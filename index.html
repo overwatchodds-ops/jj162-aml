@@ -388,6 +388,10 @@ tbody tr:hover td{background:var(--surface-2);}
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
       Print Report
     </div>
+    <div class="nav-item" id="tab-about" onclick="switchTab('about')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      About & Support
+    </div>
   </div>
   <div class="sid-footer">
     <div class="sid-status"><div class="pulse"></div>AUSTRAC Enrolled</div>
@@ -1068,6 +1072,51 @@ tbody tr:hover td{background:var(--surface-2);}
     </div>
   </div>
 
+  <!-- ══════════ ABOUT & SUPPORT ══════════════════════════════ -->
+  <div class="page tab-view hidden" id="view-about">
+    <div class="pg-header">
+      <div><div class="pg-title">About & Support</div><div class="pg-sub">Product information and contact details</div></div>
+    </div>
+    <div class="g2" style="gap:16px;align-items:start;">
+      <div class="card">
+        <div class="card-header"><div class="card-header-label"><div class="card-accent" style="background:var(--brand);"></div>About This Product</div></div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+          <div style="width:48px;height:48px;background:var(--brand);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;flex-shrink:0;">JJ</div>
+          <div>
+            <div style="font-size:16px;font-weight:700;color:#0f172a;">JJ162 AML/CTF Compliance Hub</div>
+            <div style="font-size:11px;color:#94a3b8;margin-top:2px;">Tranche 2 — Accountants Edition · v1.0</div>
+          </div>
+        </div>
+        <div style="font-size:13px;color:#475569;line-height:1.7;margin-bottom:16px;">
+          This tool is designed to help Australian accounting practices prepare for and maintain compliance with AML/CTF obligations under Tranche 2 legislation, effective 1 July 2026.
+        </div>
+        <div style="background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:14px;">
+          <div style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;margin-bottom:6px;">Developed by</div>
+          <div style="font-size:14px;font-weight:700;color:#0f172a;">Click Seed Pty Ltd</div>
+          <div style="font-size:11px;color:#94a3b8;margin-top:2px;">ABN 87 656 256 567 · Australia</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card">
+          <div class="card-header"><div class="card-header-label"><div class="card-accent" style="background:var(--blue);"></div>Support</div></div>
+          <div style="font-size:13px;color:#475569;line-height:1.7;margin-bottom:14px;">For technical support, questions, or feedback about this product, please contact us by email.</div>
+          <a href="mailto:overwatchodds@gmail.com" style="display:inline-flex;align-items:center;gap:8px;background:var(--brand-dim);color:var(--brand);border:1px solid var(--brand-line);border-radius:8px;padding:10px 16px;font-size:13px;font-weight:600;text-decoration:none;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            overwatchodds@gmail.com
+          </a>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-header-label"><div class="card-accent" style="background:var(--amber);"></div>Disclaimer</div></div>
+          <div style="font-size:12px;color:#475569;line-height:1.8;">
+            This tool is provided for compliance assistance purposes only and does not constitute legal advice. Users are responsible for ensuring their own compliance with AUSTRAC requirements.
+            <br><br>
+            Click Seed Pty Ltd makes no warranty, express or implied, as to the accuracy, completeness or fitness for purpose of this tool. Users should seek independent legal or compliance advice where required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /main -->
 
 <div id="toast"><svg id="toast-ico" width="13" height="13" fill="currentColor" viewBox="0 0 20 20"></svg><span id="toast-msg"></span></div>
@@ -1110,7 +1159,7 @@ function toast(msg, type='ok'){
 }
 
 // ─── NAV ───────────────────────────────────────────────────────
-const LABELS = {dashboard:'Dashboard',entities:'Entity Overview',scope:'Designated Services',riskass:'Firm Risk Assessment',enrolment:'AUSTRAC Enrolment',assessment:'Client Risk Profiler',kyc:'Evidence Vault',pdd:'Personnel Due Diligence',policy:'Policy & Approval',training:'Training Register',appointments:'Appointments'};
+const LABELS = {dashboard:'Dashboard',entities:'Entity Overview',scope:'Designated Services',riskass:'Firm Risk Assessment',enrolment:'AUSTRAC Enrolment',assessment:'Client Risk Profiler',kyc:'Evidence Vault',pdd:'Personnel Due Diligence',policy:'Policy & Approval',training:'Training Register',appointments:'Appointments',about:'About & Support'};
 function switchTab(id){
   document.querySelectorAll('.tab-view').forEach(v => v.classList.add('hidden'));
   $('view-'+id).classList.remove('hidden');
