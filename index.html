@@ -208,12 +208,11 @@ tbody tr:hover td{background:var(--surface-2);}
 .upload-text.filed{color:#059669;font-weight:600;}
 
 /* ─── CHECKPOINTS ──────────────────────────────────────────── */
-.checkpoint{display:flex;align-items:flex-start;gap:12px;padding:12px;border:1px solid var(--line);border-radius:8px;cursor:pointer;transition:all .15s;margin-bottom:8px;background:var(--surface);}
+.checkpoint{display:flex;align-items:flex-start;gap:12px;padding:12px;border:1px solid var(--line);border-left:4px solid #cbd5e1;border-radius:8px;cursor:pointer;transition:background .15s;margin-bottom:8px;background:var(--surface);}
 .checkpoint:last-child{margin-bottom:0;}
-.checkpoint:hover{background:var(--surface-2);}
-.checkpoint.checked{border-color:var(--green-line);background:var(--green-dim);}
-.checkbox-custom{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--line-2);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
-.checkbox-custom.checked{background:var(--green);border-color:#059669;}
+.checkpoint.checked{border-left:4px solid #0f172a !important;background:#e2e8f0 !important;}
+.checkbox-custom{width:20px;height:20px;border-radius:5px;border:2px solid #0f172a;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s;background:#fff;}
+.checkbox-custom.checked{background:#fff;border-color:#0f172a;}
 .chk-title{font-size:13px;font-weight:600;color:#0f172a;margin-bottom:2px;}
 .chk-sub{font-size:11px;color:#94a3b8;}
 
@@ -786,11 +785,15 @@ tbody tr:hover td{background:var(--surface-2);}
           <div class="f-group"><label class="f-label">Designated Service Being Provided</label>
             <select class="f-input" id="designatedService">
               <option value="">— Select applicable service —</option>
-              <option>Assisting with real estate transaction</option>
-              <option>Assisting with sale/transfer of company or legal arrangement</option>
-              <option>Receiving, holding or managing client funds/property</option>
-              <option>Arranging corporate appointments or nominee services</option>
-              <option>Providing registered office or business address</option>
+              <option>Assisting with real estate transaction (buy, sell or transfer)</option>
+              <option>Assisting with sale/transfer of a body corporate or legal arrangement</option>
+              <option>Receiving, holding, controlling or managing client funds or property</option>
+              <option>Assisting with equity or debt financing for a body corporate or legal arrangement</option>
+              <option>Selling or transferring a shelf company</option>
+              <option>Assisting with creation or restructuring of a body corporate or legal arrangement</option>
+              <option>Acting as or arranging an officer (director, secretary, partner or trustee)</option>
+              <option>Acting as or arranging a nominee shareholder</option>
+              <option>Providing a registered office or principal place of business address</option>
             </select>
           </div>
 
@@ -958,12 +961,12 @@ tbody tr:hover td{background:var(--surface-2);}
         <div>
           <div class="section-label">Program Checkpoints</div>
           <div id="pol-chkpts">
-            <div class="checkpoint" id="pwrap-a" onclick="togglePolChk('pa',this)"><div class="checkbox-custom" id="pchk-a"></div><div><div class="chk-title">Part A (General) — Governance framework</div><div class="chk-sub">Accountability, risk appetite, governance arrangements</div></div></div>
-            <div class="checkpoint" id="pwrap-b" onclick="togglePolChk('pb',this)"><div class="checkbox-custom" id="pchk-b"></div><div><div class="chk-title">Part B (KYC/CDD) — Customer identification</div><div class="chk-sub">CDD procedures, beneficial ownership, ongoing monitoring</div></div></div>
-            <div class="checkpoint" id="pwrap-pf" onclick="togglePolChk('ppf',this)"><div class="checkbox-custom" id="pchk-pf"></div><div><div class="chk-title">Proliferation Financing (PF) controls documented</div><div class="chk-sub">PF risk assessment and screening procedures included</div></div></div>
-            <div class="checkpoint" id="pwrap-ra" onclick="togglePolChk('pra',this)"><div class="checkbox-custom" id="pchk-ra"></div><div><div class="chk-title">Firm-level risk assessment attached</div><div class="chk-sub">ML/TF/PF risk assessment document referenced</div></div></div>
-            <div class="checkpoint" id="pwrap-tip" onclick="togglePolChk('ptip',this)"><div class="checkbox-custom" id="pchk-tip"></div><div><div class="chk-title">Tipping-off policy documented</div><div class="chk-sub">Procedures for SMR filing and non-disclosure obligations</div></div></div>
-            <div class="checkpoint" id="pwrap-tr" onclick="togglePolChk('ptr',this)"><div class="checkbox-custom" id="pchk-tr"></div><div><div class="chk-title">Training program documented</div><div class="chk-sub">Annual staff AML/CTF training schedule</div></div></div>
+            <div class="checkpoint" id="pwrap-a" onclick="togglePolChk('pa')"><div class="checkbox-custom" id="pchk-a"><svg id="ptick-pa" style="display:none;" width="13" height="13" fill="none" stroke="#0f172a" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/></svg></div><div><div class="chk-title">Part A (General) — Governance framework</div><div class="chk-sub">Accountability, risk appetite, governance arrangements</div></div></div>
+            <div class="checkpoint" id="pwrap-b" onclick="togglePolChk('pb')"><div class="checkbox-custom" id="pchk-b"><svg id="ptick-pb" style="display:none;" width="13" height="13" fill="none" stroke="#0f172a" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/></svg></div><div><div class="chk-title">Part B (KYC/CDD) — Customer identification</div><div class="chk-sub">CDD procedures, beneficial ownership, ongoing monitoring</div></div></div>
+            <div class="checkpoint" id="pwrap-pf" onclick="togglePolChk('ppf')"><div class="checkbox-custom" id="pchk-pf"><svg id="ptick-ppf" style="display:none;" width="13" height="13" fill="none" stroke="#0f172a" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/></svg></div><div><div class="chk-title">Proliferation Financing (PF) controls documented</div><div class="chk-sub">PF risk assessment and screening procedures included</div></div></div>
+            <div class="checkpoint" id="pwrap-ra" onclick="togglePolChk('pra')"><div class="checkbox-custom" id="pchk-ra"><svg id="ptick-pra" style="display:none;" width="13" height="13" fill="none" stroke="#0f172a" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/></svg></div><div><div class="chk-title">Firm-level risk assessment attached</div><div class="chk-sub">ML/TF/PF risk assessment document referenced</div></div></div>
+            <div class="checkpoint" id="pwrap-tip" onclick="togglePolChk('ptip')"><div class="checkbox-custom" id="pchk-tip"><svg id="ptick-ptip" style="display:none;" width="13" height="13" fill="none" stroke="#0f172a" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/></svg></div><div><div class="chk-title">Tipping-off policy documented</div><div class="chk-sub">Procedures for SMR filing and non-disclosure obligations</div></div></div>
+            <div class="checkpoint" id="pwrap-tr" onclick="togglePolChk('ptr')"><div class="checkbox-custom" id="pchk-tr"><svg id="ptick-ptr" style="display:none;" width="13" height="13" fill="none" stroke="#0f172a" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/></svg></div><div><div class="chk-title">Training program documented</div><div class="chk-sub">Annual staff AML/CTF training schedule</div></div></div>
           </div>
           <div class="prog-track"><div class="prog-fill" id="pol-prog" style="width:0%;"></div></div>
           <div class="prog-label" id="pol-prog-label">0 / 6 complete</div>
@@ -976,7 +979,7 @@ tbody tr:hover td{background:var(--surface-2);}
           <div id="approval-form">
             <div class="f-group"><label class="f-label">Approved By (Senior Manager) *</label><input class="f-input" id="appr-name" type="text" placeholder="Full name"></div>
             <div class="f-group"><label class="f-label">Title / Position</label><input class="f-input" id="appr-title" type="text" placeholder="e.g. Principal / Managing Partner"></div>
-            <div class="f-group"><label class="f-label">Approval Date *</label><input class="f-input" id="appr-date" type="date"></div>
+            <div class="f-group"><label class="f-label">Approval Date *</label><input class="f-input" id="appr-date" type="date" onchange="const v=this.value; const el=document.getElementById('appr-date-display'); if(v){const p=v.split('-');el.textContent=p[2]+'/'+p[1]+'/'+p[0];}else{el.textContent='';}"><div id="appr-date-display" style="font-size:12px;color:#475569;margin-top:4px;font-family:var(--mono);"></div></div>
             <div class="f-group"><label class="f-label">Governing Body Notified</label>
               <select class="f-input" id="appr-notified">
                 <option value="Yes">Yes — board/owners notified</option>
@@ -1095,7 +1098,7 @@ const fmtDate = d => { if(!d) return '—'; const dt=new Date(d); if(isNaN(dt)) 
 const isOD    = d => d && new Date(d) < new Date();
 const isDue30 = d => { if(!d) return false; const dt=new Date(d), now=new Date(); return dt>now && dt<=new Date(now.getTime()+30*864e5); };
 const $       = id => document.getElementById(id);
-const CHKSVG  = `<svg width="10" height="10" fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>`;
+const CHKSVG  = `<svg width="13" height="13" fill="none" stroke="#0f172a" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/></svg>`;
 
 function toast(msg, type='ok'){
   $('toast-msg').textContent = msg;
@@ -1154,12 +1157,15 @@ function selectRadio(type, val){
 
 // ─── DESIGNATED SERVICES ───────────────────────────────────────
 const DS_LIST = [
-  {id:'ds1', name:'Assisting with real estate transactions', desc:'Actively assisting clients with the sale, purchase or transfer of real estate (beyond general advice)'},
-  {id:'ds2', name:'Assisting with sale/transfer of a body corporate or legal arrangement', desc:'Including purchase, sale or restructuring of companies, trusts, partnerships or similar entities'},
-  {id:'ds3', name:'Receiving, holding, controlling or managing client funds or property', desc:'Includes trust accounts used as substitute banking facilities'},
-  {id:'ds4', name:'Arranging corporate appointments or nominee services', desc:'Acting as or arranging for someone to act as director, trustee, partner or nominee shareholder'},
-  {id:'ds5', name:'Equity or debt financing for a body corporate or legal arrangement', desc:'Assisting in organising, planning or executing transactions for equity or debt financing'},
-  {id:'ds6', name:'Providing a registered office or business address', desc:'Acting as registered agent providing a registered or principal place of business address'},
+  {id:'ds1', name:'Assisting with real estate transactions', desc:'Assisting in the planning or execution of a transaction to sell, buy, or transfer real estate'},
+  {id:'ds2', name:'Assisting with sale/transfer of a body corporate or legal arrangement', desc:'Assisting in the planning or execution of a transaction to sell, buy, or transfer a company or legal arrangement (e.g. trust)'},
+  {id:'ds3', name:'Receiving, holding, controlling or managing client funds or property', desc:'Includes money, accounts, securities, virtual assets or other property — includes trust accounts used as substitute banking'},
+  {id:'ds4', name:'Assisting with equity or debt financing', desc:'Assisting in organising, planning or executing transactions for equity or debt financing for a company or legal arrangement'},
+  {id:'ds5', name:'Selling or transferring a shelf company', desc:'Selling or transferring ownership of a pre-registered company (shelf company) to another person'},
+  {id:'ds6', name:'Assisting with creation or restructuring of a body corporate or legal arrangement', desc:'Assisting in the planning or execution of the creation or restructuring of a company, trust, partnership or similar'},
+  {id:'ds7', name:'Acting as or arranging an officer (director, secretary, partner or trustee)', desc:'Acting as, or arranging for another person to act as, a director, secretary, partner or trustee'},
+  {id:'ds8', name:'Acting as or arranging a nominee shareholder', desc:'Acting as, or arranging for another person to act as, a nominee shareholder on behalf of another person'},
+  {id:'ds9', name:'Providing a registered office or principal place of business address', desc:'Providing a registered office or principal place of business address for a company or legal arrangement'},
 ];
 function renderScope(){
   const el = $('ds-list'); if(!el) return;
@@ -1265,7 +1271,9 @@ function renderEnrolChks(){
     const checked = !!(S.enrolChks||{})[id];
     const box=$(id), wrap=$(id+'-wrap');
     if(box){ box.classList.toggle('checked',checked); box.innerHTML=checked?CHKSVG:''; }
-    if(wrap) wrap.classList.toggle('checked',checked);
+    if(wrap){
+      wrap.classList.toggle('checked',checked);
+    }
   });
 }
 
@@ -1278,9 +1286,10 @@ function togglePolChk(key){
 function refreshPolChks(){
   POL_KEYS.forEach(k => {
     const checked = !!(S.polChks||{})[k];
-    const box=$('pchk-'+k), wrap=$('pwrap-'+k);
-    if(box){ box.classList.toggle('checked',checked); box.innerHTML=checked?CHKSVG:''; }
-    if(wrap) wrap.classList.toggle('checked',checked);
+    const tick = $('ptick-'+k);
+    const wrap = $('pwrap-'+k);
+    if(tick) tick.style.display = checked ? 'block' : 'none';
+    if(wrap) wrap.classList.toggle('checked', checked);
   });
   const count = POL_KEYS.filter(k=>S.polChks[k]).length;
   if($('pol-prog'))       $('pol-prog').style.width = (count/6*100)+'%';
@@ -1376,7 +1385,37 @@ function addPerson(){
   currentPeople.push({id:Date.now(),name:'',role:'',dvsFile:'',pepFile:'',sanctionsFile:'',assocFile:''});
   renderPeople(); validateForm();
 }
-function removePerson(id){ currentPeople=currentPeople.filter(p=>p.id!==id); renderPeople(); validateForm(); }
+function removePerson(id){
+  const person = currentPeople.find(p=>p.id===id);
+  const name = person?.name ? `"${person.name}"` : 'this person';
+  showConfirm(`Remove ${name}?`, 'This cannot be undone.', ()=>{
+    currentPeople=currentPeople.filter(p=>p.id!==id);
+    renderPeople(); validateForm();
+  });
+}
+
+function showConfirm(title, message, onConfirm){
+  // Remove any existing confirm dialog
+  const existing = document.getElementById('confirm-modal');
+  if(existing) existing.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'confirm-modal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:12px;padding:28px 32px;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.18);border:1px solid #e2e8f0;">
+      <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:8px;">${title}</div>
+      <div style="font-size:13px;color:#64748b;margin-bottom:24px;">${message}</div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button onclick="document.getElementById('confirm-modal').remove()" style="padding:8px 18px;border-radius:7px;border:1px solid #e2e8f0;background:#f8fafc;color:#475569;font-size:13px;font-weight:500;cursor:pointer;">Cancel</button>
+        <button id="confirm-ok" style="padding:8px 18px;border-radius:7px;border:none;background:#dc2626;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">Remove</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+  document.getElementById('confirm-ok').onclick = ()=>{ modal.remove(); onConfirm(); };
+  // Close on backdrop click
+  modal.addEventListener('click', e=>{ if(e.target===modal) modal.remove(); });
+}
 function updateP(id,f,v){ const p=currentPeople.find(p=>p.id===id); if(p) p[f]=v; validateForm(); }
 function handleFile(id,type,input){
   const p = currentPeople.find(p=>p.id===id);
