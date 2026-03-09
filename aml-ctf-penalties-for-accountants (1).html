@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z6L06TX2HB');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AML/CTF Penalties for Accountants — What Happens If You Don't Comply? | SimpleAML</title>
+<meta name="description" content="What are the real penalties for Australian accountants who don't comply with AML/CTF obligations? Civil fines up to $31.3M, daily penalties, criminal charges, and more — explained in plain English.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #0a1628;
+  --navy-2: #112240;
+  --gold:   #c9a84c;
+  --gold-2: #e8c66d;
+  --gold-dim: rgba(201,168,76,.12);
+  --white:  #ffffff;
+  --text:   #e8e4da;
+  --muted:  #8a9bb0;
+  --line:   rgba(201,168,76,.2);
+  --red:    #f87171;
+  --red-dim: rgba(220,38,38,.08);
+  --red-line: rgba(220,38,38,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:rgba(10,22,40,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+.nav-logo{display:flex;align-items:center;gap:12px;font-family:'DM Serif Display',serif;font-size:20px;color:var(--white);text-decoration:none;}
+.nav-logo-mark{width:32px;height:32px;background:var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--navy);font-family:'DM Mono',monospace;}
+.nav-back{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold);}
+.nav-cta{background:var(--gold);color:var(--navy);padding:8px 20px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--gold-2);}
+
+.article-hero{padding:9rem 2rem 4rem;max-width:780px;margin:0 auto;}
+.article-category{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);font-weight:600;display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;}
+.article-category::before{content:'';display:inline-block;width:24px;height:1px;background:var(--red);}
+.article-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:400;line-height:1.1;color:var(--white);margin-bottom:1.5rem;letter-spacing:-.02em;}
+.article-title em{font-style:italic;color:var(--red);}
+.article-meta{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;padding:1.2rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:3rem;}
+.meta-badge{display:inline-flex;align-items:center;gap:6px;background:var(--red-dim);border:1px solid var(--red-line);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--red);}
+.meta-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--red);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.meta-info{font-size:12px;color:var(--muted);}
+
+.article-body{max-width:780px;margin:0 auto;padding:0 2rem 6rem;}
+.article-body p{font-size:1.05rem;line-height:1.85;color:rgba(232,228,218,.85);margin-bottom:1.6rem;}
+.article-body h2{font-family:'DM Serif Display',serif;font-size:1.9rem;font-weight:400;color:var(--white);margin:3rem 0 1rem;letter-spacing:-.02em;padding-bottom:0.8rem;border-bottom:1px solid var(--line);}
+.article-body h3{font-size:0.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:2rem 0 0.6rem;}
+.article-body strong{color:var(--white);font-weight:500;}
+.article-body a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3);transition:border-color .2s;}
+.article-body a.btn-primary{color:var(--navy) !important;border-bottom:none !important;}
+
+.article-body a:hover{border-color:var(--gold);}
+
+/* Penalty stat cards */
+.penalty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin:2rem 0;}
+@media(max-width:650px){.penalty-grid{grid-template-columns:1fr;}}
+.penalty-card{background:var(--red-dim);border:1px solid var(--red-line);border-radius:10px;padding:1.5rem;text-align:center;}
+.penalty-amount{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--red);line-height:1;margin-bottom:0.4rem;}
+.penalty-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+.penalty-desc{font-size:12px;color:var(--muted);margin-top:0.5rem;line-height:1.5;}
+
+.answer-box{background:rgba(201,168,76,.08);border:1px solid var(--line);border-radius:10px;padding:1.8rem 2rem;margin:2rem 0;}
+.answer-box-label{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
+.answer-box p{font-size:0.95rem !important;margin-bottom:0 !important;color:var(--text) !important;}
+
+.pull-quote{margin:2.5rem 0;padding:1.8rem 2rem;background:var(--gold-dim);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;}
+.pull-quote p{font-family:'DM Serif Display',serif;font-size:1.25rem !important;font-style:italic;color:var(--white) !important;line-height:1.5 !important;margin:0 !important;}
+
+.checklist{list-style:none;margin:1rem 0 1.6rem;padding:0;}
+.checklist li{display:flex;align-items:flex-start;gap:12px;font-size:1rem;line-height:1.7;color:rgba(232,228,218,.85);margin-bottom:0.5rem;padding:0.5rem 0;border-bottom:1px solid rgba(201,168,76,.08);}
+.checklist li:last-child{border-bottom:none;}
+.checklist li::before{content:'✓';color:var(--gold);font-weight:600;flex-shrink:0;margin-top:2px;}
+
+/* Enforcement tools */
+.enforcement-list{margin:1.5rem 0;}
+.enforcement-item{display:flex;gap:1.2rem;align-items:flex-start;padding:1.2rem;background:var(--navy-2);border:1px solid var(--line);border-radius:8px;margin-bottom:0.8rem;}
+.enforcement-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.enforcement-title{font-size:14px;font-weight:600;color:var(--white);margin-bottom:4px;}
+.enforcement-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* Case study */
+.case-study{background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:1.8rem 2rem;margin:2rem 0;position:relative;overflow:hidden;}
+.case-study::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);}
+.case-study-label{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
+.case-study p{font-size:0.92rem !important;margin-bottom:0.8rem !important;color:var(--muted) !important;}
+.case-study p:last-child{margin-bottom:0 !important;}
+.case-study strong{color:var(--text) !important;}
+
+.warning-box{background:var(--red-dim);border:1px solid var(--red-line);border-radius:10px;padding:1.5rem 2rem;margin:2rem 0;display:flex;gap:1rem;align-items:flex-start;}
+.warning-icon{color:var(--red);font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.warning-box p{font-size:0.95rem !important;color:rgba(232,228,218,.85) !important;margin:0 !important;}
+.warning-box strong{color:var(--red) !important;}
+
+.tip-box{background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.2);border-radius:10px;padding:1.5rem 2rem;margin:2rem 0;display:flex;gap:1rem;align-items:flex-start;}
+.tip-icon{color:#34d399;font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.tip-box p{font-size:0.95rem !important;color:rgba(232,228,218,.85) !important;margin:0 !important;}
+.tip-box strong{color:#34d399 !important;}
+
+
+.article-cta{
+  margin:3rem 0;
+  padding:2rem;
+  background:var(--navy-2);
+  border:1px solid var(--line);
+  border-radius:12px;
+}
+.article-cta h4{
+  font-family:'DM Serif Display',serif;
+  font-size:1.4rem;
+  font-weight:400;
+  color:var(--white);
+  margin-bottom:0.5rem;
+}
+.article-cta p{
+  font-size:0.88rem !important;
+  color:var(--muted) !important;
+  margin:0 0 1.5rem 0 !important;
+  line-height:1.5 !important;
+}
+.btn-primary{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--gold);
+  color:var(--navy);
+  padding:14px 28px;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:600;
+  text-decoration:none;
+  border:none;
+  transition:all .2s;
+}
+.btn-primary:hover{background:var(--gold-2);transform:translateY(-1px);}
+
+
+footer{border-top:1px solid var(--line);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-brand{font-family:'DM Serif Display',serif;font-size:1rem;color:rgba(232,228,218,.4);}
+.footer-link{font-size:12px;color:var(--muted);text-decoration:none;}
+.footer-link:hover{color:var(--gold);}
+
+@media(max-width:700px){
+  nav{padding:16px 20px;}
+  .article-hero,.article-body{padding-left:1.2rem;padding-right:1.2rem;}
+  .article-hero{padding-top:7rem;}
+  .article-cta{padding:1.5rem;flex-direction:column;}
+  footer{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">
+    <div class="nav-logo-mark">SA</div>
+    SimpleAML
+  </a>
+  <a class="nav-back" href="/articles.html">← All Articles</a>
+  <a href="/app.html" class="nav-cta">Open App →</a>
+</nav>
+
+<div class="article-hero">
+  <p class="article-category">Penalties · Enforcement</p>
+  <h1 class="article-title">
+    AML/CTF Penalties for Accountants —<br>
+    <em>What Happens If<br>You Don't Comply?</em>
+  </h1>
+  <div class="article-meta">
+    <div class="meta-badge"><div class="meta-badge-dot"></div>Updated March 2026</div>
+    <span class="meta-info">SimpleAML Editorial · 6 min read</span>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>
+    From 1 July 2026, Australian accountants who fail to meet their AML/CTF obligations face a penalty regime that is, by design, severe. AUSTRAC has been explicit: non-compliance is not treated as a minor administrative oversight. The penalties are structured to hurt — financially, operationally, and reputationally.
+  </p>
+
+  <p>
+    This article sets out the real numbers, the enforcement tools AUSTRAC has available, what actually triggers action, and — critically — what you can do to reduce your risk right now.
+  </p>
+
+  <div class="answer-box">
+    <div class="answer-box-label">The headline numbers</div>
+    <p>Maximum civil penalty for a firm: <strong>$31.3 million per breach.</strong> Maximum civil penalty for an individual: <strong>$6.26 million per breach.</strong> Daily penalty for failing to enrol: <strong>$18,780 per day.</strong> Criminal penalties for serious offences: up to <strong>life imprisonment.</strong> These penalties apply <em>per contravention</em> — a systemic failure across many clients can be treated as thousands of separate breaches.</p>
+  </div>
+
+  <h2>The Penalty Numbers</h2>
+
+  <div class="penalty-grid">
+    <div class="penalty-card">
+      <div class="penalty-amount">$31.3M</div>
+      <div class="penalty-label">Max per breach</div>
+      <div class="penalty-desc">Maximum civil penalty for a corporate entity (firm) per contravention of the AML/CTF Act</div>
+    </div>
+    <div class="penalty-card">
+      <div class="penalty-amount">$6.26M</div>
+      <div class="penalty-label">Individual max</div>
+      <div class="penalty-desc">Maximum civil penalty for an individual accountant or sole practitioner per contravention</div>
+    </div>
+    <div class="penalty-card">
+      <div class="penalty-amount">$18,780</div>
+      <div class="penalty-label">Per day</div>
+      <div class="penalty-desc">Daily accruing penalty for failing to enrol with AUSTRAC after obligations commence</div>
+    </div>
+  </div>
+
+  <p>
+    These are maximum figures — in practice, penalties are determined by the Federal Court based on the severity and nature of the breach. But the key point is that penalties apply <strong>per contravention</strong>. A firm that fails to conduct CDD on 200 clients has not committed one breach — it has potentially committed 200 separate breaches, each attracting its own penalty calculation.
+  </p>
+
+  <div class="pull-quote">
+    <p>"AUSTRAC doesn't need to prove intent or knowledge — only that a violation occurred. Even well-intentioned firms with compliance programs can face significant penalties for systemic failures."</p>
+  </div>
+
+  <h2>AUSTRAC's Enforcement Tools</h2>
+
+  <p>
+    AUSTRAC has a wide range of enforcement powers — from informal education through to Federal Court proceedings. Here is how the escalation ladder works:
+  </p>
+
+  <div class="enforcement-list">
+    <div class="enforcement-item">
+      <div class="enforcement-icon" style="background:rgba(201,168,76,.12);">📋</div>
+      <div>
+        <div class="enforcement-title">Remedial Direction</div>
+        <div class="enforcement-desc">A written instruction to take specific steps to fix a compliance failure. AUSTRAC's first response for lower-level breaches. Non-compliance with a direction is itself a serious offence.</div>
+      </div>
+    </div>
+    <div class="enforcement-item">
+      <div class="enforcement-icon" style="background:rgba(201,168,76,.12);">🔔</div>
+      <div>
+        <div class="enforcement-title">Infringement Notice</div>
+        <div class="enforcement-desc">An on-the-spot fine for specific breaches — for example, failing to lodge an annual compliance report on time can result in fines of up to $16,500 for companies. Infringement notices may be made public.</div>
+      </div>
+    </div>
+    <div class="enforcement-item">
+      <div class="enforcement-icon" style="background:rgba(201,168,76,.12);">🤝</div>
+      <div>
+        <div class="enforcement-title">Enforceable Undertaking</div>
+        <div class="enforcement-desc">A formal commitment from your firm outlining specific actions you will take to achieve compliance. Undertakings are published publicly. Breaching an undertaking allows AUSTRAC to apply to the Federal Court.</div>
+      </div>
+    </div>
+    <div class="enforcement-item">
+      <div class="enforcement-icon" style="background:rgba(201,168,76,.12);">🔍</div>
+      <div>
+        <div class="enforcement-title">External Audit</div>
+        <div class="enforcement-desc">AUSTRAC can appoint an independent external auditor to review your ML/TF risk management and AML/CTF compliance at your expense. This is a significant operational and financial imposition.</div>
+      </div>
+    </div>
+    <div class="enforcement-item">
+      <div class="enforcement-icon" style="background:var(--red-dim);">⚖️</div>
+      <div>
+        <div class="enforcement-title">Federal Court Civil Penalty Order</div>
+        <div class="enforcement-desc">AUSTRAC's most powerful tool. Applied for when breaches are serious or systemic. The Court determines the penalty amount — which can run to tens of millions of dollars. Recent examples: Crown ($450M), SkyCity ($67M), Westpac ($1.3B).</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>What Triggers Enforcement Action?</h2>
+
+  <p>
+    AUSTRAC's enforcement actions are not random. They are triggered by specific patterns of non-compliance that its intelligence systems detect. Understanding these triggers is the most practical way to manage your risk.
+  </p>
+
+  <h3>Failure to enrol</h3>
+  <p>
+    Not enrolling with AUSTRAC after obligations commence is one of the clearest and most easily detected breaches. Daily penalties of $18,780 for firms and $3,756 for individuals apply for each day you remain unenrolled. With tens of thousands of new reporting entities entering the regime, AUSTRAC will be monitoring enrolment rates closely.
+  </p>
+
+  <h3>No AML/CTF program in place</h3>
+  <p>
+    Providing designated services without a documented AML/CTF program is a direct breach of the Act. AUSTRAC's initial approach for newly regulated Tranche 2 entities is education-focused — but only for firms that are making genuine documented efforts to comply. Having done nothing at all is the worst position to be in.
+  </p>
+
+  <h3>Failure to file Suspicious Matter Reports</h3>
+  <p>
+    Reporting violations account for approximately 70% of AUSTRAC enforcement actions. Failure to lodge Suspicious Matter Reports (SMRs) within the required timeframe — 24 hours for terrorism financing suspicions, three business days for others — is one of the most common triggers for escalated enforcement.
+  </p>
+
+  <h3>Inadequate customer due diligence</h3>
+  <p>
+    Systemic CDD failures — where a firm has not properly verified client identities or risk-rated its client base — are treated seriously. Because penalties apply per contravention, a firm with 150 clients and no CDD process could face 150 separate breach calculations.
+  </p>
+
+  <h3>Failure to lodge annual compliance report</h3>
+  <p>
+    AUSTRAC applied for civil penalty orders against two entities in December 2025 for failing to lodge their compliance report for the 2023 calendar year — demonstrating that even administrative reporting failures are actively pursued.
+  </p>
+
+  <h2>Criminal Penalties — The Serious End</h2>
+
+  <p>
+    Beyond civil penalties, the AML/CTF Act and the Criminal Code Act 1995 create criminal liability for serious offences. These are not theoretical risks — they represent the regime's response to deliberate or reckless non-compliance.
+  </p>
+
+  <ul class="checklist">
+    <li><strong>Tipping off</strong> — alerting a client that they are the subject of a suspicious matter report or AUSTRAC investigation: up to <strong>2 years imprisonment</strong></li>
+    <li><strong>Structuring</strong> — deliberately structuring transactions to avoid reporting thresholds: up to <strong>5 years imprisonment</strong></li>
+    <li><strong>Money laundering</strong> — actively assisting in laundering proceeds of crime: up to <strong>life imprisonment</strong> for the most serious offences under the Criminal Code</li>
+  </ul>
+
+  <p>
+    These criminal offences require proof of intent or recklessness — they are not triggered by accidental administrative failures. But they serve as a reminder that the AML/CTF regime is not just about paperwork. The underlying purpose is to prevent serious crime.
+  </p>
+
+  <h2>Beyond Fines — The Broader Consequences</h2>
+
+  <p>
+    The financial penalties are only part of the picture. AUSTRAC can strip your registration, freeze your accounts, and publicly name your business as non-compliant. For an accounting firm, the reputational consequences of a public enforcement action can be devastating — far exceeding the financial penalty itself.
+  </p>
+
+  <p>
+    Additional consequences include:
+  </p>
+
+  <ul class="checklist">
+    <li>Loss of professional membership — CA ANZ and CPA Australia are expected to treat serious AML/CTF non-compliance as a professional conduct matter</li>
+    <li>Client loss — business clients who are themselves reporting entities may be required to terminate relationships with non-compliant service providers</li>
+    <li>Legal costs — defending an AUSTRAC enforcement action requires specialist AML lawyers, with fees commonly running to hundreds of thousands of dollars</li>
+    <li>Management distraction — an AUSTRAC audit or investigation is an enormous operational burden for a small firm</li>
+  </ul>
+
+  <div class="case-study">
+    <div class="case-study-label">What cooperation looks like in practice</div>
+    <p>When an accounting firm discovered historical CDD failures during an internal audit, they immediately reported the issues to AUSTRAC and implemented a comprehensive remediation plan.</p>
+    <p><strong>The proactive approach reduced a potential $4.2 million penalty to $1.1 million</strong> — still significant, but a fraction of the maximum exposure. AUSTRAC consistently rewards genuine cooperation and self-reporting with substantially reduced penalties.</p>
+  </div>
+
+  <h2>AUSTRAC's Approach to New Tranche 2 Entities</h2>
+
+  <p>
+    AUSTRAC has publicly stated that its initial approach to newly regulated Tranche 2 entities — including accountants — will be education-focused, provided firms are making genuine efforts to comply. This does not mean the penalties won't apply. It means AUSTRAC will generally seek to educate before it prosecutes — for firms that are visibly trying.
+  </p>
+
+  <p>
+    The factors AUSTRAC and courts consider when determining penalties include:
+  </p>
+
+  <ul class="checklist">
+    <li>The nature and extent of the breach — isolated incident vs systemic failure</li>
+    <li>Whether the breach was intentional, reckless, or inadvertent</li>
+    <li>The firm's compliance history — first offence vs repeat non-compliance</li>
+    <li>The level of cooperation with AUSTRAC during the investigation</li>
+    <li>Steps taken to remediate the breach once identified</li>
+    <li>The harm caused to the integrity of the financial system</li>
+  </ul>
+
+  <div class="tip-box">
+    <div class="tip-icon">💡</div>
+    <p><strong>The single most important thing you can do:</strong> Start now and document everything. A firm that has made genuine, documented efforts to comply — even if imperfect — is in a fundamentally different position to a firm that has done nothing. AUSTRAC will treat those two situations very differently.</p>
+  </div>
+
+  <div class="warning-box">
+    <div class="warning-icon">⚠</div>
+    <p><strong>Size is not a defence.</strong> AUSTRAC has been explicit that the obligations apply equally to sole practitioners and small firms. "I'm too small to matter" is not a position AUSTRAC will accept. The regime is designed to catch the full spectrum of professional services — including the smallest practices.</p>
+  </div>
+
+  <h2>What You Should Do Right Now</h2>
+
+  <p>
+    The good news is that the path to compliance is clear. Most small accounting practices can meet their obligations without engaging expensive compliance consultants — AUSTRAC's free Accounting Program Starter Kit provides a ready-made framework, and tools like SimpleAML make day-to-day CDD management straightforward.
+  </p>
+
+  <ul class="checklist">
+    <li>Confirm whether your services are designated services — <a href="/articles/do-i-need-to-register-with-austrac.html">use our guide to check</a></li>
+    <li>Enrol with AUSTRAC from 31 March 2026 — do not wait until July</li>
+    <li>Download and customise AUSTRAC's free Accounting Program Starter Kit</li>
+    <li>Set up your CDD process before 1 July — <a href="/articles/what-is-customer-due-diligence.html">read our CDD guide</a></li>
+    <li>Train all relevant staff before obligations commence</li>
+    <li>Keep records of everything — every CDD step, every review, every training completion</li>
+  </ul>
+
+  <p>
+    The compliance investment required for most small practices is modest. The cost of non-compliance is not.
+  </p>
+
+  <div class="article-cta">
+    <h4>Don't give AUSTRAC a reason to call.</h4>
+      <p>SimpleAML helps you build and maintain the CDD records, compliance documentation, and audit trail that protect your practice. Free for small accounting firms.</p>
+    <a href="/app.html" class="btn-primary">
+      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      Get Compliant Free
+    </a>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-top:1rem;">
+    Further reading: <a href="/articles/do-i-need-to-register-with-austrac.html">Do I need to register with AUSTRAC?</a> · <a href="/articles/what-is-an-aml-ctf-program.html">What is an AML/CTF Program?</a> · <a href="/articles/aml-ctf-tranche-2-deadlines-for-accountants.html">Key Deadlines</a> · <a href="/articles/what-is-customer-due-diligence.html">What is CDD?</a>
+  </p>
+
+</div>
+
+<footer>
+  <span class="footer-brand">SimpleAML</span>
+  <a href="/" class="footer-link">← Back to Home</a>
+</footer>
+
+</body>
+</html>

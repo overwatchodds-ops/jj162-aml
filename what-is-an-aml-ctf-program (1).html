@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z6L06TX2HB');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What is an AML/CTF Program and How Do I Write One? A Guide for Accountants | SimpleAML</title>
+<meta name="description" content="Every Australian accounting firm providing designated services needs an AML/CTF program by 1 July 2026. This plain-English guide explains what it is, what it must contain, and how to use AUSTRAC's free Starter Kit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #0a1628;
+  --navy-2: #112240;
+  --gold:   #c9a84c;
+  --gold-2: #e8c66d;
+  --gold-dim: rgba(201,168,76,.12);
+  --white:  #ffffff;
+  --text:   #e8e4da;
+  --muted:  #8a9bb0;
+  --line:   rgba(201,168,76,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--navy);
+  color:var(--text);
+  overflow-x:hidden;
+}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 48px;
+  background:rgba(10,22,40,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:12px;
+  font-family:'DM Serif Display',serif;
+  font-size:20px;color:var(--white);text-decoration:none;
+}
+.nav-logo-mark{
+  width:32px;height:32px;background:var(--gold);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--navy);
+  font-family:'DM Mono',monospace;
+}
+.nav-back{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold);}
+.nav-cta{
+  background:var(--gold);color:var(--navy);
+  padding:8px 20px;border-radius:6px;
+  font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;
+}
+.nav-cta:hover{background:var(--gold-2);}
+
+.article-hero{padding:9rem 2rem 4rem;max-width:780px;margin:0 auto;}
+.article-category{
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;
+  display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;
+}
+.article-category::before{content:'';display:inline-block;width:24px;height:1px;background:var(--gold);}
+.article-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2rem,5vw,3.2rem);
+  font-weight:400;line-height:1.1;
+  color:var(--white);margin-bottom:1.5rem;letter-spacing:-.02em;
+}
+.article-title em{font-style:italic;color:var(--gold);}
+.article-meta{
+  display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;
+  padding:1.2rem 0;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  margin-bottom:3rem;
+}
+.meta-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--gold-dim);border:1px solid var(--line);
+  border-radius:20px;padding:4px 12px;
+  font-size:10px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--gold);
+}
+.meta-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.meta-info{font-size:12px;color:var(--muted);}
+
+.article-body{max-width:780px;margin:0 auto;padding:0 2rem 6rem;}
+.article-body p{font-size:1.05rem;line-height:1.85;color:rgba(232,228,218,.85);margin-bottom:1.6rem;}
+.article-body h2{
+  font-family:'DM Serif Display',serif;font-size:1.9rem;font-weight:400;
+  color:var(--white);margin:3rem 0 1rem;letter-spacing:-.02em;
+  padding-bottom:0.8rem;border-bottom:1px solid var(--line);
+}
+.article-body h3{
+  font-size:0.72rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);margin:2rem 0 0.6rem;
+}
+.article-body strong{color:var(--white);font-weight:500;}
+.article-body a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3);transition:border-color .2s;}
+.article-body a.btn-primary{color:var(--navy) !important;border-bottom:none !important;}
+
+.article-body a:hover{border-color:var(--gold);}
+
+.answer-box{
+  background:rgba(201,168,76,.08);border:1px solid var(--line);
+  border-radius:10px;padding:1.8rem 2rem;margin:2rem 0;
+}
+.answer-box-label{
+  font-size:9px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;
+}
+.answer-box p{font-size:0.95rem !important;margin-bottom:0 !important;color:var(--text) !important;}
+
+.pull-quote{
+  margin:2.5rem 0;padding:1.8rem 2rem;
+  background:var(--gold-dim);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;
+}
+.pull-quote p{
+  font-family:'DM Serif Display',serif;font-size:1.25rem !important;
+  font-style:italic;color:var(--white) !important;line-height:1.5 !important;margin:0 !important;
+}
+
+.checklist{list-style:none;margin:1rem 0 1.6rem;padding:0;}
+.checklist li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:1rem;line-height:1.7;color:rgba(232,228,218,.85);
+  margin-bottom:0.5rem;padding:0.5rem 0;
+  border-bottom:1px solid rgba(201,168,76,.08);
+}
+.checklist li:last-child{border-bottom:none;}
+.checklist li::before{content:'✓';color:var(--gold);font-weight:600;flex-shrink:0;margin-top:2px;}
+
+/* Four-part steps */
+.steps-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+  margin:2rem 0;
+}
+@media(max-width:600px){.steps-grid{grid-template-columns:1fr;}}
+.step-card{
+  background:var(--navy-2);border:1px solid var(--line);
+  border-radius:10px;padding:1.5rem;
+  position:relative;overflow:hidden;
+}
+.step-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--gold);
+}
+.step-num{
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  color:var(--gold);letter-spacing:.1em;margin-bottom:0.6rem;
+}
+.step-title{font-size:14px;font-weight:600;color:var(--white);margin-bottom:0.5rem;}
+.step-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+
+.warning-box{
+  background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);
+  border-radius:10px;padding:1.5rem 2rem;margin:2rem 0;
+  display:flex;gap:1rem;align-items:flex-start;
+}
+.warning-icon{color:#f87171;font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.warning-box p{font-size:0.95rem !important;color:rgba(232,228,218,.85) !important;margin:0 !important;}
+.warning-box strong{color:#f87171 !important;}
+
+.tip-box{
+  background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.2);
+  border-radius:10px;padding:1.5rem 2rem;margin:2rem 0;
+  display:flex;gap:1rem;align-items:flex-start;
+}
+.tip-icon{color:#34d399;font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.tip-box p{font-size:0.95rem !important;color:rgba(232,228,218,.85) !important;margin:0 !important;}
+.tip-box strong{color:#34d399 !important;}
+
+
+.article-cta{
+  margin:3rem 0;
+  padding:2rem;
+  background:var(--navy-2);
+  border:1px solid var(--line);
+  border-radius:12px;
+}
+.article-cta h4{
+  font-family:'DM Serif Display',serif;
+  font-size:1.4rem;
+  font-weight:400;
+  color:var(--white);
+  margin-bottom:0.5rem;
+}
+.article-cta p{
+  font-size:0.88rem !important;
+  color:var(--muted) !important;
+  margin:0 0 1.5rem 0 !important;
+  line-height:1.5 !important;
+}
+.btn-primary{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--gold);
+  color:var(--navy);
+  padding:14px 28px;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:600;
+  text-decoration:none;
+  border:none;
+  transition:all .2s;
+}
+.btn-primary:hover{background:var(--gold-2);transform:translateY(-1px);}
+
+
+footer{
+  border-top:1px solid var(--line);padding:2rem 3rem;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+}
+.footer-brand{font-family:'DM Serif Display',serif;font-size:1rem;color:rgba(232,228,218,.4);}
+.footer-link{font-size:12px;color:var(--muted);text-decoration:none;}
+.footer-link:hover{color:var(--gold);}
+
+@media(max-width:700px){
+  nav{padding:16px 20px;}
+  .article-hero{padding:7rem 1.2rem 3rem;}
+  .article-body{padding:0 1.2rem 4rem;}
+  .article-cta{padding:1.5rem;}
+  footer{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">
+    <div class="nav-logo-mark">SA</div>
+    SimpleAML
+  </a>
+  <a class="nav-back" href="/articles.html">← All Articles</a>
+  <a href="/app.html" class="nav-cta">Open App →</a>
+</nav>
+
+<div class="article-hero">
+  <p class="article-category">AML/CTF Program · Compliance</p>
+  <h1 class="article-title">
+    What is an AML/CTF Program<br>and <em>How Do I Write One</em><br>for My Accounting Firm?
+  </h1>
+  <div class="article-meta">
+    <div class="meta-badge"><div class="meta-badge-dot"></div>Updated March 2026</div>
+    <span class="meta-info">SimpleAML Editorial · 7 min read</span>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>
+    If your accounting firm provides designated services from 1 July 2026, you are legally required to have an AML/CTF program in place <strong>before you provide your first designated service</strong>. No program means no compliance — and no compliance means potential penalties of up to $6.6 million for individuals.
+  </p>
+
+  <p>
+    The good news: for most small accounting practices, writing your AML/CTF program does not need to be complicated or expensive. AUSTRAC has released a free Accounting Program Starter Kit specifically designed for small, low-complexity practices — and this guide walks you through exactly how to use it.
+  </p>
+
+  <div class="answer-box">
+    <div class="answer-box-label">Quick Answer</div>
+    <p>An AML/CTF program is a documented set of policies, procedures, and controls that your firm uses to identify, assess, and manage money laundering and terrorism financing risks. It must be completed and approved by a senior manager before 1 July 2026. AUSTRAC's free Starter Kit provides a ready-made framework that most small practices can customise in a few hours.</p>
+  </div>
+
+  <h2>What is an AML/CTF Program?</h2>
+
+  <p>
+    An AML/CTF program is essentially your firm's written plan for managing the risk that clients could use your services to launder money or finance terrorism. It is not just a document you file away — it is a living framework that guides how you onboard clients, verify their identity, monitor their activity, and respond to anything suspicious.
+  </p>
+
+  <p>
+    Under the AML/CTF Act, every reporting entity — including accountants providing designated services — must have a program that covers two parts:
+  </p>
+
+  <p>
+    <strong>Part A</strong> covers your firm's internal systems and controls — your risk assessment, governance structure, staff training, and record keeping obligations.
+  </p>
+
+  <p>
+    <strong>Part B</strong> covers customer due diligence — the processes you use to identify and verify clients, assess their risk profile, and monitor ongoing relationships.
+  </p>
+
+  <div class="pull-quote">
+    <p>"Your AML/CTF program must be documented and approved by a senior manager before you start providing any designated service."</p>
+  </div>
+
+  <h2>Who Needs One?</h2>
+
+  <p>
+    Any accounting firm that provides one or more of the nine designated services from 1 July 2026 must have an AML/CTF program in place. This includes sole practitioners — the obligation applies regardless of business size.
+  </p>
+
+  <p>
+    If you are unsure whether your services are designated, read our guide: <a href="/articles/do-i-need-to-register-with-austrac.html">Do I Need to Register with AUSTRAC?</a>
+  </p>
+
+  <h2>AUSTRAC's Free Accounting Starter Kit</h2>
+
+  <p>
+    Rather than writing your program from scratch, AUSTRAC has released a free <strong>Accounting Program Starter Kit</strong> specifically designed for small, low-complexity accounting practices. It is a pre-built framework you customise for your firm — saving significant time and cost compared to engaging a compliance consultant.
+  </p>
+
+  <p>
+    The Starter Kit is designed for practices that:
+  </p>
+
+  <ul class="checklist">
+    <li>Only provide designated services that are professional services</li>
+    <li>Have 15 or fewer personnel (including administrative staff)</li>
+    <li>Are an accounting practice — evidenced by membership to CA ANZ, CPA Australia, or ACCA</li>
+    <li>Are not a high-complexity or high-risk firm</li>
+  </ul>
+
+  <p>
+    If your firm is larger or more complex — for example, if you handle significant volumes of physical cash, have international clients, or manage complex trust structures — the Starter Kit can still be a useful starting point, but you may want to seek specialist advice to ensure your program is adequately tailored.
+  </p>
+
+  <h2>The Four Steps to Building Your Program</h2>
+
+  <p>
+    AUSTRAC's Starter Kit breaks the process into four clear steps:
+  </p>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">STEP 01</div>
+      <div class="step-title">Confirm & Prepare</div>
+      <div class="step-desc">Confirm your firm provides designated services and prepare for AUSTRAC enrolment. Gather your ABN, business structure details, and key personnel information.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">STEP 02</div>
+      <div class="step-title">Customise</div>
+      <div class="step-desc">Work through the Starter Kit to customise your risk assessment, policies, and processes. Appoint your AML/CTF Compliance Officer. This must be completed before 1 July 2026.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">STEP 03</div>
+      <div class="step-title">Implement</div>
+      <div class="step-desc">Get your completed program approved by a senior manager. Train all relevant staff. Begin conducting customer due diligence on clients receiving designated services.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">STEP 04</div>
+      <div class="step-title">Maintain</div>
+      <div class="step-desc">Your program is not set-and-forget. Review it regularly, particularly when your services change or new risks emerge. Keep records for a minimum of seven years.</div>
+    </div>
+  </div>
+
+  <h2>What Must Your Program Cover?</h2>
+
+  <p>
+    Whether you use the Starter Kit or write your own program, AUSTRAC requires it to address the following key areas:
+  </p>
+
+  <h3>1. Risk Assessment</h3>
+  <p>
+    A documented assessment of your firm's exposure to money laundering, terrorism financing, and proliferation financing risks. This covers your client types, the designated services you provide, your geographic exposure, and your delivery channels. AUSTRAC has published sector-specific risk insights for accountants to help you identify the most common risk indicators.
+  </p>
+
+  <h3>2. Governance & Oversight</h3>
+  <p>
+    Your program must identify who is responsible for AML/CTF compliance in your firm. This includes appointing an <strong>AML/CTF Compliance Officer (AMLCO)</strong> — someone who meets AUSTRAC's "fit and proper" requirements and has day-to-day responsibility for compliance oversight. For many small firms, this will be the principal or office manager.
+  </p>
+
+  <h3>3. Customer Due Diligence Procedures</h3>
+  <p>
+    Documented processes for identifying and verifying clients before providing designated services. This includes standard CDD for most clients, enhanced CDD for high-risk clients (such as politically exposed persons or clients from high-risk jurisdictions), and simplified CDD in limited low-risk circumstances.
+  </p>
+
+  <h3>4. Ongoing Monitoring</h3>
+  <p>
+    Procedures for monitoring existing client relationships, reviewing risk ratings periodically, and identifying changes in client behaviour that may indicate suspicious activity.
+  </p>
+
+  <h3>5. Suspicious Matter Reporting</h3>
+  <p>
+    Clear procedures for identifying and reporting suspicious matters to AUSTRAC. A Suspicious Matter Report (SMR) must be submitted within 24 hours if you suspect terrorism financing, or within three business days for other suspicious matters.
+  </p>
+
+  <h3>6. Staff Training</h3>
+  <p>
+    A training program ensuring all relevant staff understand their AML/CTF obligations, can identify red flags, and know how to escalate concerns. Training must be completed before staff commence AML/CTF duties and refreshed regularly.
+  </p>
+
+  <h3>7. Record Keeping</h3>
+  <p>
+    All CDD documentation, transaction records, and compliance activity must be retained for a minimum of <strong>seven years</strong>. This is a strict requirement — and the responsibility for maintaining those records sits entirely with your firm.
+  </p>
+
+  <div class="tip-box">
+    <div class="tip-icon">💡</div>
+    <p><strong>Tip:</strong> AUSTRAC's CEO has been clear that compliance does not need to be complex for small firms. The core expectation is that you know who your clients are, you've assessed their risk, and you've kept a record of having done so. SimpleAML is built around exactly these three things.</p>
+  </div>
+
+  <h2>Who Should Write It?</h2>
+
+  <p>
+    For most small practices, the AML/CTF Compliance Officer — typically the principal or a senior manager — should lead the customisation of the Starter Kit. AUSTRAC has designed the kit to be completed without specialist compliance knowledge, though it does require careful reading and genuine engagement with the risk assessment.
+  </p>
+
+  <p>
+    If you have a more complex practice or are uncertain about specific obligations, engaging a compliance consultant to review your program before submission is a sensible precaution. A number of accounting industry bodies including CA ANZ and CPA Australia also have resources and guidance available to members.
+  </p>
+
+  <div class="warning-box">
+    <div class="warning-icon">⚠</div>
+    <p><strong>Important:</strong> Your program must be approved by a senior manager before you provide your first designated service from 1 July 2026. Don't leave customisation until the last minute — allow at least 2–4 weeks to work through the Starter Kit, complete staff training, and get sign-off.</p>
+  </div>
+
+  <h2>Keeping Your Program Up to Date</h2>
+
+  <p>
+    An AML/CTF program is not a one-time exercise. AUSTRAC expects firms to review and update their program regularly — particularly when:
+  </p>
+
+  <ul class="checklist">
+    <li>You start offering a new designated service</li>
+    <li>Your client base changes significantly</li>
+    <li>A new risk emerges that your current program doesn't address</li>
+    <li>AUSTRAC publishes updated guidance relevant to your sector</li>
+    <li>There is a change in key personnel, including your AMLCO</li>
+  </ul>
+
+  <p>
+    At minimum, most firms should review their program annually. Keeping a record of when reviews were conducted — and what changes were made — is important for demonstrating ongoing compliance to AUSTRAC if requested.
+  </p>
+
+  <h2>How SimpleAML Helps</h2>
+
+  <p>
+    Once your AML/CTF program is written and approved, SimpleAML gives you the tools to actually live it day-to-day. The app helps you run customer due diligence on each client, store your evidence vault, track ongoing monitoring obligations, log staff training completions, and maintain the seven-year records AUSTRAC requires — all in one place, free for small firms.
+  </p>
+
+  <div class="article-cta">
+    <h4>Ready to get your program in place?</h4>
+      <p>SimpleAML helps you manage CDD, track obligations, and stay audit-ready. Free for small accounting firms — no account needed.</p>
+    <a href="/app.html" class="btn-primary">
+      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      Get Compliant Free
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  <span class="footer-brand">SimpleAML</span>
+  <a href="/" class="footer-link">← Back to Home</a>
+</footer>
+
+</body>
+</html>
