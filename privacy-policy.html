@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — SimpleAML</title>
+  <meta name="description" content="Privacy Policy for SimpleAML, a free AML/CTF compliance tool for Australian accountants, lawyers and real estate agents. Developed by Click Seed Pty Ltd.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0F1F3D;
+      --navy-mid: #1A3260;
+      --teal: #00A896;
+      --teal-light: #E0F7F4;
+      --border: #E4E2DC;
+      --off-white: #F8F7F4;
+      --text: #1A1A2E;
+      --text-mid: #4A5568;
+      --text-muted: #718096;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-sans: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--text);
+      background: #fff;
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 62px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--navy);
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      background: var(--navy);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      color: var(--text-mid);
+      text-decoration: none;
+      padding: 6px 13px;
+      border-radius: 7px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-links a:hover { background: var(--off-white); color: var(--navy); }
+
+    .nav-cta {
+      background: var(--navy) !important;
+      color: white !important;
+      font-weight: 500 !important;
+      padding: 8px 18px !important;
+      border-radius: 8px !important;
+    }
+    .nav-cta:hover { background: var(--navy-mid) !important; }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      background: var(--off-white);
+      border-bottom: 1px solid var(--border);
+      padding: 56px 40px 52px;
+      text-align: center;
+    }
+
+    .page-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+
+    .page-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 48px);
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .page-hero p {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .last-updated {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+      background: white;
+      border: 1px solid var(--border);
+      padding: 4px 14px;
+      border-radius: 100px;
+    }
+
+    /* ── CONTENT ── */
+    .content-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 40px 96px;
+    }
+
+    /* Table of contents */
+    .toc {
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 32px;
+      margin-bottom: 56px;
+    }
+
+    .toc-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: toc-counter;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+    }
+
+    .toc li {
+      counter-increment: toc-counter;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .toc li::before {
+      content: counter(toc-counter, decimal-leading-zero);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--teal);
+      flex-shrink: 0;
+    }
+
+    .toc a {
+      color: var(--text-mid);
+      text-decoration: none;
+      transition: color 0.15s;
+      line-height: 1.4;
+    }
+
+    .toc a:hover { color: var(--teal); }
+
+    /* Sections */
+    .policy-section {
+      margin-bottom: 52px;
+      padding-bottom: 52px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .policy-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .section-num {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--teal);
+      margin-bottom: 8px;
+    }
+
+    .policy-section h2 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      color: var(--navy);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .policy-section p {
+      font-size: 15px;
+      color: var(--text-mid);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .policy-section p:last-child { margin-bottom: 0; }
+
+    .policy-section ul, .policy-section ol {
+      margin: 16px 0 16px 20px;
+    }
+
+    .policy-section li {
+      font-size: 15px;
+      color: var(--text-mid);
+      line-height: 1.75;
+      margin-bottom: 8px;
+    }
+
+    .policy-section li:last-child { margin-bottom: 0; }
+
+    /* Highlight box */
+    .highlight-box {
+      background: var(--teal-light);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 10px 10px 0;
+      padding: 18px 22px;
+      margin: 24px 0;
+    }
+
+    .highlight-box p {
+      font-size: 14px;
+      color: #0F4A44;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .highlight-box strong { color: #0A3530; }
+
+    /* Warning box */
+    .warning-box {
+      background: #FEF7E0;
+      border-left: 3px solid #F2A10A;
+      border-radius: 0 10px 10px 0;
+      padding: 18px 22px;
+      margin: 24px 0;
+    }
+
+    .warning-box p {
+      font-size: 14px;
+      color: #5A3E00;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* Contact card */
+    .contact-card {
+      background: var(--navy);
+      border-radius: 16px;
+      padding: 32px;
+      margin-top: 24px;
+    }
+
+    .contact-card h3 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .contact-card p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .contact-label {
+      color: rgba(255,255,255,0.4);
+      min-width: 80px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .contact-value {
+      color: white;
+    }
+
+    .contact-value a {
+      color: var(--teal);
+      text-decoration: none;
+    }
+
+    .contact-value a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0A1628;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-brand { display: flex; align-items: center; gap: 12px; }
+    .footer-text  { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.65; }
+
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.75); }
+
+    .disclaimer {
+      background: #0A1628;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 24px 40px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+      line-height: 1.75;
+    }
+
+    @media (max-width: 680px) {
+      nav { padding: 0 20px; }
+      .nav-links li:not(:last-child) { display: none; }
+      .page-hero { padding: 48px 20px; }
+      .content-wrap { padding: 48px 20px 72px; }
+      .toc ol { grid-template-columns: 1fr; }
+      footer { padding: 32px 20px; flex-direction: column; align-items: flex-start; }
+      .disclaimer { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div class="logo-mark">SA</div>
+      SimpleAML
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#how">How It Works</a></li>
+      <li><a href="articles.html">Guides</a></li>
+      <li><a href="mailto:clickseedaustralia@gmail.com">Contact</a></li>
+      <li><a href="app.html" class="nav-cta">Open App →</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <p class="page-label">Legal</p>
+    <h1>Privacy Policy</h1>
+    <p>How SimpleAML and Click Seed Pty Ltd collect, use, and protect your information.</p>
+    <span class="last-updated">Last updated: March 2026</span>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content-wrap">
+
+    <!-- Table of contents -->
+    <div class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#who-we-are">Who we are</a></li>
+        <li><a href="#what-we-collect">What we collect</a></li>
+        <li><a href="#how-we-use">How we use it</a></li>
+        <li><a href="#firebase">Firebase &amp; Google</a></li>
+        <li><a href="#analytics">Analytics</a></li>
+        <li><a href="#your-data">Your app data</a></li>
+        <li><a href="#your-rights">Your rights</a></li>
+        <li><a href="#children">Children</a></li>
+        <li><a href="#changes">Changes to this policy</a></li>
+        <li><a href="#contact">Contact us</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. Who we are -->
+    <div class="policy-section" id="who-we-are">
+      <div class="section-num">01</div>
+      <h2>Who we are</h2>
+      <p>SimpleAML is a free AML/CTF compliance tool developed and operated by <strong>Click Seed Pty Ltd</strong> (ABN 87 656 256 567), a company registered in New South Wales, Australia.</p>
+      <p>This Privacy Policy explains how we handle information in connection with the SimpleAML website (<strong>simpleaml.com.au</strong>) and the SimpleAML web application. By using our site or app, you agree to the practices described in this policy.</p>
+      <p>If you have any questions, you can contact us at any time at <a href="mailto:clickseedaustralia@gmail.com" style="color: var(--teal);">clickseedaustralia@gmail.com</a>.</p>
+    </div>
+
+    <!-- 2. What we collect -->
+    <div class="policy-section" id="what-we-collect">
+      <div class="section-num">02</div>
+      <h2>What information we collect</h2>
+      <p>We collect a limited amount of information depending on how you interact with SimpleAML.</p>
+
+      <p><strong>Information you give us directly:</strong></p>
+      <ul>
+        <li>Your email address if you contact us via email</li>
+        <li>Any information you voluntarily include in correspondence with us</li>
+      </ul>
+
+      <p><strong>Information collected automatically:</strong></p>
+      <ul>
+        <li>Pages visited on simpleaml.com.au and approximate time of visit</li>
+        <li>Your general location (country or city level, not precise location)</li>
+        <li>Browser type, device type, and operating system</li>
+        <li>Referring website (how you found us)</li>
+        <li>Anonymous usage patterns collected via Google Analytics (see Section 5)</li>
+      </ul>
+
+      <div class="highlight-box">
+        <p><strong>Important — app data:</strong> Compliance data you enter into the SimpleAML app (client records, risk assessments, firm details, documents) is currently stored in your browser's local storage and is not transmitted to or stored on our servers. See Section 6 for full details.</p>
+      </div>
+
+      <p><strong>Information we do not collect:</strong></p>
+      <ul>
+        <li>We do not currently require account registration or login</li>
+        <li>We do not collect payment information</li>
+        <li>We do not collect precise geolocation data</li>
+        <li>We do not collect biometric data</li>
+      </ul>
+    </div>
+
+    <!-- 3. How we use it -->
+    <div class="policy-section" id="how-we-use">
+      <div class="section-num">03</div>
+      <h2>How we use your information</h2>
+      <p>We use the limited information we collect for the following purposes:</p>
+      <ul>
+        <li>To respond to enquiries you send us by email</li>
+        <li>To understand how visitors use our website so we can improve it (via analytics)</li>
+        <li>To monitor the performance and availability of the SimpleAML application</li>
+        <li>To comply with our legal obligations under Australian law</li>
+      </ul>
+      <p>We do not sell, rent, or trade your personal information to any third party. We do not use your information for advertising profiling or targeted marketing.</p>
+    </div>
+
+    <!-- 4. Firebase -->
+    <div class="policy-section" id="firebase">
+      <div class="section-num">04</div>
+      <h2>Firebase &amp; Google services</h2>
+      <p>SimpleAML uses <strong>Firebase</strong>, a platform developed by Google, as part of our technical infrastructure. Firebase is used for website hosting (Firebase Hosting) to serve the SimpleAML site and application reliably.</p>
+      <p>As a result, your connection to SimpleAML passes through Google's infrastructure. Google may process certain technical data (such as IP addresses and request logs) as part of providing this hosting service. This is governed by Google's Privacy Policy, available at <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color: var(--teal);">policies.google.com/privacy</a>.</p>
+
+      <div class="warning-box">
+        <p><strong>Future change — user accounts:</strong> We intend to introduce optional user registration and login functionality in a future version of SimpleAML, using Firebase Authentication. When this feature is introduced, we will update this Privacy Policy and notify users clearly. At that point, account information (such as email address) will be stored on Firebase's servers, which are located outside Australia. We will provide full details of this before the feature goes live.</p>
+      </div>
+
+      <p>Click Seed Pty Ltd and SimpleAML are the data controller for any personal data processed in connection with our services. Google acts as a data processor in relation to Firebase services.</p>
+    </div>
+
+    <!-- 5. Analytics -->
+    <div class="policy-section" id="analytics">
+      <div class="section-num">05</div>
+      <h2>Analytics</h2>
+      <p>We use <strong>Google Analytics</strong> to understand how visitors use the SimpleAML website. Google Analytics collects anonymous information about your visit, including which pages you view, how long you spend on the site, and how you arrived.</p>
+      <p>This data is aggregated and does not identify you personally. We use it solely to improve the website and understand what content is most useful to visitors.</p>
+      <p>Google Analytics sets cookies in your browser to collect this information. You can opt out of Google Analytics tracking at any time by:</p>
+      <ul>
+        <li>Installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener" style="color: var(--teal);">Google Analytics Opt-out Browser Add-on</a></li>
+        <li>Using your browser's privacy or incognito mode</li>
+        <li>Adjusting your browser's cookie settings to block third-party cookies</li>
+      </ul>
+      <p>For more information on how Google uses data collected via analytics, visit <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener" style="color: var(--teal);">policies.google.com/technologies/partner-sites</a>.</p>
+    </div>
+
+    <!-- 6. Your app data -->
+    <div class="policy-section" id="your-data">
+      <div class="section-num">06</div>
+      <h2>Your compliance data in the app</h2>
+      <p>The SimpleAML application is designed with your data privacy and security in mind. All compliance data you enter into the app — including client records, risk assessments, firm details, training records, and uploaded documents — is stored in your browser's <strong>local storage</strong> on your own device.</p>
+
+      <div class="highlight-box">
+        <p><strong>This means your compliance data is not transmitted to, or stored on, any server operated by Click Seed Pty Ltd or any third party.</strong> It exists only on the device and browser you use to access the app.</p>
+      </div>
+
+      <p>As a consequence of this architecture, you are solely responsible for:</p>
+      <ul>
+        <li>Maintaining regular backups of your compliance data using the app's export function</li>
+        <li>Ensuring your data is retained for the 7-year period required under AML/CTF legislation</li>
+        <li>Securing the device and browser on which your data is stored</li>
+        <li>Any loss of data resulting from clearing browser storage, changing browsers, or changing devices</li>
+      </ul>
+
+      <p>We strongly recommend exporting your data regularly and storing a backup in a secure location.</p>
+
+      <div class="warning-box">
+        <p><strong>Note:</strong> If you clear your browser's local storage or use the app in a private/incognito window, your data will not persist between sessions. Always use the export function to maintain your records.</p>
+      </div>
+    </div>
+
+    <!-- 7. Your rights -->
+    <div class="policy-section" id="your-rights">
+      <div class="section-num">07</div>
+      <h2>Your rights</h2>
+      <p>Under the <strong>Privacy Act 1988 (Cth)</strong> and the Australian Privacy Principles, you have rights in relation to your personal information, including the right to:</p>
+      <ul>
+        <li>Know what personal information we hold about you</li>
+        <li>Request access to your personal information</li>
+        <li>Request correction of inaccurate or incomplete information</li>
+        <li>Make a complaint if you believe we have mishandled your information</li>
+      </ul>
+      <p>Because we collect very limited personal information (primarily via email enquiries), most of these rights are straightforward to exercise. Simply contact us at <a href="mailto:clickseedaustralia@gmail.com" style="color: var(--teal);">clickseedaustralia@gmail.com</a> and we will respond promptly.</p>
+      <p>If you are not satisfied with our response to a privacy complaint, you can contact the <strong>Office of the Australian Information Commissioner (OAIC)</strong> at <a href="https://www.oaic.gov.au" target="_blank" rel="noopener" style="color: var(--teal);">oaic.gov.au</a>.</p>
+    </div>
+
+    <!-- 8. Children -->
+    <div class="policy-section" id="children">
+      <div class="section-num">08</div>
+      <h2>Children</h2>
+      <p>SimpleAML is a professional compliance tool intended for use by adults operating in regulated industries. We do not knowingly collect personal information from anyone under the age of 18. If you believe a minor has provided us with personal information, please contact us and we will promptly delete it.</p>
+    </div>
+
+    <!-- 9. Changes -->
+    <div class="policy-section" id="changes">
+      <div class="section-num">09</div>
+      <h2>Changes to this policy</h2>
+      <p>We may update this Privacy Policy from time to time, particularly as we introduce new features such as user accounts. When we make material changes, we will update the "Last updated" date at the top of this page.</p>
+      <p>We encourage you to review this policy periodically. Continued use of SimpleAML after changes are posted constitutes your acceptance of the updated policy.</p>
+      <p>If we introduce features that materially change how we handle your personal data — such as the introduction of user accounts and Firebase Authentication — we will make this clearly visible on the site before those features go live.</p>
+    </div>
+
+    <!-- 10. Contact -->
+    <div class="policy-section" id="contact">
+      <div class="section-num">10</div>
+      <h2>Contact us</h2>
+      <p>If you have any questions, concerns, or requests relating to this Privacy Policy or your personal information, please get in touch.</p>
+
+      <div class="contact-card">
+        <h3>Click Seed Pty Ltd</h3>
+        <p>We aim to respond to all privacy enquiries within 5 business days.</p>
+        <div class="contact-detail">
+          <div class="contact-row">
+            <span class="contact-label">Email</span>
+            <span class="contact-value"><a href="mailto:clickseedaustralia@gmail.com">clickseedaustralia@gmail.com</a></span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">ABN</span>
+            <span class="contact-value">87 656 256 567</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">State</span>
+            <span class="contact-value">New South Wales, Australia</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">Website</span>
+            <span class="contact-value"><a href="https://simpleaml.com.au">simpleaml.com.au</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <div class="logo-mark">SA</div>
+      <div class="footer-text">
+        SimpleAML — Free AML/CTF compliance for Australian accountants, lawyers &amp; real estate agents<br>
+        Developed by Click Seed Pty Ltd ABN 87 656 256 567
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="articles.html">Guides</a>
+      <a href="app.html">Open App</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="mailto:clickseedaustralia@gmail.com">Contact</a>
+    </div>
+  </footer>
+
+  <div class="disclaimer">
+    <strong>Important:</strong> SimpleAML is a compliance assistance tool only and does not constitute legal advice. Users are responsible for ensuring their own compliance with AUSTRAC requirements. Seek independent legal advice where required. This Privacy Policy does not constitute legal advice. Click Seed Pty Ltd ABN 87 656 256 567.
+  </div>
+
+</body>
+</html>
