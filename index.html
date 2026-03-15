@@ -365,18 +365,21 @@
       background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 16px;
+      overflow: hidden;
     }
 
     .feature-card {
       background: rgba(255,255,255,0.03);
       padding: 32px 28px;
       transition: background 0.2s;
+      position: relative;
+      z-index: 1;
     }
+    .feature-card:hover { background: rgba(255,255,255,0.07); }
     .feature-card:first-child { border-radius: 16px 0 0 0; }
     .feature-card:nth-child(3) { border-radius: 0 16px 0 0; }
     .feature-card:nth-child(4) { border-radius: 0 0 0 16px; }
     .feature-card:last-child { border-radius: 0 0 16px 0; }
-    .feature-card:hover { background: rgba(255,255,255,0.07); }
 
     .feature-icon {
       width: 42px;
@@ -392,7 +395,7 @@
 
     .feature-title { font-size: 16px; font-weight: 600; color: white; margin-bottom: 8px; }
     .feature-desc  { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.65; margin-bottom: 16px; }
-    .feature-link  { font-size: 13px; color: var(--teal); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; transition: gap 0.15s; }
+    .feature-link  { font-size: 13px; color: var(--teal); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; transition: gap 0.15s; cursor: pointer; padding: 4px 0; }
     .feature-link:hover { gap: 8px; }
 
     /* ── HOW IT WORKS ── */
