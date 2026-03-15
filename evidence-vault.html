@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidence Vault — AML/CTF Document Register Requirements | SimpleAML</title>
+  <meta name="description" content="Understand your AML/CTF document register obligations under AUSTRAC Tranche 2. Learn what evidence you must keep, for how long, and how SimpleAML's Evidence Vault keeps you audit-ready.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy: #0F1F3D; --navy-mid: #1A3260; --teal: #00A896; --teal-light: #E0F7F4; --border: #E4E2DC; --off-white: #F8F7F4; --text: #1A1A2E; --text-mid: #4A5568; --text-muted: #718096; --font-display: 'DM Serif Display', Georgia, serif; --font-sans: 'DM Sans', system-ui, sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); color: var(--text); background: #fff; line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 62px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; color: var(--navy); text-decoration: none; }
+    .logo-mark { width: 34px; height: 34px; background: var(--navy); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .nav-links a { font-size: 14px; color: var(--text-mid); text-decoration: none; padding: 6px 13px; border-radius: 7px; transition: background 0.15s, color 0.15s; }
+    .nav-links a:hover { background: var(--off-white); color: var(--navy); }
+    .nav-cta { background: var(--navy) !important; color: white !important; font-weight: 500 !important; padding: 8px 18px !important; border-radius: 8px !important; }
+    .nav-cta:hover { background: var(--navy-mid) !important; }
+    .feature-hero { background: var(--navy); padding: 72px 40px 64px; text-align: center; position: relative; overflow: hidden; }
+    .feature-hero::before { content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(0,168,150,0.15) 0%, transparent 70%); pointer-events: none; }
+    .feature-breadcrumb { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 28px; font-size: 13px; color: rgba(255,255,255,0.35); position: relative; }
+    .feature-breadcrumb a { color: var(--teal); text-decoration: none; }
+    .feature-hero-icon { width: 64px; height: 64px; background: rgba(0,168,150,0.2); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 24px; position: relative; }
+    .feature-hero h1 { font-family: var(--font-display); font-size: clamp(32px, 5vw, 52px); color: white; line-height: 1.1; max-width: 700px; margin: 0 auto 16px; position: relative; }
+    .feature-hero h1 em { color: var(--teal); font-style: italic; }
+    .feature-hero-sub { font-size: 17px; color: rgba(255,255,255,0.55); max-width: 520px; margin: 0 auto; font-weight: 300; line-height: 1.75; position: relative; }
+    .feature-content { max-width: 820px; margin: 0 auto; padding: 72px 40px 96px; }
+    .feature-section { margin-bottom: 56px; padding-bottom: 56px; border-bottom: 1px solid var(--border); }
+    .feature-section:last-of-type { border-bottom: none; }
+    .feature-section-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 10px; }
+    .feature-section h2 { font-family: var(--font-display); font-size: clamp(24px, 3vw, 34px); color: var(--navy); line-height: 1.2; margin-bottom: 20px; }
+    .feature-section p { font-size: 16px; color: var(--text-mid); line-height: 1.8; margin-bottom: 16px; }
+    .feature-section p:last-child { margin-bottom: 0; }
+    .info-box { background: var(--teal-light); border-left: 3px solid var(--teal); border-radius: 0 12px 12px 0; padding: 20px 24px; margin: 24px 0; }
+    .info-box p { font-size: 15px; color: #0A4A44; line-height: 1.75; margin: 0; }
+    .warn-box { background: #FEF7E0; border-left: 3px solid #F2A10A; border-radius: 0 12px 12px 0; padding: 20px 24px; margin: 24px 0; }
+    .warn-box p { font-size: 15px; color: #5A3E00; line-height: 1.75; margin: 0; }
+    .danger-box { background: #FDF0F0; border-left: 3px solid #D63B3B; border-radius: 0 12px 12px 0; padding: 20px 24px; margin: 24px 0; }
+    .danger-box p { font-size: 15px; color: #6B1A1A; line-height: 1.75; margin: 0; }
+    .checklist { list-style: none; margin: 20px 0; display: flex; flex-direction: column; gap: 12px; }
+    .checklist li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: var(--text-mid); line-height: 1.65; }
+    .checklist li::before { content: '✓'; width: 20px; height: 20px; background: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: white; flex-shrink: 0; margin-top: 2px; }
+    .app-feature-box { background: var(--navy); border-radius: 16px; padding: 32px; margin: 24px 0; }
+    .app-feature-box h3 { font-family: var(--font-display); font-size: 22px; color: white; margin-bottom: 16px; }
+    .app-feature-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .app-feature-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.65; }
+    .app-feature-list li::before { content: '→'; color: var(--teal); flex-shrink: 0; font-weight: 600; }
+    .feature-cta { background: var(--off-white); border: 1px solid var(--border); border-radius: 20px; padding: 40px; text-align: center; margin-top: 64px; }
+    .feature-cta h2 { font-family: var(--font-display); font-size: 28px; color: var(--navy); margin-bottom: 12px; }
+    .feature-cta p { font-size: 16px; color: var(--text-muted); margin-bottom: 28px; line-height: 1.7; }
+    .btn-primary { background: var(--navy); color: white; font-family: var(--font-sans); font-size: 16px; font-weight: 500; padding: 14px 28px; border-radius: 10px; border: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; box-shadow: 0 4px 16px rgba(15,31,61,0.2); }
+    .btn-primary:hover { background: var(--navy-mid); transform: translateY(-1px); }
+    .related-features { margin-top: 72px; padding-top: 56px; border-top: 1px solid var(--border); }
+    .related-features h3 { font-family: var(--font-display); font-size: 22px; color: var(--navy); margin-bottom: 24px; }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .related-card { background: var(--off-white); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-decoration: none; transition: all 0.2s; display: block; }
+    .related-card:hover { background: white; border-color: var(--teal); transform: translateY(-1px); }
+    .related-icon { font-size: 20px; margin-bottom: 10px; display: block; }
+    .related-title { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+    .related-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    footer { background: #0A1628; padding: 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+    .footer-brand { display: flex; align-items: center; gap: 12px; }
+    .footer-text { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.65; }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.75); }
+    .disclaimer { background: #0A1628; border-top: 1px solid rgba(255,255,255,0.05); padding: 24px 40px; font-size: 12px; color: rgba(255,255,255,0.2); line-height: 1.75; }
+    @media (max-width: 680px) { nav { padding: 0 20px; } .nav-links li:not(:last-child) { display: none; } .feature-hero { padding: 56px 20px 48px; } .feature-content { padding: 48px 20px 72px; } .related-grid { grid-template-columns: 1fr; } footer { padding: 32px 20px; flex-direction: column; align-items: flex-start; } .disclaimer { padding: 24px 20px; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-logo"><div class="logo-mark">SA</div>SimpleAML</a>
+    <ul class="nav-links">
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#how">How It Works</a></li>
+      <li><a href="articles.html">Guides</a></li>
+      <li><a href="mailto:clickseedaustralia@gmail.com">Contact</a></li>
+      <li><a href="app.html" class="nav-cta">Open App →</a></li>
+    </ul>
+  </nav>
+
+  <div class="feature-hero">
+    <div class="feature-breadcrumb"><a href="index.html">Home</a> <span>›</span> <a href="index.html#features">Features</a> <span>›</span> Evidence Vault</div>
+    <div class="feature-hero-icon">📂</div>
+    <h1>Evidence Vault<br><em>&amp; Document Register</em></h1>
+    <p class="feature-hero-sub">Every identity check, every screening result, every piece of CDD evidence — in one audit-ready place.</p>
+  </div>
+
+  <div class="feature-content">
+
+    <div class="feature-section">
+      <div class="feature-section-label">The Requirement</div>
+      <h2>What records must you keep under Tranche 2?</h2>
+      <p>The AML/CTF Act requires you to create and retain records of all CDD and verification activities. It is not enough to check a client's identity — you must be able to prove you checked it, what you found, and when you did it. AUSTRAC's compliance expectation is that you can produce this evidence on demand during an audit or investigation.</p>
+      <p>The records you must retain include:</p>
+      <ul class="checklist">
+        <li>Identity verification documents and the method used (DVS, certified copies, etc.)</li>
+        <li>Politically Exposed Person (PEP) screening results and the date conducted</li>
+        <li>Sanctions list screening results against Australian and UN sanctions lists</li>
+        <li>Adverse media checks for higher-risk clients</li>
+        <li>All CDD forms and risk assessments completed for each client</li>
+        <li>Records of any Suspicious Matter Reports (SMRs) filed or considered</li>
+        <li>Correspondence and notes relevant to compliance decisions</li>
+      </ul>
+      <div class="info-box">
+        <p><strong>7-year retention requirement.</strong> Under section 106 of the AML/CTF Act, all CDD and transaction records must be retained for a minimum of 7 years from the date the record was made or the date the business relationship ended — whichever is later.</p>
+      </div>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-section-label">Why AUSTRAC Requires It</div>
+      <h2>Why does AUSTRAC need you to keep all this?</h2>
+      <p>Records are the backbone of any AML/CTF enforcement action. When AUSTRAC or the Australian Federal Police investigates a money laundering matter, they will request documentation from every professional who touched the client or transaction. Without records, you cannot demonstrate you fulfilled your obligations — and the default assumption is that you didn't.</p>
+      <p>Beyond enforcement, records serve a practical intelligence purpose. AUSTRAC uses aggregated data from reporting entities across the financial system to detect patterns of criminal behaviour. Your records, if requested, contribute to that picture.</p>
+      <div class="warn-box">
+        <p><strong>PEP and sanctions screening is ongoing, not once-off.</strong> A client who was low-risk when onboarded can become a PEP or appear on a sanctions list years later. AUSTRAC expects you to have a process for periodic re-screening — and evidence that you ran it.</p>
+      </div>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-section-label">Consequences of Non-Compliance</div>
+      <h2>What happens if you can't produce the evidence?</h2>
+      <p>During an AUSTRAC audit, the burden is on you to demonstrate compliance. If you cannot produce records of your CDD and screening activities, AUSTRAC will treat that as evidence of non-compliance — not as an oversight.</p>
+      <div class="danger-box">
+        <p><strong>Failure to keep required records</strong> is itself a breach of the AML/CTF Act, carrying penalties of up to <strong>$4.4 million per breach for individuals</strong>. If AUSTRAC finds a pattern of missing records across your client base, each missing record is a separate breach.</p>
+      </div>
+      <p>Beyond regulatory penalties, missing records create professional liability exposure. If a client later becomes the subject of a money laundering investigation and you cannot show you conducted proper due diligence, you may face action from your professional body and potential civil claims.</p>
+      <p>The 7-year retention requirement also means that deleting or losing records — even accidentally — is a compliance failure. Cloud storage, email folders and paper files are not adequate substitutes for a structured document register.</p>
+    </div>
+
+    <div class="feature-section">
+      <div class="feature-section-label">How SimpleAML Handles It</div>
+      <h2>How SimpleAML's Evidence Vault works</h2>
+      <div class="app-feature-box">
+        <h3>What the app does for you</h3>
+        <ul class="app-feature-list">
+          <li>Centralised document register linked to each client record — identity documents, screening results and CDD evidence all in one place</li>
+          <li>Date-stamped entries for every document uploaded, creating an automatic audit trail</li>
+          <li>PEP and sanctions screening log — record the date, source and result of every screening check</li>
+          <li>DVS verification records — log identity document types checked and verification outcomes</li>
+          <li>Export function to download your complete evidence register at any time for 7-year retention compliance</li>
+          <li>Dashboard alerts when screening records are approaching their review date</li>
+        </ul>
+      </div>
+      <p>Because SimpleAML stores data locally in your browser, your evidence register never leaves your device. You retain full control of your records and are solely responsible for backing them up — which is why the export function is a core part of the app, not an afterthought.</p>
+    </div>
+
+    <div class="feature-cta">
+      <h2>Build your evidence register today</h2>
+      <p>Start documenting your CDD evidence properly. No account needed — open SimpleAML in your browser right now.</p>
+      <a href="app.html" class="btn-primary">Open SimpleAML Free →</a>
+    </div>
+
+    <div class="related-features">
+      <h3>Related features</h3>
+      <div class="related-grid">
+        <a href="client-risk-profiling.html" class="related-card">
+          <span class="related-icon">👤</span>
+          <div class="related-title">Client Risk Profiling</div>
+          <p class="related-desc">Complete CDD forms and risk ratings for every client.</p>
+        </a>
+        <a href="firm-risk-assessment.html" class="related-card">
+          <span class="related-icon">🏢</span>
+          <div class="related-title">Firm Risk Assessment</div>
+          <p class="related-desc">Document your firm-level ML/TF risk across all services.</p>
+        </a>
+        <a href="personnel-due-diligence.html" class="related-card">
+          <span class="related-icon">🔍</span>
+          <div class="related-title">Personnel Due Diligence</div>
+          <p class="related-desc">Keep staff screening records in the same structured format.</p>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-brand"><div class="logo-mark">SA</div><div class="footer-text">SimpleAML — Free AML/CTF compliance for Australian accountants, lawyers &amp; real estate agents<br>Developed by Click Seed Pty Ltd ABN 87 656 256 567</div></div>
+    <div class="footer-links"><a href="index.html#features">Features</a><a href="articles.html">Guides</a><a href="app.html">Open App</a><a href="privacy-policy.html">Privacy Policy</a><a href="mailto:clickseedaustralia@gmail.com">Contact</a></div>
+  </footer>
+  <div class="disclaimer"><strong>Important:</strong> SimpleAML is a compliance assistance tool only and does not constitute legal advice. Users are responsible for ensuring their own compliance with AUSTRAC requirements. Seek independent legal advice where required. Developed by Click Seed Pty Ltd ABN 87 656 256 567.</div>
+</body>
+</html>
