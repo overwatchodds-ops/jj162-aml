@@ -51,7 +51,7 @@
     nav {
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
       background: rgba(255,255,255,0.96);
       backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
@@ -60,6 +60,7 @@
       align-items: center;
       justify-content: space-between;
       height: 62px;
+      overflow: visible;
     }
 
     .nav-logo {
@@ -115,9 +116,9 @@
     .nav-cta:hover { background: var(--navy-mid) !important; }
 
     /* Nav dropdown */
-    .nav-dropdown { position: relative; }
+    .nav-dropdown { position: relative; padding-bottom: 8px; margin-bottom: -8px; }
     .nav-dropdown > a::after { content: ' ▾'; font-size: 10px; opacity: 0.6; }
-    .dropdown-menu { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 8px; min-width: 220px; box-shadow: 0 8px 32px rgba(15,31,61,0.12); z-index: 200; }
+    .dropdown-menu { display: none; position: absolute; top: calc(100% + 0px); left: 0; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 8px; min-width: 220px; box-shadow: 0 8px 32px rgba(15,31,61,0.12); z-index: 1000; }
     .nav-dropdown:hover .dropdown-menu { display: block; }
     .dropdown-menu a { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 7px; font-size: 14px; color: var(--text-mid); text-decoration: none; transition: background 0.15s; white-space: nowrap; }
     .dropdown-menu a:hover { background: var(--off-white); color: var(--navy); }
@@ -364,7 +365,6 @@
       background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 16px;
-      overflow: hidden;
     }
 
     .feature-card {
@@ -372,6 +372,10 @@
       padding: 32px 28px;
       transition: background 0.2s;
     }
+    .feature-card:first-child { border-radius: 16px 0 0 0; }
+    .feature-card:nth-child(3) { border-radius: 0 16px 0 0; }
+    .feature-card:nth-child(4) { border-radius: 0 0 0 16px; }
+    .feature-card:last-child { border-radius: 0 0 16px 0; }
     .feature-card:hover { background: rgba(255,255,255,0.07); }
 
     .feature-icon {
@@ -754,7 +758,7 @@
   </li>
   <li><a href="#how">How It Works</a></li>
   <li><a href="articles.html">Guides</a></li>
-  <li><a href="mailto:clickseedaustralia@gmail.com">Contact</a></li>
+  <li><a href="/cdn-cgi/l/email-protection#dbb8b7b2b8b0a8bebebfbaaea8afa9bab7b2ba9bbcb6bab2b7f5b8b4b6">Contact</a></li>
   <li><a href="app.html" class="nav-cta">Open App →</a></li>
 </ul>
   </nav>
@@ -801,7 +805,7 @@
   </div>
 
   <!-- WHO IT'S FOR -->
-  <div id="features">
+  <div>
     <div class="section-wrap">
       <p class="section-label">Who it's for</p>
       <h2 class="section-heading">Built for <em>Tranche 2</em> firms.</h2>
@@ -833,7 +837,7 @@
   </div>
 
   <!-- FEATURES -->
-  <div class="features-section">
+  <div class="features-section" id="features">
     <div class="section-wrap" style="padding-top: 0; padding-bottom: 0;">
       <p class="section-label">What's included</p>
       <h2 class="section-heading">Everything AUSTRAC<br><em>actually requires.</em></h2>
@@ -1095,9 +1099,16 @@
       </div>
     </div>
     <div class="footer-links">
+      <a href="client-risk-profiling.html">Client Risk Profiling</a>
+      <a href="evidence-vault.html">Evidence Vault</a>
+      <a href="firm-risk-assessment.html">Firm Risk Assessment</a>
+      <a href="policy-approval.html">Policy &amp; Approval</a>
+      <a href="personnel-due-diligence.html">Personnel Due Diligence</a>
+      <a href="training-register.html">Training Register</a>
       <a href="articles.html">Guides</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
       <a href="app.html">Open App</a>
-      <a href="/cdn-cgi/l/email-protection#7d1e11141e160e1818191c080e090f1c11141c3d1a101c1411531e1210">Contact</a>
+      <a href="mailto:clickseedaustralia@gmail.com">Contact</a>
     </div>
   </footer>
 
@@ -1105,7 +1116,7 @@
     <strong>Important:</strong> SimpleAML is a compliance assistance tool only and does not constitute legal advice. Users are responsible for ensuring their own compliance with AUSTRAC requirements. Seek independent legal advice where required. Users are solely responsible for the maintenance, backup, and storage of their own data to meet the 7-year record retention requirement under AML/CTF legislation. Developed by Click Seed Pty Ltd ABN 87 656 256 567.
   </div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     function updateCountdown() {
       var deadline = new Date('2026-07-01T00:00:00+10:00');
       var now = new Date();
@@ -1128,4 +1139,13 @@
       var cdH = document.getElementById('cd-hours');
       var cdM = document.getElementById('cd-mins');
       if (cdD) cdD.textContent = days;
-      if (cdH) cdH.
+      if (cdH) cdH.textContent = String(hours).padStart(2, '0');
+      if (cdM) cdM.textContent = String(mins).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 30000);
+  </script>
+
+</body>
+</html>
