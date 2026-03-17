@@ -2054,6 +2054,7 @@ function renderTraining(filter=''){
       <td style="font-size:10px;color:var(--text-2);">${t.type}</td>
       <td style="font-size:10px;">${fmtDate(t.date)}</td>
       <td style="font-size:10px;color:${exp?'var(--red)':soon?'var(--amber)':'inherit'};">${fmtDate(t.expiry)}</td>
+      <td style="font-size:10px;">${t.cert?`<span style="color:#059669;font-weight:500;">✓ ${t.cert}</span>`:'<span style="color:#94a3b8;">—</span>'}</td>
       <td><span class="badge ${exp?'b-high':soon?'b-med':'b-low'}">${exp?'Expired':soon?'Soon':'Current'}</span></td>
       <td><button onclick="deleteTraining(${t.id})" class="btn-danger"><svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></td>
     </tr>`;
