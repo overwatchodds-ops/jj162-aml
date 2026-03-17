@@ -1724,6 +1724,48 @@ ${c.people.some(p=>!p.dvsFile||!p.pepFile||!p.sanctionsFile||!p.assocFile)?'<div
   }).join('');
 }
 function filterClients(v){ renderClientList(v); }
+
+// ─── EDIT CLIENT ───────────────────────────────────────────────
+let editingClientId = null;
+
+function editClient(id){
+  const c = S.clients.find(x=>x.id===id);
+  if(!c) return;
+  editingClientId = id;
+  switchTab('assessment');
+  setTimeout(()=>{
+    if($('clientName'))         $('clientName').value = c.entityName||'';
+    if($('bizPurpose'))         $('bizPurpose').value = c.purpose||'';
+    if($('clientJurisdiction')) $('clientJurisdiction').value = c.jurisdiction||'Australia';
+    if($('manualRisk'))         $('manualRisk').value = c.risk||'';
+    if($('nextReview'))         $('nextReview').value = c.nextReview||'';
+    if($('designatedService'))  $('designatedService').value = c.designatedService||'';
+    if($('entityType')){
+      const typeMap = {'Individual / Sole Trader':'1','Private Company / Partnership':'2','Complex Trust / Unit Trust':'3'};
+      const typeKey = Object.keys(typeMap).find(k=>c.type&&c.type.includes(k.split('/')[0].trim()));
+      if(typeKey) $('entityType').value = typeMap[typeKey];
+      toggleTrustFields(); updatePeopleLabel();
+    }
+    currentPeople = c.people ? JSON.parse(JSON.stringify(c.people)) : [];
+    if(!currentPeople.length) addPerson();
+    renderPeople();
+    benOwners = c.benOwners ? JSON.parse(JSON.stringify(c.benOwners)) : [];
+    renderBenOwners();
+    selectRadio('ttr', c.reporting?.ttr?'Yes':'No');
+    selectRadio('smr', c.reporting?.smr?'Yes':'No');
+    if($('smrReason')) $('smrReason').value = c.reporting?.smrReason||'';
+    if($('tipping-ack')) $('tipping-ack').checked = c.tippingAck||false;
+    validateForm();
+    updateReviewSuggestion();
+    const btn = $('submitBtn');
+    if(btn) btn.textContent = 'Update Client Record';
+    const pg = document.querySelector('#view-assessment .pg-sub');
+    if(pg) pg.textContent = '✏ Editing: '+c.entityName;
+    toast('Editing — '+c.entityName);
+    document.getElementById('view-assessment')?.scrollIntoView({behavior:'smooth'});
+  }, 150);
+}
+
 function deleteClient(id){
   if(!confirm('Delete this client record?')) return;
   S.clients=S.clients.filter(c=>c.id!==id); save();
