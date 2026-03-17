@@ -1716,9 +1716,9 @@ return `<div class="feed-card${od?' overdue':''}">
           <div style="font-family:var(--mono);font-size:9px;color:${od?'var(--red)':'var(--text-3)'};margin-top:4px;">${od?'⚠ OVERDUE — ':'Review: '}${fmtDate(c.nextReview)}</div>
 ${c.people.some(p=>!p.dvsFile||!p.pepFile||!p.sanctionsFile||!p.assocFile)?'<div style="font-size:9px;color:#d97706;margin-top:3px;font-weight:600;">⚠ Documents incomplete</div>':''}
 
-       <div class="flex-c gap8" style="flex-shrink:0;">
+    <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
           <span class="badge ${c.risk==='High'?'b-high':c.risk==='Medium'?'b-med':'b-low'}">${c.risk}</span>
-          <button onclick="editClient(${c.id})" class="btn btn-ghost btn-sm" style="font-size:9px;">Edit</button>
+          <button onclick="editClient(${c.id})" class="btn btn-ghost btn-sm" style="font-size:9px;padding:4px 8px;text-transform:uppercase;letter-spacing:.04em;">Edit</button>
           <button onclick="deleteClient(${c.id})" class="btn-danger"><svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
         </div>
       </div>
