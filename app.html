@@ -917,7 +917,7 @@ tbody tr:hover td{background:var(--surface-2);}
           <div class="section-label">3 — Ongoing CDD</div>
           <div class="f-group"><label class="f-label">Nature & Purpose of Relationship *</label><input class="f-input" id="bizPurpose" type="text" placeholder="e.g. Tax compliance & advisory" oninput="validateForm()"></div>
           <div class="g2 mb0" style="gap:10px;margin-bottom:14px;">
-            <div class="f-group mb0"><label class="f-label">Risk Rating</label><select class="f-input" id="manualRisk" onchange="updateReviewSuggestion();validateForm()"><option value="">— Auto-calculated —</option><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option></select></div>
+            <div class="f-group mb0"><label class="f-label">Risk Rating</label><select class="f-input" id="manualRisk" onchange="updateReviewSuggestion();validateForm();renderPeople();"><option value="">— Auto-calculated —</option><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option></select></div>
             <div class="f-group mb0"><label class="f-label">Review Date * <span id="review-hint" style="color:#b45309;"></span></label><input class="f-input" id="nextReview" type="date" onchange="validateForm()"></div>
           </div>
           <div style="font-size:9px;color:#94a3b8;margin-bottom:13px;padding:6px 8px;background:#f8fafc;border-radius:3px;">High Risk = annual, Medium = 2 years, Low = 3 years per AUSTRAC starter kit</div>
