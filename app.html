@@ -1667,8 +1667,6 @@ function validateForm(){
 javascript
 <div style="font-family:var(--mono);font-size:9px;color:${od?'var(--red)':'var(--text-3)'};margin-top:4px;">${od?'⚠ OVERDUE — ':'Review: '}${fmtDate(c.nextReview)}</div>
 ${c.people.some(p=>!p.dvsFile||!p.pepFile||!p.sanctionsFile||!p.assocFile)?'<div style="font-size:9px;color:#d97706;margin-top:3px;font-weight:600;">⚠ Documents incomplete</div>':''}
-That's two changes — the validation no longer requires documents, and any client with missing documents shows a clear amber warning on their card. Want me to also add the same flag to the Evidence Vault table and the Entity Overview?
-
 
 
 
