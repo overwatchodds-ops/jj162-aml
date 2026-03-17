@@ -1664,11 +1664,6 @@ function validateForm(){
   btn.disabled=!ok; btn.style.opacity=ok?'1':'0.35';
 }
 
-javascript
-<div style="font-family:var(--mono);font-size:9px;color:${od?'var(--red)':'var(--text-3)'};margin-top:4px;">${od?'⚠ OVERDUE — ':'Review: '}${fmtDate(c.nextReview)}</div>
-${c.people.some(p=>!p.dvsFile||!p.pepFile||!p.sanctionsFile||!p.assocFile)?'<div style="font-size:9px;color:#d97706;margin-top:3px;font-weight:600;">⚠ Documents incomplete</div>':''}
-
-
 
 // ─── FORM SUBMIT ───────────────────────────────────────────────
 $('amlForm').addEventListener('submit', e => {
@@ -1717,6 +1712,8 @@ function renderClientList(filter=''){
           <div class="feed-name" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.entityName}</div>
           <div class="feed-meta">${c.type}${c.designatedService?' · '+c.designatedService.split('(')[0].trim():''}</div>
           <div style="font-family:var(--mono);font-size:9px;color:${od?'var(--red)':'var(--text-3)'};margin-top:4px;">${od?'⚠ OVERDUE — ':'Review: '}${fmtDate(c.nextReview)}</div>
+${c.people.some(p=>!p.dvsFile||!p.pepFile||!p.sanctionsFile||!p.assocFile)?'<div style="font-size:9px;color:#d97706;margin-top:3px;font-weight:600;">⚠ Documents incomplete</div>':''}
+
         </div>
         <div class="flex-c gap8" style="flex-shrink:0;">
           <span class="badge ${c.risk==='High'?'b-high':c.risk==='Medium'?'b-med':'b-low'}">${c.risk}</span>
