@@ -2019,8 +2019,10 @@ function updateComplianceScore(){
 function addTraining(){
   const staff=$('staffName')?.value.trim(), date=$('trainingDate')?.value;
   if(!staff||!date){ toast('Fill required fields','err'); return; }
-  S.trainingRec.unshift({id:Date.now(),staff,type:$('trainingType').value,date,expiry:$('trainingExpiry').value});
-  save(); $('staffName').value=''; $('trainingDate').value=''; $('trainingExpiry').value='';
+  const certFile = $('trainingCert')?.files[0]?.name || '';
+  S.trainingRec.unshift({id:Date.now(),staff,type:$('trainingType').value,date,expiry:$('trainingExpiry').value,cert:certFile});
+  save(); $('staffName').value=''; $('trainingDate').value=''; $('trainingExpiry').value=''; 
+  if($('trainingCert')) $('trainingCert').value=''; $('trainingCert-label').textContent='Upload certificate (optional)';
   renderTraining(); updateComplianceScore(); toast('Training logged for '+staff);
 }
 function deleteTraining(id){ S.trainingRec=S.trainingRec.filter(t=>t.id!==id); save(); renderTraining(); toast('Training record removed','err'); }
