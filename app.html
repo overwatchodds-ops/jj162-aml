@@ -1119,7 +1119,22 @@ tbody tr:hover td{background:var(--surface-2);}
           <div><label class="f-label">Completed *</label><input class="f-input" type="date" id="trainingDate"></div>
           <div><label class="f-label">Expiry</label><input class="f-input" type="date" id="trainingExpiry"></div>
         </div>
-        <button class="btn btn-gold btn-full" onclick="addTraining()">Add to Register</button>
+        <div class="f-group">
+  <label class="f-label">Certificate</label>
+  <label style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line-2);border-radius:6px;padding:8px 10px;cursor:pointer;font-size:10px;color:#94a3b8;">
+    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+    <span id="trainingCert-label">Upload certificate (optional)</span>
+    <input type="file" id="trainingCert" style="display:none;" accept=".pdf,.jpg,.jpeg,.png" onchange="$('trainingCert-label').textContent=this.files[0]?.name||'Upload certificate (optional)'">
+  </label>
+</div>
+
+<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px;margin-bottom:14px;">
+  <div style="font-size:10px;font-weight:700;color:#b45309;margin-bottom:6px;">🎓 Need AML/CTF training?</div>
+  <div style="font-size:10px;color:#92400e;line-height:1.65;margin-bottom:8px;">Complete an AUSTRAC-aligned AML/CTF course and upload your certificate here. SimpleAML maintains a list of approved training providers.</div>
+  <a href="https://simpleaml.com.au/training-providers.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:#b45309;background:#fef3c7;border:1px solid #fde68a;border-radius:5px;padding:5px 10px;text-decoration:none;white-space:nowrap;">View approved training providers →</a>
+</div>
+
+<button class="btn btn-gold btn-full" onclick="addTraining()">Add to Register</button>
       </div>
       <div>
         <div class="flex-c jb mb12">
