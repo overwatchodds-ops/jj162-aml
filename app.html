@@ -1656,11 +1656,11 @@ function updateReviewSuggestion(){
 }
 
 // ─── VALIDATE ──────────────────────────────────────────────────
-function validateForm(){
+  function validateForm(){
   const n=$('clientName')?.value.trim(), p=$('bizPurpose')?.value.trim(), r=$('nextReview')?.value;
-  const allDone = currentPeople.length>0 && currentPeople.every(p=>p.name&&p.dvsFile&&p.pepFile&&p.sanctionsFile&&p.assocFile);
+  const hasPersonName = currentPeople.length>0 && currentPeople.every(p=>p.name);
   const btn=$('submitBtn'); if(!btn) return;
-  const ok = !!(n&&p&&r&&allDone);
+  const ok = !!(n&&p&&r&&hasPersonName);
   btn.disabled=!ok; btn.style.opacity=ok?'1':'0.35';
 }
 
