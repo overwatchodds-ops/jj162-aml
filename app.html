@@ -1706,9 +1706,11 @@ function renderClientList(filter=''){
   if(!list.length){ el.innerHTML=`<div class="empty"><svg width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg><div class="empty-text">${filter?'No matches':'No clients yet'}</div></div>`; return; }
   el.innerHTML=list.map(c=>{
     const od=isOD(c.nextReview);
-    return `<div class="feed-card${od?' overdue':''}">
-      <div class="flex-c jb gap8">
-        <div style="min-width:0;">
+
+return `<div class="feed-card${od?' overdue':''}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+        <div style="min-width:0;flex:1;">
+        
           <div class="feed-name" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.entityName}</div>
           <div class="feed-meta">${c.type}${c.designatedService?' · '+c.designatedService.split('(')[0].trim():''}</div>
           <div style="font-family:var(--mono);font-size:9px;color:${od?'var(--red)':'var(--text-3)'};margin-top:4px;">${od?'⚠ OVERDUE — ':'Review: '}${fmtDate(c.nextReview)}</div>
