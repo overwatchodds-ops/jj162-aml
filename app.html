@@ -1597,25 +1597,88 @@ function handleFile(id,type,input){
   validateForm();
 }
 function renderPeople(){
-  $('people-container').innerHTML = currentPeople.map(p=>`
-    <div class="person-card">
+  const risk = $('manualRisk')?.value || '';
+  $('people-container').innerHTML = currentPeople.map(p=>{
+    const isHigh = risk==='High';
+    const isMed  = risk==='Medium';
+
+    const assocLabel = isHigh
+      ? 'Associates <span style="color:#dc2626;font-size:8px;">REQUIRED</span>'
+      : isMed
+      ? 'Associates <span style="color:#d97706;font-size:8px;">RECOMMENDED</span>'
+      : 'Associates <span style="color:#94a3b8;font-size:8px;">OPTIONAL</span>';
+
+    const cddBanner = isHigh
+      ? `<div style="background:#fef2f2;border:1px solid #fecaca;border-left:3px solid #dc2626;border-radius:6px;padding:10px 12px;margin-bottom:10px;">
+          <div style="font-size:10px;font-weight:700;color:#dc2626;margin-bottom:3px;">⚠ Enhanced CDD Required (High Risk)</div>
+          <div style="font-size:9px;color:#94a3b8;line-height:1.6;">Source of funds, associates screening and reason for proceeding must all be documented before this client can be onboarded.</div>
+        </div>`
+      : isMed
+      ? `<div style="background:#fffbeb;border:1px solid #fde68a;border-left:3px solid #d97706;border-radius:6px;padding:10px 12px;margin-bottom:10px;">
+          <div style="font-size:10px;font-weight:700;color:#d97706;margin-bottom:3px;">Standard CDD — Medium Risk</div>
+          <div style="font-size:9px;color:#94a3b8;line-height:1.6;">DVS identity, PEP and sanctions screening required. Associates screening recommended.</div>
+        </div>`
+      : `<div style="background:#ecfdf5;border:1px solid #a7f3d0;border-left:3px solid #059669;border-radius:6px;padding:10px 12px;margin-bottom:10px;">
+          <div style="font-size:10px;font-weight:700;color:#059669;margin-bottom:3px;">Standard CDD — Low Risk</div>
+          <div style="font-size:9px;color:#94a3b8;line-height:1.6;">DVS identity, PEP and sanctions screening required. Associates screening optional.</div>
+        </div>`;
+
+    const namescanBtn = `<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:10px 12px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+          <div style="font-size:10px;color:#92400e;line-height:1.6;"><strong style="color:#b45309;">Screening required</strong> — DVS identity, PEP &amp; sanctions checks must be completed.</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+            <a href="https://namescan.io/?ref=PLACEHOLDER" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:#b45309;background:#fef3c7;border:1px solid #fde68a;border-radius:5px;padding:5px 10px;text-decoration:none;white-space:nowrap;">🔍 Screen via NameScan (recommended) →</a>
+            <span style="font-size:10px;color:#94a3b8;">or use your own provider</span>
+          </div>
+        </div>`;
+
+    const sofSection = isHigh ? `
+        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:7px;padding:12px;margin-top:10px;">
+          <div style="font-size:10px;font-weight:700;color:#dc2626;margin-bottom:8px;">Enhanced CDD — Additional Requirements</div>
+          <div class="f-group" style="margin-bottom:10px;">
+            <label class="f-label" style="color:#dc2626;">Source of Funds / Wealth * <span style="color:#94a3b8;font-weight:400;text-transform:none;letter-spacing:0;">(required for high risk)</span></label>
+            <textarea class="f-input" rows="2" placeholder="e.g. Director salary from ABC Pty Ltd, property sale proceeds, inherited wealth…" oninput="updateP(${p.id},'sourceOfFunds',this.value)" style="font-size:11px;">${p.sourceOfFunds||''}</textarea>
+          </div>
+          <div style="margin-bottom:10px;">
+            <label class="f-label" style="color:#dc2626;">Source of Funds Evidence</label>
+            <label style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #fecaca;border-radius:6px;padding:8px 10px;cursor:pointer;font-size:10px;color:#94a3b8;">
+              <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+              <span id="sof-label-${p.id}">${p.sourceOfFundsFile||'Upload bank statement, payslip or supporting document'}</span>
+              <input type="file" style="display:none;" onchange="handleFile(${p.id},'sourceOfFunds',this)">
+            </label>
+          </div>
+          <div>
+            <label class="f-label" style="color:#dc2626;">Reason for Proceeding with High Risk Client</label>
+            <textarea class="f-input" rows="2" placeholder="e.g. Long-standing client with verified source of wealth. Senior manager approval obtained on DD/MM/YYYY…" oninput="updateP(${p.id},'reasonForProceeding',this.value)" style="font-size:11px;">${p.reasonForProceeding||''}</textarea>
+          </div>
+        </div>` : '';
+
+    return `<div class="person-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
         <span style="font-size:11px;font-weight:600;color:#b45309;">Verification Set #${currentPeople.indexOf(p)+1}</span>
         <button type="button" onclick="removePerson(${p.id})" class="btn-danger btn btn-sm">Remove</button>
       </div>
-      <div class="g2" style="gap:8px;margin-bottom:0;">
+      <div class="g2" style="gap:8px;margin-bottom:10px;">
         <input class="f-input" type="text" value="${p.name}" oninput="updateP(${p.id},'name',this.value)" placeholder="Legal Name" style="font-size:11px;">
         <input class="f-input" type="text" value="${p.role}" oninput="updateP(${p.id},'role',this.value)" placeholder="Position / Role" style="font-size:11px;">
       </div>
+      ${cddBanner}
+      ${namescanBtn}
       <div class="doc-grid">
-        ${[['dvs','DVS Identity'],['pep','PEP Check'],['sanctions','Sanctions'],['assoc','Associates']].map(([t,lbl])=>`
+        ${[['dvs','DVS Identity'],['pep','PEP Check'],['sanctions','Sanctions']].map(([t,lbl])=>`
           <label class="doc-zone${p[t+'File']?' filed':''}" id="dz-${t}-${p.id}">
             <div class="doc-zone-label">${lbl}</div>
             <div class="doc-zone-val">${p[t+'File']?'✓ Filed':'Upload'}</div>
             <input type="file" style="display:none;" onchange="handleFile(${p.id},'${t}',this)">
           </label>`).join('')}
+        <label class="doc-zone${p.assocFile?' filed':''}" id="dz-assoc-${p.id}" style="${isHigh?'border-color:#fecaca;':isMed?'border-color:#fde68a;':''}">
+          <div class="doc-zone-label" style="font-size:8px;">${assocLabel}</div>
+          <div class="doc-zone-val">${p.assocFile?'✓ Filed':'Upload'}</div>
+          <input type="file" style="display:none;" onchange="handleFile(${p.id},'assoc',this)">
+        </label>
       </div>
-    </div>`).join('');
+      ${sofSection}
+    </div>`;
+  }).join('');
 }
 function addBenOwner(){
   benOwners.push({id:Date.now(),name:'',pct:'',role:''}); renderBenOwners();
