@@ -1659,8 +1659,10 @@ function updateReviewSuggestion(){
 function validateForm(){
   const n=$('clientName')?.value.trim(), p=$('bizPurpose')?.value.trim(), r=$('nextReview')?.value;
   const hasPersonName = currentPeople.length>0 && currentPeople.every(p=>p.name);
+  const risk = $('manualRisk')?.value || '';
+  const sofOk = risk!=='High' || currentPeople.every(p=>p.sourceOfFunds && p.sourceOfFunds.trim());
   const btn=$('submitBtn'); if(!btn) return;
-  const ok = !!(n&&p&&r&&hasPersonName);
+  const ok = !!(n&&p&&r&&hasPersonName&&sofOk);
   btn.disabled=!ok; btn.style.opacity=ok?'1':'0.35';
 }
 
