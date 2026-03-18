@@ -59,20 +59,21 @@
     .deadline-banner strong { color: var(--amber); font-weight: 600; }
 
     /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(255,255,255,0.96);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 62px;
-      overflow: visible;
-    }
+ nav {
+  position: sticky;
+  top: 0;
+  z-index: 10000;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+  overflow: visible;
+  isolation: isolate;
+}
 
     .nav-logo {
       display: flex;
