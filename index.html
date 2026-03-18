@@ -734,19 +734,18 @@
     flex-direction: column;
     padding: 32px 24px;
     gap: 6px;
-    overflow-y: auto;
+    overflow-y: hidden;
     z-index: 999;
     border-top: 1px solid var(--border);
     box-shadow: 0 8px 32px rgba(15,31,61,0.12);
   }
   .nav-links.open { display: flex; }
   .nav-links li { width: 100%; }
-  .nav-links a { display: block; padding: 16px 20px; font-size: 18px; border-radius: 10px; color: var(--navy); font-weight: 500; line-height: 1.4; }
+  .nav-links a { display: block; padding: 13px 20px; font-size: 17px; border-radius: 10px; color: var(--navy); font-weight: 500; line-height: 1.4; }
   .nav-links a:hover { background: var(--off-white); }
   .nav-cta { background: var(--navy) !important; color: white !important; text-align: center; margin-top: 8px; padding: 14px 16px !important; }
   .nav-dropdown > a::after { content: ' ▾'; }
-  .dropdown-menu { display: block !important; position: static; box-shadow: none; border: none; border-radius: 0; padding: 0 0 0 16px; background: transparent; min-width: unset; }
-  .dropdown-menu a { font-size: 16px; padding: 14px 16px; color: var(--text-mid); }
+  .dropdown-menu { display: none !important; }
   .hero { padding: 56px 20px 0; }
       .stats-row { flex-direction: column; }
       .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
