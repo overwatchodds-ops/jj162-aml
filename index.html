@@ -727,18 +727,16 @@
 .nav-links {
     display: none;
     position: fixed;
-    top: 62px;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background: white;
     flex-direction: column;
-    padding: 32px 24px;
+    padding: 100px 24px 40px;
     gap: 6px;
-    overflow-y: hidden;
-    border-top: 1px solid var(--border);
-    box-shadow: 0 8px 32px rgba(15,31,61,0.12);
-    z-index: 9999;
+    overflow-y: auto;
+    z-index: 9998;
   }
   .nav-links.open { display: flex; }
   .nav-links li { width: 100%; }
