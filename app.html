@@ -1565,7 +1565,114 @@ function renderDerivedCountries(){
 }
 
 // ─── ENROLMENT ─────────────────────────────────────────────────
-function saveEnrolment(){
+// ─── ENROLMENT READINESS ───────────────────────────────────────
+const ENROL_REQS = [
+  {
+    key: 'services',
+    title: 'Designated services confirmed',
+    desc: 'You must confirm which accounting services your firm provides before enrolling.',
+    check: () => (S.scope?.services||[]).length > 0,
+    detail: () => (S.scope?.services||[]).length + ' service' + ((S.scope?.services||[]).length!==1?'s':'') + ' confirmed',
+    tab: 'scope',
+    tabLabel: 'Go to Services →'
+  },
+  {
+    key: 'riskass',
+    title: 'Firm risk assessment complete',
+    desc: 'Your ML/TF/PF risk assessment must be completed and rated before enrolling.',
+    check: () => !!(S.riskAss?.overallRating && S.riskAss?.pfRating),
+    detail: () => S.riskAss?.overallRating ? 'Completed — rated ' + S.riskAss.overallRating + ' risk' : 'Not yet completed',
+    tab: 'riskass',
+    tabLabel: 'Go to Client Base & Geography →'
+  },
+  {
+    key: 'program',
+    title: 'AML/CTF Program uploaded',
+    desc: 'Your written AML/CTF Program (Part A and Part B) must be documented and uploaded.',
+    check: () => !!S.policyMeta?.fileName,
+    detail: () => S.policyMeta?.fileName ? '✓ ' + S.policyMeta.fileName : 'No program document uploaded yet',
+    tab: 'policy',
+    tabLabel: 'Go to Policy & Approval →'
+  },
+  {
+    key: 'approval',
+    title: 'Program approved by senior manager',
+    desc: 'Your AML/CTF Program must be formally approved by a senior manager before enrolment.',
+    check: () => !!S.approval?.signed,
+    detail: () => S.approval?.signed ? '✓ Approved by ' + S.approval.name + ' on ' + fmtDate(S.approval.date) : 'Senior manager approval not yet recorded',
+    tab: 'policy',
+    tabLabel: 'Go to Policy & Approval →'
+  },
+  {
+    key: 'amlco',
+    title: 'AMLCO appointed',
+    desc: 'An AML/CTF Compliance Officer must be appointed before enrolment. They must meet AUSTRAC fit & proper requirements.',
+    check: () => !!(S.appointments?.amlco?.name),
+    detail: () => S.appointments?.amlco?.name ? '✓ ' + S.appointments.amlco.name : 'No AMLCO recorded yet',
+    tab: 'appointments',
+    tabLabel: 'Go to Appointments →'
+  },
+  {
+    key: 'training',
+    title: 'Staff training on file',
+    desc: 'At least one staff member must have completed AML/CTF training before obligations commence.',
+    check: () => (S.trainingRec||[]).length > 0,
+    detail: () => (S.trainingRec||[]).length > 0 ? (S.trainingRec.length) + ' training record' + (S.trainingRec.length!==1?'s':'') + ' on file' : 'No training records on file yet',
+    tab: 'training',
+    tabLabel: 'Go to Training Register →'
+  },
+];
+
+function renderEnrolReadiness(){
+  const done = ENROL_REQS.filter(r=>r.check()).length;
+  const total = ENROL_REQS.length;
+  const pct = Math.round(done/total*100);
+
+  // Update score
+  const bar = $('enrol-ready-bar');
+  const pctEl = $('enrol-ready-pct');
+  const titleEl = $('enrol-ready-title');
+  const readyBtn = $('enrol-ready-btn');
+
+  if(bar){
+    bar.style.width = pct+'%';
+    bar.style.background = pct===100?'#059669':pct>=50?'#d97706':'#dc2626';
+  }
+  if(pctEl){
+    pctEl.textContent = pct+'%';
+    pctEl.style.color = pct===100?'#059669':pct>=50?'#d97706':'#dc2626';
+  }
+  if(titleEl){
+    if(pct===100) titleEl.textContent = 'You are ready to enrol with AUSTRAC';
+    else if(pct>=50) titleEl.textContent = 'Getting closer — ' + (total-done) + ' requirement' + (total-done!==1?'s':'') + ' remaining';
+    else titleEl.textContent = 'Not yet ready — ' + done + ' of ' + total + ' requirements complete';
+  }
+  if(readyBtn) readyBtn.style.display = pct===100 ? 'flex' : 'none';
+
+  // Render requirement cards
+  const el = $('enrol-requirements'); if(!el) return;
+  el.innerHTML = ENROL_REQS.map(r => {
+    const isDone = r.check();
+    return `<div style="background:${isDone?'#ecfdf5':'#fff'};border:1px solid ${isDone?'#a7f3d0':'var(--line)'};border-left:4px solid ${isDone?'#059669':'#dc2626'};border-radius:10px;padding:16px 18px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:flex-start;gap:12px;flex:1;min-width:0;">
+        <div style="width:24px;height:24px;border-radius:50%;background:${isDone?'#059669':'#dc2626'};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+          <svg width="12" height="12" fill="none" stroke="white" viewBox="0 0 24 24">
+            ${isDone
+              ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>'
+              : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/>'}
+          </svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:3px;">${r.title}</div>
+          <div style="font-size:11px;color:${isDone?'#059669':'#94a3b8'};margin-bottom:${isDone?'0':'6px'};">${r.detail()}</div>
+          ${!isDone ? `<div style="font-size:11px;color:#475569;line-height:1.6;">${r.desc}</div>` : ''}
+        </div>
+      </div>
+      ${!isDone ? `<button onclick="switchTab('${r.tab}')" class="btn btn-ghost btn-sm" style="white-space:nowrap;flex-shrink:0;">${r.tabLabel}</button>` : ''}
+    </div>`;
+  }).join('');
+}
+  function saveEnrolment(){
   S.enrolment = { id:$('enrol-id')?.value||'', date:$('enrol-date')?.value||'', by:$('enrol-by')?.value||'', status:$('enrol-status-sel')?.value||'', acrDate:$('acr-date')?.value||'', acrNext:$('acr-next')?.value||'' };
   save(); updateEnrolBadge(); updateComplianceScore(); toast('Enrolment record saved');
 }
