@@ -482,9 +482,9 @@ tbody tr:hover td{background:var(--surface-2);}
       Import Data
     </div>
     <input type="file" id="import-file-input" accept=".json" style="display:none;" onchange="importData(this)">
-   <div class="nav-item" onclick="window.print()" title="Opens print dialog — select 'Save as PDF' to save current tab as PDF">
+    <div class="nav-item" onclick="openComplianceReport()" title="Export full AUSTRAC compliance evidence report as PDF">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-      Save as PDF
+      Export Report
     </div>
     <div class="nav-item" id="tab-about" onclick="switchTab('about')">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -1430,6 +1430,9 @@ function toast(msg, type='ok'){
 
 
 // ─── FIRM PROFILE ───────────────────────────────────────────────
+  function openComplianceReport(){
+  window.open('report.html', '_blank');
+}
 function saveFirmProfile(){
   if(!S.firmProfile) S.firmProfile = {};
   S.firmProfile = {
