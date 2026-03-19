@@ -420,6 +420,10 @@ tbody tr:hover td{background:var(--surface-2);}
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke-width="2"/></svg>
       Dashboard
     </div>
+    <div class="nav-item" id="tab-firmprofile" onclick="switchTab('firmprofile')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+      Firm Profile
+    </div>
 
     <div class="nav-section" style="margin-top:6px;">Firm Risk Assessment</div>
     <div class="nav-item" id="tab-scope" onclick="switchTab('scope')">
@@ -614,7 +618,78 @@ tbody tr:hover td{background:var(--surface-2);}
       </div>
     </div>
   </div>
+<!-- ══════════ FIRM PROFILE ══════════════════════════════════ -->
+  <div class="page tab-view hidden" id="view-firmprofile">
+    <div class="pg-header">
+      <div><div class="pg-title">Firm Profile</div><div class="pg-sub">Your practice details — used across your AML/CTF program and compliance reports</div></div>
+      <button class="btn btn-gold" onclick="saveFirmProfile()">Save Firm Profile</button>
+    </div>
 
+    <div class="g2" style="gap:16px;margin-bottom:16px;">
+      <!-- Left — Firm Details -->
+      <div class="card">
+        <div class="card-header"><div class="card-header-label"><div class="card-accent" style="background:var(--brand);"></div>Practice Details</div></div>
+        <div class="f-group"><label class="f-label">Firm / Practice Name *</label><input class="f-input" id="fp-name" type="text" placeholder="e.g. Smith & Associates"></div>
+        <div class="f-group"><label class="f-label">ABN *</label><input class="f-input" id="fp-abn" type="text" placeholder="e.g. 12 345 678 901"></div>
+        <div class="f-group"><label class="f-label">ACN (if applicable)</label><input class="f-input" id="fp-acn" type="text" placeholder="e.g. 123 456 789"></div>
+        <div class="f-group"><label class="f-label">Practice Type</label>
+          <select class="f-input" id="fp-type">
+            <option value="Sole Practitioner">Sole Practitioner</option>
+            <option value="Partnership">Partnership</option>
+            <option value="Pty Ltd">Pty Ltd Company</option>
+            <option value="Trust">Trust</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="f-group"><label class="f-label">Date Established</label><input class="f-input" id="fp-established" type="date"></div>
+        <div class="section-label" style="margin-top:8px;">Business Address</div>
+        <div class="f-group"><label class="f-label">Street Address</label><input class="f-input" id="fp-address" type="text" placeholder="e.g. Level 2, 123 Collins Street"></div>
+        <div class="g2" style="gap:10px;">
+          <div class="f-group"><label class="f-label">Suburb / City</label><input class="f-input" id="fp-suburb" type="text" placeholder="e.g. Melbourne"></div>
+          <div class="f-group"><label class="f-label">State</label>
+            <select class="f-input" id="fp-state">
+              <option value="">— Select —</option>
+              <option>NSW</option><option>VIC</option><option>QLD</option>
+              <option>WA</option><option>SA</option><option>TAS</option>
+              <option>ACT</option><option>NT</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-group"><label class="f-label">Postcode</label><input class="f-input" id="fp-postcode" type="text" placeholder="e.g. 3000" style="width:120px;"></div>
+      </div>
+
+      <!-- Right — Principal Contact -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card">
+          <div class="card-header"><div class="card-header-label"><div class="card-accent" style="background:#b45309;"></div>Principal Contact</div></div>
+          <div class="f-group"><label class="f-label">Full Name *</label><input class="f-input" id="fp-principal" type="text" placeholder="e.g. Jane Smith"></div>
+          <div class="f-group"><label class="f-label">Position / Title</label><input class="f-input" id="fp-position" type="text" placeholder="e.g. Principal / Managing Partner"></div>
+          <div class="f-group"><label class="f-label">Email Address *</label><input class="f-input" id="fp-email" type="email" placeholder="e.g. jane@smithassociates.com.au"></div>
+          <div class="f-group"><label class="f-label">Phone Number</label><input class="f-input" id="fp-phone" type="tel" placeholder="e.g. 03 9123 4567"></div>
+          <div class="f-group"><label class="f-label">Professional Membership</label>
+            <select class="f-input" id="fp-membership">
+              <option value="">— Select —</option>
+              <option>CPA Australia</option>
+              <option>Chartered Accountants Australia & New Zealand (CA ANZ)</option>
+              <option>Institute of Public Accountants (IPA)</option>
+              <option>Tax Practitioners Board (TPB)</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-header-label"><div class="card-accent" style="background:var(--teal);"></div>AUSTRAC Registration</div></div>
+          <div style="font-size:10px;color:#94a3b8;line-height:1.6;margin-bottom:12px;">Complete your AUSTRAC Enrolment tab first — your Entity ID will appear here once saved.</div>
+          <div class="f-group"><label class="f-label">AUSTRAC Entity ID</label>
+            <div id="fp-austrac-id" style="font-size:13px;font-weight:600;color:#0f172a;padding:8px 11px;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;">—</div>
+          </div>
+          <div class="f-group"><label class="f-label">Registered Business Name (if different)</label><input class="f-input" id="fp-regname" type="text" placeholder="Leave blank if same as firm name"></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-gold btn-full" onclick="saveFirmProfile()" style="max-width:300px;">Save Firm Profile</button>
+  </div>
   <!-- ══════════ ENTITY OVERVIEW ═══════════════════════════════ -->
   <div class="page tab-view hidden" id="view-entities">
     <div class="pg-header">
@@ -1331,6 +1406,7 @@ function loadState(){
   S.polChks    = S.polChks    || {};
   S.enrolChks  = S.enrolChks  || {};
   S.appointments = S.appointments || {};
+  S.firmProfile = S.firmProfile || {};
 }
 function save(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
@@ -1357,8 +1433,45 @@ function toast(msg, type='ok'){
   setTimeout(() => $('toast').className = '', 3200);
 }
 
-// ─── NAV ───────────────────────────────────────────────────────
-const LABELS = {dashboard:'Dashboard',entities:'Client Overview',scope:'Services',riskass:'Client Base & Geography',enrolment:'AUSTRAC Enrolment',assessment:'Client Risk Profiler',kyc:'Verification Records',pdd:'Personnel Due Diligence',policy:'Policy & Approval',training:'Training Register',appointments:'Appointments',about:'About & Support'};
+
+// ─── FIRM PROFILE ───────────────────────────────────────────────
+function saveFirmProfile(){
+  if(!S.firmProfile) S.firmProfile = {};
+  S.firmProfile = {
+    name:        $('fp-name')?.value.trim()||'',
+    abn:         $('fp-abn')?.value.trim()||'',
+    acn:         $('fp-acn')?.value.trim()||'',
+    type:        $('fp-type')?.value||'',
+    established: $('fp-established')?.value||'',
+    address:     $('fp-address')?.value.trim()||'',
+    suburb:      $('fp-suburb')?.value.trim()||'',
+    state:       $('fp-state')?.value||'',
+    postcode:    $('fp-postcode')?.value.trim()||'',
+    principal:   $('fp-principal')?.value.trim()||'',
+    position:    $('fp-position')?.value.trim()||'',
+    email:       $('fp-email')?.value.trim()||'',
+    phone:       $('fp-phone')?.value.trim()||'',
+    membership:  $('fp-membership')?.value||'',
+    regname:     $('fp-regname')?.value.trim()||'',
+  };
+  // Update firm name everywhere if changed
+  if(S.firmProfile.name){
+    saveFirmName(S.firmProfile.name);
+    applyFirmName();
+  }
+  save(); updateComplianceScore(); toast('Firm profile saved');
+}
+
+function restoreFirmProfile(){
+  const f = S.firmProfile||{};
+  const fields = ['name','abn','acn','type','established','address','suburb','state','postcode','principal','position','email','phone','membership','regname'];
+  fields.forEach(k=>{ const el=$('fp-'+k); if(el) el.value = f[k]||''; });
+  // Pull AUSTRAC Entity ID from enrolment if available
+  const austracId = S.enrolment?.id||'—';
+  if($('fp-austrac-id')) $('fp-austrac-id').textContent = austracId;
+}
+  // ─── NAV ───────────────────────────────────────────────────────
+const LABELS = {dashboard:'Dashboard',firmprofile:'Firm Profile',entities:'Client Overview',scope:'Services',riskass:'Client Base & Geography',enrolment:'AUSTRAC Enrolment',assessment:'Client Risk Profiler',kyc:'Verification Records',pdd:'Personnel Due Diligence',policy:'Policy & Approval',training:'Training Register',appointments:'Appointments',about:'About & Support'};
   function switchTab(id){
   document.querySelectorAll('.tab-view').forEach(v => v.classList.add('hidden'));
   $('view-'+id).classList.remove('hidden');
@@ -1367,6 +1480,7 @@ const LABELS = {dashboard:'Dashboard',entities:'Client Overview',scope:'Services
   $('breadcrumb-label').textContent = LABELS[id] || id;
   closeSidebar();
   if(id==='dashboard')   updateDashboard();
+  if(id==='firmprofile') restoreFirmProfile();
   if(id==='entities')    renderEntityOverview();
   if(id==='appointments')    renderAppointments();
   if(id==='kyc')         renderVault();
