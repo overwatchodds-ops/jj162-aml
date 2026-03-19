@@ -1319,8 +1319,8 @@ function toast(msg, type='ok'){
 }
 
 // ─── NAV ───────────────────────────────────────────────────────
-const LABELS = {dashboard:'Dashboard',entities:'Entity Overview',scope:'Designated Services',riskass:'Firm Risk Assessment',enrolment:'AUSTRAC Enrolment',assessment:'Client Risk Profiler',kyc:'Evidence Vault',pdd:'Personnel Due Diligence',policy:'Policy & Approval',training:'Training Register',appointments:'Appointments',about:'About & Support'};
-function switchTab(id){
+const LABELS = {dashboard:'Dashboard',entities:'Client Overview',scope:'Services',riskass:'Client Base & Geography',enrolment:'AUSTRAC Enrolment',assessment:'Client Risk Profiler',kyc:'Verification Records',pdd:'Personnel Due Diligence',policy:'Policy & Approval',training:'Training Register',appointments:'Appointments',about:'About & Support'};
+  function switchTab(id){
   document.querySelectorAll('.tab-view').forEach(v => v.classList.add('hidden'));
   $('view-'+id).classList.remove('hidden');
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
