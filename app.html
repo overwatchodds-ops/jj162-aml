@@ -1152,31 +1152,47 @@ tbody tr:hover td{background:var(--surface-2);}
 
   <!-- ══════════ APPOINTMENTS ════════════════════════════════════ -->
   <div class="page tab-view hidden" id="view-appointments">
-    <div class="pg-header"><div><div class="pg-title">Appointments & Governance</div><div class="pg-sub" id="appt-firm-sub">Official regulatory appointments</div></div></div>
-    <div style="display:grid;grid-template-columns:260px 1fr;gap:20px;" id="appt-grid">
-      <div class="card" style="text-align:center;padding:28px 20px;">
-        <div class="appt-avatar" style="margin:0 auto 16px;color:#fff;" id="appt-avatar">?</div>
-        <div style="font-size:16px;font-weight:700;color:#0f172a;">Johnny Jim</div>
-        <div style="font-size:9px;color:#b45309;letter-spacing:.1em;text-transform:uppercase;margin-top:4px;margin-bottom:20px;">Principal Compliance Lead</div>
-        <div class="g2" style="gap:8px;text-align:left;">
-          <div class="meta-pair"><div class="meta-key">Entity</div><div class="meta-val" id="appt-entity-name">Your Firm</div></div>
-          <div class="meta-pair"><div class="meta-key">Appt. Date</div><div class="meta-val">01/07/2023</div></div>
-          <div class="meta-pair" style="grid-column:span 2;"><div class="meta-key">Fit & Proper Assessment</div><div class="meta-val" style="color:#059669;">✓ Completed</div></div>
-        </div>
+    <div class="pg-header">
+      <div><div class="pg-title">Appointments & Governance</div><div class="pg-sub" id="appt-firm-sub">Who is responsible for each compliance role</div></div>
+    </div>
+
+    <!-- Sole practitioner shortcut -->
+    <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:#b45309;margin-bottom:3px;">Sole practitioner? You may hold all roles.</div>
+        <div style="font-size:11px;color:#92400e;line-height:1.6;">Enter your name once and it will fill all appointment slots. You can update individual roles at any time.</div>
       </div>
-      <div class="card">
-        <div class="card-header"><div class="card-header-label"><div class="card-accent" style="background:#b45309;"></div>Regulatory Appointments</div></div>
-        <div class="appt-row"><div><div style="font-size:12px;font-weight:500;">AML/CTF Compliance Officer (AMLCO)</div><div style="font-size:9px;color:#94a3b8;margin-top:2px;">Primary regulatory liaison & oversight — must meet AUSTRAC fit & proper person requirements</div></div><span class="badge b-low">Active</span></div>
-        <div class="appt-row"><div><div style="font-size:12px;font-weight:500;">Reporting Officer</div><div style="font-size:9px;color:#94a3b8;margin-top:2px;">Threshold & Suspicious Matter Reporting (SMR/TTR)</div></div><span class="badge b-low">Active</span></div>
-        <div class="appt-row"><div><div style="font-size:12px;font-weight:500;">Board/Owner Approval Record</div><div style="font-size:9px;color:#94a3b8;margin-top:2px;">Resolution #2023-04 — Governance Documentation</div></div><span class="badge b-neutral">Filed</span></div>
-        <div class="appt-row"><div><div style="font-size:12px;font-weight:500;">Delegation Authority Record</div><div style="font-size:9px;color:#94a3b8;margin-top:2px;">Full Executive Power & Resource Management</div></div><span class="badge b-neutral">Filed</span></div>
-        <div class="appt-row"><div><div style="font-size:12px;font-weight:500;">Personnel Due Diligence — AMLCO</div><div style="font-size:9px;color:#94a3b8;margin-top:2px;">Initial PDD completed prior to appointment (Tranche 2 requirement)</div></div><span class="badge b-low">Completed</span></div>
-        <div style="margin-top:16px;background:#fffbeb;border:1px solid #fde68a;border-radius:4px;padding:14px;display:flex;gap:10px;align-items:flex-start;">
-          <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20" style="color:#b45309;flex-shrink:0;margin-top:1px;"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
-          <div style="font-size:10px;color:#94a3b8;line-height:1.7;">As principal, the AMLCO holds ultimate accountability for the AML/CTF Program implementation and maintenance. The AMLCO role requires genuine authority, oversight capability, and ongoing suitability assessment per AUSTRAC's fit and proper person requirements.</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <input id="sole-prac-name" class="f-input" type="text" placeholder="Your full name" style="width:200px;font-size:12px;">
+        <button class="btn btn-gold btn-sm" onclick="fillAllRoles()">Fill All Roles →</button>
+      </div>
+    </div>
+
+    <!-- Role cards -->
+    <div style="display:flex;flex-direction:column;gap:12px;" id="appointments-container"></div>
+
+    <!-- Edit modal -->
+    <div id="appt-edit-modal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;">
+      <div style="background:#fff;border-radius:14px;padding:28px;max-width:440px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.2);">
+        <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:4px;" id="appt-modal-title">Edit Appointment</div>
+        <div style="font-size:11px;color:#94a3b8;margin-bottom:20px;" id="appt-modal-desc"></div>
+        <div class="f-group"><label class="f-label">Full Name *</label><input class="f-input" id="appt-edit-name" type="text" placeholder="Full legal name"></div>
+        <div class="f-group"><label class="f-label">Date Appointed</label><input class="f-input" id="appt-edit-date" type="date"></div>
+        <div class="f-group"><label class="f-label">Fit & Proper Assessment</label>
+          <select class="f-input" id="appt-edit-fit">
+            <option value="Yes">Yes — completed</option>
+            <option value="No">No — not yet completed</option>
+            <option value="NA">N/A — not required for this role</option>
+          </select>
+        </div>
+        <div class="f-group"><label class="f-label">Notes</label><textarea class="f-input" id="appt-edit-notes" rows="2" placeholder="Any relevant notes…"></textarea></div>
+        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px;">
+          <button class="btn btn-ghost" onclick="closeApptModal()">Cancel</button>
+          <button class="btn btn-gold" onclick="saveApptEdit()">Save Appointment</button>
         </div>
       </div>
     </div>
+
   </div>
 
   <!-- ══════════ ABOUT & SUPPORT ══════════════════════════════ -->
@@ -1269,6 +1285,7 @@ function loadState(){
   S.approval   = S.approval   || {};
   S.polChks    = S.polChks    || {};
   S.enrolChks  = S.enrolChks  || {};
+  S.appointments = S.appointments || {};
 }
 function save(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
@@ -1306,6 +1323,7 @@ function switchTab(id){
   closeSidebar();
   if(id==='dashboard')   updateDashboard();
   if(id==='entities')    renderEntityOverview();
+  if(id==='appointments')    renderAppointments();
   if(id==='kyc')         renderVault();
   if(id==='training')    renderTraining();
   if(id==='pdd')         renderPdd();
@@ -1527,7 +1545,112 @@ function restoreApproval(){
   }
 }
 function editApproval(){ S.approval.signed=false; save(); restoreApproval(); }
+const APPT_ROLES = [
+  { key:'amlco',     title:'AML/CTF Compliance Officer (AMLCO)',  desc:'Primary regulatory liaison & oversight. Must meet AUSTRAC fit & proper person requirements. Required before enrolment.',      fit:true  },
+  { key:'reporting', title:'Reporting Officer',                    desc:'Responsible for filing Suspicious Matter Reports (SMRs) and Threshold Transaction Reports (TTRs) with AUSTRAC.',             fit:false },
+  { key:'senior',    title:'Senior Manager',                       desc:'Approves the AML/CTF Program and any material amendments. Receives compliance reports from the AMLCO.',                      fit:false },
+  { key:'principal', title:'Principal / Managing Partner',         desc:'Overall firm leadership accountability for AML/CTF obligations.',                                                            fit:false },
+  { key:'delegate',  title:'Delegate (optional)',                  desc:'For larger firms where compliance tasks are formally delegated. Leave blank if not applicable.',                              fit:false },
+];
 
+let currentApptKey = null;
+
+function renderAppointments(){
+  if(!S.appointments) S.appointments = {};
+  const el = $('appointments-container'); if(!el) return;
+  el.innerHTML = APPT_ROLES.map(role => {
+    const a = S.appointments[role.key] || {};
+    const hasName = !!a.name;
+    const fitBadge = role.fit
+      ? a.fit==='Yes'
+        ? `<span class="badge b-low">✓ Fit & Proper</span>`
+        : a.fit==='NA'
+        ? `<span class="badge b-neutral">N/A</span>`
+        : `<span class="badge b-high">⚠ Not yet assessed</span>`
+      : '';
+    return `<div class="card" style="padding:18px 20px;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap;">
+            <div style="font-size:13px;font-weight:700;color:#0f172a;">${role.title}</div>
+            ${fitBadge}
+            ${!hasName && role.key!=='delegate' ? `<span class="badge b-high" style="font-size:9px;">⚠ Not assigned</span>` : ''}
+          </div>
+          <div style="font-size:11px;color:#94a3b8;line-height:1.6;margin-bottom:10px;">${role.desc}</div>
+          ${hasName ? `
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:32px;height:32px;background:var(--brand);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;">${a.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)}</div>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:#0f172a;">${a.name}</div>
+                  ${a.date ? `<div style="font-size:10px;color:#94a3b8;">Appointed: ${fmtDate(a.date)}</div>` : ''}
+                  ${a.notes ? `<div style="font-size:10px;color:#94a3b8;margin-top:2px;">${a.notes}</div>` : ''}
+                </div>
+              </div>
+            </div>` : `
+            <div style="font-size:12px;color:#94a3b8;font-style:italic;">${role.key==='delegate'?'Not assigned — optional':'Not yet assigned'}</div>`
+          }
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="openApptModal('${role.key}')" style="flex-shrink:0;white-space:nowrap;">
+          ${hasName ? 'Edit' : '+ Assign'}
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openApptModal(key){
+  currentApptKey = key;
+  const role = APPT_ROLES.find(r=>r.key===key);
+  const a = (S.appointments||{})[key] || {};
+  if($('appt-modal-title')) $('appt-modal-title').textContent = role.title;
+  if($('appt-modal-desc'))  $('appt-modal-desc').textContent  = role.desc;
+  if($('appt-edit-name'))   $('appt-edit-name').value  = a.name||'';
+  if($('appt-edit-date'))   $('appt-edit-date').value  = a.date||'';
+  if($('appt-edit-fit'))    $('appt-edit-fit').value   = a.fit||'Yes';
+  if($('appt-edit-notes'))  $('appt-edit-notes').value = a.notes||'';
+  const modal = $('appt-edit-modal');
+  if(modal){ modal.style.display='flex'; }
+}
+
+function closeApptModal(){
+  const modal = $('appt-edit-modal');
+  if(modal){ modal.style.display='none'; }
+  currentApptKey = null;
+}
+
+function saveApptEdit(){
+  const name = $('appt-edit-name')?.value.trim();
+  if(!name && currentApptKey!=='delegate'){ toast('Please enter a name','err'); return; }
+  if(!S.appointments) S.appointments = {};
+  S.appointments[currentApptKey] = {
+    name,
+    date:  $('appt-edit-date')?.value||'',
+    fit:   $('appt-edit-fit')?.value||'Yes',
+    notes: $('appt-edit-notes')?.value||''
+  };
+  save(); closeApptModal(); renderAppointments();
+  updateComplianceScore();
+  toast(name ? name+' saved' : 'Appointment updated');
+}
+
+function fillAllRoles(){
+  const name = $('sole-prac-name')?.value.trim();
+  if(!name){ toast('Please enter your name first','err'); return; }
+  if(!S.appointments) S.appointments = {};
+  const today = new Date().toISOString().split('T')[0];
+  APPT_ROLES.forEach(role => {
+    if(role.key==='delegate') return; // skip optional delegate
+    S.appointments[role.key] = {
+      name,
+      date: S.appointments[role.key]?.date || today,
+      fit:  role.fit ? (S.appointments[role.key]?.fit||'Yes') : 'NA',
+      notes: S.appointments[role.key]?.notes||''
+    };
+  });
+  save(); renderAppointments(); updateComplianceScore();
+  toast('All roles assigned to '+name);
+}
 // ─── PDD ───────────────────────────────────────────────────────
 function openPddForm(){  $('pdd-form-section').style.display='grid'; $('pdd-form-section').scrollIntoView({behavior:'smooth'}); }
 function closePddForm(){ $('pdd-form-section').style.display='none'; }
