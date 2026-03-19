@@ -882,44 +882,7 @@ tbody tr:hover td{background:var(--surface-2);}
       </div>
     </div>
   </div>
-    <div class="alert alert-blue mb16">
-      <div class="alert-title" style="color:#2563eb;">Key Enrolment Dates</div>
-      <div style="font-size:10px;color:#475569;line-height:1.9;">
-        <strong style="color:#2563eb;">31 March 2026</strong> — Enrolment opens<br>
-        <strong style="color:#2563eb;">1 July 2026</strong> — AML/CTF obligations commence<br>
-        <strong style="color:#2563eb;">29 July 2026</strong> — Enrolment deadline for entities providing designated services from 1 July 2026
-      </div>
-    </div>
-    <div class="g2">
-      <div class="card">
-        <div class="card-header"><div class="card-header-label"><div class="card-accent" style="background:#b45309;"></div>Enrolment Record</div></div>
-        <div class="f-group"><label class="f-label">AUSTRAC Entity ID</label><input class="f-input" id="enrol-id" type="text" placeholder="e.g. 100123456"></div>
-        <div class="f-group"><label class="f-label">Enrolment Date</label><input class="f-input" id="enrol-date" type="date"></div>
-        <div class="f-group"><label class="f-label">Enrolled By</label><input class="f-input" id="enrol-by" type="text" placeholder="Full name of person who enrolled"></div>
-        <div class="f-group"><label class="f-label">Enrolment Status</label>
-          <select class="f-input" id="enrol-status-sel">
-            <option value="Not Started">Not Started</option>
-            <option value="Preparing">Preparing Documents</option>
-            <option value="Submitted">Submitted</option>
-            <option value="Enrolled">Enrolled — Active</option>
-          </select>
-        </div>
-        <div class="g2" style="gap:10px;">
-          <div class="f-group"><label class="f-label">ACR — Last Submitted</label><input class="f-input" id="acr-date" type="date"></div>
-          <div class="f-group"><label class="f-label">ACR — Next Due</label><input class="f-input" id="acr-next" type="date"></div>
-        </div>
-        <button class="btn btn-gold btn-full" onclick="saveEnrolment()">Save Enrolment Record</button>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:14px;">
-     
-        <div class="card">
-          <div class="card-header"><div class="card-header-label"><div class="card-accent" style="background:var(--purple);"></div>Annual Compliance Report</div></div>
-          <div style="font-size:10px;color:#94a3b8;line-height:1.7;margin-bottom:12px;">All reporting entities must submit an Annual Compliance Report to AUSTRAC. The first report for Tranche 2 entities will be due in 2027.</div>
-          <span class="badge b-neutral">Not yet due</span>
-        </div>
-      </div>
-    </div>
-  </div>
+    
 
   <!-- ══════════ CLIENT RISK PROFILER ══════════════════════════ -->
   <div class="page tab-view hidden" id="view-assessment">
