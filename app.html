@@ -1401,7 +1401,7 @@ const LABELS = {dashboard:'Dashboard',entities:'Client Overview',scope:'Services
   if(id==='pdd')         renderPdd();
   if(id==='scope')       renderScope();
   if(id==='riskass')     restoreRiskAss();
-  if(id==='enrolment')   restoreEnrolment();
+  if(id==='enrolment')   { restoreEnrolment(); renderEnrolReadiness(); }
   if(id==='policy')      restorePolicy();
 }
 function toggleSidebar(){ $('sidebar').classList.toggle('open'); $('overlay').classList.toggle('show'); }
