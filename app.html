@@ -809,12 +809,79 @@ tbody tr:hover td{background:var(--surface-2);}
     </div>
   </div>
 
-  <!-- ══════════ AUSTRAC ENROLMENT ═════════════════════════════ -->
+ 
+    <!-- ══════════ AUSTRAC ENROLMENT ═════════════════════════════ -->
   <div class="page tab-view hidden" id="view-enrolment">
     <div class="pg-header">
-      <div><div class="pg-title">AUSTRAC Enrolment</div><div class="pg-sub">Opens 31 March 2026 — must complete within 28 days of providing designated services</div></div>
+      <div><div class="pg-title">AUSTRAC Enrolment</div><div class="pg-sub">Complete all requirements below before enrolling with AUSTRAC</div></div>
       <div id="enrol-status-badge" class="badge b-neutral">Not Enrolled</div>
     </div>
+
+    <!-- Readiness Score -->
+    <div class="card" style="margin-bottom:20px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px;">
+        <div>
+          <div style="font-size:16px;font-weight:700;color:#0f172a;" id="enrol-ready-title">Calculating readiness…</div>
+          <div style="font-size:11px;color:#94a3b8;margin-top:3px;">Complete all six requirements before enrolling with AUSTRAC</div>
+        </div>
+        <div style="font-size:28px;font-weight:700;" id="enrol-ready-pct">0%</div>
+      </div>
+      <div style="height:8px;background:var(--surface-3);border-radius:4px;overflow:hidden;">
+        <div id="enrol-ready-bar" style="height:100%;width:0%;border-radius:4px;transition:width .6s ease;background:var(--red);"></div>
+      </div>
+
+      <!-- Ready to enrol button — only shows when 100% -->
+      <div id="enrol-ready-btn" style="display:none;margin-top:16px;padding:16px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#059669;margin-bottom:3px;">✅ You are ready to enrol with AUSTRAC</div>
+          <div style="font-size:11px;color:#475569;">All requirements are complete. Click to go to the AUSTRAC Online portal to enrol.</div>
+        </div>
+        <a href="https://www.austrac.gov.au/business/how-comply-guidance-and-resources/enrolment" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:#059669;color:white;font-size:13px;font-weight:600;padding:10px 20px;border-radius:8px;text-decoration:none;white-space:nowrap;">Enrol with AUSTRAC →</a>
+      </div>
+    </div>
+
+    <!-- Six requirement cards -->
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;" id="enrol-requirements"></div>
+
+    <!-- Key dates info box -->
+    <div class="alert alert-blue mb16">
+      <div class="alert-title" style="color:#2563eb;">Key Enrolment Dates</div>
+      <div style="font-size:10px;color:#475569;line-height:1.9;">
+        <strong style="color:#2563eb;">31 March 2026</strong> — Enrolment opens<br>
+        <strong style="color:#2563eb;">1 July 2026</strong> — AML/CTF obligations commence<br>
+        <strong style="color:#2563eb;">29 July 2026</strong> — Enrolment deadline for entities providing designated services from 1 July 2026
+      </div>
+    </div>
+
+    <!-- Enrolment record -->
+    <div class="g2">
+      <div class="card">
+        <div class="card-header"><div class="card-header-label"><div class="card-accent" style="background:#b45309;"></div>Enrolment Record</div></div>
+        <div style="font-size:10px;color:#94a3b8;line-height:1.7;margin-bottom:14px;">Once you have enrolled with AUSTRAC record your details here for your compliance records.</div>
+        <div class="f-group"><label class="f-label">AUSTRAC Entity ID</label><input class="f-input" id="enrol-id" type="text" placeholder="e.g. 100123456"></div>
+        <div class="f-group"><label class="f-label">Enrolment Date</label><input class="f-input" id="enrol-date" type="date"></div>
+        <div class="f-group"><label class="f-label">Enrolled By</label><input class="f-input" id="enrol-by" type="text" placeholder="Full name of person who enrolled"></div>
+        <div class="f-group"><label class="f-label">Enrolment Status</label>
+          <select class="f-input" id="enrol-status-sel">
+            <option value="Not Started">Not Started</option>
+            <option value="Preparing">Preparing Documents</option>
+            <option value="Submitted">Submitted</option>
+            <option value="Enrolled">Enrolled — Active</option>
+          </select>
+        </div>
+        <div class="g2" style="gap:10px;">
+          <div class="f-group"><label class="f-label">ACR — Last Submitted</label><input class="f-input" id="acr-date" type="date"></div>
+          <div class="f-group"><label class="f-label">ACR — Next Due</label><input class="f-input" id="acr-next" type="date"></div>
+        </div>
+        <button class="btn btn-gold btn-full" onclick="saveEnrolment()">Save Enrolment Record</button>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-header-label"><div class="card-accent" style="background:var(--purple);"></div>Annual Compliance Report</div></div>
+        <div style="font-size:10px;color:#94a3b8;line-height:1.7;margin-bottom:12px;">All reporting entities must submit an Annual Compliance Report to AUSTRAC. The first report for Tranche 2 entities will be due in 2027.</div>
+        <span class="badge b-neutral">Not yet due</span>
+      </div>
+    </div>
+  </div>
     <div class="alert alert-blue mb16">
       <div class="alert-title" style="color:#2563eb;">Key Enrolment Dates</div>
       <div style="font-size:10px;color:#475569;line-height:1.9;">
