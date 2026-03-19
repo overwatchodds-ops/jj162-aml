@@ -1424,7 +1424,8 @@ function restoreRiskAss(){
   const r = S.riskAss||{};
   const map = [['ra-service-risk','serviceRisk'],['ra-service-rating','serviceRating'],['ra-client-risk','clientRisk'],['ra-client-rating','clientRating'],['ra-pf-risk','pfRisk'],['ra-pf-rating','pfRating'],['ra-overall-rating','overallRating'],['ra-controls','controls'],['ra-date','date'],['ra-next-date','nextDate']];
   map.forEach(([id,k]) => { const el=$(id); if(el) el.value = r[k]||''; });
-  renderCountries(); updateRaBadge();
+  renderDerivedCountries(); updateRaBadge();
+  if($('ra-geo-commentary')) $('ra-geo-commentary').value = S.riskAss?.geoCommentary||'';
 }
 function updateRaBadge(){
   const r = S.riskAss||{}, b = $('ra-status-badge'); if(!b) return;
@@ -1432,23 +1433,69 @@ function updateRaBadge(){
   else if(r.serviceRating||r.clientRating){ b.textContent='In Progress'; b.className='badge b-med'; }
   else { b.textContent='Not Started'; b.className='badge b-neutral'; }
 }
-function addCountry(){
-  const n = $('country-name-input')?.value.trim(), r = $('country-risk-input')?.value;
-  if(!n) return;
-  S.countries.push({name:n, risk:r, id:Date.now()});
-  $('country-name-input').value = ''; save(); renderCountries();
+function saveGeoCommentary(){
+  if(!S.riskAss) S.riskAss = {};
+  S.riskAss.geoCommentary = $('ra-geo-commentary')?.value||'';
+  save();
 }
-function renderCountries(){
-  const el = $('country-list'); if(!el) return;
-  if(!S.countries.length){ el.innerHTML='<div class="txt-muted" style="text-align:center;padding:16px;">No countries added yet</div>'; return; }
-  el.innerHTML = S.countries.map(c=>`
-    <div class="country-row">
-      <span class="country-name">${c.name}</span>
-      <span class="badge ${c.risk==='High'?'b-high':c.risk==='Medium'?'b-med':'b-low'}">${c.risk}</span>
-      <button class="btn-danger" onclick="deleteCountry(${c.id})"><svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    </div>`).join('');
+
+function renderDerivedCountries(){
+  const el = $('country-risk-derived'); if(!el) return;
+  if(!S.clients||!S.clients.length){
+    el.innerHTML='<div style="text-align:center;padding:20px;font-size:12px;color:#94a3b8;">No clients added yet — geographic exposure will appear here automatically as you add clients.</div>';
+    return;
+  }
+
+  // Build country summary from client data
+  const countryMap = {};
+  S.clients.forEach(c => {
+    const jur = c.jurisdiction||'Australia';
+    if(!countryMap[jur]) countryMap[jur] = { count:0, risk:'Low' };
+    countryMap[jur].count++;
+    // Determine risk from jurisdiction string
+    const risk = jur.includes('High') ? 'High' : jur.includes('Medium') ? 'Medium' : 'Low';
+    // Escalate risk if needed
+    if(risk==='High') countryMap[jur].risk='High';
+    else if(risk==='Medium' && countryMap[jur].risk!=='High') countryMap[jur].risk='Medium';
+  });
+
+  const countries = Object.entries(countryMap).sort((a,b)=>{
+    const order={High:0,Medium:1,Low:2};
+    return (order[a[1].risk]??3)-(order[b[1].risk]??3);
+  });
+
+  const total = S.clients.length;
+  const high  = countries.filter(([,v])=>v.risk==='High').length;
+  const med   = countries.filter(([,v])=>v.risk==='Medium').length;
+
+  el.innerHTML = `
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+      <div style="background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:10px 14px;flex:1;min-width:80px;text-align:center;">
+        <div style="font-size:20px;font-weight:700;color:#0f172a;">${countries.length}</div>
+        <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;">Countries</div>
+      </div>
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;flex:1;min-width:80px;text-align:center;">
+        <div style="font-size:20px;font-weight:700;color:#dc2626;">${high}</div>
+        <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;">High Risk</div>
+      </div>
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 14px;flex:1;min-width:80px;text-align:center;">
+        <div style="font-size:20px;font-weight:700;color:#d97706;">${med}</div>
+        <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;">Medium Risk</div>
+      </div>
+      <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;padding:10px 14px;flex:1;min-width:80px;text-align:center;">
+        <div style="font-size:20px;font-weight:700;color:#059669;">${total}</div>
+        <div style="font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;">Total Clients</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      ${countries.map(([name, data])=>`
+        <div class="country-row">
+          <span class="country-name">${name.replace('Other — ','')}</span>
+          <span style="font-size:11px;color:#94a3b8;">${data.count} client${data.count!==1?'s':''}</span>
+          <span class="badge ${data.risk==='High'?'b-high':data.risk==='Medium'?'b-med':'b-low'}">${data.risk}</span>
+        </div>`).join('')}
+    </div>`;
 }
-function deleteCountry(id){ S.countries=S.countries.filter(c=>c.id!==id); save(); renderCountries(); }
 
 // ─── ENROLMENT ─────────────────────────────────────────────────
 function saveEnrolment(){
