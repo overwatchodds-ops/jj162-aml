@@ -371,6 +371,77 @@ textarea.f-input{resize:vertical;min-height:80px}
                 <button type="button" class="btn btn-ghost" style="font-size:11px;margin-top:6px;border-color:#ddd6fe;color:#7c3aed" onclick="addSmsfMember()">+ Add Member</button>
               </div>
             </div>
+
+            <!-- VERIFICATION METHOD -->
+            <div style="border:1px solid var(--line);border-radius:10px;padding:16px;margin-top:2px">
+              <div class="f-label" style="margin-bottom:10px">Verification Method</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+                <div id="vm-direct" onclick="setVerificationMethod('direct')" style="border:2px solid var(--brand);background:var(--brand-dim);border-radius:8px;padding:12px;cursor:pointer;transition:all .15s">
+                  <div style="font-size:12px;font-weight:700;color:var(--brand);margin-bottom:3px">Direct KYC</div>
+                  <div style="font-size:10px;color:var(--text-3);line-height:1.5">Agent collects and verifies ID directly from the buyer or seller</div>
+                </div>
+                <div id="vm-reliance" onclick="setVerificationMethod('reliance')" style="border:2px solid var(--line-2);background:white;border-radius:8px;padding:12px;cursor:pointer;transition:all .15s">
+                  <div style="font-size:12px;font-weight:700;color:var(--text-3);margin-bottom:3px">&#9878; Legal Reliance</div>
+                  <div style="font-size:10px;color:var(--text-3);line-height:1.5">Rely on CDD by buyer's lawyer (Chapter 7 AML/CTF Rules)</div>
+                </div>
+              </div>
+              <input type="hidden" id="verification-method" value="direct">
+
+              <div id="reliance-panel" style="display:none">
+                <div id="reliance-state-bar" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;margin-bottom:12px">
+                  <div id="reliance-state-dot" style="width:8px;height:8px;border-radius:50%;background:var(--text-3);flex-shrink:0;transition:background .2s"></div>
+                  <div>
+                    <div id="reliance-state-label" style="font-size:11px;font-weight:700;color:var(--text-2)">Awaiting legal confirmation</div>
+                    <div id="reliance-state-desc" style="font-size:10px;color:var(--text-3);margin-top:1px">Enter lawyer details below and send a reliance request</div>
+                  </div>
+                </div>
+                <div style="background:var(--amber-bg);border:1px solid var(--amber-line);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 12px;margin-bottom:12px;font-size:11px;color:#92400e;line-height:1.65">
+                  <strong>You retain the risk — Chapter 7 AML/CTF Rules.</strong> Reliance satisfies your <em>identification</em> obligation only. PEP and sanctions screening remains your responsibility.
+                </div>
+                <div class="g2">
+                  <div class="f-group"><label class="f-label">Law Firm / Conveyancer *</label><input class="f-input" id="r-firm" placeholder="e.g. Smith &amp; Jones Lawyers" oninput="updateRelianceState()"></div>
+                  <div class="f-group"><label class="f-label">Practitioner Name *</label><input class="f-input" id="r-practitioner" placeholder="e.g. Sarah Jones" oninput="updateRelianceState()"></div>
+                </div>
+                <div class="g2">
+                  <div class="f-group"><label class="f-label">Email</label><input class="f-input" id="r-email" type="email" placeholder="e.g. sarah@smithjones.com.au" oninput="updateRelianceState()"></div>
+                  <div class="f-group"><label class="f-label">Phone</label><input class="f-input" id="r-phone" type="tel" placeholder="e.g. 02 9123 4567"></div>
+                </div>
+                <div style="background:var(--bg);border:1px dashed var(--line-2);border-radius:8px;padding:12px;margin-bottom:8px">
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:8px">Step 1 — Send reliance request to lawyer</div>
+                  <button type="button" class="btn btn-ghost btn-full" onclick="sendRelianceEmail()">
+                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    Draft Reliance Request Email
+                  </button>
+                  <div style="font-size:10px;color:var(--text-3);margin-top:5px">Opens your email app with a pre-filled Chapter 7 reliance request. Requires email address above.</div>
+                </div>
+                <div style="background:var(--bg);border:1px dashed var(--line-2);border-radius:8px;padding:12px;margin-bottom:8px">
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:8px">Step 2 — Upload signed confirmation letter</div>
+                  <label id="r-upload-zone" style="display:flex;align-items:center;gap:10px;background:white;border:2px dashed var(--line-2);border-radius:8px;padding:12px;cursor:pointer;transition:border .15s" onmouseover="this.style.borderColor='var(--brand)'" onmouseout="this.style.borderColor='var(--line-2)'">
+                    <svg width="16" height="16" fill="none" stroke="var(--brand)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                    <div>
+                      <div id="r-file-label" style="font-size:12px;font-weight:600;color:var(--brand)">Upload CDD Confirmation Letter or Reliance Certificate</div>
+                      <div style="font-size:10px;color:var(--text-3)">PDF — signed by the legal representative</div>
+                    </div>
+                    <input type="file" id="r-file" style="display:none" accept=".pdf,.doc,.docx" onchange="handleRelianceUpload(this)">
+                  </label>
+                  <div class="f-group" style="margin-top:10px;margin-bottom:0"><label class="f-label">Date Confirmation Received</label><input class="f-input" id="r-date-received" type="date" onchange="updateRelianceState()"></div>
+                </div>
+                <div style="background:var(--bg);border:1px dashed var(--line-2);border-radius:8px;padding:12px;margin-bottom:8px">
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:8px">Optional — Formal certificate template for lawyer to sign</div>
+                  <button type="button" class="btn btn-ghost btn-full" onclick="downloadRelianceCert()">
+                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Download Reliance Certificate Template
+                  </button>
+                </div>
+                <div style="background:white;border:1px solid var(--line);border-radius:8px;padding:12px">
+                  <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
+                    <input type="checkbox" id="r-confirmed" style="accent-color:var(--brand);margin-top:2px;flex-shrink:0" onchange="updateRelianceState()">
+                    <span style="font-size:11px;color:#1d4ed8;line-height:1.6;font-weight:500">I confirm I have received written confirmation from the legal representative that KYC/CDD has been completed for this buyer and their documents are held on file.</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           <!-- SECTION 3: INDIVIDUAL SCREENING -->
@@ -816,17 +887,156 @@ function updateDoc(cId, i, key, input) {
 }
 function getArr(id) { return {'c-directors':directors,'c-bos':bos,'t-trustees':trustees,'s-trustees':smsfTrustees,'s-corp-directors':corpDirectors,'s-members':smsfMembers,'people-container':people}[id]; }
 
+// ── LEGAL RELIANCE WORKFLOW ──────────────────────────────────
+function setVerificationMethod(method) {
+  el('verification-method').value = method;
+  var isDirect = method === 'direct';
+  var vmDirect   = el('vm-direct');
+  var vmReliance = el('vm-reliance');
+  var panel      = el('reliance-panel');
+  if (vmDirect) {
+    vmDirect.style.border     = isDirect ? '2px solid var(--brand)' : '2px solid var(--line-2)';
+    vmDirect.style.background = isDirect ? 'var(--brand-dim)' : 'white';
+    vmDirect.querySelector('div').style.color = isDirect ? 'var(--brand)' : 'var(--text-3)';
+  }
+  if (vmReliance) {
+    vmReliance.style.border     = !isDirect ? '2px solid var(--brand)' : '2px solid var(--line-2)';
+    vmReliance.style.background = !isDirect ? 'var(--brand-dim)' : 'white';
+    vmReliance.querySelector('div').style.color = !isDirect ? 'var(--brand)' : 'var(--text-3)';
+  }
+  if (panel) panel.style.display = isDirect ? 'none' : 'block';
+  if (!isDirect) updateRelianceState();
+}
+
+function updateRelianceState() {
+  var dot   = el('reliance-state-dot');
+  var label = el('reliance-state-label');
+  var desc  = el('reliance-state-desc');
+  if (!dot) return;
+  var hasFirm  = !!(el('r-firm') && el('r-firm').value.trim());
+  var hasFile  = !!(el('r-file') && el('r-file').dataset.filename);
+  var hasDate  = !!(el('r-date-received') && el('r-date-received').value);
+  var confirmed = !!(el('r-confirmed') && el('r-confirmed').checked);
+  if (confirmed && hasFile && hasDate) {
+    dot.style.background   = 'var(--green)';
+    label.textContent      = '✓ Verified via Third Party';
+    label.style.color      = 'var(--green)';
+    desc.textContent       = 'Letter received ' + (el('r-date-received').value) + ' — audit trail complete';
+  } else if (hasFile && !confirmed) {
+    dot.style.background   = 'var(--amber)';
+    label.textContent      = 'Letter uploaded — confirm receipt';
+    label.style.color      = 'var(--amber)';
+    desc.textContent       = 'Tick the confirmation checkbox below to complete';
+  } else if (hasFirm) {
+    dot.style.background   = 'var(--brand)';
+    label.textContent      = 'Awaiting legal confirmation';
+    label.style.color      = 'var(--text-2)';
+    desc.textContent       = 'Send the reliance request and upload the signed letter';
+  } else {
+    dot.style.background   = 'var(--text-3)';
+    label.textContent      = 'Awaiting legal confirmation';
+    label.style.color      = 'var(--text-2)';
+    desc.textContent       = 'Enter lawyer details below and send a reliance request';
+  }
+}
+
+function handleRelianceUpload(input) {
+  if (!input.files || !input.files[0]) return;
+  var name = input.files[0].name;
+  input.dataset.filename = name;
+  var lbl = el('r-file-label');
+  if (lbl) lbl.textContent = '✓ ' + name;
+  var zone = el('r-upload-zone');
+  if (zone) { zone.style.borderColor = 'var(--green)'; zone.style.borderStyle = 'solid'; }
+  updateRelianceState();
+}
+
+function sendRelianceEmail() {
+  var buyer   = el('f-name') ? el('f-name').value.trim() : '[Buyer Name]';
+  var address = el('f-address') ? el('f-address').value.trim() : '[Property Address]';
+  var email   = el('r-email') ? el('r-email').value.trim() : '';
+  var firm    = el('r-firm') ? el('r-firm').value.trim() : '[Law Firm]';
+  var prac    = el('r-practitioner') ? el('r-practitioner').value.trim() : 'Colleague';
+  var agency  = (window.D && D.agency && D.agency.name) ? D.agency.name : '[Agency Name]';
+  if (!email) { toast('Please enter the lawyer\'s email address first'); el('r-email').focus(); return; }
+  var subject = encodeURIComponent('AML/CTF Reliance Request: ' + buyer + ' — ' + address);
+  var body = encodeURIComponent(
+    'Dear ' + prac + ',\n\n' +
+    'We act as the Real Estate Agent for the sale of ' + address + '. Our mutual client, ' + buyer + ', is the prospective purchaser.\n\n' +
+    'In accordance with Chapter 7 of the AML/CTF Rules (Cth) 2007, we wish to rely on the Customer Due Diligence (CDD) performed by ' + firm + ' for this transaction.\n\n' +
+    'COULD YOU PLEASE CONFIRM:\n' +
+    '1. Your firm is a reporting entity under the AML/CTF Act 2006 (Cth).\n' +
+    '2. You have identified and verified the identity of ' + buyer + ' in accordance with your AML/CTF Program.\n' +
+    '3. You consent to our reliance on your CDD procedures for this transaction (s.38A AML/CTF Act).\n' +
+    '4. You agree to provide us with the underlying CDD records if required by AUSTRAC.\n\n' +
+    'Please reply to this email confirming the above, or sign and return the attached Reliance Certificate.\n\n' +
+    'Kind regards,\n[Agent Name]\n' + agency
+  );
+  window.location.href = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
+}
+
+function downloadRelianceCert() {
+  var buyer   = el('f-name') ? el('f-name').value.trim() : '[Full Name of Buyer]';
+  var address = el('f-address') ? el('f-address').value.trim() : '[Property Address]';
+  var agency  = (window.D && D.agency && D.agency.name) ? D.agency.name : '[Your Agency Name]';
+  var firm    = el('r-firm') ? el('r-firm').value.trim() : '[Law Firm / Conveyancer Name]';
+  var prac    = el('r-practitioner') ? el('r-practitioner').value.trim() : '';
+  var today   = new Date().toLocaleDateString('en-AU');
+  var text =
+'RELIANCE ON CUSTOMER DUE DILIGENCE (CDD) CERTIFICATE\n' +
+'Pursuant to Chapter 7 of the AML/CTF Rules 2007 (Cth)\n\n' +
+'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+'PART A — THE PARTIES\n\n' +
+'Relying Entity (Real Estate Agent):   ' + agency + '\n' +
+'Performing Entity (Law Firm):         ' + firm + '\n' +
+'Customer (Buyer):                     ' + buyer + '\n' +
+'Property:                             ' + address + '\n\n' +
+'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+'PART B — CERTIFICATION\n\n' +
+'I, the undersigned, hereby certify that:\n\n' +
+'  1. The Performing Entity is a reporting entity under the AML/CTF Act 2006 (Cth).\n' +
+'  2. We have carried out CDD procedures for the Customer above in accordance\n' +
+'     with our AML/CTF Program.\n' +
+'  3. We consent to the Relying Entity\'s reliance on these CDD procedures for\n' +
+'     the purpose of this transaction (Chapter 7 AML/CTF Rules 2007).\n' +
+'  4. We agree to provide the Relying Entity with underlying CDD records upon\n' +
+'     request, including if required by AUSTRAC for audit purposes.\n\n' +
+'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+'PART C — EXECUTION\n\n' +
+'Authorised Signatory:  ___________________________\n\n' +
+'Full Name:             ' + (prac || '___________________________') + '\n\n' +
+'Position / Title:      ___________________________\n\n' +
+'Date:                  ___________________________\n\n' +
+'Law Firm Stamp/Seal:   ___________________________\n\n' +
+'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+'Generated by SimpleAML on ' + today + '. Not legal advice.\n' +
+'Click Seed Pty Ltd ABN 87 656 256 567 — simpleaml.com.au';
+  var blob = new Blob([text], {type:'text/plain'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Reliance_Certificate_' + buyer.replace(/\s+/g,'_') + '.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('Reliance certificate downloaded');
+}
+
 function resetCddForm() {
   directors=[]; bos=[]; trustees=[]; smsfTrustees=[]; corpDirectors=[]; smsfMembers=[]; people=[];
   ['c-directors','c-bos','t-trustees','s-trustees','s-corp-directors','s-members','people-container'].forEach(function(id){ var c=el(id); if(c) c.innerHTML=''; });
   ['ext-company','ext-trust','ext-smsf'].forEach(function(id){ var e=el(id); if(e) e.style.display='none'; });
-  ['f-address','f-title','f-value','f-name','f-nature','f-review','c-acn','t-appointor','t-beneficiaries','s-fundname','s-abn','s-corp-name','s-corp-acn'].forEach(function(id){ var e=el(id); if(e) e.value=''; });
+  ['f-address','f-title','f-value','f-name','f-nature','f-review','c-acn','t-appointor','t-beneficiaries','s-fundname','s-abn','s-corp-name','s-corp-acn','r-firm','r-practitioner','r-email','r-phone','r-date-received'].forEach(function(id){ var e=el(id); if(e) e.value=''; });
   ['f-role','f-service','f-entity','f-risk'].forEach(function(id){ var e=el(id); if(e) e.selectedIndex=0; });
   var noSmr = document.querySelector('input[name="smr"][value="No"]');
   var noTtr = document.querySelector('input[name="ttr"][value="No"]');
   if (noSmr) noSmr.checked=true;
   if (noTtr) noTtr.checked=true;
   var tb = el('tier-banner'); if(tb) tb.style.display='none';
+  // Reset reliance
+  setVerificationMethod('direct');
+  var rConf = el('r-confirmed'); if(rConf) rConf.checked=false;
+  var rFile = el('r-file'); if(rFile) { rFile.value=''; delete rFile.dataset.filename; }
+  var rLbl  = el('r-file-label'); if(rLbl) rLbl.textContent='Upload CDD Confirmation Letter or Reliance Certificate';
+  var rZone = el('r-upload-zone'); if(rZone) { rZone.style.borderColor='var(--line-2)'; rZone.style.borderStyle='dashed'; }
 }
 
 function updateTier() {
@@ -881,6 +1091,18 @@ function saveTx() {
     trust:    entity==='Trust'   ? {appointor:el('t-appointor').value.trim(),beneficiaries:el('t-beneficiaries').value.trim(),trustees:trustees.slice()} : null,
     smsf:     entity==='SMSF'    ? {fundName:el('s-fundname').value.trim(),abn:el('s-abn').value.trim(),trusteeType:el('s-trustee-type').value,trustees:smsfTrustees.slice(),corpName:el('s-corp-name').value.trim(),corpAcn:el('s-corp-acn').value.trim(),corpDirectors:corpDirectors.slice(),members:smsfMembers.slice()} : null,
     people:   people.slice(),
+    verificationMethod: el('verification-method') ? el('verification-method').value : 'direct',
+    reliance: (el('verification-method') && el('verification-method').value === 'reliance') ? {
+      firm:        el('r-firm') ? el('r-firm').value.trim() : '',
+      practitioner:el('r-practitioner') ? el('r-practitioner').value.trim() : '',
+      email:       el('r-email') ? el('r-email').value.trim() : '',
+      phone:       el('r-phone') ? el('r-phone').value.trim() : '',
+      docFiled:    !!(el('r-file') && el('r-file').dataset.filename),
+      docName:     (el('r-file') && el('r-file').dataset.filename) || '',
+      dateReceived:el('r-date-received') ? el('r-date-received').value : '',
+      confirmed:   !!(el('r-confirmed') && el('r-confirmed').checked),
+      status:      (el('r-confirmed') && el('r-confirmed').checked && el('r-file') && el('r-file').dataset.filename) ? 'verified-third-party' : 'pending'
+    } : null,
     date:     new Date().toISOString()
   });
   save();
