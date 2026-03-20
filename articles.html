@@ -170,15 +170,22 @@ nav{
 .btn-primary:hover{background:var(--gold-2);}
 
 footer{
-  border-top:1px solid var(--line);padding:2rem 3rem;
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:1rem;position:relative;z-index:1;
+  border-top:1px solid var(--line);padding:3rem 3rem 2rem;
+  position:relative;z-index:1;
 }
-.footer-logo{font-family:'DM Serif Display',serif;font-size:18px;color:var(--white);}
-.footer-text{font-size:11px;color:var(--muted);line-height:1.6;}
-.footer-links{display:flex;gap:24px;}
-.footer-links a{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s;}
-.footer-links a:hover{color:var(--gold);}
+.footer-inner{
+  display:grid;grid-template-columns:2fr 1fr 1fr;
+  gap:48px;padding-bottom:2rem;
+  border-bottom:1px solid var(--line);
+  margin-bottom:1.5rem;
+}
+.footer-logo{font-family:'DM Serif Display',serif;font-size:18px;color:var(--white);margin-bottom:10px;}
+.footer-text{font-size:11px;color:var(--muted);line-height:1.75;}
+.footer-col-title{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(201,168,76,.4);margin-bottom:14px;}
+.footer-col-links{display:flex;flex-direction:column;gap:10px;}
+.footer-col-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.footer-col-links a:hover{color:var(--gold);}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11px;color:rgba(255,255,255,0.2);}
 
 @media(max-width:700px){
   nav{padding:16px 20px;}
@@ -188,7 +195,9 @@ footer{
   .article-featured{grid-template-columns:1fr;}
   .article-featured-visual{min-height:140px;border-right:none;border-bottom:1px solid var(--line);}
   .article-featured-body{padding:1.5rem;}
-  footer{padding:24px 20px;flex-direction:column;}
+  footer{padding:32px 20px 20px;}
+  .footer-inner{grid-template-columns:1fr;gap:28px;}
+  .footer-bottom{flex-direction:column;align-items:flex-start;}
 }
 </style>
 </head>
@@ -301,14 +310,34 @@ footer{
 </script>
 
 <footer>
-  <div>
-    <div class="footer-logo">SimpleAML</div>
-    <div class="footer-text" style="margin-top:6px;">Free AML/CTF compliance for Australian accountants<br>Developed by Click Seed Pty Ltd ABN 87 656 256 567</div>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">SimpleAML</div>
+      <div class="footer-text">Free AML/CTF compliance for Australian accountants, lawyers &amp; real estate agents.<br><br>Developed by Click Seed Pty Ltd<br>ABN 87 656 256 567</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Product</div>
+      <div class="footer-col-links">
+        <a href="/app.html">Open App →</a>
+        <a href="templates.html">Free Templates</a>
+        <a href="faq.html">User Guide & FAQ</a>
+        <a href="training-providers.html">Training Providers</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <div class="footer-col-links">
+        <a href="/">Home</a>
+        <a href="partners.html">Partners</a>
+        <a href="articles.html">Guides</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+    </div>
   </div>
-  <div class="footer-links">
-    <a href="/app.html">Open App</a>
-    <a href="/">Home</a>
-    <a href="contact.html">Contact</a>
+  <div class="footer-bottom">
+    <div>© 2026 Click Seed Pty Ltd. All rights reserved.</div>
+    <div>simpleaml.com.au</div>
   </div>
 </footer>
 
