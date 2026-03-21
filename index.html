@@ -1174,7 +1174,15 @@
       <p class="cta-note">No account &nbsp;·&nbsp; Opens in browser &nbsp;·&nbsp; 100% free during beta</p>
     </div>
   </div>
-
+<!-- STAY UPDATED -->
+  <div style="background: var(--off-white); border-top: 1px solid var(--border); padding: 72px 40px; text-align: center;">
+    <div style="max-width: 560px; margin: 0 auto;">
+      <p class="section-label">Stay informed</p>
+      <h2 class="section-heading" style="margin-bottom: 12px;">New features &amp; Tranche 2 updates</h2>
+      <p style="font-size: 16px; color: var(--text-muted); margin-bottom: 32px; line-height: 1.75;">Stay updated on new SimpleAML features and AUSTRAC Tranche 2 news.</p>
+      <iframe width="540" height="305" src="https://070d782a.sibforms.com/serve/MUIFAK4IjlmfCGKleSE_Mrhe06gWko3rBs9m1XX9vzkC7HX-xh-usXTX_3jjHwtqZaZLksgYMYsgqm-ApmqbCWg6-d4pb9FgVRKe1sD6YzlMYfb24foNM7rgra575sing2v6UkKNYw_QpECE06LPSH-CiFHI623ubPpLCzlAL6E-PcnuJsuJZCccgsBMwidzKjgVCyzcR9k_mk23RQ==" frameborder="0" scrolling="auto" allowfullscreen style="display: block; margin: 0 auto; max-width: 100%; border-radius: 12px;"></iframe>
+    </div>
+  </div>
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
@@ -1491,25 +1499,6 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
   });
 });
 </script>
-<script>
-function toggleMobileNav() {
-  var nav = document.querySelector('.nav-links');
-  var open = document.getElementById('mob-icon-open');
-  var close = document.getElementById('mob-icon-close');
-  var isOpen = nav.classList.toggle('open');
-  open.style.display = isOpen ? 'none' : 'block';
-  close.style.display = isOpen ? 'block' : 'none';
-  document.body.style.overflow = isOpen ? 'hidden' : '';
-}
-document.querySelectorAll('.nav-links a').forEach(function(link) {
-  link.addEventListener('click', function() {
-    var nav = document.querySelector('.nav-links');
-    nav.classList.remove('open');
-    document.getElementById('mob-icon-open').style.display = 'block';
-    document.getElementById('mob-icon-close').style.display = 'none';
-    document.body.style.overflow = '';
-  });
-});
-</script>
+
 </body>
 </html>
