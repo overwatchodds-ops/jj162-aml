@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AML/CTF Compliance Evidence Report — Real Estate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --brand:#E84040; --navy:#1a1a2e; --green:#059669; --amber:#b45309;
+      --red:#dc2626; --blue:#2563eb; --border:#e2e8f0; --bg:#f8fafc;
+      --text:#0f172a; --muted:#64748b;
+    }
+    html { font-size: 11px; }
+    body { font-family:'Inter',system-ui,sans-serif; color:var(--text); background:white; line-height:1.55; -webkit-font-smoothing:antialiased; }
+    @page { size:A4 portrait; margin:18mm 20mm; }
+    @media print {
+      .no-print { display:none!important; }
+      .page-break { page-break-before:always; break-before:page; }
+      .avoid-break { page-break-inside:avoid; break-inside:avoid; }
+      body { font-size:10px; }
+      .report-body { padding:0; }
+    }
+    @media screen {
+      body { background:#e2e8f0; }
+      .report-body { max-width:820px; margin:0 auto; padding:32px 24px; }
+      .report-page { background:white; padding:48px; margin-bottom:20px; box-shadow:0 2px 20px rgba(0,0,0,0.12); }
+    }
+    .print-toolbar { position:sticky; top:0; z-index:100; background:var(--brand); color:white; padding:12px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .print-toolbar h2 { font-size:13px; font-weight:600; }
+    .print-toolbar p { font-size:10px; color:rgba(255,255,255,0.7); margin-top:2px; }
+    .print-btn { background:white; color:var(--brand); border:none; padding:9px 20px; border-radius:7px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; display:flex; align-items:center; gap:7px; }
+    .print-btn:hover { opacity:0.88; }
+    /* Cover */
+    .cover-ruled { border-top:6px solid var(--brand); padding-top:28px; margin-bottom:32px; }
+    .cover-classification { font-size:9px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:28px; display:flex; align-items:center; gap:8px; }
+    .cover-classification::after { content:''; flex:1; height:1px; background:var(--border); }
+    .cover-logo-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:48px; }
+    .logo-mark { width:38px; height:38px; background:var(--brand); border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-size:13px; font-weight:700; }
+    .cover-austrac-ref { text-align:right; font-size:10px; color:var(--muted); line-height:1.7; }
+    .cover-doc-title { font-size:26px; font-weight:700; color:var(--navy); letter-spacing:-0.02em; line-height:1.15; margin-bottom:6px; }
+    .cover-doc-sub { font-size:14px; color:var(--muted); margin-bottom:32px; }
+    .cover-firm-block { background:var(--bg); border:1px solid var(--border); border-left:4px solid var(--brand); border-radius:0 8px 8px 0; padding:16px 20px; margin-bottom:24px; }
+    .cover-firm-label { font-size:9px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+    .cover-firm-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px 24px; }
+    .cover-firm-item label { display:block; font-size:9px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); margin-bottom:2px; }
+    .cover-firm-item span { font-size:12px; color:var(--text); font-weight:500; }
+    .cover-status-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:24px; }
+    .cover-status-card { border:1px solid var(--border); border-radius:8px; padding:12px 14px; text-align:center; }
+    .status-label { font-size:9px; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+    .status-value { font-size:18px; font-weight:700; line-height:1; margin-bottom:4px; }
+    .status-bar { height:3px; background:var(--border); border-radius:2px; overflow:hidden; margin-top:6px; }
+    .status-bar-fill { height:100%; border-radius:2px; }
+    .cover-declaration { font-size:10px; color:var(--muted); line-height:1.75; padding:14px 16px; border:1px solid #fde68a; background:#fffbeb; border-radius:6px; margin-bottom:24px; }
+    .cover-sig-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; margin-top:16px; }
+    .sig-space { height:36px; }
+    .sig-line-rule { border-top:1px solid var(--text); padding-top:6px; }
+    .sig-block-label { font-size:9px; color:var(--muted); margin-top:4px; }
+    .sig-block-name { font-size:11px; color:var(--text); font-weight:500; }
+    /* Sections */
+    .part-divider { border-top:3px solid var(--brand); padding:14px 0 10px; margin:28px 0 20px; }
+    .part-label { font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--brand); }
+    .part-desc { font-size:10px; color:var(--muted); margin-top:3px; }
+    .section { margin-bottom:24px; }
+    .section-header { display:flex; align-items:center; gap:12px; border-bottom:2px solid var(--navy); padding-bottom:8px; margin-bottom:14px; }
+    .section-num { font-size:10px; font-weight:700; color:white; background:var(--navy); padding:2px 8px; border-radius:4px; letter-spacing:0.04em; }
+    .section-title { font-size:13px; font-weight:700; color:var(--navy); letter-spacing:-0.01em; }
+    .section-austrac-ref { margin-left:auto; font-size:9px; color:var(--muted); font-family:'IBM Plex Mono',monospace; }
+    /* Evidence blocks */
+    .evidence-block { margin-bottom:12px; }
+    .evidence-label { font-size:9px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; display:flex; align-items:center; gap:6px; }
+    .evidence-req { font-size:8px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; color:var(--amber); background:#fef3c7; padding:1px 6px; border-radius:3px; }
+    .evidence-value { font-size:11px; color:var(--text); line-height:1.6; }
+    .evidence-value.narrative { background:var(--bg); border:1px solid var(--border); border-left:3px solid var(--brand); border-radius:0 6px 6px 0; padding:10px 12px; font-size:11px; line-height:1.7; white-space:pre-wrap; min-height:36px; }
+    .evidence-value.mono { font-family:'IBM Plex Mono',monospace; font-size:11px; }
+    /* Grids */
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+    .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    .grid-5 { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+    /* Badges */
+    .badge { display:inline-block; font-size:9px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; padding:2px 8px; border-radius:20px; }
+    .b-low { background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; }
+    .b-med { background:#fffbeb; color:#b45309; border:1px solid #fde68a; }
+    .b-high { background:#fef2f2; color:#dc2626; border:1px solid #fecaca; }
+    .b-neutral { background:var(--bg); color:var(--muted); border:1px solid var(--border); }
+    .b-ok { background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; }
+    .b-enrolled { background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe; }
+    .b-brand { background:#fff5f5; color:var(--brand); border:1px solid #fecaca; }
+    /* Checklists */
+    .checklist { display:flex; flex-direction:column; gap:5px; }
+    .chk-item { display:flex; align-items:flex-start; gap:8px; padding:6px 10px; border-radius:5px; border:1px solid var(--border); }
+    .chk-item.done { background:#ecfdf5; border-color:#a7f3d0; }
+    .chk-item.undone { background:#fef2f2; border-color:#fecaca; }
+    .chk-icon { font-size:11px; flex-shrink:0; }
+    .chk-text { font-size:10px; color:var(--text); line-height:1.4; }
+    /* Tables */
+    .data-table { width:100%; border-collapse:collapse; font-size:9px; }
+    .data-table th { background:var(--bg); font-size:8px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted); padding:6px 8px; text-align:left; border-bottom:2px solid var(--border); white-space:nowrap; }
+    .data-table td { padding:7px 8px; border-bottom:1px solid var(--border); color:var(--text); vertical-align:top; line-height:1.4; }
+    .data-table tbody tr:last-child td { border-bottom:none; }
+    /* Gap analysis */
+    .gap-item { display:flex; align-items:flex-start; gap:10px; padding:8px 12px; border-radius:6px; margin-bottom:6px; border:1px solid var(--border); }
+    .gap-item.gap-ok { background:#ecfdf5; border-color:#a7f3d0; }
+    .gap-item.gap-warn { background:#fffbeb; border-color:#fde68a; }
+    .gap-item.gap-fail { background:#fef2f2; border-color:#fecaca; }
+    .gap-icon { font-size:13px; flex-shrink:0; margin-top:1px; }
+    .gap-label { font-size:10px; font-weight:600; color:var(--text); }
+    .gap-note { font-size:9px; color:var(--muted); margin-top:2px; line-height:1.4; }
+    /* Evaluator sign-off */
+    .eval-field { border-bottom:1px solid var(--text); min-height:28px; margin-bottom:4px; }
+    .eval-label { font-size:9px; color:var(--muted); margin-bottom:8px; }
+    .eval-box { border:1px solid var(--border); border-radius:6px; min-height:60px; margin-bottom:4px; }
+    /* Misc */
+    .divider { height:1px; background:var(--border); margin:14px 0; }
+    .empty-note { text-align:center; padding:16px; font-size:10px; color:var(--muted); font-style:italic; border:1px dashed var(--border); border-radius:6px; }
+    .page-footer { margin-top:32px; padding-top:12px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; font-size:8px; color:var(--muted); }
+    .kpi-num { font-size:22px; font-weight:700; line-height:1; }
+    .kpi-label { font-size:9px; color:var(--muted); margin-top:3px; text-transform:uppercase; letter-spacing:0.06em; }
+  </style>
+</head>
+<body>
+
+<div class="print-toolbar no-print">
+  <div>
+    <h2>AML/CTF Compliance Evidence Report — Real Estate</h2>
+    <p>Print dialog opens automatically — select Portrait, A4, Save as PDF</p>
+  </div>
+  <button class="print-btn" onclick="window.print()">
+    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+    Save as PDF
+  </button>
+</div>
+
+<div class="report-body"><div class="report-page">
+
+  <!-- COVER -->
+  <div class="cover-ruled">
+    <div class="cover-classification">Confidential — Regulatory Compliance Documentation</div>
+    <div class="cover-logo-row">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="logo-mark" id="r-logo">RE</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);">SimpleAML</div>
+          <div style="font-size:10px;color:var(--muted);">Real Estate AML/CTF Compliance</div>
+        </div>
+      </div>
+      <div class="cover-austrac-ref">
+        <div>Generated: <span id="r-date">—</span></div>
+        <div>Ref: AML/CTF Act 2006 (as amended)</div>
+        <div>Applies from: 1 July 2026</div>
+      </div>
+    </div>
+    <div class="cover-doc-title">AML/CTF Compliance<br>Evidence Report</div>
+    <div class="cover-doc-sub" id="r-agency-sub">Real Estate Agency — Seller's Agent</div>
+
+    <div class="cover-firm-block">
+      <div class="cover-firm-label">Reporting Entity Details</div>
+      <div class="cover-firm-grid">
+        <div class="cover-firm-item"><label>Registered Agency Name</label><span id="r-agency-name">—</span></div>
+        <div class="cover-firm-item"><label>Australian Business Number (ABN)</label><span id="r-abn" style="font-family:'IBM Plex Mono',monospace;">—</span></div>
+        <div class="cover-firm-item"><label>Real Estate Licence Number</label><span id="r-licence" style="font-family:'IBM Plex Mono',monospace;">—</span></div>
+        <div class="cover-firm-item"><label>AUSTRAC Entity ID</label><span id="r-austrac-id" style="font-family:'IBM Plex Mono',monospace;">—</span></div>
+        <div class="cover-firm-item"><label>AML/CTF Compliance Officer (AMLCO)</label><span id="r-amlco">—</span></div>
+        <div class="cover-firm-item"><label>Principal Place of Business</label><span id="r-address">—</span></div>
+      </div>
+    </div>
+
+    <div class="cover-status-row">
+      <div class="cover-status-card">
+        <div class="status-label">Program Readiness</div>
+        <div class="status-value" id="r-score" style="color:var(--brand);">—</div>
+        <div class="status-bar"><div class="status-bar-fill" id="r-score-bar" style="width:0%;background:var(--red);"></div></div>
+      </div>
+      <div class="cover-status-card">
+        <div class="status-label">Overall ML/TF Risk</div>
+        <div class="status-value" id="r-risk-rating">—</div>
+      </div>
+      <div class="cover-status-card">
+        <div class="status-label">Enrolment Status</div>
+        <div class="status-value" style="font-size:13px;" id="r-enrol-status-cover">—</div>
+      </div>
+    </div>
+
+    <div class="cover-declaration">
+      <strong>Purpose of this document:</strong> This report constitutes evidence of compliance with the Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth) and associated Rules, as applicable to real estate agents as Tranche 2 reporting entities from 1 July 2026. It documents the reporting entity's AML/CTF program, ML/TF/PF risk assessment, governance arrangements, customer due diligence records, staff training, and staff vetting. Part B provides structured support for the three-year independent evaluation required under s.159 of the Act. This document is confidential and prepared for regulatory compliance purposes.
+    </div>
+
+    <div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:12px;">Declaration by Senior Management</div>
+    <div style="font-size:10px;color:var(--muted);line-height:1.75;margin-bottom:16px;">
+      We declare that this AML/CTF Compliance Evidence Report accurately reflects the reporting entity's compliance arrangements as at the date of this report. The AML/CTF program described herein has been developed, implemented and maintained in accordance with our obligations under the Anti-Money Laundering and Counter-Terrorism Financing Act 2006 and associated Rules.
+    </div>
+    <div class="cover-sig-row">
+      <div><div class="sig-space"></div><div class="sig-line-rule"></div><div class="sig-block-label">AML/CTF Compliance Officer (AMLCO)</div><div class="sig-block-name" id="r-sig-amlco">—</div></div>
+      <div><div class="sig-space"></div><div class="sig-line-rule"></div><div class="sig-block-label">Principal / Licensee in Charge</div><div class="sig-block-name" id="r-sig-principal">—</div></div>
+      <div><div class="sig-space"></div><div class="sig-line-rule"></div><div class="sig-block-label">Date</div><div class="sig-block-name" id="r-sig-date">—</div></div>
+    </div>
+  </div>
+
+  <!-- ═══ PART A ═══ -->
+  <div class="part-divider page-break">
+    <div class="part-label">Part A — Annual Compliance Evidence</div>
+    <div class="part-desc">For internal use and annual compliance review. Sections 01–07.</div>
+  </div>
+
+  <!-- 01 ENROLMENT -->
+  <div class="section avoid-break">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">AUSTRAC Enrolment</span>
+      <span class="section-austrac-ref">AML/CTF Act s.51A — Enrolment required by 29 July 2026</span>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="evidence-block"><div class="evidence-label">Enrolment Status <span class="evidence-req">Required</span></div><div id="r-enrol-status"></div></div>
+        <div class="evidence-block"><div class="evidence-label">AUSTRAC Entity ID</div><div class="evidence-value mono" id="r-enrol-id">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">Designated Services Commencement Date</div><div class="evidence-value" id="r-commence">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">Date Enrolled</div><div class="evidence-value" id="r-enrol-date">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">Enrolled By</div><div class="evidence-value" id="r-enrol-by">—</div></div>
+      </div>
+      <div>
+        <div class="evidence-block"><div class="evidence-label">Designated Services Declared <span class="evidence-req">Required</span></div><div id="r-services-list" style="display:flex;flex-direction:column;gap:4px;"></div></div>
+        <div class="evidence-block" style="margin-top:10px;"><div class="evidence-label">Fit &amp; Proper — Civil Penalty Orders</div><div class="evidence-value" id="r-penalty">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">Fit &amp; Proper — Adverse Proceedings</div><div class="evidence-value" id="r-proceedings">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">Annual Compliance Report — Next Due</div><div class="evidence-value" id="r-acr-next">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 PROGRAM -->
+  <div class="section avoid-break">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">AML/CTF Program — Governance &amp; Documentation</span>
+      <span class="section-austrac-ref">AML/CTF Act s.26A–26E — Program required before 1 July 2026</span>
+    </div>
+    <div class="grid-2" style="margin-bottom:12px;">
+      <div>
+        <div class="evidence-block"><div class="evidence-label">Policy Document <span class="evidence-req">Required</span></div><div class="evidence-value" id="r-policy-doc">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">Process Document</div><div class="evidence-value" id="r-process-doc">—</div></div>
+      </div>
+      <div class="grid-2" style="gap:10px;align-content:start;">
+        <div class="evidence-block"><div class="evidence-label">Last Reviewed</div><div class="evidence-value" id="r-policy-last">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">Next Review Due</div><div class="evidence-value" id="r-policy-next">—</div></div>
+      </div>
+    </div>
+    <div class="evidence-block" style="margin-bottom:12px;">
+      <div class="evidence-label">Program Checkpoints <span class="evidence-req">Required</span></div>
+      <div class="checklist" id="r-pol-checks"></div>
+    </div>
+    <div class="evidence-block">
+      <div class="evidence-label">Senior Manager Approval <span class="evidence-req">Required before 1 July 2026</span></div>
+      <div id="r-approval-block"></div>
+    </div>
+  </div>
+
+  <!-- 03 RISK ASSESSMENT -->
+  <div class="section page-break avoid-break">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">ML/TF/PF Risk Assessment</span>
+      <span class="section-austrac-ref">AML/CTF Act s.26B — Annual review required</span>
+    </div>
+    <div class="grid-5" style="margin-bottom:14px;">
+      <div class="evidence-block"><div class="evidence-label">Overall <span class="evidence-req">Required</span></div><div id="r-overall-rating"></div></div>
+      <div class="evidence-block"><div class="evidence-label">Transaction</div><div id="r-tx-rating"></div></div>
+      <div class="evidence-block"><div class="evidence-label">Customer</div><div id="r-cust-rating"></div></div>
+      <div class="evidence-block"><div class="evidence-label">Geographic</div><div id="r-geo-rating"></div></div>
+      <div class="evidence-block"><div class="evidence-label">Payment / Funding</div><div id="r-pay-rating"></div></div>
+    </div>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="evidence-block"><div class="evidence-label">Transaction &amp; Property Risk <span class="evidence-req">Written Narrative Required</span></div><div class="evidence-value narrative" id="r-tx-risk">Not yet documented.</div></div>
+      <div class="evidence-block"><div class="evidence-label">Customer Risk <span class="evidence-req">Written Narrative Required</span></div><div class="evidence-value narrative" id="r-cust-risk">Not yet documented.</div></div>
+    </div>
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div class="evidence-block"><div class="evidence-label">Proliferation Financing (PF) Risk <span class="evidence-req">Written Narrative Required</span></div><div class="evidence-value narrative" id="r-pf-risk">Not yet documented.</div></div>
+      <div class="evidence-block"><div class="evidence-label">Geographic Risk Commentary <span class="evidence-req">Written Narrative Required</span></div><div class="evidence-value narrative" id="r-geo-risk">Not yet documented.</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="evidence-block"><div class="evidence-label">Payment &amp; Funding Risk <span class="evidence-req">Written Narrative Required</span></div><div class="evidence-value narrative" id="r-pay-risk">Not yet documented.</div></div>
+      <div>
+        <div class="evidence-block"><div class="evidence-label">Key Controls &amp; Mitigants <span class="evidence-req">Required</span></div><div class="evidence-value narrative" id="r-controls">Not yet documented.</div></div>
+        <div class="grid-2" style="gap:10px;margin-top:10px;">
+          <div class="evidence-block"><div class="evidence-label">Assessment Date</div><div class="evidence-value" id="r-ra-date">—</div></div>
+          <div class="evidence-block"><div class="evidence-label">Next Review Due</div><div class="evidence-value" id="r-ra-next">—</div></div>
+        </div>
+        <div class="evidence-block" style="margin-top:10px;"><div class="evidence-label">Assessed By</div><div class="evidence-value" id="r-ra-by">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 GOVERNANCE -->
+  <div class="section avoid-break">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">Governance &amp; Agency Profile</span>
+      <span class="section-austrac-ref">AML/CTF Act s.26A(2) — AMLCO appointment required</span>
+    </div>
+    <div class="grid-2" style="margin-bottom:12px;">
+      <div>
+        <div class="evidence-block"><div class="evidence-label">Legal Entity Name</div><div class="evidence-value" id="r-legal-name">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">Trading Name</div><div class="evidence-value" id="r-trading">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">Business Structure</div><div class="evidence-value" id="r-structure">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">Number of Personnel</div><div class="evidence-value" id="r-staff-count">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">Reporting Group Status</div><div class="evidence-value" id="r-reporting-group">—</div></div>
+      </div>
+      <div>
+        <div class="evidence-block"><div class="evidence-label">AMLCO — Full Name <span class="evidence-req">Required</span></div><div class="evidence-value" id="r-amlco-name">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">AMLCO — Title / Role</div><div class="evidence-value" id="r-amlco-title">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">AMLCO — Appointment Date <span class="evidence-req">Required</span></div><div class="evidence-value" id="r-amlco-date">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">AMLCO — Email</div><div class="evidence-value" id="r-amlco-email">—</div></div>
+        <div class="evidence-block"><div class="evidence-label">Principal / Licensee in Charge</div><div class="evidence-value" id="r-principal">—</div></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="evidence-block" style="margin-top:10px;">
+      <div class="evidence-label">Trust Account Details</div>
+      <div class="evidence-value" id="r-trust-account">—</div>
+    </div>
+  </div>
+
+  <!-- 05 CDD REGISTER -->
+  <div class="section page-break">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">Customer Due Diligence — Listing Register</span>
+      <span class="section-austrac-ref">AML/CTF Act s.26F — CDD before designated service</span>
+    </div>
+    <div class="grid-3" style="margin-bottom:14px;">
+      <div class="evidence-block">
+        <div class="kpi-num" id="r-listing-count">0</div>
+        <div class="kpi-label">Total Listings</div>
+      </div>
+      <div class="evidence-block">
+        <div class="kpi-num" style="color:var(--red);" id="r-high-count">0</div>
+        <div class="kpi-label">High Risk</div>
+      </div>
+      <div class="evidence-block">
+        <div class="kpi-num" style="color:var(--amber);" id="r-smr-count">0</div>
+        <div class="kpi-label">SMR Filed / Under Consideration</div>
+      </div>
+    </div>
+    <table class="data-table">
+      <thead><tr>
+        <th>Property</th>
+        <th>Method</th>
+        <th>Price Range</th>
+        <th>Seller CDD</th>
+        <th>Buyer CDD</th>
+        <th>Risk</th>
+        <th>Flags</th>
+        <th>SMR</th>
+        <th>TTR</th>
+        <th>Status</th>
+      </tr></thead>
+      <tbody id="r-listings-table"></tbody>
+    </table>
+  </div>
+
+  <!-- 06 TRAINING -->
+  <div class="section avoid-break">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <span class="section-title">AML/CTF Staff Training Register</span>
+      <span class="section-austrac-ref">AML/CTF Act s.26A(2)(d) — Training program required</span>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>Staff Member</th><th>Training Type</th><th>Format</th><th>Date Completed</th><th>Next Refresh Due</th><th>Provider</th><th>Assessment</th><th>Status</th></tr></thead>
+      <tbody id="r-training-table"></tbody>
+    </table>
+  </div>
+
+  <!-- 07 STAFF VETTING -->
+  <div class="section avoid-break">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <span class="section-title">Staff Vetting Register (Personnel Due Diligence)</span>
+      <span class="section-austrac-ref">AML/CTF Act s.26A(2)(c) — Staff vetting required</span>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>Staff Member</th><th>Role</th><th>AML Level</th><th>Vetting Date</th><th>Checks</th><th>Skills</th><th>Integrity</th><th>Next Review</th><th>Status</th></tr></thead>
+      <tbody id="r-staff-table"></tbody>
+    </table>
+  </div>
+
+  <!-- ═══ PART B ═══ -->
+  <div class="part-divider page-break">
+    <div class="part-label">Part B — Three-Year Independent Evaluation Support</div>
+    <div class="part-desc">Structured to support the independent evaluation required under s.159 AML/CTF Act. First evaluation due approximately 2029 for Tranche 2 entities. Sections 08–12.</div>
+  </div>
+
+  <!-- 08 GAP ANALYSIS -->
+  <div class="section avoid-break">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <span class="section-title">Compliance Gap Analysis</span>
+      <span class="section-austrac-ref">Auto-generated from recorded data at time of report</span>
+    </div>
+    <div style="font-size:10px;color:var(--muted);margin-bottom:12px;line-height:1.6;">The following assessment identifies gaps between required compliance elements and what has been recorded in SimpleAML as at the report date. Items marked ✗ require attention before the next review period.</div>
+    <div id="r-gap-analysis"></div>
+  </div>
+
+  <!-- 09 CDD TIMELINESS -->
+  <div class="section avoid-break">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <span class="section-title">CDD Timeliness Analysis</span>
+      <span class="section-austrac-ref">Evidence that CDD was completed before deadline</span>
+    </div>
+    <div style="font-size:10px;color:var(--muted);margin-bottom:12px;line-height:1.6;">For an independent evaluation, evidence must demonstrate that CDD was completed on time — not just that it was completed. This section flags listings where the deadline status can be assessed.</div>
+    <div class="grid-3" style="margin-bottom:14px;">
+      <div class="evidence-block"><div class="kpi-num" style="color:var(--green);" id="r-cdd-ontime">0</div><div class="kpi-label">CDD Complete</div></div>
+      <div class="evidence-block"><div class="kpi-num" style="color:var(--red);" id="r-cdd-overdue">0</div><div class="kpi-label">Buyer CDD Overdue</div></div>
+      <div class="evidence-block"><div class="kpi-num" style="color:var(--amber);" id="r-cdd-pending">0</div><div class="kpi-label">Buyer CDD Pending</div></div>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>Property</th><th>Method</th><th>Listing Date</th><th>Buyer Deadline</th><th>Seller CDD</th><th>Buyer CDD</th><th>Timeliness</th></tr></thead>
+      <tbody id="r-timeliness-table"></tbody>
+    </table>
+  </div>
+
+  <!-- 10 HIGH-RISK & RED FLAGS -->
+  <div class="section avoid-break">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <span class="section-title">High-Risk &amp; Red-Flag Transaction Summary</span>
+      <span class="section-austrac-ref">Evidence of escalation and SMR decision-making</span>
+    </div>
+    <div style="font-size:10px;color:var(--muted);margin-bottom:12px;line-height:1.6;">An independent evaluation will examine whether high-risk and red-flag transactions were appropriately escalated and whether SMR decisions were documented. Only listings with Risk = High or one or more red flags are shown.</div>
+    <div id="r-highrisk-table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Property</th><th>Risk Rating</th><th>Red Flags</th><th>SMR Decision</th><th>TTR</th><th>Enhanced CDD</th><th>AMLCO Approval</th></tr></thead>
+        <tbody id="r-highrisk-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 11 PROGRAM ADEQUACY -->
+  <div class="section avoid-break">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <span class="section-title">Program Adequacy Checklist</span>
+      <span class="section-austrac-ref">Against AUSTRAC real estate starter kit requirements</span>
+    </div>
+    <div style="font-size:10px;color:var(--muted);margin-bottom:12px;line-height:1.6;">This checklist maps your recorded compliance activities against AUSTRAC's published requirements for real estate agents. An independent evaluator will assess whether each element is not just present but <em>adequate and effective</em>.</div>
+    <div id="r-adequacy-checklist"></div>
+  </div>
+
+  <!-- 12 EVALUATOR DECLARATION -->
+  <div class="section page-break avoid-break">
+    <div class="section-header">
+      <span class="section-num">12</span>
+      <span class="section-title">Independent Evaluator Declaration</span>
+      <span class="section-austrac-ref">AML/CTF Act s.159 — Independent evaluation required every 3 years</span>
+    </div>
+    <div style="font-size:10px;color:var(--muted);margin-bottom:16px;line-height:1.6;">
+      This section is to be completed by the independent evaluator. The evaluator must be independent of the agency — they cannot be the AMLCO or a person directly involved in implementing the AML/CTF program. The evaluator should review all sections of this report and the underlying records before completing this declaration.
+    </div>
+
+    <div class="grid-2" style="margin-bottom:16px;">
+      <div>
+        <div class="eval-label">Evaluator Full Name</div>
+        <div class="eval-field"></div>
+        <div style="margin-bottom:12px;"></div>
+        <div class="eval-label">Evaluator Organisation / Title</div>
+        <div class="eval-field"></div>
+        <div style="margin-bottom:12px;"></div>
+        <div class="eval-label">Evaluator Qualifications / Basis for Independence</div>
+        <div class="eval-field"></div>
+        <div style="margin-bottom:12px;"></div>
+        <div class="eval-label">Date of Evaluation</div>
+        <div class="eval-field"></div>
+        <div style="margin-bottom:12px;"></div>
+        <div class="eval-label">Period Covered by Evaluation</div>
+        <div class="eval-field"></div>
+      </div>
+      <div>
+        <div class="eval-label">Overall Assessment</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:10px;"><input type="checkbox"> Program is adequate and effective — no significant gaps identified</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:10px;"><input type="checkbox"> Program is adequate with minor gaps — remediation recommended</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:10px;"><input type="checkbox"> Program requires material improvement — significant gaps identified</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:10px;"><input type="checkbox"> Program is inadequate — urgent remediation required</label>
+        </div>
+        <div class="eval-label">Areas Reviewed</div>
+        <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:12px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:10px;"><input type="checkbox"> AML/CTF Program documentation</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:10px;"><input type="checkbox"> ML/TF/PF Risk Assessment</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:10px;"><input type="checkbox"> Customer due diligence records (sample)</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:10px;"><input type="checkbox"> Staff training records</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:10px;"><input type="checkbox"> Staff vetting records</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:10px;"><input type="checkbox"> AUSTRAC enrolment</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:10px;"><input type="checkbox"> SMR / TTR reporting decisions</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="eval-label">Key Findings &amp; Observations</div>
+    <div class="eval-box"></div>
+    <div style="margin-bottom:12px;"></div>
+
+    <div class="eval-label">Recommended Actions (if any)</div>
+    <div class="eval-box"></div>
+    <div style="margin-bottom:24px;"></div>
+
+    <div class="cover-sig-row">
+      <div><div class="sig-space"></div><div class="sig-line-rule"></div><div class="sig-block-label">Independent Evaluator Signature</div></div>
+      <div><div class="sig-space"></div><div class="sig-line-rule"></div><div class="sig-block-label">Evaluator Name (print)</div></div>
+      <div><div class="sig-space"></div><div class="sig-line-rule"></div><div class="sig-block-label">Date</div></div>
+    </div>
+    <div style="margin-top:16px;font-size:9px;color:var(--muted);line-height:1.7;padding:10px;border:1px solid var(--border);border-radius:6px;">
+      <strong>Retention note:</strong> This evaluation report must be retained for a minimum of 7 years from the date of evaluation (s.107 AML/CTF Act). A copy should be held by both the agency and the evaluator. AUSTRAC may request this document during a supervisory review.
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div>CONFIDENTIAL — AML/CTF Compliance Evidence Report — Real Estate — Generated by SimpleAML (simpleaml.com.au) — Click Seed Pty Ltd ABN 87 656 256 567</div>
+    <div id="r-footer-right">—</div>
+  </div>
+
+</div></div>
+
+<script>
+'use strict';
+var KEY = 're_v2';
+var fmtDate = function(d) {
+  if (!d) return '—';
+  var dt = new Date(d);
+  if (isNaN(dt)) return d;
+  return String(dt.getDate()).padStart(2,'0') + '/' + String(dt.getMonth()+1).padStart(2,'0') + '/' + dt.getFullYear();
+};
+var $ = function(id) { return document.getElementById(id); };
+var set = function(id, val) { var el = $(id); if (el) el.textContent = val || '—'; };
+var setHTML = function(id, html) { var el = $(id); if (el) el.innerHTML = html; };
+var isOD = function(d) { return d && new Date(d) < new Date(); };
+var badgeHTML = function(r) {
+  var cls = r==='High'?'b-high':r==='Medium'?'b-med':r==='Low'?'b-low':'b-neutral';
+  return '<span class="badge ' + cls + '">' + (r || 'Not rated') + '</span>';
+};
+var svcOK = function(checked) {
+  return checked
+    ? '<div style="display:flex;align-items:center;gap:6px;padding:4px 8px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:4px;font-size:10px;color:#059669;">✓ <span></span></div>'
+    : '<div style="display:flex;align-items:center;gap:6px;padding:4px 8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;font-size:10px;color:var(--muted);">– <span></span></div>';
+};
+
+var POL_CHKS = {
+  pa:   'Part A — Governance & accountability (AMLCO, senior manager, risk appetite)',
+  pb:   'Part B — Initial CDD procedures (seller & buyer ID for all entity types)',
+  ppep: 'PEP & sanctions screening procedures documented',
+  pesc: 'Escalation & Enhanced CDD policy (when to involve AMLCO)',
+  pong: 'Ongoing CDD & monitoring policy (exchange to settlement)',
+  prf:  'Red flag indicators documented (cash, third-party funds, unusual structures)',
+  ptip: 'Tipping-off & SMR procedures (s.123 non-disclosure obligations)',
+  ppf:  'Proliferation financing (PF) controls and DFAT screening',
+  prk:  'Record keeping procedures (7-year retention)',
+  ptr:  'Training program documented (roles, frequency, schedule)',
+  pra:  'Risk assessment referenced in program',
+};
+
+var RE_SERVICES = {
+  'svc-1': 'Brokering the sale of real estate on behalf of the seller',
+  'svc-2': 'Brokering the purchase of real estate on behalf of the buyer',
+  'svc-3': 'Brokering the transfer of real estate',
+};
+
+function calcScore(D) {
+  var checks = [
+    !!(D.profile && D.profile.name && D.profile.name !== 'My Agency'),
+    D.staff && D.staff.length > 0,
+    D.training && D.training.length > 0,
+    !!(D.riskass && D.riskass.overallRating),
+    !!(D.program && D.program.approvalDate),
+    !!(D.enrolment && D.enrolment.status && ['Preparing','Submitted','Enrolled'].indexOf(D.enrolment.status) >= 0),
+  ];
+  return Math.round(checks.filter(Boolean).length / checks.length * 100);
+}
+
+function render() {
+  var D = {};
+  try { D = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) {}
+  D.profile    = D.profile    || {};
+  D.riskass    = D.riskass    || {};
+  D.program    = D.program    || {};
+  D.enrolment  = D.enrolment  || {};
+  D.staff      = D.staff      || [];
+  D.training   = D.training   || [];
+  D.transactions = D.transactions || [];
+
+  var now = new Date();
+  var dateStr = fmtDate(now.toISOString());
+  var agencyName = D.profile.name || D.agency && D.agency.name || 'My Agency';
+
+  // ── COVER ──
+  var initials = agencyName.split(' ').map(function(w){return w[0]||'';}).join('').toUpperCase().slice(0,2) || 'RE';
+  set('r-logo', initials);
+  set('r-date', dateStr);
+  set('r-agency-name', agencyName);
+  set('r-agency-sub', 'Real Estate Agency — Seller\'s Agent');
+  set('r-abn', D.profile.abn || 'Not recorded');
+  set('r-licence', D.profile.licence || 'Not recorded');
+  set('r-austrac-id', D.enrolment.id || 'Pending enrolment');
+  set('r-amlco', D.profile.amlco || 'Not yet appointed');
+  set('r-address', D.profile.address || 'Not recorded');
+  set('r-footer-right', agencyName + ' — ' + dateStr);
+  set('r-sig-amlco', D.profile.amlco || '');
+  set('r-sig-principal', D.profile.principal || '');
+  set('r-sig-date', dateStr);
+
+  var score = calcScore(D);
+  set('r-score', score + '%');
+  var bar = $('r-score-bar');
+  if (bar) { bar.style.width = score + '%'; bar.style.background = score>=80?'#059669':score>=50?'#b45309':'#dc2626'; }
+
+  var rr = D.riskass.overallRating;
+  setHTML('r-risk-rating', rr
+    ? '<span class="badge ' + (rr==='High'?'b-high':rr==='Medium'?'b-med':'b-low') + '" style="font-size:13px;padding:4px 12px;">' + rr + '</span>'
+    : '<span style="color:var(--muted);font-size:12px;">Not yet rated</span>');
+
+  var est = D.enrolment.status || 'Not Started';
+  var estCls = est==='Enrolled'?'b-ok':est==='Submitted'?'b-enrolled':est==='Preparing'?'b-med':'b-neutral';
+  setHTML('r-enrol-status-cover', '<span class="badge ' + estCls + '" style="font-size:12px;padding:4px 12px;">' + est + '</span>');
+
+  // ── 01 ENROLMENT ──
+  setHTML('r-enrol-status', '<span class="badge ' + estCls + '">' + est + '</span>');
+  set('r-enrol-id', D.enrolment.id);
+  set('r-commence', fmtDate(D.enrolment.commence));
+  set('r-enrol-date', fmtDate(D.enrolment.date));
+  set('r-enrol-by', D.enrolment.by);
+  set('r-penalty', D.enrolment.penalty || 'No');
+  set('r-proceedings', D.enrolment.proceedings || 'No');
+  set('r-acr-next', fmtDate(D.enrolment.acrNext) || 'Not yet confirmed by AUSTRAC (expected 2027)');
+
+  var svcEl = $('r-services-list');
+  if (svcEl) {
+    var svcs = D.enrolment.services || {};
+    svcEl.innerHTML = Object.keys(RE_SERVICES).map(function(k) {
+      var checked = svcs[k];
+      return '<div style="display:flex;align-items:center;gap:6px;padding:4px 8px;margin-bottom:3px;' +
+        (checked ? 'background:#ecfdf5;border:1px solid #a7f3d0;' : 'background:var(--bg);border:1px solid var(--border);') +
+        'border-radius:4px;font-size:10px;color:' + (checked ? '#059669' : 'var(--muted)') + ';">' +
+        (checked ? '✓' : '–') + ' ' + RE_SERVICES[k] + '</div>';
+    }).join('');
+  }
+
+  // ── 02 PROGRAM ──
+  set('r-policy-doc', D.program.policyFilename ? '✓ ' + D.program.policyFilename : 'No document uploaded');
+  set('r-process-doc', D.program.processFilename ? '✓ ' + D.program.processFilename : 'No document uploaded');
+  set('r-policy-last', fmtDate(D.program.lastReview));
+  set('r-policy-next', fmtDate(D.program.nextReview));
+
+  var polEl = $('r-pol-checks');
+  if (polEl) {
+    var chks = D.program.chks || {};
+    polEl.innerHTML = Object.keys(POL_CHKS).map(function(k) {
+      var done = !!chks[k];
+      return '<div class="chk-item ' + (done?'done':'undone') + '">' +
+        '<span class="chk-icon">' + (done?'✓':'✗') + '</span>' +
+        '<span class="chk-text">' + POL_CHKS[k] + '</span></div>';
+    }).join('');
+  }
+
+  var apprEl = $('r-approval-block');
+  if (apprEl) {
+    if (D.program.approvalDate && D.program.approvalName) {
+      apprEl.innerHTML = '<div style="background:#ecfdf5;border:1px solid #a7f3d0;border-left:3px solid #059669;border-radius:0 6px 6px 0;padding:10px 12px;">' +
+        '<div style="font-size:10px;font-weight:600;color:#059669;margin-bottom:6px;">✓ AML/CTF Program Formally Approved</div>' +
+        '<div style="font-size:10px;color:var(--muted);line-height:1.7;">' +
+        'Approved by: <strong style="color:var(--text);">' + D.program.approvalName + (D.program.approvalTitle ? ', ' + D.program.approvalTitle : '') + '</strong><br>' +
+        'Date of approval: ' + fmtDate(D.program.approvalDate) + '<br>' +
+        'Governing body notified: ' + (D.program.approvalNotified || '—') + '<br>' +
+        'Program version: ' + (D.program.approvalVersion || '—') +
+        '</div></div>';
+    } else {
+      apprEl.innerHTML = '<div class="empty-note">Senior manager approval not yet recorded</div>';
+    }
+  }
+
+  // ── 03 RISK ASSESSMENT ──
+  setHTML('r-overall-rating', badgeHTML(D.riskass.overallRating));
+  setHTML('r-tx-rating', badgeHTML(D.riskass.txRating));
+  setHTML('r-cust-rating', badgeHTML(D.riskass.custRating));
+  setHTML('r-geo-rating', badgeHTML(D.riskass.geoRating));
+  setHTML('r-pay-rating', badgeHTML(D.riskass.payRating));
+
+  var setN = function(id, val) { var el = $(id); if (el) el.textContent = val || 'Not yet documented.'; };
+  setN('r-tx-risk', D.riskass.txRisk);
+  setN('r-cust-risk', D.riskass.custRisk);
+  setN('r-pf-risk', D.riskass.pfRisk);
+  setN('r-geo-risk', D.riskass.geoRisk);
+  setN('r-pay-risk', D.riskass.payRisk);
+  setN('r-controls', D.riskass.controls);
+  set('r-ra-date', fmtDate(D.riskass.date));
+  set('r-ra-next', fmtDate(D.riskass.nextDate));
+  set('r-ra-by', D.riskass.by);
+
+  // ── 04 GOVERNANCE ──
+  set('r-legal-name', D.profile.name);
+  set('r-trading', D.profile.trading);
+  set('r-structure', D.profile.structure);
+  set('r-staff-count', D.profile.staffCount);
+  set('r-reporting-group', D.profile.reportingGroup);
+  set('r-amlco-name', D.profile.amlco);
+  set('r-amlco-title', D.profile.amlcoTitle);
+  set('r-amlco-date', fmtDate(D.profile.amlcoDate));
+  set('r-amlco-email', D.profile.amlcoEmail);
+  set('r-principal', D.profile.principal ? D.profile.principal + (D.profile.principalTitle ? ' — ' + D.profile.principalTitle : '') : '—');
+  set('r-trust-account', D.profile.trustAccount === 'Yes'
+    ? 'Trust account held — ' + (D.profile.trustBank || 'bank not specified')
+    : D.profile.trustAccount === 'No' ? 'No trust account held' : '—');
+
+  // ── 05 CDD REGISTER ──
+  var txs = D.transactions;
+  set('r-listing-count', txs.length);
+  set('r-high-count', txs.filter(function(t){return t.risk==='High';}).length);
+  set('r-smr-count', txs.filter(function(t){return t.smr && t.smr !== 'No';}).length);
+
+  var listEl = $('r-listings-table');
+  if (listEl) {
+    if (!txs.length) {
+      listEl.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:16px;color:var(--muted);font-style:italic;">No listings recorded</td></tr>';
+    } else {
+      listEl.innerHTML = txs.map(function(t) {
+        var sCls = t.sellerCddDone ? 'b-ok' : 'b-high';
+        var bCls = t.buyerCddDone ? 'b-ok' : t.buyerName ? 'b-med' : 'b-neutral';
+        var smrCls = t.smr==='Yes'?'b-high':t.smr==='Under consideration'?'b-med':'b-ok';
+        var smrLabel = t.smr==='Yes'?'Filed':t.smr==='Under consideration'?'Pending':'No';
+        return '<tr>' +
+          '<td style="font-size:9px;max-width:140px;"><strong>' + (t.address||'—') + '</strong></td>' +
+          '<td><span class="badge b-neutral" style="font-size:8px;">' + (t.saleMethod==='auction'?'Auction':'Private') + '</span></td>' +
+          '<td style="font-size:9px;">' + (t.valueLabel||'—') + '</td>' +
+          '<td><span class="badge ' + sCls + '">' + (t.sellerCddDone?'✓ Done':'Needed') + '</span></td>' +
+          '<td><span class="badge ' + bCls + '">' + (t.buyerCddDone?'✓ Done':t.buyerName?'Partial':'Pending') + '</span></td>' +
+          '<td>' + badgeHTML(t.risk) + '</td>' +
+          '<td style="color:' + (t.flagCount>0?'var(--red)':'var(--muted)') + ';font-weight:' + (t.flagCount>0?'700':'400') + ';">' + (t.flagCount||0) + '</td>' +
+          '<td><span class="badge ' + smrCls + '">' + smrLabel + '</span></td>' +
+          '<td style="color:' + (t.ttr==='Yes'?'var(--red)':'var(--muted)') + ';">' + (t.ttr==='Yes'?'Required':'No') + '</td>' +
+          '<td><span class="badge b-neutral" style="font-size:8px;">' + (t.status||'—') + '</span></td>' +
+          '</tr>';
+      }).join('');
+    }
+  }
+
+  // ── 06 TRAINING ──
+  var trainEl = $('r-training-table');
+  if (trainEl) {
+    if (!D.training.length) {
+      trainEl.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:16px;color:var(--muted);font-style:italic;">No training records</td></tr>';
+    } else {
+      trainEl.innerHTML = D.training.map(function(t) {
+        var exp = t.expiry && new Date(t.expiry) < now;
+        var soon = t.expiry && !exp && (new Date(t.expiry) - now) < 30*864e5;
+        var stBadge = exp ? '<span class="badge b-high">Expired</span>' : soon ? '<span class="badge b-med">Due Soon</span>' : '<span class="badge b-ok">Current</span>';
+        return '<tr>' +
+          '<td><strong>' + (t.staff||'—') + '</strong></td>' +
+          '<td style="font-size:9px;">' + (t.type||'—') + '</td>' +
+          '<td style="font-size:9px;">' + (t.format||'—') + '</td>' +
+          '<td>' + fmtDate(t.date) + '</td>' +
+          '<td style="' + (exp?'color:var(--red);font-weight:600;':'') + '">' + fmtDate(t.expiry) + '</td>' +
+          '<td style="font-size:9px;">' + (t.provider||'—') + '</td>' +
+          '<td style="font-size:9px;">' + (t.assessment||'—') + '</td>' +
+          '<td>' + stBadge + '</td>' +
+          '</tr>';
+      }).join('');
+    }
+  }
+
+  // ── 07 STAFF VETTING ──
+  var staffEl = $('r-staff-table');
+  if (staffEl) {
+    if (!D.staff.length) {
+      staffEl.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:16px;color:var(--muted);font-style:italic;">No staff vetting records</td></tr>';
+    } else {
+      staffEl.innerHTML = D.staff.map(function(s) {
+        var checks = [];
+        if (s.chkInterview)   checks.push('Interview');
+        if (s.chkReference)   checks.push('Reference');
+        if (s.chkAttestation) checks.push('Attestation');
+        if (s.chkCriminal)    checks.push('Criminal history');
+        var reviewOD = s.review && new Date(s.review) < now;
+        var stBadge = reviewOD ? '<span class="badge b-high">Review Overdue</span>' : '<span class="badge b-ok">Current</span>';
+        return '<tr>' +
+          '<td><strong>' + (s.name||'—') + '</strong></td>' +
+          '<td style="font-size:9px;">' + (s.role||'—') + '</td>' +
+          '<td style="font-size:9px;">Level ' + (s.level||'—') + '</td>' +
+          '<td>' + fmtDate(s.date) + '</td>' +
+          '<td style="font-size:9px;">' + (checks.join(', ')||'None recorded') + '</td>' +
+          '<td style="font-size:9px;">' + (s.skills||'—') + '</td>' +
+          '<td style="font-size:9px;">' + (s.integrity||'—') + '</td>' +
+          '<td style="' + (reviewOD?'color:var(--red);':'') + '">' + fmtDate(s.review) + '</td>' +
+          '<td>' + stBadge + '</td>' +
+          '</tr>';
+      }).join('');
+    }
+  }
+
+  // ── 08 GAP ANALYSIS ──
+  var gaps = [
+    {
+      label: 'Agency Profile completed',
+      ok: !!(D.profile.name && D.profile.name !== 'My Agency' && D.profile.abn && D.profile.amlco && D.profile.amlcoDate),
+      note: 'Required fields: legal name, ABN, AMLCO name and appointment date'
+    },
+    {
+      label: 'Staff vetting records — at least one record',
+      ok: D.staff.length > 0,
+      note: 'At least one staff member must have a completed vetting record before 1 July 2026'
+    },
+    {
+      label: 'Staff vetting — all reviews current',
+      ok: D.staff.length > 0 && D.staff.every(function(s){ return !s.review || new Date(s.review) >= now; }),
+      note: 'One or more staff vetting records are overdue for review'
+    },
+    {
+      label: 'Training records — at least one record',
+      ok: D.training.length > 0,
+      note: 'At least one training record must be logged before 1 July 2026'
+    },
+    {
+      label: 'Training — no expired records',
+      ok: D.training.length === 0 || D.training.every(function(t){ return !t.expiry || new Date(t.expiry) >= now; }),
+      note: 'One or more training records have expired and require renewal'
+    },
+    {
+      label: 'ML/TF/PF Risk Assessment completed',
+      ok: !!(D.riskass.overallRating && D.riskass.txRisk && D.riskass.pfRisk),
+      note: 'Overall rating and written narratives required for all risk dimensions'
+    },
+    {
+      label: 'Risk Assessment — all 5 dimensions rated',
+      ok: !!(D.riskass.txRating && D.riskass.custRating && D.riskass.pfRating && D.riskass.geoRating && D.riskass.payRating),
+      note: 'Transaction, Customer, PF, Geographic and Payment/Funding risk must all be rated'
+    },
+    {
+      label: 'AML/CTF Program — both documents uploaded',
+      ok: !!(D.program.policyFilename && D.program.processFilename),
+      note: 'Both the Policy document and Process document must be uploaded'
+    },
+    {
+      label: 'AML/CTF Program — all 11 checkpoints ticked',
+      ok: (function() {
+        var chks = D.program.chks || {};
+        return ['pa','pb','ppep','pesc','pong','prf','ptip','ppf','prk','ptr','pra'].every(function(k){ return chks[k]; });
+      })(),
+      note: 'All 11 program sections must be confirmed as documented'
+    },
+    {
+      label: 'AML/CTF Program — senior manager approval recorded',
+      ok: !!(D.program.approvalDate && D.program.approvalName),
+      note: 'Program must be formally approved by a senior manager before 1 July 2026'
+    },
+    {
+      label: 'AUSTRAC Enrolment — commenced or enrolled',
+      ok: !!(D.enrolment.status && ['Preparing','Submitted','Enrolled'].indexOf(D.enrolment.status) >= 0),
+      note: 'Enrolment opens 31 March 2026. Deadline: 29 July 2026.'
+    },
+    {
+      label: 'AUSTRAC Enrolment — designated services declared',
+      ok: !!(D.enrolment.services && Object.values(D.enrolment.services).some(Boolean)),
+      note: 'At least one designated service must be selected in the enrolment record'
+    },
+    {
+      label: 'All listings have seller CDD completed',
+      ok: txs.length === 0 || txs.every(function(t){ return t.sellerCddDone; }),
+      note: 'One or more listings are missing seller CDD — required at listing (agency agreement signing)'
+    },
+    {
+      label: 'No buyer CDD deadlines overdue',
+      ok: txs.every(function(t){
+        if (!t.buyerDeadline || t.buyerCddDone) return true;
+        if (t.status === 'Settled' || t.status === 'Withdrawn') return true;
+        return new Date(t.buyerDeadline) >= now;
+      }),
+      note: 'One or more active listings have passed their buyer CDD deadline without CDD completed'
+    },
+    {
+      label: 'High-risk listings have Enhanced CDD recorded',
+      ok: txs.filter(function(t){return t.sellerRisk==='High'||t.buyerRisk==='High';})
+             .every(function(t){return t.sellerRisk!=='High'||t.sAmlcoApproval; }),
+      note: 'High risk customers require source of funds, source of wealth, adverse media check and AMLCO approval'
+    },
+  ];
+
+  var gapEl = $('r-gap-analysis');
+  if (gapEl) {
+    var passed = gaps.filter(function(g){return g.ok;}).length;
+    var pct = Math.round(passed / gaps.length * 100);
+    var summaryColor = pct===100?'#059669':pct>=70?'#b45309':'#dc2626';
+    gapEl.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:6px;">' +
+        '<div style="font-size:11px;font-weight:600;color:var(--text);">' + passed + ' of ' + gaps.length + ' compliance requirements met</div>' +
+        '<div style="font-size:18px;font-weight:700;color:' + summaryColor + ';">' + pct + '%</div>' +
+      '</div>' +
+      gaps.map(function(g) {
+        var cls = g.ok ? 'gap-ok' : 'gap-fail';
+        var icon = g.ok ? '✓' : '✗';
+        return '<div class="gap-item ' + cls + '">' +
+          '<span class="gap-icon">' + icon + '</span>' +
+          '<div><div class="gap-label">' + g.label + '</div>' +
+          (!g.ok ? '<div class="gap-note">' + g.note + '</div>' : '') +
+          '</div></div>';
+      }).join('');
+  }
+
+  // ── 09 CDD TIMELINESS ──
+  var ontime = 0, overdue = 0, pending = 0;
+  var timeEl = $('r-timeliness-table');
+  if (timeEl) {
+    if (!txs.length) {
+      timeEl.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:16px;color:var(--muted);font-style:italic;">No listings recorded</td></tr>';
+    } else {
+      timeEl.innerHTML = txs.map(function(t) {
+        var settled = t.status === 'Settled' || t.status === 'Withdrawn';
+        var dlOD = t.buyerDeadline && !t.buyerCddDone && !settled && new Date(t.buyerDeadline) < now;
+        var dlPending = t.buyerDeadline && !t.buyerCddDone && !settled && new Date(t.buyerDeadline) >= now;
+
+        var timeliness, timeCls;
+        if (!t.buyerDeadline) {
+          timeliness = 'No deadline set'; timeCls = 'color:var(--muted);';
+        } else if (t.buyerCddDone) {
+          timeliness = '✓ Complete'; timeCls = 'color:var(--green);font-weight:600;'; ontime++;
+        } else if (dlOD) {
+          timeliness = '✗ Overdue'; timeCls = 'color:var(--red);font-weight:700;'; overdue++;
+        } else if (dlPending) {
+          timeliness = '⚠ Pending'; timeCls = 'color:var(--amber);font-weight:600;'; pending++;
+        } else if (settled) {
+          timeliness = 'Settled/Withdrawn'; timeCls = 'color:var(--muted);';
+        } else {
+          timeliness = 'N/A'; timeCls = 'color:var(--muted);';
+        }
+
+        return '<tr>' +
+          '<td style="font-size:9px;"><strong>' + (t.address||'—') + '</strong></td>' +
+          '<td><span class="badge b-neutral" style="font-size:8px;">' + (t.saleMethod==='auction'?'Auction':'Private') + '</span></td>' +
+          '<td>' + fmtDate(t.listingDate) + '</td>' +
+          '<td style="' + (dlOD?'color:var(--red);font-weight:600;':'') + '">' + fmtDate(t.buyerDeadline) + '</td>' +
+          '<td><span class="badge ' + (t.sellerCddDone?'b-ok':'b-high') + '">' + (t.sellerCddDone?'✓':'Needed') + '</span></td>' +
+          '<td><span class="badge ' + (t.buyerCddDone?'b-ok':t.buyerName?'b-med':'b-neutral') + '">' + (t.buyerCddDone?'✓':t.buyerName?'Partial':'Pending') + '</span></td>' +
+          '<td style="' + timeCls + '">' + timeliness + '</td>' +
+          '</tr>';
+      }).join('');
+    }
+  }
+  set('r-cdd-ontime', ontime);
+  set('r-cdd-overdue', overdue);
+  set('r-cdd-pending', pending);
+
+  // ── 10 HIGH-RISK & RED FLAGS ──
+  var hrEl = $('r-highrisk-table');
+  var hrTxs = txs.filter(function(t){ return t.risk==='High' || (t.flagCount && t.flagCount > 0); });
+  if (hrEl) {
+    if (!hrTxs.length) {
+      hrEl.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:16px;color:var(--muted);font-style:italic;">No high-risk or red-flag listings</td></tr>';
+    } else {
+      hrEl.innerHTML = hrTxs.map(function(t) {
+        var eddDone = !!(t.sof || t.sow || t.bSof || t.bSow);
+        var amlcoDone = !!(t.sAmlcoApproval || t.bAmlcoApproval);
+        return '<tr>' +
+          '<td style="font-size:9px;"><strong>' + (t.address||'—') + '</strong></td>' +
+          '<td>' + badgeHTML(t.risk) + '</td>' +
+          '<td style="color:' + ((t.flagCount||0)>0?'var(--red)':'var(--muted)') + ';font-weight:' + ((t.flagCount||0)>0?'700':'400') + ';">' + (t.flagCount||0) + ' flag' + ((t.flagCount||0)!==1?'s':'') + '</td>' +
+          '<td><span class="badge ' + (t.smr==='Yes'?'b-high':t.smr==='Under consideration'?'b-med':'b-ok') + '">' + (t.smr==='Yes'?'Filed':t.smr==='Under consideration'?'Pending':'No SMR') + '</span></td>' +
+          '<td style="color:' + (t.ttr==='Yes'?'var(--red)':'var(--muted)') + ';">' + (t.ttr==='Yes'?'Required':'No') + '</td>' +
+          '<td><span class="badge ' + (eddDone?'b-ok':'b-high') + '">' + (eddDone?'✓ Done':'Not recorded') + '</span></td>' +
+          '<td><span class="badge ' + (amlcoDone?'b-ok':'b-high') + '">' + (amlcoDone?'✓ Recorded':'Not recorded') + '</span></td>' +
+          '</tr>';
+      }).join('');
+    }
+  }
+
+  // ── 11 PROGRAM ADEQUACY ──
+  var adequacy = [
+    { label:'Governance — AMLCO appointed and details recorded', ok: !!(D.profile.amlco && D.profile.amlcoDate) },
+    { label:'Governance — Senior manager identified (Principal/LIC)', ok: !!D.profile.principal },
+    { label:'Program — Approved before 1 July 2026', ok: !!(D.program.approvalDate && new Date(D.program.approvalDate) < new Date('2026-07-01')) },
+    { label:'Program — Reviewed within last 12 months', ok: !!(D.program.lastReview && (now - new Date(D.program.lastReview)) < 365*864e5) },
+    { label:'Risk assessment — All 5 RE-specific dimensions assessed', ok: !!(D.riskass.txRating && D.riskass.custRating && D.riskass.pfRating && D.riskass.geoRating && D.riskass.payRating) },
+    { label:'Risk assessment — PF risk explicitly documented', ok: !!(D.riskass.pfRisk && D.riskass.pfRisk.trim().length > 20) },
+    { label:'CDD — Seller CDD completed on all listings', ok: txs.length === 0 || txs.every(function(t){return t.sellerCddDone;}) },
+    { label:'CDD — No active buyer CDD deadlines overdue', ok: txs.every(function(t){ if (!t.buyerDeadline || t.buyerCddDone || t.status==='Settled' || t.status==='Withdrawn') return true; return new Date(t.buyerDeadline) >= now; }) },
+    { label:'CDD — PEP and sanctions screening recorded for individual customers', ok: txs.length === 0 || txs.some(function(t){return t.sellerPep || t.buyerPep;}) },
+    { label:'Reporting — SMR decisions documented for all transactions', ok: txs.length === 0 || txs.every(function(t){return t.smr;}) },
+    { label:'Training — At least one record per staff member', ok: (function(){ if (!D.staff.length) return false; return D.staff.every(function(s){ return D.training.some(function(t){ return t.staff === s.name; }); }); })() },
+    { label:'Staff vetting — All personnel vetted before providing designated service', ok: D.staff.length > 0 && D.staff.every(function(s){return s.date;}) },
+    { label:'Enrolment — Enrolled with AUSTRAC', ok: D.enrolment.status === 'Enrolled' },
+    { label:'Record keeping — 7-year retention policy documented in program', ok: !!(D.program.chks && D.program.chks.prk) },
+  ];
+
+  var adeEl = $('r-adequacy-checklist');
+  if (adeEl) {
+    var adePassed = adequacy.filter(function(a){return a.ok;}).length;
+    var adePct = Math.round(adePassed / adequacy.length * 100);
+    var adeColor = adePct===100?'#059669':adePct>=70?'#b45309':'#dc2626';
+    adeEl.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:6px;">' +
+        '<div style="font-size:11px;font-weight:600;color:var(--text);">' + adePassed + ' of ' + adequacy.length + ' adequacy criteria met</div>' +
+        '<div style="font-size:18px;font-weight:700;color:' + adeColor + ';">' + adePct + '%</div>' +
+      '</div>' +
+      adequacy.map(function(a) {
+        return '<div class="gap-item ' + (a.ok?'gap-ok':'gap-fail') + '">' +
+          '<span class="gap-icon">' + (a.ok?'✓':'✗') + '</span>' +
+          '<div class="gap-label">' + a.label + '</div>' +
+          '</div>';
+      }).join('');
+  }
+}
+
+render();
+setTimeout(function(){ window.print(); }, 900);
+</script>
+</body>
+</html>
