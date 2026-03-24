@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z6L06TX2HB');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AML/CTF Software for Australian Accountants — SimpleAML vs easyAML vs TrustEasy vs First AML | SimpleAML</title>
+<meta name="description" content="Honest comparison of AML/CTF compliance tools for Australian accountants in 2026 — SimpleAML, easyAML, TrustEasy, First AML and the AUSTRAC Starter Kit. Pricing, features and who each suits.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #0a1628;
+  --navy-2: #112240;
+  --gold:   #c9a84c;
+  --gold-2: #e8c66d;
+  --gold-dim: rgba(201,168,76,.12);
+  --white:  #ffffff;
+  --text:   #e8e4da;
+  --muted:  #8a9bb0;
+  --line:   rgba(201,168,76,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--navy);
+  color:var(--text);
+  overflow-x:hidden;
+}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 48px;
+  background:rgba(10,22,40,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:12px;
+  font-family:'DM Serif Display',serif;
+  font-size:20px;color:var(--white);text-decoration:none;
+}
+.nav-logo-mark{
+  width:32px;height:32px;background:var(--gold);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--navy);
+  font-family:'DM Mono',monospace;
+}
+.nav-back{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold);}
+.nav-cta{
+  background:var(--gold);color:var(--navy);
+  padding:8px 20px;border-radius:6px;
+  font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;
+}
+.nav-cta:hover{background:var(--gold-2);}
+
+.article-hero{padding:9rem 2rem 4rem;max-width:780px;margin:0 auto;}
+.article-category{
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;
+  display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;
+}
+.article-category::before{content:'';display:inline-block;width:24px;height:1px;background:var(--gold);}
+.article-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2rem,5vw,3.2rem);
+  font-weight:400;line-height:1.1;
+  color:var(--white);margin-bottom:1.5rem;letter-spacing:-.02em;
+}
+.article-title em{font-style:italic;color:var(--gold);}
+.article-meta{
+  display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;
+  padding:1.2rem 0;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  margin-bottom:3rem;
+}
+.meta-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--gold-dim);border:1px solid var(--line);
+  border-radius:20px;padding:4px 12px;
+  font-size:10px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--gold);
+}
+.meta-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.meta-info{font-size:12px;color:var(--muted);}
+
+.article-body{max-width:780px;margin:0 auto;padding:0 2rem 6rem;}
+.article-body p{font-size:1.05rem;line-height:1.85;color:rgba(232,228,218,.85);margin-bottom:1.6rem;}
+.article-body h2{
+  font-family:'DM Serif Display',serif;font-size:1.9rem;font-weight:400;
+  color:var(--white);margin:3rem 0 1rem;letter-spacing:-.02em;
+  padding-bottom:0.8rem;border-bottom:1px solid var(--line);
+}
+.article-body h3{
+  font-size:0.72rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);margin:2rem 0 0.6rem;
+}
+.article-body strong{color:var(--white);font-weight:500;}
+.article-body a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3);transition:border-color .2s;}
+.article-body a.btn-primary{color:var(--navy) !important;border-bottom:none !important;}
+.article-body a:hover{border-color:var(--gold);}
+
+.answer-box{
+  background:rgba(201,168,76,.08);border:1px solid var(--line);
+  border-radius:10px;padding:1.8rem 2rem;margin:2rem 0;
+}
+.answer-box-label{
+  font-size:9px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;
+}
+.answer-box p{font-size:0.95rem !important;margin-bottom:0 !important;color:var(--text) !important;}
+
+.pull-quote{
+  margin:2.5rem 0;padding:1.8rem 2rem;
+  background:var(--gold-dim);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;
+}
+.pull-quote p{
+  font-family:'DM Serif Display',serif;font-size:1.25rem !important;
+  font-style:italic;color:var(--white) !important;line-height:1.5 !important;margin:0 !important;
+}
+
+.checklist{list-style:none;margin:1rem 0 1.6rem;padding:0;}
+.checklist li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:1rem;line-height:1.7;color:rgba(232,228,218,.85);
+  margin-bottom:0.5rem;padding:0.5rem 0;
+  border-bottom:1px solid rgba(201,168,76,.08);
+}
+.checklist li:last-child{border-bottom:none;}
+.checklist li::before{content:'✓';color:var(--gold);font-weight:600;flex-shrink:0;margin-top:2px;}
+
+.warning-box{
+  background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);
+  border-radius:10px;padding:1.5rem 2rem;margin:2rem 0;
+  display:flex;gap:1rem;align-items:flex-start;
+}
+.warning-icon{color:#f87171;font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.warning-box p{font-size:0.95rem !important;color:rgba(232,228,218,.85) !important;margin:0 !important;}
+.warning-box strong{color:#f87171 !important;}
+
+.tip-box{
+  background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.2);
+  border-radius:10px;padding:1.5rem 2rem;margin:2rem 0;
+  display:flex;gap:1rem;align-items:flex-start;
+}
+.tip-icon{color:#34d399;font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.tip-box p{font-size:0.95rem !important;color:rgba(232,228,218,.85) !important;margin:0 !important;}
+.tip-box strong{color:#34d399 !important;}
+
+/* Comparison cards */
+.provider-card{
+  background:var(--navy-2);border:1px solid var(--line);
+  border-radius:12px;padding:2rem;margin:2rem 0;
+  position:relative;
+}
+.provider-card.featured{border-color:var(--gold);}
+.provider-card.featured::before{
+  content:'This article';position:absolute;top:-1px;right:20px;
+  background:var(--gold);color:var(--navy);
+  font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 10px;border-radius:0 0 6px 6px;
+}
+.provider-name{
+  font-family:'DM Serif Display',serif;font-size:1.4rem;
+  color:var(--white);margin-bottom:0.3rem;
+}
+.provider-tagline{font-size:13px;color:var(--muted);margin-bottom:1.2rem;}
+.provider-meta{
+  display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem;
+}
+.provider-pill{
+  font-size:11px;font-weight:600;padding:4px 10px;
+  border-radius:20px;border:1px solid var(--line);color:var(--muted);
+}
+.provider-pill.green{border-color:rgba(5,150,105,.4);color:#34d399;background:rgba(5,150,105,.08);}
+.provider-pill.amber{border-color:rgba(251,191,36,.4);color:#fbbf24;background:rgba(251,191,36,.08);}
+.provider-pill.red{border-color:rgba(220,38,38,.3);color:#f87171;background:rgba(220,38,38,.08);}
+.provider-pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;}
+@media(max-width:600px){.provider-pros-cons{grid-template-columns:1fr;}}
+.pros-col,.cons-col{font-size:13px;line-height:1.7;}
+.pros-col-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#34d399;margin-bottom:0.5rem;}
+.cons-col-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#f87171;margin-bottom:0.5rem;}
+.pros-col li,.cons-col li{
+  list-style:none;padding:3px 0;color:rgba(232,228,218,.8);
+  display:flex;gap:8px;align-items:flex-start;
+}
+.pros-col li::before{content:'＋';color:#34d399;flex-shrink:0;}
+.cons-col li::before{content:'－';color:#f87171;flex-shrink:0;}
+.provider-verdict{
+  margin-top:1.2rem;padding-top:1.2rem;
+  border-top:1px solid var(--line);
+  font-size:13px;color:var(--muted);line-height:1.6;
+}
+.provider-verdict strong{color:var(--gold);}
+
+.article-cta{
+  margin:3rem 0;padding:2rem;
+  background:var(--navy-2);border:1px solid var(--line);border-radius:12px;
+}
+.article-cta h4{
+  font-family:'DM Serif Display',serif;font-size:1.4rem;font-weight:400;
+  color:var(--white);margin-bottom:0.5rem;
+}
+.article-cta p{font-size:0.9rem !important;color:var(--muted) !important;margin-bottom:1.2rem !important;}
+.btn-primary{
+  display:inline-block;background:var(--gold);color:var(--navy) !important;
+  padding:12px 28px;border-radius:6px;font-size:14px;font-weight:600;
+  text-decoration:none !important;border-bottom:none !important;transition:background .2s;
+}
+.btn-primary:hover{background:var(--gold-2);}
+
+footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:2rem 48px;border-top:1px solid var(--line);
+}
+.footer-brand{font-family:'DM Serif Display',serif;font-size:16px;color:var(--muted);}
+.footer-link{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.footer-link:hover{color:var(--gold);}
+
+@media(max-width:768px){
+  nav{padding:16px 20px;}
+  .article-hero{padding:7rem 1.2rem 3rem;}
+  .article-body{padding:0 1.2rem 4rem;}
+  .article-cta{padding:1.5rem;}
+  footer{flex-direction:column;gap:1rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">
+    <div class="nav-logo-mark">SA</div>
+    SimpleAML
+  </a>
+  <a class="nav-back" href="/articles.html">← All Articles</a>
+  <a href="/app.html" class="nav-cta">Open App →</a>
+</nav>
+
+<div class="article-hero">
+  <div class="article-category">Comparison · Tools</div>
+  <h1 class="article-title">AML/CTF Software for Australian Accountants — <em>An Honest Comparison</em></h1>
+  <div class="article-meta">
+    <div class="meta-badge"><span class="meta-badge-dot"></span> Updated March 2026</div>
+    <div class="meta-info">SimpleAML Editorial &nbsp;·&nbsp; 10 min read</div>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>With the 1 July 2026 deadline approaching, Australian accountants are searching for AML/CTF compliance tools — and finding a confusing mix of options at very different price points, with very different feature sets. Some come with aggressive sales follow-up. Others are built for large institutions, not a three-person accounting practice.</p>
+
+  <p>This article gives you an honest, plain-English comparison of the main options — including SimpleAML, which we built. We'll tell you what each is good for, what it costs, and who it actually suits.</p>
+
+  <div class="answer-box">
+    <div class="answer-box-label">The short version</div>
+    <p>If you are a sole practitioner or small accounting firm that just needs to meet the minimum AUSTRAC requirements without fuss or expense, SimpleAML or the AUSTRAC Starter Kit are your two free options. If you want more automation, cloud sync, or built-in identity verification, TrustEasy or easyAML are worth looking at — but expect to pay. First AML is built for much larger operations and is probably not relevant to most small practices.</p>
+  </div>
+
+  <h2>What Every Accountant Actually Needs</h2>
+
+  <p>Before comparing tools, it helps to be clear on what you actually need to comply. AUSTRAC requires every accounting firm providing designated services to have:</p>
+
+  <ul class="checklist">
+    <li>A written AML/CTF program — Part A (governance) and Part B (client due diligence)</li>
+    <li>A firm-level risk assessment covering ML/TF/PF risk</li>
+    <li>Staff vetting records for anyone in an AML/CTF role</li>
+    <li>A staff training register with documented completions</li>
+    <li>Client due diligence records for every client receiving a designated service</li>
+    <li>AUSTRAC enrolment completed by 29 July 2026</li>
+    <li>A compliance evidence record — kept for 7 years</li>
+  </ul>
+
+  <p>That is the minimum. Every tool in this comparison covers these requirements in some form — they differ in how automated, how expensive, and how complex they are to set up and use.</p>
+
+  <div class="pull-quote">
+    <p>"The right tool for your practice is the one you will actually use — not the most feature-rich one."</p>
+  </div>
+
+  <h2>The Options Compared</h2>
+
+  <!-- AUSTRAC Starter Kit -->
+  <div class="provider-card">
+    <div class="provider-name">AUSTRAC Accounting Program Starter Kit</div>
+    <div class="provider-tagline">Free Word documents from AUSTRAC — the DIY option</div>
+    <div class="provider-meta">
+      <span class="provider-pill green">Free</span>
+      <span class="provider-pill">No software required</span>
+      <span class="provider-pill">AUSTRAC official</span>
+    </div>
+    <div class="provider-pros-cons">
+      <div class="pros-col">
+        <div class="pros-col-label">Pros</div>
+        <ul>
+          <li>Completely free</li>
+          <li>Official AUSTRAC source</li>
+          <li>Designed specifically for small practices (under 15 staff)</li>
+          <li>No sign-up, no software, no vendor</li>
+        </ul>
+      </div>
+      <div class="cons-col">
+        <div class="cons-col-label">Cons</div>
+        <ul>
+          <li>Just Word documents — no structure or guidance</li>
+          <li>No client register, no training log, no dashboard</li>
+          <li>You manage everything in files and folders</li>
+          <li>No reminders, no overdue alerts, no audit trail</li>
+          <li>Requires significant effort to customise properly</li>
+        </ul>
+      </div>
+    </div>
+    <div class="provider-verdict"><strong>Best for:</strong> Firms that are confident customising Word documents and managing their own records, and want the most direct AUSTRAC-sourced materials. Not a software solution — just a starting point.</div>
+  </div>
+
+  <!-- SimpleAML -->
+  <div class="provider-card featured">
+    <div class="provider-name">SimpleAML</div>
+    <div class="provider-tagline">Free browser-based app — the minimum you need, organised</div>
+    <div class="provider-meta">
+      <span class="provider-pill green">Free during beta</span>
+      <span class="provider-pill">No account required</span>
+      <span class="provider-pill">Data stays on your device</span>
+    </div>
+    <div class="provider-pros-cons">
+      <div class="pros-col">
+        <div class="pros-col-label">Pros</div>
+        <ul>
+          <li>Completely free — no credit card, no subscription</li>
+          <li>No account required — open and start immediately</li>
+          <li>Guides you step by step through every AUSTRAC requirement</li>
+          <li>Built specifically for Australian accountants</li>
+          <li>Free templates for all five required documents</li>
+          <li>Client register, training log, staff vetting, risk assessment — all in one place</li>
+          <li>Generates a formal Compliance Report PDF — your audit evidence</li>
+          <li>Data stored in your browser — no cloud, no breach risk</li>
+          <li>No sales calls, no spam, no upsells</li>
+        </ul>
+      </div>
+      <div class="cons-col">
+        <div class="cons-col-label">Cons</div>
+        <ul>
+          <li>No built-in identity verification (DVS checks done separately)</li>
+          <li>No automated transaction monitoring</li>
+          <li>Currently single-device — no multi-user access yet</li>
+          <li>No integrations with Xero, MYOB or practice management software</li>
+          <li>User accounts and cloud sync coming — not live yet</li>
+        </ul>
+      </div>
+    </div>
+    <div class="provider-verdict"><strong>Best for:</strong> Sole practitioners and small accounting firms who want a structured, guided way to meet the minimum AUSTRAC requirements without spending anything. SimpleAML does not do everything — but it covers everything AUSTRAC requires to get enrolled and stay compliant. If you need automated identity checks or practice management integration, look at the paid options below.</div>
+  </div>
+
+  <!-- easyAML -->
+  <div class="provider-card">
+    <div class="provider-name">easyAML</div>
+    <div class="provider-tagline">All-in-one platform — free until 1 July 2026, then paid</div>
+    <div class="provider-meta">
+      <span class="provider-pill green">Free until 1 July 2026</span>
+      <span class="provider-pill amber">Paid after July 2026</span>
+      <span class="provider-pill">Cloud-based</span>
+    </div>
+    <div class="provider-pros-cons">
+      <div class="pros-col">
+        <div class="pros-col-label">Pros</div>
+        <ul>
+          <li>Free to use until 1 July 2026</li>
+          <li>Covers all Tranche 2 sectors — accountants, real estate, lawyers</li>
+          <li>Built-in risk assessment tools</li>
+          <li>AUSTRAC Online integration</li>
+          <li>Training resources included</li>
+          <li>Australian-based support team</li>
+        </ul>
+      </div>
+      <div class="cons-col">
+        <div class="cons-col-label">Cons</div>
+        <ul>
+          <li>Pricing after July 2026 not publicly listed — requires sign-up to find out</li>
+          <li>Aggressive marketing — users report significant follow-up after signing up</li>
+          <li>Account required before you can use it</li>
+          <li>Data stored in their cloud — not on your device</li>
+          <li>Built for multiple sectors — not as specific to accounting as SimpleAML or TrustEasy</li>
+        </ul>
+      </div>
+    </div>
+    <div class="provider-verdict"><strong>Best for:</strong> Firms that want a broader platform covering multiple service types and are comfortable with cloud storage. Be aware that pricing kicks in after 1 July 2026 — make sure you understand the cost before committing. If you sign up, expect follow-up contact from their sales team.</div>
+  </div>
+
+  <!-- TrustEasy -->
+  <div class="provider-card">
+    <div class="provider-name">TrustEasy</div>
+    <div class="provider-tagline">Cloud platform built for accountants — approx. $1,200/year</div>
+    <div class="provider-meta">
+      <span class="provider-pill amber">~$1,200/year + $330 onboarding</span>
+      <span class="provider-pill">Cloud-based</span>
+      <span class="provider-pill">Accountant-specific</span>
+    </div>
+    <div class="provider-pros-cons">
+      <div class="pros-col">
+        <div class="pros-col-label">Pros</div>
+        <ul>
+          <li>Purpose-built for Australian accounting firms</li>
+          <li>Integrates with Xero, XPM, MYOB, HandiSoft</li>
+          <li>Includes built-in KYC/identity verification</li>
+          <li>Ongoing staff training modules included</li>
+          <li>Multi-user access — team can all use it</li>
+          <li>Cloud-based — access from any device</li>
+          <li>Onboarding support from compliance specialists</li>
+        </ul>
+      </div>
+      <div class="cons-col">
+        <div class="cons-col-label">Cons</div>
+        <ul>
+          <li>$1,200/year is a significant cost for a sole practitioner</li>
+          <li>Additional $330 onboarding fee on top</li>
+          <li>More complex than most small practices need</li>
+          <li>Newer platform — still building reputation</li>
+        </ul>
+      </div>
+    </div>
+    <div class="provider-verdict"><strong>Best for:</strong> Small to mid-sized accounting firms with multiple staff who want practice management integration, built-in identity verification, and are prepared to pay for a more complete solution. Not cost-effective for a sole practitioner who just needs to meet the minimum requirements.</div>
+  </div>
+
+  <!-- First AML -->
+  <div class="provider-card">
+    <div class="provider-name">First AML</div>
+    <div class="provider-tagline">Enterprise KYC/CDD platform — quote-based pricing</div>
+    <div class="provider-meta">
+      <span class="provider-pill red">Quote-based — enterprise pricing</span>
+      <span class="provider-pill">Cloud-based</span>
+      <span class="provider-pill">Enterprise-focused</span>
+    </div>
+    <div class="provider-pros-cons">
+      <div class="pros-col">
+        <div class="pros-col-label">Pros</div>
+        <ul>
+          <li>Very sophisticated KYC and CDD workflows</li>
+          <li>Handles complex entity structures — trusts, multinationals</li>
+          <li>Used by Grant Thornton, LJ Hooker, Raine & Horne</li>
+          <li>Strong audit trail and reporting</li>
+          <li>Dedicated account management</li>
+          <li>Integrates with major practice management systems</li>
+        </ul>
+      </div>
+      <div class="cons-col">
+        <div class="cons-col-label">Cons</div>
+        <ul>
+          <li>Built for large firms — likely overkill for most small practices</li>
+          <li>Pricing not listed — requires a sales conversation</li>
+          <li>Significant onboarding and setup investment</li>
+          <li>Focused on KYC/CDD — less emphasis on full AML program documentation</li>
+        </ul>
+      </div>
+    </div>
+    <div class="provider-verdict"><strong>Best for:</strong> Mid to large accounting firms with complex client bases, significant volumes of new client onboarding, or international client exposure. Not the right fit for a sole practitioner or small practice just looking to meet their baseline Tranche 2 obligations.</div>
+  </div>
+
+  <h2>Side-by-Side Summary</h2>
+
+  <p>Here is a quick reference across the five options:</p>
+
+  <div style="overflow-x:auto;margin:1.5rem 0;">
+    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+      <thead>
+        <tr style="border-bottom:1px solid var(--line);">
+          <th style="text-align:left;padding:10px 12px;color:var(--gold);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;"></th>
+          <th style="text-align:center;padding:10px 8px;color:var(--gold);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;">AUSTRAC Kit</th>
+          <th style="text-align:center;padding:10px 8px;color:var(--gold);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;">SimpleAML</th>
+          <th style="text-align:center;padding:10px 8px;color:var(--gold);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;">easyAML</th>
+          <th style="text-align:center;padding:10px 8px;color:var(--gold);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;">TrustEasy</th>
+          <th style="text-align:center;padding:10px 8px;color:var(--gold);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;">First AML</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(201,168,76,.08);">
+          <td style="padding:10px 12px;color:var(--muted);">Cost</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Free</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Free</td>
+          <td style="text-align:center;padding:10px 8px;color:#fbbf24;">Free then paid</td>
+          <td style="text-align:center;padding:10px 8px;color:#fbbf24;">~$1,200/yr</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">Quote</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(201,168,76,.08);">
+          <td style="padding:10px 12px;color:var(--muted);">Account required</td>
+          <td style="text-align:center;padding:10px 8px;">No</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">No</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">Yes</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">Yes</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">Yes</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(201,168,76,.08);">
+          <td style="padding:10px 12px;color:var(--muted);">Step-by-step guidance</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">No</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(201,168,76,.08);">
+          <td style="padding:10px 12px;color:var(--muted);">Built-in identity verification</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">No</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">No</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(201,168,76,.08);">
+          <td style="padding:10px 12px;color:var(--muted);">Practice management integration</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">No</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">No</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">No</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(201,168,76,.08);">
+          <td style="padding:10px 12px;color:var(--muted);">Compliance Report PDF</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">No</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(201,168,76,.08);">
+          <td style="padding:10px 12px;color:var(--muted);">Data on your device</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+          <td style="text-align:center;padding:10px 8px;color:#34d399;">Yes</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">No — cloud</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">No — cloud</td>
+          <td style="text-align:center;padding:10px 8px;color:#f87171;">No — cloud</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;color:var(--muted);">Best suited to</td>
+          <td style="text-align:center;padding:10px 8px;color:var(--muted);font-size:12px;">DIY confident</td>
+          <td style="text-align:center;padding:10px 8px;color:var(--gold);font-size:12px;font-weight:600;">Sole practitioners & small firms</td>
+          <td style="text-align:center;padding:10px 8px;color:var(--muted);font-size:12px;">Multi-sector firms</td>
+          <td style="text-align:center;padding:10px 8px;color:var(--muted);font-size:12px;">Small-mid firms</td>
+          <td style="text-align:center;padding:10px 8px;color:var(--muted);font-size:12px;">Large firms</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>The Honest Take on SimpleAML</h2>
+
+  <p>SimpleAML was built by a CPA who saw sole practitioners struggling to find something simple enough to use without a compliance background or a budget for enterprise software. It does not do everything — and it is honest about that.</p>
+
+  <p>SimpleAML does not include automated identity verification. It does not integrate with Xero or your practice management system. It does not have multi-user access yet. If you need those things, TrustEasy or First AML are worth investigating.</p>
+
+  <p>What SimpleAML does is guide you through every step AUSTRAC actually requires — your firm risk assessment, staff vetting, training register, AML/CTF program documents, client CDD, AUSTRAC enrolment, and your Compliance Report. Everything is in one place, in the right order, with the right prompts. When you are done, you have a formal Compliance Evidence Report that documents everything an AUSTRAC auditor would want to see.</p>
+
+  <p>It is free, requires no account, and your data never leaves your device. There are no sales calls, no follow-up emails, and no subscription to cancel.</p>
+
+  <div class="tip-box">
+    <div class="tip-icon">💡</div>
+    <p><strong>Not sure which to choose?</strong> If you are a sole practitioner or small firm just trying to meet the 1 July deadline without spending money, start with SimpleAML. You can always move to a paid platform later if your needs grow — and the work you do in SimpleAML won't be wasted, because the compliance records and documents transfer.</p>
+  </div>
+
+  <h2>What About Compliance Consultants?</h2>
+
+  <p>Some accounting firms are engaging compliance consultants to build their AML/CTF program from scratch. This is a legitimate option, particularly for larger or more complex practices — but costs can range from $3,000 to $15,000 or more depending on the scope.</p>
+
+  <p>For most small practices, this level of spend is not necessary. AUSTRAC has been explicit that the compliance requirements for small, low-complexity accounting practices are manageable without specialist help — which is why they released the free Starter Kit, and why tools like SimpleAML exist.</p>
+
+  <h2>A Note on Pricing Changes</h2>
+
+  <p>Pricing for several tools in this comparison — particularly easyAML — is expected to change after 1 July 2026. Tools offering free access until the deadline may shift to subscription models once the compliance rush is over. Before committing to any paid platform, make sure you understand the ongoing cost and what happens to your data if you cancel.</p>
+
+  <div class="article-cta">
+    <h4>Try SimpleAML — free, no account needed</h4>
+    <p>Open the app, follow the steps, and be compliant before 1 July. No credit card, no sign-up, no sales calls. If it's not right for you, nothing is lost.</p>
+    <a href="/app.html" class="btn-primary">Open SimpleAML Free →</a>
+  </div>
+
+</div>
+
+<footer>
+  <span class="footer-brand">SimpleAML</span>
+  <a href="/" class="footer-link">← Back to Home</a>
+</footer>
+
+</body>
+</html>
