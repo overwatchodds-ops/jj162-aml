@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z6L06TX2HB');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AML/CTF Guides for Australian Accountants | SimpleAML</title>
+<meta name="description" content="Plain-English guides on AML/CTF compliance for Australian accountants and bookkeepers — AUSTRAC registration, AML programs, deadlines, CDD, and penalties explained.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #0a1628;
+  --navy-2: #112240;
+  --gold:   #c9a84c;
+  --gold-2: #e8c66d;
+  --gold-dim: rgba(201,168,76,.12);
+  --white:  #ffffff;
+  --text:   #e8e4da;
+  --muted:  #8a9bb0;
+  --line:   rgba(201,168,76,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);overflow-x:hidden;}
+
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.4;
+}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 48px;
+  background:rgba(10,22,40,.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav-logo{display:flex;align-items:center;gap:12px;font-family:'DM Serif Display',serif;font-size:22px;color:var(--white);letter-spacing:-.02em;text-decoration:none;}
+.nav-logo-mark{width:36px;height:36px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--navy);font-family:'DM Mono',monospace;}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-links a.active{color:var(--gold);}
+.nav-cta{background:var(--gold);color:var(--navy);padding:9px 22px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--gold-2);transform:translateY(-1px);}
+
+/* PAGE HERO */
+.page-hero{
+  padding:9rem 48px 5rem;
+  max-width:1140px;margin:0 auto;
+  position:relative;z-index:1;
+}
+.page-hero-bg{
+  position:absolute;top:0;left:0;right:0;height:500px;
+  background:radial-gradient(ellipse 70% 60% at 50% -10%, rgba(201,168,76,.12) 0%, transparent 70%);
+  pointer-events:none;
+}
+.page-tag{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin-bottom:1.2rem;}
+.page-tag::before{content:'';display:inline-block;width:24px;height:1px;background:var(--gold);}
+.page-title{font-family:'DM Serif Display',serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:400;line-height:1.05;color:var(--white);letter-spacing:-.03em;margin-bottom:1.2rem;}
+.page-title em{font-style:italic;color:var(--gold);}
+.page-sub{font-size:17px;color:var(--muted);line-height:1.7;max-width:560px;}
+
+/* ARTICLES GRID */
+.articles-section{
+  position:relative;z-index:1;
+  max-width:1140px;margin:0 auto;
+  padding:0 48px 6rem;
+}
+
+/* Featured article — full width */
+.article-featured{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;
+  background:var(--navy-2);
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:2rem;
+  text-decoration:none;
+  transition:border-color .25s, transform .2s;
+}
+.article-featured:hover{border-color:var(--gold);transform:translateY(-2px);}
+.article-featured-visual{
+  background:linear-gradient(135deg, rgba(201,168,76,.15) 0%, rgba(10,22,40,.8) 100%);
+  display:flex;align-items:center;justify-content:center;
+  min-height:260px;
+  position:relative;
+  overflow:hidden;
+  border-right:1px solid var(--line);
+}
+.article-featured-visual::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(201,168,76,.04) 1px, transparent 1px),linear-gradient(90deg, rgba(201,168,76,.04) 1px, transparent 1px);
+  background-size:40px 40px;
+}
+.featured-num{
+  font-family:'DM Serif Display',serif;
+  font-size:8rem;font-weight:400;
+  color:rgba(201,168,76,.15);
+  position:relative;z-index:1;
+  line-height:1;
+  user-select:none;
+}
+.article-featured-body{padding:2.5rem;}
+.featured-tag{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
+.featured-title{font-family:'DM Serif Display',serif;font-size:1.7rem;font-weight:400;color:var(--white);line-height:1.2;margin-bottom:0.8rem;letter-spacing:-.02em;}
+.featured-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;}
+.featured-meta{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.featured-read{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;}
+.featured-cta{font-size:12px;font-weight:600;color:var(--gold);letter-spacing:.06em;display:flex;align-items:center;gap:6px;}
+
+/* Articles grid — 2 col */
+.articles-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1.2rem;
+  margin-bottom:1.2rem;
+}
+@media(max-width:700px){.articles-grid{grid-template-columns:1fr;}}
+
+.article-card{
+  background:var(--navy-2);border:1px solid var(--line);
+  border-radius:10px;padding:2rem;
+  text-decoration:none;
+  display:flex;flex-direction:column;
+  transition:border-color .25s, transform .2s;
+  position:relative;overflow:hidden;
+}
+.article-card:hover{border-color:var(--gold);transform:translateY(-2px);}
+.article-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);opacity:0;transition:opacity .2s;}
+.article-card:hover::before{opacity:1;}
+.card-num{
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  color:rgba(201,168,76,.4);margin-bottom:0.8rem;letter-spacing:.08em;
+}
+.card-tag{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
+.card-title{font-family:'DM Serif Display',serif;font-size:1.2rem;font-weight:400;color:var(--white);line-height:1.25;margin-bottom:0.7rem;letter-spacing:-.01em;}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.65;flex:1;margin-bottom:1.2rem;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;}
+.card-read{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;}
+.card-arrow{font-size:12px;color:var(--gold);font-weight:600;}
+
+/* Deadline banner */
+.deadline-banner{
+  background:rgba(201,168,76,.08);border:1px solid var(--line);
+  border-radius:10px;padding:1.5rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1.5rem;flex-wrap:wrap;
+  margin-bottom:3rem;
+}
+.deadline-left{display:flex;align-items:center;gap:1rem;}
+.deadline-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.deadline-text{font-size:14px;color:var(--text);}
+.deadline-text strong{color:var(--gold);}
+.deadline-countdown{font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);}
+.btn-primary{background:var(--gold);color:var(--navy);padding:10px 22px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;white-space:nowrap;}
+.btn-primary:hover{background:var(--gold-2);}
+
+footer{
+  border-top:1px solid var(--line);padding:3rem 3rem 2rem;
+  position:relative;z-index:1;
+}
+.footer-inner{
+  display:grid;grid-template-columns:2fr 1fr 1fr;
+  gap:48px;padding-bottom:2rem;
+  border-bottom:1px solid var(--line);
+  margin-bottom:1.5rem;
+}
+.footer-logo{font-family:'DM Serif Display',serif;font-size:18px;color:var(--white);margin-bottom:10px;}
+.footer-text{font-size:11px;color:var(--muted);line-height:1.75;}
+.footer-col-title{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(201,168,76,.4);margin-bottom:14px;}
+.footer-col-links{display:flex;flex-direction:column;gap:10px;}
+.footer-col-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.footer-col-links a:hover{color:var(--gold);}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11px;color:rgba(255,255,255,0.2);}
+
+@media(max-width:700px){
+  nav{padding:16px 20px;}
+  .nav-links{display:none;}
+  .page-hero{padding:7rem 20px 3rem;}
+  .articles-section{padding:0 20px 4rem;}
+  .article-featured{grid-template-columns:1fr;}
+  .article-featured-visual{min-height:140px;border-right:none;border-bottom:1px solid var(--line);}
+  .article-featured-body{padding:1.5rem;}
+  footer{padding:32px 20px 20px;}
+  .footer-inner{grid-template-columns:1fr;gap:28px;}
+  .footer-bottom{flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">
+    <div class="nav-logo-mark">SA</div>
+    SimpleAML
+  </a>
+  <div class="nav-links">
+    <a href="/#features">Features</a>
+    <a href="/#how">How It Works</a>
+    <a href="/articles.html" class="active">Guides</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <a href="/app.html" class="nav-cta">Open App →</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <p class="page-tag">AML/CTF Guides</p>
+  <h1 class="page-title">Plain-English guides for<br><em>Australian accountants</em></h1>
+  <p class="page-sub">Everything you need to understand your AML/CTF obligations under Tranche 2 — from AUSTRAC registration to penalties, written for small accounting firms.</p>
+</div>
+
+<div class="articles-section">
+
+  <!-- Deadline banner -->
+  <div class="deadline-banner">
+    <div class="deadline-left">
+      <div class="deadline-dot"></div>
+      <div class="deadline-text"><strong>1 July 2026:</strong> AML/CTF obligations commence for accountants. Enrolment opens 31 March 2026.</div>
+    </div>
+    <div class="deadline-countdown" id="banner-countdown"></div>
+    <a href="/app.html" class="btn-primary">Get compliant free →</a>
+  </div>
+
+  <!-- Featured article -->
+  <a class="article-featured" href="/articles/do-i-need-to-register-with-austrac.html">
+    <div class="article-featured-visual">
+      <div class="featured-num">01</div>
+    </div>
+    <div class="article-featured-body">
+      <div class="featured-tag">AUSTRAC · Registration · Start here</div>
+      <div class="featured-title">Do I Need to Register with AUSTRAC? A Guide for Australian Accountants</div>
+      <div class="featured-desc">The #1 question small firms are asking right now. If your firm provides any of the nine designated accounting services, you must enrol. This plain-English guide tells you exactly who needs to enrol, when, and what happens if you don't.</div>
+      <div class="featured-meta">
+        <span class="featured-read">6 min read · March 2026</span>
+        <span class="featured-cta">Read guide →</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 2-col grid -->
+  <div class="articles-grid">
+
+    <a class="article-card" href="/articles/what-is-an-aml-ctf-program.html">
+      <div class="card-num">02</div>
+      <div class="card-tag">AML/CTF Program</div>
+      <div class="card-title">What is an AML/CTF Program and How Do I Write One?</div>
+      <div class="card-desc">Every firm providing designated services needs an AML/CTF program in place before 1 July 2026. This guide explains what it must contain and how to use AUSTRAC's free Accounting Starter Kit to build yours.</div>
+      <div class="card-footer">
+        <span class="card-read">7 min read</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="/articles/aml-ctf-tranche-2-deadlines-for-accountants.html">
+      <div class="card-num">03</div>
+      <div class="card-tag">Deadlines · Timeline</div>
+      <div class="card-title">AML/CTF Tranche 2 Deadlines: What Accountants Need to Do and When</div>
+      <div class="card-desc">A complete timeline of every deadline — from enrolment opening 31 March 2026, to obligations commencing 1 July, to the final enrolment deadline of 29 July 2026. Includes a pre-July checklist.</div>
+      <div class="card-footer">
+        <span class="card-read">5 min read</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="/articles/what-is-customer-due-diligence.html">
+      <div class="card-num">04</div>
+      <div class="card-tag">Customer Due Diligence · CDD</div>
+      <div class="card-title">What is Customer Due Diligence and How Does It Apply to Accountants?</div>
+      <div class="card-desc">CDD is the most day-to-day compliance obligation. This guide explains initial CDD, ongoing CDD, enhanced CDD for high-risk clients, and the transitional rules for your existing client base.</div>
+      <div class="card-footer">
+        <span class="card-read">7 min read</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="/articles/aml-ctf-penalties-for-accountants.html">
+      <div class="card-num">05</div>
+      <div class="card-tag">Penalties · Enforcement</div>
+      <div class="card-title">AML/CTF Penalties for Accountants — What Happens If You Don't Comply?</div>
+      <div class="card-desc">Civil fines up to $31.3M per breach. Daily penalties of $18,780. Criminal liability. Reputational damage. This guide sets out the real consequences of non-compliance — and what triggers enforcement action.</div>
+      <div class="card-footer">
+        <span class="card-read">6 min read</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="/articles/how-to-complete-your-aml-ctf-firm-risk-assessment.html">
+      <div class="card-num">06</div>
+      <div class="card-tag">Risk Assessment · How-to</div>
+      <div class="card-title">How to Complete Your AML/CTF Firm Risk Assessment</div>
+      <div class="card-desc">A step-by-step guide to completing your firm-level ML/TF/PF risk assessment before 1 July 2026. Covers designated services, client types, geographic exposure, risk appetite statement, and free template.</div>
+      <div class="card-footer">
+        <span class="card-read">8 min read</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="/articles/how-to-create-an-aml-ctf-program.html">
+      <div class="card-num">07</div>
+      <div class="card-tag">AML/CTF Program · How-to</div>
+      <div class="card-title">How to Create an AML/CTF Program for Your Accounting Practice</div>
+      <div class="card-desc">Everything you need to build your AML/CTF program from scratch — Part A, Part B, what each section must cover, senior manager approval, and five free templates ready to customise.</div>
+      <div class="card-footer">
+        <span class="card-read">9 min read</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="/articles/aml-ctf-software-comparison-for-accountants.html">
+      <div class="card-num">08</div>
+      <div class="card-tag">Comparison · Tools</div>
+      <div class="card-title">AML/CTF Software for Australian Accountants — An Honest Comparison</div>
+      <div class="card-desc">SimpleAML vs easyAML vs TrustEasy vs First AML vs the AUSTRAC Starter Kit. Pricing, features, pros and cons — and an honest take on what suits a sole practitioner versus a larger firm.</div>
+      <div class="card-footer">
+        <span class="card-read">10 min read</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="/articles/how-to-enrol-with-austrac.html">
+      <div class="card-num">09</div>
+      <div class="card-tag">AUSTRAC Enrolment · How-to</div>
+      <div class="card-title">How to Enrol with AUSTRAC — Complete Your Program First</div>
+      <div class="card-desc">Enrolment opened 31 March 2026 — but before you go to AUSTRAC Online, your program must be ready. This guide covers all three phases: complete your AML/CTF program, enrol with AUSTRAC, then save your Compliance Report as proof.</div>
+      <div class="card-footer">
+        <span class="card-read">9 min read</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+  </div>
+
+</div>
+
+<script>
+  const deadline = new Date('2026-07-01');
+  const days = Math.ceil((deadline - new Date()) / (1000*60*60*24));
+  document.getElementById('banner-countdown').textContent = days > 0 ? days + ' days remaining' : 'Deadline passed';
+</script>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">SimpleAML</div>
+      <div class="footer-text">Free AML/CTF compliance for Australian accountants, lawyers &amp; real estate agents.<br><br>Developed by Click Seed Pty Ltd<br>ABN 87 656 256 567</div>
+    </div>
+    <div>
+      <div class="footer-col-title">Product</div>
+      <div class="footer-col-links">
+        <a href="/app.html">Open App →</a>
+        <a href="templates.html">Free Templates</a>
+        <a href="faq.html">User Guide & FAQ</a>
+        <a href="training-providers.html">Training Providers</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <div class="footer-col-links">
+        <a href="/">Home</a>
+        <a href="partners.html">Partners</a>
+        <a href="articles.html">Articles</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Click Seed Pty Ltd. All rights reserved.</div>
+    <div>simpleaml.com.au</div>
+  </div>
+</footer>
+
+<script>
+function toggleMobileNav() {
+  var nav = document.querySelector('.nav-links');
+  var open = document.getElementById('mob-icon-open');
+  var close = document.getElementById('mob-icon-close');
+  var isOpen = nav.classList.toggle('open');
+  open.style.display = isOpen ? 'none' : 'block';
+  close.style.display = isOpen ? 'block' : 'none';
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    var nav = document.querySelector('.nav-links');
+    nav.classList.remove('open');
+    document.getElementById('mob-icon-open').style.display = 'block';
+    document.getElementById('mob-icon-close').style.display = 'none';
+    document.body.style.overflow = '';
+  });
+});
+</script>
+</body>
+</html>
