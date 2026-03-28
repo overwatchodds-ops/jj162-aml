@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/index-realestate.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "realestate.simpleaml.com.au"
+        }
+      ]
+    }
+  ]
+}
