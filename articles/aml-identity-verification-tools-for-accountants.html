@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z6L06TX2HB');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AML Identity Verification Tools for Accountants — Honest Comparison | SimpleAML</title>
+  <meta name="description" content="A plain-English comparison of AML identity verification and PEP/sanctions screening tools for Australian accountants in 2026 — NameScan, VerifiMe, StackGo, BGLiD and OneClickVerify reviewed.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --navy:   #0a1628;
+  --navy-2: #112240;
+  --gold:   #c9a84c;
+  --gold-2: #e8c66d;
+  --gold-dim: rgba(201,168,76,.12);
+  --white:  #ffffff;
+  --text:   #e8e4da;
+  --muted:  #8a9bb0;
+  --line:   rgba(201,168,76,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:rgba(10,22,40,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+.nav-logo{display:flex;align-items:center;gap:12px;font-family:'DM Serif Display',serif;font-size:20px;color:var(--white);text-decoration:none;}
+.nav-logo-mark{width:32px;height:32px;background:var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--navy);}
+.nav-back{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold);}
+.nav-cta{background:var(--gold);color:var(--navy);padding:8px 20px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--gold-2);}
+
+.article-hero{padding:9rem 2rem 4rem;max-width:780px;margin:0 auto;}
+.article-category{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;}
+.article-category::before{content:'';display:inline-block;width:24px;height:1px;background:var(--gold);}
+.article-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:400;line-height:1.1;color:var(--white);margin-bottom:1.5rem;letter-spacing:-.02em;}
+.article-title em{font-style:italic;color:var(--gold);}
+.article-meta{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;padding:1.2rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:3rem;}
+.meta-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold-dim);border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);}
+.meta-info{font-size:12px;color:var(--muted);}
+
+.article-body{max-width:780px;margin:0 auto;padding:0 2rem 6rem;}
+.article-body p{font-size:1.05rem;line-height:1.85;color:rgba(232,228,218,.85);margin-bottom:1.6rem;}
+.article-body h2{font-family:'DM Serif Display',serif;font-size:1.9rem;font-weight:400;color:var(--white);margin:3rem 0 1rem;letter-spacing:-.02em;padding-bottom:.8rem;border-bottom:1px solid var(--line);}
+.article-body h3{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:2rem 0 .6rem;}
+.article-body strong{color:var(--white);font-weight:500;}
+.article-body a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3);transition:border-color .2s;}
+.article-body a:hover{border-color:var(--gold);}
+.article-body a.btn-primary{color:var(--navy)!important;border-bottom:none!important;}
+.article-body a.btn-secondary{border-bottom:1px solid var(--line)!important;}
+
+.answer-box{background:rgba(201,168,76,.08);border:1px solid var(--line);border-radius:10px;padding:1.8rem 2rem;margin:2rem 0;}
+.answer-box-label{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;}
+.answer-box p{font-size:.95rem!important;margin-bottom:0!important;color:var(--text)!important;}
+
+.warning-box{background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);border-radius:10px;padding:1.5rem 2rem;margin:2rem 0;display:flex;gap:1rem;align-items:flex-start;}
+.warning-icon{color:#f87171;font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.warning-box p{font-size:.95rem!important;color:rgba(232,228,218,.85)!important;margin:0!important;}
+.warning-box strong{color:#f87171!important;}
+
+.tip-box{background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.2);border-radius:10px;padding:1.5rem 2rem;margin:2rem 0;display:flex;gap:1rem;align-items:flex-start;}
+.tip-icon{color:#34d399;font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.tip-box p{font-size:.95rem!important;color:rgba(232,228,218,.85)!important;margin:0!important;}
+.tip-box strong{color:#34d399!important;}
+
+/* Tool cards */
+.tool-card{background:var(--navy-2);border:1px solid var(--line);border-radius:12px;padding:1.8rem 2rem;margin:1.5rem 0;position:relative;}
+.tool-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;background:var(--gold);border-radius:12px 0 0 12px;}
+.tool-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:1rem;flex-wrap:wrap;}
+.tool-name{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--white);}
+.tool-tag{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--line);padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.tool-type{font-size:11px;color:var(--muted);margin-bottom:.8rem;}
+.tool-card p{font-size:.9rem!important;color:rgba(232,228,218,.8)!important;line-height:1.7!important;margin-bottom:.8rem!important;}
+.tool-card p:last-child{margin-bottom:0!important;}
+.pro-con-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:.8rem 0;}
+.pro-con-col{background:rgba(255,255,255,.03);border-radius:6px;padding:12px 14px;}
+.pro-con-label{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.pro-con-label.cons{color:#f87171;}
+.pro-con-col ul{list-style:none;padding:0;}
+.pro-con-col ul li{font-size:12px;color:var(--muted);padding:3px 0;line-height:1.5;display:flex;gap:7px;}
+.pro-con-col ul li::before{content:'+';color:#34d399;font-weight:700;flex-shrink:0;}
+.pro-con-col.cons ul li::before{content:'−';color:#f87171;}
+.tool-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3)!important;margin-top:.6rem;transition:border-color .2s;}
+.tool-link:hover{border-color:var(--gold)!important;}
+
+/* Comparison table */
+.comp-table-wrap{overflow-x:auto;margin:1.5rem 0;}
+.comp-table{width:100%;border-collapse:collapse;font-size:13px;}
+.comp-table th{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);background:rgba(255,255,255,.02);white-space:nowrap;}
+.comp-table td{padding:11px 12px;border-bottom:1px solid rgba(201,168,76,.08);color:var(--muted);vertical-align:top;line-height:1.5;}
+.comp-table td strong{color:var(--text);}
+.comp-table tr:last-child td{border-bottom:none;}
+.tick{color:#34d399;font-weight:700;}
+.cross{color:rgba(255,255,255,.2);}
+.partial{color:var(--gold);}
+
+
+/* Pricing box */
+.pricing-box{background:rgba(201,168,76,.06);border:1px solid var(--line);border-radius:6px;padding:14px 16px;margin:.8rem 0;}
+.pricing-content{flex:1;}
+.pricing-label{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.pricing-detail{font-size:13px;color:rgba(232,228,218,.85);line-height:1.6;}
+.pricing-detail strong{color:var(--white);}
+
+/* Rec grid */
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;}
+@media(max-width:580px){.rec-grid{grid-template-columns:1fr;}.pro-con-grid{grid-template-columns:1fr;}}
+.rec-card{background:var(--navy-2);border:1px solid var(--line);border-radius:8px;padding:1.2rem 1.4rem;}
+.rec-label{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.rec-title{font-size:14px;font-weight:500;color:var(--white);margin-bottom:.4rem;}
+.rec-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+
+.article-cta{margin:3rem 0;padding:2rem;background:var(--navy-2);border:1px solid var(--line);border-radius:12px;}
+.article-cta h4{font-family:'DM Serif Display',serif;font-size:1.4rem;font-weight:400;color:var(--white);margin-bottom:.5rem;}
+.article-cta p{font-size:.9rem!important;color:var(--muted)!important;margin-bottom:1.2rem!important;}
+.btn-primary{display:inline-block;background:var(--gold);color:var(--navy)!important;padding:12px 28px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none!important;border-bottom:none!important;transition:background .2s;}
+.btn-primary:hover{background:var(--gold-2);}
+.btn-secondary{display:inline-block;background:transparent;color:var(--gold)!important;padding:12px 24px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none!important;border:1px solid var(--line)!important;transition:all .2s;margin-left:10px;}
+.btn-secondary:hover{border-color:var(--gold)!important;}
+
+footer{display:flex;align-items:center;justify-content:space-between;padding:2rem 48px;border-top:1px solid var(--line);}
+.footer-brand{font-family:'DM Serif Display',serif;font-size:16px;color:var(--muted);}
+.footer-link{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.footer-link:hover{color:var(--gold);}
+
+@media(max-width:768px){
+  nav{padding:16px 20px;}
+  .article-hero{padding:7rem 1.2rem 3rem;}
+  .article-body{padding:0 1.2rem 4rem;}
+  footer{flex-direction:column;gap:1rem;text-align:center;padding:2rem 20px;}
+  .btn-secondary{margin-left:0;margin-top:10px;display:block;text-align:center;}
+}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">
+    <div class="nav-logo-mark">SA</div>
+    SimpleAML
+  </a>
+  <a class="nav-back" href="/articles.html">&larr; All Articles</a>
+  <a href="/app.html" class="nav-cta">Open App &rarr;</a>
+</nav>
+
+<div class="article-hero">
+  <div class="article-category">Identity Verification &middot; Tools &middot; Comparison</div>
+  <h1 class="article-title">AML identity verification tools for accountants &mdash; <em>honest comparison</em></h1>
+  <p style="font-size:1.1rem;line-height:1.8;color:rgba(232,228,218,.75);margin-bottom:2rem;">From 1 July 2026, Australian accountants must verify client identities as part of their CDD obligations. This guide explains the two types of tools you need, reviews the main providers, and helps you pick the right combination for your practice.</p>
+  <div class="article-meta">
+    <span class="meta-badge">March 2026</span>
+    <span class="meta-info">12 min read &nbsp;&middot;&nbsp; Chris Wong, CPA</span>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <h2>First: there are two different jobs to do</h2>
+  <p>Before comparing tools, it&rsquo;s important to understand that &ldquo;AML identity verification&rdquo; actually covers two distinct obligations under the AML/CTF Act &mdash; and they require different types of tools.</p>
+
+  <div class="answer-box">
+    <div class="answer-box-label">The two jobs</div>
+    <p><strong>1. Identity verification (DVS):</strong> Confirming your client is who they say they are &mdash; by checking their ID documents against government databases. This is about document authenticity.<br><br><strong>2. PEP and sanctions screening:</strong> Checking whether your client appears on lists of politically exposed persons, sanctioned individuals, or adverse media. This is about risk profile.</p>
+  </div>
+
+  <p>Both are required. A tool that only does DVS doesn&rsquo;t satisfy your screening obligations. A tool that only does PEP/sanctions screening doesn&rsquo;t satisfy your identity verification requirements. Most practices will need at least one tool from each category &mdash; or a single platform that covers both.</p>
+
+  <div class="warning-box">
+    <span class="warning-icon">⚠</span>
+    <p><strong>Common mistake:</strong> Some practices assume that sighting a passport or licence satisfies their AML/CTF identity verification requirements. Manual document sighting is legally acceptable, but electronic verification via a DVS-connected service provides a stronger, more defensible audit trail &mdash; and is faster for you and your client.</p>
+  </div>
+
+  <h2>The tools reviewed</h2>
+  <p>We&rsquo;ve reviewed five tools currently available to Australian accounting practices. They fall into three categories: dedicated screening tools, full-service identity platforms, and CRM-embedded solutions.</p>
+
+  <!-- ── NAMESCAN ── -->
+  <div class="tool-card">
+    <div class="tool-header">
+      <div>
+        <div class="tool-name">NameScan</div>
+        <div class="tool-type">PEP &middot; Sanctions &middot; Adverse Media Screening</div>
+      </div>
+      <span class="tool-tag">Screening only</span>
+    </div>
+    <p>NameScan is a dedicated PEP, sanctions and adverse media screening platform. It checks individuals against global watchlists including the DFAT consolidated sanctions list, UN Security Council, OFAC, and thousands of PEP and adverse media sources. It also provides DVS-connected identity verification for Australian documents. Pay-per-search pricing makes it accessible for practices of any size.</p>
+    <div class="pro-con-grid">
+      <div class="pro-con-col">
+        <div class="pro-con-label">Strengths</div>
+        <ul>
+          <li>Purpose-built for PEP and sanctions screening</li>
+          <li>Covers DFAT, UN, OFAC and global lists</li>
+          <li>DVS document verification available</li>
+          <li>Pay-per-search &mdash; no minimum commitment</li>
+          <li>Fast results &mdash; seconds per search</li>
+          <li>Used directly from SimpleAML&rsquo;s CDD section</li>
+        </ul>
+      </div>
+      <div class="pro-con-col cons">
+        <div class="pro-con-label cons">Limitations</div>
+        <ul>
+          <li>Not a full identity verification platform</li>
+          <li>No reusable client wallet</li>
+          <li>No CRM integration</li>
+          <li>DVS is add-on, not core feature</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pricing-box">
+      <div class="pricing-content">
+        <div class="pricing-label">Pricing</div>
+        <div class="pricing-detail"><strong>Pay-as-you-go — no subscription, no monthly minimum.</strong> Packs start at around <strong>$90 for 50 scans (~$1.80 per scan)</strong>, with lower per-scan rates on larger packs. Credits expire after 12 months. No setup fee. Free trial available. DVS identity verification is a separate add-on — check namescan.io/pricing for current rates as these change.</div>
+      </div>
+    </div>
+    <p><strong>Best for:</strong> Practices that want a fast, pay-per-search screening tool for PEP and sanctions checks. Works well alongside SimpleAML and a separate DVS provider for complete CDD coverage.</p>
+    <a href="https://namescan.io" target="_blank" rel="noopener" class="tool-link">Visit NameScan &rarr;</a>
+  </div>
+
+  <!-- ── VERIFIME ── -->
+  <div class="tool-card">
+    <div class="tool-header">
+      <div>
+        <div class="tool-name">VerifiMe</div>
+        <div class="tool-type">DVS &middot; Reusable Identity Wallet &middot; PEP/Sanctions &middot; AML/CTF Portal</div>
+      </div>
+      <span class="tool-tag">Full-service platform</span>
+    </div>
+    <p>VerifiMe is an Australian platform purpose-built for Tranche 2 professional services. Its standout feature is the <strong>reusable identity wallet</strong>: clients verify their identity once and then securely share those verified credentials with multiple service providers &mdash; reducing the need for repeat verification across their accountant, lawyer, conveyancer and financial adviser. VerifiMe also includes PEP/sanctions screening, biometric checks, and a full AML/CTF compliance portal. Pricing starts around $50/month plus per-verification fees.</p>
+    <div class="pro-con-grid">
+      <div class="pro-con-col">
+        <div class="pro-con-label">Strengths</div>
+        <ul>
+          <li>DVS-connected identity verification</li>
+          <li>Reusable wallet &mdash; clients verify once, share many times</li>
+          <li>PEP and global sanctions screening included</li>
+          <li>Biometric and liveness checks</li>
+          <li>Full AML/CTF compliance portal</li>
+          <li>Designed specifically for Tranche 2</li>
+          <li>Australian data sovereignty</li>
+        </ul>
+      </div>
+      <div class="pro-con-col cons">
+        <div class="pro-con-label cons">Limitations</div>
+        <ul>
+          <li>Monthly subscription cost</li>
+          <li>More complex than a simple DVS check</li>
+          <li>Client needs to set up a wallet</li>
+          <li>May be over-engineered for very small practices</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pricing-box">
+      <div class="pricing-content">
+        <div class="pricing-label">Pricing</div>
+        <div class="pricing-detail"><strong>Subscription + per-verification fee.</strong> Monthly subscription starts around <strong>$50/month</strong> (includes a credit towards verifications). Each verification is then charged as the client grants access to their wallet. The subscription model means you pay even in quiet months — best suited to practices verifying multiple clients per month. Setup typically takes 2–4 hours. See verifime.com/pricing for current rates.</div>
+      </div>
+    </div>
+    <p><strong>Best for:</strong> Practices with a larger client base, high-value clients, or complex entity structures who want an end-to-end AML/CTF platform. Also ideal if your clients are shared with other professionals &mdash; the reusable wallet reduces friction for everyone.</p>
+    <a href="https://www.verifime.com/pricing" target="_blank" rel="noopener" class="tool-link">View VerifiMe pricing &rarr;</a>
+  </div>
+
+  <!-- ── STACKGO ── -->
+  <div class="tool-card">
+    <div class="tool-header">
+      <div>
+        <div class="tool-name">StackGo IdentityCheck</div>
+        <div class="tool-type">DVS &middot; KYC &middot; CRM-Embedded &middot; PEP/Sanctions (add-on)</div>
+      </div>
+      <span class="tool-tag">CRM-embedded</span>
+    </div>
+    <p>StackGo IdentityCheck embeds KYC and AML verification directly inside your CRM &mdash; HubSpot, Salesforce, or Xero. Rather than opening a separate portal, you trigger a verification from the client&rsquo;s contact record, and the results write back automatically. A privacy layer keeps sensitive PII out of your CRM and behind MFA-authenticated admin access. Pricing is usage-based (pay per check), with PEP/sanctions screening available as an add-on from around USD$0.75 per check.</p>
+    <div class="pro-con-grid">
+      <div class="pro-con-col">
+        <div class="pro-con-label">Strengths</div>
+        <ul>
+          <li>No new software &mdash; runs inside your CRM</li>
+          <li>Results written back to client record automatically</li>
+          <li>Privacy layer keeps PII out of CRM</li>
+          <li>Usage-based &mdash; no monthly minimum</li>
+          <li>200+ countries, 10,000+ document types</li>
+          <li>Audit trail native to your CRM</li>
+        </ul>
+      </div>
+      <div class="pro-con-col cons">
+        <div class="pro-con-label cons">Limitations</div>
+        <ul>
+          <li>Only useful if you run HubSpot, Salesforce or Xero</li>
+          <li>PEP/sanctions screening is an add-on, not included</li>
+          <li>Initial configuration required</li>
+          <li>Pricing in USD</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pricing-box">
+      <div class="pricing-content">
+        <div class="pricing-label">Pricing</div>
+        <div class="pricing-detail"><strong>Pay-per-check — no monthly minimum.</strong> Identity verification checks are usage-based (see stackgo.io/identitycheck for current rates). PEP and sanctions screening is an <strong>add-on starting from ~USD$0.75 per check</strong>. Pricing is in USD. No subscription required — you only pay for what you use. Initial configuration is required to connect to your CRM, which may take developer time if you're not on a standard plan.</div>
+      </div>
+    </div>
+    <p><strong>Best for:</strong> Practices already running HubSpot, Salesforce or Xero as their main client management tool, who want verification to happen inside their existing workflow without a new platform.</p>
+    <a href="https://stackgo.io/identitycheck/" target="_blank" rel="noopener" class="tool-link">View StackGo IdentityCheck &rarr;</a>
+  </div>
+
+  <!-- ── BGLID ── -->
+  <div class="tool-card">
+    <div class="tool-header">
+      <div>
+        <div class="tool-name">BGLiD</div>
+        <div class="tool-type">DVS &middot; Biometrics &middot; AML/CTF Screening &middot; Built into BGL</div>
+      </div>
+      <span class="tool-tag">BGL users only</span>
+    </div>
+    <p>BGLiD is BGL&rsquo;s built-in identity verification solution, integrated directly into Simple Fund 360 and Simple Invest 360. Powered by FrankieOne, it provides instant DVS identity verification, AI-powered biometric scanning, and AML/CTF screening against global sanctions and adverse news databases. Critically, it requires <strong>no additional subscription</strong> for existing BGL users &mdash; making it the most cost-effective option for SMSF-focused accounting practices already paying for BGL software.</p>
+    <div class="pro-con-grid">
+      <div class="pro-con-col">
+        <div class="pro-con-label">Strengths</div>
+        <ul>
+          <li>Included in Simple Fund 360 and Simple Invest 360</li>
+          <li>No extra subscription cost for BGL users</li>
+          <li>DVS-connected &mdash; instant government database check</li>
+          <li>AI-powered biometrics and document scanning</li>
+          <li>AML/CTF, sanctions and adverse news screening</li>
+          <li>ATO and TPB compliant</li>
+        </ul>
+      </div>
+      <div class="pro-con-col cons">
+        <div class="pro-con-label cons">Limitations</div>
+        <ul>
+          <li>Only available to BGL software subscribers</li>
+          <li>Not standalone &mdash; requires BGL subscription</li>
+          <li>Limited to clients managed in BGL</li>
+          <li>Not suitable as a primary tool for non-BGL practices</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pricing-box">
+      <div class="pricing-content">
+        <div class="pricing-label">Pricing</div>
+        <div class="pricing-detail"><strong>Included in your BGL subscription — no additional cost.</strong> If you are already a BGL Simple Fund 360 or Simple Invest 360 subscriber, BGLiD is built in with no extra per-check or subscription fee. This makes it by far the most cost-effective identity verification option for BGL users. If you are not already a BGL subscriber, it is not available as a standalone product.</div>
+      </div>
+    </div>
+    <p><strong>Best for:</strong> Accounting practices already using BGL Simple Fund 360 or Simple Invest 360 for SMSF administration. If you&rsquo;re paying for BGL, BGLiD is essentially free &mdash; start here before considering a paid third-party tool.</p>
+    <a href="https://www.bglcorp.com/bglid/" target="_blank" rel="noopener" class="tool-link">Learn about BGLiD &rarr;</a>
+  </div>
+
+  <!-- ── ONECLICKVERIFY ── -->
+  <div class="tool-card">
+    <div class="tool-header">
+      <div>
+        <div class="tool-name">OneClickVerify</div>
+        <div class="tool-type">DVS &middot; 5-Factor Verification &middot; PEP/Sanctions &middot; Biometrics</div>
+      </div>
+      <span class="tool-tag">Australian-owned</span>
+    </div>
+    <p>OneClickVerify is an Australian-owned DVS gateway provider using five-factor authentication &mdash; knowledge, possession, biometrics, location and a one-time token. Endorsed by the Department of Home Affairs and ATO. Clients verify in under a minute and the verified credential renews automatically when their photo ID expires. Includes PEP, sanctions and adverse media screening against 366,000+ records. Pricing is by enquiry &mdash; contact them for rates.</p>
+    <div class="pro-con-grid">
+      <div class="pro-con-col">
+        <div class="pro-con-label">Strengths</div>
+        <ul>
+          <li>Australian-owned &mdash; no offshore data processing</li>
+          <li>DVS gateway provider &mdash; government connected</li>
+          <li>5-factor authentication &mdash; highest assurance level</li>
+          <li>PEP, sanctions and adverse media screening included</li>
+          <li>NFC passport scanning and biometrics</li>
+          <li>Automatic re-verification on ID expiry</li>
+        </ul>
+      </div>
+      <div class="pro-con-col cons">
+        <div class="pro-con-label cons">Limitations</div>
+        <ul>
+          <li>No published pricing &mdash; must contact for quote</li>
+          <li>No CRM integration</li>
+          <li>Smaller vendor than some alternatives</li>
+          <li>Less accountant-specific marketing</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pricing-box">
+      <div class="pricing-content">
+        <div class="pricing-label">Pricing</div>
+        <div class="pricing-detail"><strong>Pricing by enquiry — no published rates.</strong> OneClickVerify does not list prices publicly. You need to contact them to get a quote. Enterprise plans are available for larger organisations (20+ users, 1,000+ verifications per year). For small practices, contact them directly to understand what a per-verification rate looks like for your volumes before committing.</div>
+      </div>
+    </div>
+    <p><strong>Best for:</strong> Practices that place high value on Australian data sovereignty and want a high-assurance verification method with the strongest possible authentication factors. Worth contacting if data residency is a concern for your client base.</p>
+    <a href="https://oneclickverify.com.au/#contact" target="_blank" rel="noopener" class="tool-link">Get in touch with OneClickVerify &rarr;</a>
+  </div>
+
+  <h2>Side-by-side comparison</h2>
+
+  <div class="comp-table-wrap">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>NameScan</th>
+          <th>VerifiMe</th>
+          <th>StackGo</th>
+          <th>BGLiD</th>
+          <th>OneClickVerify</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>DVS identity verification</strong></td>
+          <td><span class="partial">Add-on</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+        </tr>
+        <tr>
+          <td><strong>PEP screening</strong></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="partial">Add-on</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+        </tr>
+        <tr>
+          <td><strong>Sanctions screening</strong></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="partial">Add-on</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+        </tr>
+        <tr>
+          <td><strong>Adverse media</strong></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="partial">Add-on</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+        </tr>
+        <tr>
+          <td><strong>Biometric verification</strong></td>
+          <td><span class="cross">&mdash;</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+        </tr>
+        <tr>
+          <td><strong>Reusable client wallet</strong></td>
+          <td><span class="cross">&mdash;</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="cross">&mdash;</span></td>
+          <td><span class="cross">&mdash;</span></td>
+          <td><span class="cross">&mdash;</span></td>
+        </tr>
+        <tr>
+          <td><strong>CRM integration</strong></td>
+          <td><span class="cross">&mdash;</span></td>
+          <td><span class="partial">API</span></td>
+          <td><span class="tick">✓ Native</span></td>
+          <td><span class="cross">&mdash;</span></td>
+          <td><span class="cross">&mdash;</span></td>
+        </tr>
+        <tr>
+          <td><strong>Australian data storage</strong></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="partial">Check</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+        </tr>
+        <tr>
+          <td><strong>Pricing model</strong></td>
+          <td>~$1.80/scan<br><span style="font-size:11px;color:var(--muted)">min 50 scans</span></td>
+          <td>~$50/mo +<br><span style="font-size:11px;color:var(--muted)">per-verification</span></td>
+          <td>Pay-per-check<br><span style="font-size:11px;color:var(--muted)">USD pricing</span></td>
+          <td>Free for<br><span style="font-size:11px;color:var(--muted)">BGL subscribers</span></td>
+          <td>Contact<br><span style="font-size:11px;color:var(--muted)">for quote</span></td>
+        </tr>
+        <tr>
+          <td><strong>No BGL required</strong></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="cross">BGL only</span></td>
+          <td><span class="tick">✓</span></td>
+        </tr>
+        <tr>
+          <td><strong>No CRM required</strong></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="cross">CRM required</span></td>
+          <td><span class="tick">✓</span></td>
+          <td><span class="tick">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Our recommendation by practice type</h2>
+  <p>There is no single right answer &mdash; the best combination depends on your practice size, existing software, and client profile. Here&rsquo;s our recommendation by situation:</p>
+
+  <div class="rec-grid">
+    <div class="rec-card">
+      <div class="rec-label">Sole practitioner, no CRM</div>
+      <div class="rec-title">NameScan + VerifiMe</div>
+      <div class="rec-desc">Use NameScan for fast, pay-per-search PEP/sanctions screening. Use VerifiMe for DVS identity verification. Between them you have full CDD coverage at low cost with no CRM needed.</div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-label">BGL Simple Fund 360 user</div>
+      <div class="rec-title">BGLiD + NameScan</div>
+      <div class="rec-desc">BGLiD is already in your subscription &mdash; use it first for DVS verification of SMSF clients. Add NameScan for any screening needs not covered by BGLiD&rsquo;s built-in checks.</div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-label">Practice on HubSpot or Salesforce</div>
+      <div class="rec-title">StackGo IdentityCheck</div>
+      <div class="rec-desc">If your client records already live in HubSpot or Salesforce, StackGo is the cleanest option &mdash; verification happens inside your existing tool with automatic write-back. Add the PEP/sanctions add-on for complete coverage.</div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-label">High-value or complex clients</div>
+      <div class="rec-title">VerifiMe</div>
+      <div class="rec-desc">For practices with HNWI clients, complex trusts, SMSFs or foreign nationals, VerifiMe&rsquo;s full-service platform and reusable wallet provides the strongest audit trail and the smoothest client experience.</div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-label">Data sovereignty is a priority</div>
+      <div class="rec-title">OneClickVerify</div>
+      <div class="rec-desc">If keeping client data entirely within Australia is non-negotiable, OneClickVerify is purpose-built for it. Contact them for pricing &mdash; the 5-factor verification provides a highly defensible identity check.</div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-label">Just need PEP/sanctions screening</div>
+      <div class="rec-title">NameScan</div>
+      <div class="rec-desc">If you&rsquo;re already handling DVS through another method and just need fast, pay-per-search PEP and sanctions screening, NameScan is the simplest and most cost-effective option.</div>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <span class="tip-icon">💡</span>
+    <p><strong>Important:</strong> These tools handle identity verification and screening &mdash; they do not replace a full AML/CTF compliance system. You still need a documented AML/CTF program, risk assessment, staff vetting register, training records, and AUSTRAC enrolment. SimpleAML covers all of that for free.</p>
+  </div>
+
+
+  <h2>Our recommendation for sole practitioners and small firms</h2>
+  <p>If you are a sole practitioner or small accounting firm &mdash; under 10 staff, no CRM, not on BGL &mdash; the honest answer is simpler than the market makes it look.</p>
+
+  <div class="answer-box">
+    <div class="answer-box-label">Recommended combination</div>
+    <p><strong>NameScan for PEP and sanctions screening &mdash; VerifiMe for DVS identity verification.</strong> Between them, you have complete CDD coverage: identity verified against government databases, and clients screened against every major watchlist. No CRM required. No complex setup.</p>
+  </div>
+
+  <h3>Why NameScan for screening</h3>
+  <p>Pay-per-search with no monthly minimum means you only spend money when you actually onboard a new client. A small firm doing 50 new clients a year spends around <strong>0 total</strong> on a scan pack &mdash; less than a tank of fuel. There is no subscription ticking over in quiet months, no annual contract, and no minimum commitment beyond the initial pack of 50 scans.</p>
+
+  <h3>Why VerifiMe for identity verification</h3>
+  <p>The reusable identity wallet is a genuine advantage for small practices. When you ask a new client to verify through VerifiMe, they create a wallet once. If they later engage a lawyer, conveyancer or financial adviser who also uses VerifiMe, they don&rsquo;t need to verify again &mdash; they simply share their existing credentials. That is a real quality-of-service benefit you can explain to clients at onboarding.</p>
+  <p>The ~0/month subscription is the main cost to weigh. If you are bringing on fewer than five new clients a month, the per-client cost is relatively high. But for a small practice that values a clean, auditable, end-to-end verification process &mdash; and doesn&rsquo;t want to stitch together multiple tools &mdash; VerifiMe is the most complete standalone option available.</p>
+
+  <h3>Already on BGL? Adjust the combination</h3>
+  <p>If your practice uses BGL Simple Fund 360 or Simple Invest 360 for SMSF administration, BGLiD is already included in your subscription at no extra cost. Use <strong>BGLiD for SMSF clients</strong> and <strong>NameScan for everything else</strong>. You may not need VerifiMe at all &mdash; BGLiD covers DVS verification and AML/CTF screening for your SMSF client base, and NameScan handles any clients outside BGL.</p>
+
+  <div class="tip-box">
+    <span class="tip-icon">💡</span>
+    <p><strong>None of these tools replace SimpleAML.</strong> NameScan and VerifiMe handle identity checks &mdash; they do not build your AML/CTF program, manage your risk assessment, run your staff vetting register, or track your AUSTRAC enrolment. Use SimpleAML alongside whichever verification tool you choose to cover your full compliance obligations.</p>
+  </div>
+
+  <div class="article-cta">
+    <h4>Need the rest of your compliance setup?</h4>
+    <p>SimpleAML handles everything else &mdash; your AML/CTF program, risk assessment, staff vetting, training register, client risk profiling and AUSTRAC enrolment tracking. Free, browser-based, no account required.</p>
+    <a href="/app.html" class="btn-primary">Open SimpleAML →</a>
+    <a href="/partners.html" class="btn-secondary">View all partner tools →</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-brand">SimpleAML</div>
+  <a href="/articles.html" class="footer-link">&larr; All Articles</a>
+</footer>
+
+</body>
+</html>
