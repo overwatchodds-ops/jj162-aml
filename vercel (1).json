@@ -1,0 +1,26 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "realestate.simpleaml.com.au"
+        }
+      ],
+      "destination": "/index-realestate.html",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "conveyancing.simpleaml.com.au"
+        }
+      ],
+      "destination": "/index-conveyancing.html",
+      "permanent": false
+    }
+  ]
+}

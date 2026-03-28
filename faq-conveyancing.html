@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z6L06TX2HB');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AML/CTF FAQ for Conveyancers — SimpleAML</title>
+  <meta name="description" content="Frequently asked questions about AML/CTF obligations for Australian conveyancers. AUSTRAC Tranche 2, enrolment, CDD, the SimpleAML app and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --ink:#0f1117;--ink-mid:#1c2333;
+      --gold:#b8965a;--gold-light:#d4b07a;
+      --gold-pale:rgba(184,150,90,0.12);--gold-rule:rgba(184,150,90,0.25);
+      --paper:#f5f2ec;--cream:#ede8df;--mid:#6b6459;--border:#ddd9d0;
+      --font-display:'Cormorant Garamond',Georgia,serif;
+      --font-sans:'DM Sans',system-ui,sans-serif;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-sans);color:var(--ink);background:#fff;line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
+
+    .deadline-banner{background:var(--ink);color:rgba(255,255,255,0.75);text-align:center;padding:10px 20px;font-size:14px;border-bottom:1px solid var(--gold-rule)}
+    .deadline-banner strong{color:var(--gold);font-weight:600}
+
+    nav{position:sticky;top:0;z-index:10000;background:rgba(255,255,255,0.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:62px;overflow:visible;isolation:isolate}
+    .nav-logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:18px;color:var(--ink);text-decoration:none}
+    .logo-mark{width:34px;height:34px;background:var(--ink);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:12px;font-weight:700;flex-shrink:0;letter-spacing:-0.5px;font-family:var(--font-display)}
+    .nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+    .nav-links a{font-size:14px;color:var(--mid);text-decoration:none;padding:6px 13px;border-radius:4px;transition:background .15s,color .15s}
+    .nav-links a:hover{background:var(--cream);color:var(--ink)}
+    .nav-cta{background:var(--ink)!important;color:var(--gold)!important;font-weight:500!important;padding:8px 18px!important;border-radius:4px!important}
+    .nav-cta:hover{background:var(--ink-mid)!important;color:var(--gold-light)!important}
+    .mob-menu-btn{display:none;background:none;border:none;color:var(--ink);cursor:pointer;padding:4px;z-index:1001}
+
+    /* ── HERO — light ── */
+    .page-hero{background:var(--paper);padding:72px 40px 64px;text-align:center;border-bottom:1px solid var(--border)}
+    .page-label{display:inline-flex;align-items:center;gap:7px;background:var(--gold-pale);color:var(--gold);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;padding:5px 16px;border-radius:2px;border:1px solid var(--gold-rule);margin-bottom:24px}
+    .page-hero h1{font-family:var(--font-display);font-size:clamp(36px,5vw,56px);font-weight:400;line-height:1.1;color:var(--ink);max-width:660px;margin:0 auto 18px}
+    .page-hero h1 em{color:var(--gold);font-style:italic}
+    .page-hero p{font-size:17px;color:var(--mid);max-width:500px;margin:0 auto;font-weight:300;line-height:1.75}
+
+    /* ── LAYOUT ── */
+    .faq-wrap{max-width:820px;margin:0 auto;padding:64px 40px 80px}
+
+    /* ── SECTION HEADERS ── */
+    .faq-section{margin-bottom:48px}
+    .faq-section-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:8px}
+    .faq-section-title{font-family:var(--font-display);font-size:28px;font-weight:400;color:var(--ink);margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+
+    /* ── ACCORDION ── */
+    .faq-item{border-bottom:1px solid var(--border)}
+    .faq-item:first-of-type{border-top:1px solid var(--border)}
+    .faq-q{display:flex;align-items:center;justify-content:space-between;padding:18px 0;cursor:pointer;gap:16px;user-select:none}
+    .faq-q-text{font-size:15px;font-weight:500;color:var(--ink);line-height:1.5;flex:1}
+    .faq-q:hover .faq-q-text{color:var(--gold)}
+    .faq-chevron{width:20px;height:20px;flex-shrink:0;color:var(--mid);transition:transform .2s}
+    .faq-item.open .faq-chevron{transform:rotate(180deg);color:var(--gold)}
+    .faq-item.open .faq-q-text{color:var(--gold)}
+    .faq-a{display:none;padding:0 0 20px;font-size:14px;color:var(--mid);line-height:1.85;font-weight:300}
+    .faq-item.open .faq-a{display:block}
+    .faq-a p{margin-bottom:12px}
+    .faq-a p:last-child{margin-bottom:0}
+    .faq-a strong{color:var(--ink);font-weight:600}
+    .faq-a a{color:var(--gold);text-decoration:none}
+    .faq-a a:hover{text-decoration:underline}
+    .faq-a ul{margin:10px 0 12px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+    .faq-a ul li{display:flex;align-items:flex-start;gap:9px;font-size:14px;color:var(--mid);line-height:1.7}
+    .faq-a ul li::before{content:'—';color:var(--gold);flex-shrink:0;font-family:var(--font-display);font-size:16px;line-height:1.5}
+    .callout{background:var(--gold-pale);border:1px solid var(--gold-rule);border-left:3px solid var(--gold);border-radius:4px;padding:14px 18px;margin:12px 0}
+    .callout p{font-size:13px;color:var(--ink);font-weight:400;line-height:1.7;margin-bottom:0}
+
+    /* ── CTA ── */
+    .faq-cta{background:var(--paper);border:1px solid var(--border);border-radius:4px;padding:36px;text-align:center;margin-top:56px}
+    .faq-cta h3{font-family:var(--font-display);font-size:28px;font-weight:400;color:var(--ink);margin-bottom:10px}
+    .faq-cta h3 em{font-style:italic;color:var(--gold)}
+    .faq-cta p{font-size:14px;color:var(--mid);margin-bottom:20px;font-weight:300;line-height:1.7}
+    .btn-primary{background:var(--gold);color:var(--ink);font-family:var(--font-sans);font-size:14px;font-weight:500;padding:12px 24px;border-radius:3px;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+    .btn-primary:hover{background:var(--gold-light)}
+
+    /* ── FOOTER ── */
+    footer{background:var(--ink);padding:56px 40px 32px}
+    .footer-inner{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:48px;padding-bottom:40px;border-bottom:1px solid rgba(184,150,90,0.15)}
+    .footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .footer-tagline{font-size:13px;color:rgba(245,242,236,0.3);line-height:1.75;font-weight:300}
+    .footer-col-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(184,150,90,0.5);margin-bottom:16px}
+    .footer-col-links{display:flex;flex-direction:column;gap:10px}
+    .footer-col-links a{font-size:13px;color:rgba(245,242,236,0.4);text-decoration:none;transition:color .15s}
+    .footer-col-links a:hover{color:var(--gold)}
+    .footer-bottom{max-width:1040px;margin:0 auto;padding-top:24px;display:flex;justify-content:space-between;font-size:12px;color:rgba(245,242,236,0.2);flex-wrap:wrap;gap:8px}
+    .disclaimer{background:var(--cream);border-top:1px solid var(--border);padding:18px 40px;font-size:11px;color:var(--mid);line-height:1.7;text-align:center}
+
+    @media(max-width:768px){
+      nav{padding:0 20px}
+      .nav-links{display:none;position:fixed;top:62px;left:0;right:0;bottom:0;background:rgba(255,255,255,0.98);flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:9999}
+      .nav-links.open{display:flex}
+      .nav-links a{font-size:18px;padding:12px 28px}
+      .mob-menu-btn{display:flex}
+      .page-hero{padding:52px 24px 44px}
+      .faq-wrap{padding:44px 24px 60px}
+      footer{padding:44px 24px 24px}
+      .footer-inner{grid-template-columns:1fr;gap:32px}
+      .footer-bottom{justify-content:center;text-align:center}
+      .disclaimer{padding:16px 24px}
+    }
+  </style>
+</head>
+<body>
+
+<div class="deadline-banner">
+  AML/CTF obligations commence <strong>1 July 2026</strong> &nbsp;&middot;&nbsp; AUSTRAC enrolment deadline <strong>29 July 2026</strong>
+</div>
+
+<nav>
+  <a href="index-conveyancing.html" class="nav-logo">
+    <div class="logo-mark">SA</div>
+    SimpleAML
+  </a>
+  <button class="mob-menu-btn" id="mob-menu-btn" onclick="toggleMobileNav()">
+    <svg id="mob-icon-open" width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <svg id="mob-icon-close" width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index-conveyancing.html#how">How It Works</a></li>
+    <li><a href="templates-conveyancing.html">Free Templates</a></li>
+    <li><a href="faq-conveyancing.html">FAQ</a></li>
+    <li><a href="articles-conveyancing.html">Articles</a></li>
+    <li><a href="contact-conveyancing.html">Contact</a></li>
+    <li><a href="app-conveyancing.html" class="nav-cta">Open App &rarr;</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="page-label">FAQ</div>
+  <h1>Frequently asked<br><em>questions</em></h1>
+  <p>Plain-English answers to the most common questions about AML/CTF obligations for Australian conveyancers.</p>
+</div>
+
+<div class="faq-wrap">
+
+  <!-- ── SECTION 1: The basics ── -->
+  <div class="faq-section">
+    <div class="faq-section-label">The basics</div>
+    <div class="faq-section-title">What is AML/CTF Tranche 2?</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What is AUSTRAC Tranche 2 and does it apply to my practice?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Tranche 2 is the expansion of Australia's AML/CTF Act to a new group of professions including conveyancers, real estate agents, accountants, lawyers and dealers in precious metals. The reforms were passed by Parliament in late 2024.</p>
+        <p>If your practice assists clients with <strong>buying, selling or transferring real estate</strong> in Australia, you are a reporting entity under the Act from <strong>1 July 2026</strong>. This applies regardless of whether you are a sole practitioner, a small practice or a larger firm. Commercial and residential property are both in scope.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What obligations apply to conveyancers from 1 July 2026?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>From 1 July 2026 you must:</p>
+        <ul>
+          <li>Have a documented, approved <strong>AML/CTF Program</strong> in place</li>
+          <li>Conduct <strong>Customer Due Diligence (CDD)</strong> on clients at engagement</li>
+          <li>Screen clients for <strong>PEPs and sanctions</strong></li>
+          <li>File <strong>Suspicious Matter Reports (SMRs)</strong> where required</li>
+          <li>Retain records for <strong>7 years</strong></li>
+          <li>Enrol with <strong>AUSTRAC</strong> and notify your AMLCO (deadline 29 July 2026)</li>
+          <li>Complete an <strong>independent evaluation</strong> of your program at least every 3 years</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">I'm a sole practitioner. Do the same obligations apply to me?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Yes. The obligations apply to all practices that provide designated conveyancing services — there is no exemption for sole practitioners or small practices. However, the obligations are proportionate to your risk profile. A sole practitioner handling straightforward residential matters will have a simpler risk assessment and program than a large multi-office practice doing complex commercial work.</p>
+        <p>SimpleAML is specifically designed for sole practitioners and small practices (under 15 staff). The free app and templates are sized for your circumstances, not for banks.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Does this apply to off-the-plan purchases and property developers?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>The AML/CTF Act applies to the <strong>conveyancer</strong> assisting in the transaction, not to the property developer or purchaser directly. If you act as conveyancer on an off-the-plan purchase, your obligations are the same as for any other purchase matter — you must conduct CDD on your client at engagement.</p>
+        <p>Off-the-plan matters do carry some additional complexity because the final title may not be created until well after exchange. SimpleAML focuses on standard completed-title transactions. If a significant portion of your practice involves off-the-plan or property developer work, you may want to seek specific legal advice about how the timing rules apply to your matters.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What about stock and station agents?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Stock and station agents who assist with the sale of <strong>rural land</strong> may be in scope as real estate agents under the Act (since rural land is real estate). However, the exact scope of the designated service in this context depends on whether the transaction involves real property title transfer. SimpleAML for Conveyancers is not designed for stock and station agents — check AUSTRAC's sector-specific guidance or seek legal advice if you are unsure.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 2: AUSTRAC Enrolment ── -->
+  <div class="faq-section">
+    <div class="faq-section-label">Enrolment</div>
+    <div class="faq-section-title">AUSTRAC enrolment</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">When does AUSTRAC enrolment open and what is the deadline?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>AUSTRAC enrolment opens <strong>31 March 2026</strong>. The deadline to enrol is <strong>29 July 2026</strong>. However, you should enrol as early as possible — your AML/CTF obligations commence on 1 July 2026, and you should ideally be enrolled on or before that date.</p>
+        <div class="callout"><p>Enrolment is at <a href="https://online.austrac.gov.au" target="_blank" rel="noopener">online.austrac.gov.au</a>. You will need an AUSTRAC Online account — create one before the portal opens so you are ready to go on 31 March.</p></div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What do I need to have in place before I can enrol?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Technically you can complete the AUSTRAC enrolment form without having your program finalised, but you should not be providing designated services without a program in place. Before enrolling, we recommend having:</p>
+        <ul>
+          <li>Your AML/CTF Program (Parts A and B) documented and approved</li>
+          <li>Your practice risk assessment completed</li>
+          <li>Your AMLCO identified (name, title and contact details)</li>
+          <li>Your ABN, ACN (if applicable), and practice address ready</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What is an AMLCO and do I need one?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Yes. An AML/CTF Compliance Officer (AMLCO) is required for all reporting entities. The AMLCO is responsible for overseeing your AML/CTF program and ensuring your practice meets its obligations. They must be a <strong>fit and proper person</strong> — a senior manager or the principal conveyancer.</p>
+        <p>For small practices and sole practitioners, the principal conveyancer typically serves as both principal and AMLCO. You must <strong>notify AUSTRAC of your AMLCO</strong> by 29 July 2026 through AUSTRAC Online.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What is the industry levy and will it apply to my practice?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>AUSTRAC's enrolment form asks whether your business earnings (including related entities) were $100 million or more in the previous financial year. For <strong>virtually all conveyancing practices the answer is No</strong>. If you answer Yes, you may be subject to the industry contribution levy — speak with your accountant.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: AML/CTF Program ── -->
+  <div class="faq-section">
+    <div class="faq-section-label">Program</div>
+    <div class="faq-section-title">Your AML/CTF Program</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What is an AML/CTF Program and is it really required?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Yes, it is required. Your AML/CTF Program is the documented set of policies, procedures and controls your practice uses to manage its money laundering and terrorism financing risks. It must be <strong>in place, documented and approved by a senior manager before 1 July 2026</strong>.</p>
+        <p>The program must address how you assess risk, how you conduct CDD, how you screen for PEPs and sanctions, how you handle suspicious matters, and how you train your staff. AUSTRAC's Conveyancing Starter Kit provides templates to help you build it.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Where do I start? Can I use a template?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Yes — AUSTRAC publishes a free <a href="https://www.austrac.gov.au/reforms/sector-specific-guidance/conveyancer-guidance/conveyancing-program-starter-kit" target="_blank" rel="noopener">Conveyancing Program Starter Kit</a> with template documents. SimpleAML also provides three free Word templates specifically designed for small practices:</p>
+        <ul>
+          <li><strong>Part A &mdash; Policy Statement:</strong> ~20 minutes to customise</li>
+          <li><strong>Part B &mdash; CDD Procedures:</strong> ~30 minutes to customise</li>
+          <li><strong>Risk Assessment Worksheet:</strong> ~45 minutes to complete</li>
+        </ul>
+        <p>Download them from the <a href="templates-conveyancing.html">templates page</a>. Complete the risk assessment first — your program must be based on it.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Who needs to approve the program?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Your AML/CTF Program must be approved by a <strong>senior manager</strong> before 1 July 2026. For sole practitioners, the principal conveyancer can approve their own program. For practices with multiple staff, the principal or a senior manager should sign off. Record the approver's name, title and date of approval in SimpleAML's Program tab — that is your compliance evidence.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What is an independent evaluation and when is it due?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Under s.159 of the AML/CTF Act, you must arrange an <strong>independent evaluation</strong> of your AML/CTF program at least every 3 years. For newly regulated entities, the first evaluation is expected to be due <strong>no earlier than 1 July 2029</strong>. The evaluator must be independent of your practice — it cannot be conducted internally.</p>
+        <p>Record your planned evaluation date and evaluator in SimpleAML's Compliance Report tab to keep it on your radar.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 4: CDD ── -->
+  <div class="faq-section">
+    <div class="faq-section-label">CDD</div>
+    <div class="faq-section-title">Customer Due Diligence</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">When must CDD be completed — at engagement or at settlement?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p><strong>At engagement</strong> — not at settlement. For conveyancers, CDD must be completed before you begin assisting in the planning or execution of the transaction. This means before reviewing contracts, giving advice, or preparing any documents.</p>
+        <p>The one exception is auction purchases, where the buyer is not known until after the hammer falls. In that case, CDD must be completed <strong>as soon as practicable after exchange</strong> — and before settlement or within 28 days of exchange, whichever is earlier.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Do I need to identify both the buyer and seller?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>No — only the client you are <strong>acting for</strong>. If you act for the buyer, conduct CDD on the buyer. If you act for the seller, conduct CDD on the seller. You are not required to identify the other party to the transaction (that is their conveyancer's responsibility).</p>
+        <p>If your client is a company, trust or SMSF, you must also identify the beneficial owners and controllers of that entity.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What is the auction CDD rule exactly?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>For auction purchases where you are acting for the buyer, the CDD deadline is the earlier of:</p>
+        <ul>
+          <li>The settlement date, or</li>
+          <li>28 days after the exchange of contracts</li>
+        </ul>
+        <p>For example: if exchange is on auction day (say 5 April) and settlement is 2 May (27 days later), CDD must be completed by 2 May — settlement is earlier than 28 days. If settlement is 10 May (35 days later), CDD must be completed by 3 May — 28 days from exchange is earlier.</p>
+        <p>SimpleAML's New Matter form calculates this deadline automatically when you enter the exchange and settlement dates.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What is Enhanced CDD (EDD) and when does it apply?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Enhanced CDD (EDD) applies when you assess a client as <strong>high risk</strong>. Factors that can push a client to high risk include: foreign residence, PEP status, complex entity structures, large cash components, or a pattern of unusual behaviour.</p>
+        <p>EDD requires you to collect additional information — source of funds, source of wealth, and conduct an adverse media check. High-risk clients also require written approval from your AMLCO before proceeding with the matter.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Do CDD obligations apply to family transfers and gifts?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Yes. CDD obligations apply to all designated conveyancing services — including transfers where no money changes hands, such as family transfers, gifts and estate transfers. The fact that there is no sale price does not exempt the transaction from the Act.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 5: Trust Accounts ── -->
+  <div class="faq-section">
+    <div class="faq-section-label">Trust accounts</div>
+    <div class="faq-section-title">Trust account risk</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Why are trust accounts specifically mentioned in conveyancing AML/CTF guidance?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Trust accounts are one of the <strong>key ML/TF risk factors specific to conveyancers</strong> that is not present in the real estate agent world. A conveyancer's trust account receives large sums of money — deposits, settlement proceeds and sometimes purchase prices — that could be used to launder funds if not properly controlled.</p>
+        <p>AUSTRAC's conveyancing guidance specifically highlights trust account risk. Your risk assessment must address it, and your CDD procedures should include source-of-funds checks for funds deposited into trust, particularly for large or unusual amounts.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">My practice doesn't hold a trust account — does this change my obligations?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Your core AML/CTF obligations remain the same. If your practice does not hold a trust account, your trust account risk rating in the risk assessment will be N/A, and your Part B procedures will not need to include trust account controls. This slightly simplifies your program and risk assessment — but all other obligations (CDD, enrolment, staff vetting, program, SMR) still apply in full.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 6: Suspicious Matters ── -->
+  <div class="faq-section">
+    <div class="faq-section-label">Suspicious matters</div>
+    <div class="faq-section-title">SMRs and red flags</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">When do I need to file a Suspicious Matter Report?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>You must file a Suspicious Matter Report (SMR) with AUSTRAC if you have <strong>reasonable grounds to suspect</strong> that a transaction or proposed transaction:</p>
+        <ul>
+          <li>Involves proceeds of crime</li>
+          <li>Is connected to money laundering or terrorism financing</li>
+          <li>Involves a person who is subject to sanctions</li>
+        </ul>
+        <p>You do not need to be certain — reasonable suspicion is the threshold. SMRs are filed through AUSTRAC Online. You must file as soon as practicable after forming the suspicion, and <strong>before</strong> completing the transaction if possible.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What is tipping off and why is it so serious?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Tipping off is telling your client, or any other person, that you have filed or are considering filing an SMR — or that AUSTRAC is investigating them. It is a <strong>criminal offence under s.123 of the AML/CTF Act</strong>, carrying penalties of up to 2 years imprisonment.</p>
+        <p>If you suspect a matter and are considering filing an SMR, do not tell the client. Seek legal advice if you are unsure how to handle the matter.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 7: Staff ── -->
+  <div class="faq-section">
+    <div class="faq-section-label">Staff</div>
+    <div class="faq-section-title">Staff vetting &amp; training</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Do I need to vet all staff, including admin?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Yes — vetting requirements apply to <strong>all staff who have AML/CTF-related functions</strong>, which in a conveyancing practice effectively means everyone. The depth of vetting is proportionate to the role:</p>
+        <ul>
+          <li><strong>Level 1 (Admin/support):</strong> Interview and self-attestation minimum; reference check recommended</li>
+          <li><strong>Level 2 (Conveyancer/file handler):</strong> Interview, reference check and self-attestation; criminal history check recommended</li>
+          <li><strong>Level 3 (AMLCO/Principal/trust account access):</strong> All checks required including criminal history</li>
+        </ul>
+        <p>If you are setting up for the first time, log initial vetting records for all existing staff before 1 July 2026.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What AML/CTF training do staff need?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>All staff with AML/CTF responsibilities must complete training before 1 July 2026. Training must cover at minimum: what AML/CTF obligations are, how to conduct CDD, how to recognise red flags, and how to handle suspicious matters.</p>
+        <p>AUSTRAC provides free training modules through its website. Training should be refreshed annually. Log all training in SimpleAML's Training Register with the type, date, format and assessment outcome.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 8: Records ── -->
+  <div class="faq-section">
+    <div class="faq-section-label">Records</div>
+    <div class="faq-section-title">Record keeping</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">How long do I need to keep AML/CTF records?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>All AML/CTF records — CDD records, transaction records, program documents, training records and staff vetting records — must be retained for <strong>7 years</strong> from when they were created or the transaction was completed.</p>
+        <p>Because SimpleAML stores data in your browser's localStorage, you are responsible for backing up your data and storing it securely. Use the Export function in the app regularly and keep backups in a secure location.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">What happens if I lose my records?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Failing to maintain required records is a breach of the AML/CTF Act and can result in civil penalties. Since SimpleAML stores data in your browser, if you clear your browser storage without a backup, your data cannot be recovered.</p>
+        <p><strong>Export a JSON backup regularly</strong> using the Export button in the app, and store it securely. At minimum, export at the end of each month and before clearing any browser data.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION 9: SimpleAML App ── -->
+  <div class="faq-section">
+    <div class="faq-section-label">SimpleAML</div>
+    <div class="faq-section-title">About the app</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Is SimpleAML really free? What's the catch?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>Yes, genuinely free. No subscription, no freemium tier, no credit card required. SimpleAML was built by a CPA who saw that every AML tool on the market was built for banks and priced accordingly. Small conveyancing practices deserve a tool built for their circumstances.</p>
+        <p>The tool is funded by Click Seed Pty Ltd as a public good for the Australian conveyancing sector ahead of the 1 July 2026 deadline. There are no plans to charge for it.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Where is my data stored? Does it go to a server?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>All compliance data you enter — client names, matter details, CDD records, staff records — is stored entirely in <strong>your browser's localStorage</strong>. Nothing is sent to any server. We cannot see your data. No account or login is required.</p>
+        <p>This means you are responsible for backing up and retaining your own data. Export a backup regularly using the app's Export function.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Can multiple staff use the app at the same time?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>SimpleAML is a single-browser app — each browser's localStorage is independent. It is designed for one person (typically the AMLCO or principal) to manage the practice's compliance records. If you have multiple staff who need to input CDD records, the recommended approach is for one designated person to manage the compliance register, with others providing information to them.</p>
+        <p>A multi-user or cloud-synced version is not currently planned. For practices needing multi-user capability, a paid enterprise AML platform may be more appropriate.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">
+        <span class="faq-q-text">Does using SimpleAML guarantee I am compliant with the AML/CTF Act?</span>
+        <svg class="faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="faq-a">
+        <p>No tool can guarantee compliance — compliance depends on how your practice actually operates, not just on what records you keep. SimpleAML helps you build and document the right structures, but you remain responsible for ensuring your practice meets its obligations.</p>
+        <p>SimpleAML is a compliance assistance tool, not legal advice. If you have specific concerns about your compliance obligations, seek independent legal advice.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-cta">
+    <h3>Ready to get <em>started?</em></h3>
+    <p>Open the free SimpleAML app and work through the setup checklist — practice profile, staff vetting, training, risk assessment, program and enrolment. Takes a few hours. Keeps you on the right side of the law from 1 July 2026.</p>
+    <a href="app-conveyancing.html" class="btn-primary">Open SimpleAML for Conveyancers &rarr;</a>
+  </div>
+
+</div><!-- /faq-wrap -->
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        <div class="logo-mark">SA</div>
+        <div style="font-size:16px;font-weight:500;color:rgba(245,242,236,0.7);">SimpleAML</div>
+      </div>
+      <p class="footer-tagline">Free AML/CTF compliance for Australian conveyancing practices.<br><br>Developed by Click Seed Pty Ltd<br>ABN 87 656 256 567</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Product</div>
+      <div class="footer-col-links">
+        <a href="app-conveyancing.html">Open App &rarr;</a>
+        <a href="templates-conveyancing.html">Free Templates</a>
+        <a href="faq-conveyancing.html">FAQ</a>
+        <a href="articles-conveyancing.html">Articles</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <div class="footer-col-links">
+        <a href="index-conveyancing.html">Home</a>
+        <a href="contact-conveyancing.html">Contact</a>
+        <a href="privacy-policy-conveyancing.html">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>&copy; 2026 Click Seed Pty Ltd. All rights reserved.</div>
+    <div>conveyancing.simpleaml.com.au</div>
+  </div>
+</footer>
+
+<div class="disclaimer">
+  <strong>Important:</strong> SimpleAML is a compliance assistance tool only and does not constitute legal advice. Users are responsible for ensuring their own compliance with AUSTRAC requirements. Seek independent legal advice where required. Developed by Click Seed Pty Ltd ABN 87 656 256 567.
+</div>
+
+<script>
+  function toggle(btn) {
+    var item = btn.parentElement;
+    item.classList.toggle('open');
+  }
+  function toggleMobileNav() {
+    var nav = document.querySelector('.nav-links');
+    var open = document.getElementById('mob-icon-open');
+    var close = document.getElementById('mob-icon-close');
+    var isOpen = nav.classList.toggle('open');
+    open.style.display = isOpen ? 'none' : 'block';
+    close.style.display = isOpen ? 'block' : 'none';
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+  document.querySelectorAll('.nav-links a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      var nav = document.querySelector('.nav-links');
+      nav.classList.remove('open');
+      document.getElementById('mob-icon-open').style.display = 'block';
+      document.getElementById('mob-icon-close').style.display = 'none';
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+</body>
+</html>

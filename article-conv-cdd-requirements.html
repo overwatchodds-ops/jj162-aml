@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z6L06TX2HB');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CDD requirements for conveyancers — who do you need to identify? — SimpleAML</title>
+  <meta name="description" content="A practical guide to customer due diligence for Australian conveyancers. Who must be identified, when, and how the rules differ by matter type.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
+    :root{{
+      --ink:#0f1117;--ink-mid:#1c2333;
+      --gold:#b8965a;--gold-light:#d4b07a;
+      --gold-pale:rgba(184,150,90,0.12);--gold-rule:rgba(184,150,90,0.25);
+      --paper:#f5f2ec;--cream:#ede8df;--mid:#6b6459;--border:#ddd9d0;
+      --font-display:'Cormorant Garamond',Georgia,serif;
+      --font-sans:'DM Sans',system-ui,sans-serif;
+    }}
+    html{{scroll-behavior:smooth}}
+    body{{font-family:var(--font-sans);color:var(--ink);background:#fff;line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}}
+    .deadline-banner{{background:var(--ink);color:rgba(255,255,255,0.75);text-align:center;padding:10px 20px;font-size:14px;border-bottom:1px solid var(--gold-rule)}}
+    .deadline-banner strong{{color:var(--gold);font-weight:600}}
+    nav{{position:sticky;top:0;z-index:10000;background:rgba(255,255,255,0.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:62px;overflow:visible;isolation:isolate}}
+    .nav-logo{{display:flex;align-items:center;gap:10px;font-weight:600;font-size:18px;color:var(--ink);text-decoration:none}}
+    .logo-mark{{width:34px;height:34px;background:var(--ink);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:12px;font-weight:700;flex-shrink:0;letter-spacing:-0.5px;font-family:var(--font-display)}}
+    .nav-links{{display:flex;align-items:center;gap:4px;list-style:none}}
+    .nav-links a{{font-size:14px;color:var(--mid);text-decoration:none;padding:6px 13px;border-radius:4px;transition:background .15s,color .15s}}
+    .nav-links a:hover{{background:var(--cream);color:var(--ink)}}
+    .nav-cta{{background:var(--ink)!important;color:var(--gold)!important;font-weight:500!important;padding:8px 18px!important;border-radius:4px!important}}
+    .nav-cta:hover{{background:var(--ink-mid)!important;color:var(--gold-light)!important}}
+    .mob-menu-btn{{display:none;background:none;border:none;color:var(--ink);cursor:pointer;padding:4px;z-index:1001}}
+    /* article hero — light paper background */
+    .article-hero{{background:var(--paper);padding:64px 40px 56px;border-bottom:1px solid var(--border)}}
+    .article-hero-inner{{max-width:760px;margin:0 auto}}
+    .article-tag{{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:14px}}
+    .article-hero h1{{font-family:var(--font-display);font-size:clamp(32px,4.5vw,52px);font-weight:400;line-height:1.1;color:var(--ink);margin-bottom:18px}}
+    .article-hero h1 em{{font-style:italic;color:var(--gold)}}
+    .article-hero-deck{{font-size:18px;color:var(--mid);line-height:1.75;font-weight:300;margin-bottom:24px;max-width:640px}}
+    .article-meta{{display:flex;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--mid);padding-top:20px;border-top:1px solid var(--border)}}
+    .article-meta span{{display:flex;align-items:center;gap:6px}}
+    /* prose */
+    .article-wrap{{max-width:760px;margin:0 auto;padding:56px 40px 80px}}
+    .article-wrap h2{{font-family:var(--font-display);font-size:28px;font-weight:400;color:var(--ink);margin:44px 0 14px;padding-top:4px;border-top:1px solid var(--border)}}
+    .article-wrap h2:first-of-type{{border-top:none;margin-top:0}}
+    .article-wrap h3{{font-size:16px;font-weight:600;color:var(--ink);margin:24px 0 8px}}
+    .article-wrap p{{font-size:15px;color:var(--mid);line-height:1.85;margin-bottom:18px;font-weight:300}}
+    .article-wrap p strong{{color:var(--ink);font-weight:600}}
+    .article-wrap ul,.article-wrap ol{{margin:12px 0 20px 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:9px}}
+    .article-wrap ul li,.article-wrap ol li{{font-size:15px;color:var(--mid);line-height:1.75;display:flex;align-items:flex-start;gap:10px;font-weight:300}}
+    .article-wrap ul li::before{{content:'—';color:var(--gold);flex-shrink:0;font-family:var(--font-display);font-size:17px;line-height:1.5}}
+    .article-wrap ol{{counter-reset:ol-counter}}
+    .article-wrap ol li{{counter-increment:ol-counter}}
+    .article-wrap ol li::before{{content:counter(ol-counter)'.';color:var(--gold);flex-shrink:0;font-family:var(--font-display);font-size:16px;line-height:1.6;font-weight:400;min-width:20px}}
+    .article-wrap a{{color:var(--gold);text-decoration:none}}
+    .article-wrap a:hover{{text-decoration:underline}}
+    .callout{{background:var(--gold-pale);border:1px solid var(--gold-rule);border-left:3px solid var(--gold);border-radius:4px;padding:18px 22px;margin:24px 0}}
+    .callout p{{margin-bottom:0;font-size:14px;color:var(--ink);font-weight:400;line-height:1.7}}
+    .callout strong{{color:var(--ink)}}
+    .callout-red{{background:#fdf2f1;border:1px solid #f5c2bc;border-left:3px solid #c0392b;border-radius:4px;padding:18px 22px;margin:24px 0}}
+    .callout-red p{{margin-bottom:0;font-size:14px;color:#0f1117;font-weight:400;line-height:1.7}}
+    /* date table */
+    .date-table{{width:100%;border-collapse:collapse;margin:20px 0}}
+    .date-table th{{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);padding:10px 14px;text-align:left;border-bottom:2px solid var(--border);background:var(--paper)}}
+    .date-table td{{font-size:14px;color:var(--mid);padding:11px 14px;border-bottom:1px solid var(--border);line-height:1.6}}
+    .date-table td:first-child{{font-weight:600;color:var(--ink);white-space:nowrap}}
+    .date-table tr:last-child td{{border-bottom:none}}
+    /* article footer CTA */
+    .article-cta-box{{background:var(--paper);border:1px solid var(--border);border-radius:4px;padding:32px;margin:48px 0 0;text-align:center}}
+    .article-cta-box h3{{font-family:var(--font-display);font-size:26px;font-weight:400;color:var(--ink);margin-bottom:10px}}
+    .article-cta-box h3 em{{font-style:italic;color:var(--gold)}}
+    .article-cta-box p{{font-size:14px;color:var(--mid);margin-bottom:20px;font-weight:300;line-height:1.7}}
+    .btn-primary{{background:var(--gold);color:var(--ink);font-family:var(--font-sans);font-size:14px;font-weight:500;padding:12px 24px;border-radius:3px;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}}
+    .btn-primary:hover{{background:var(--gold-light)}}
+    /* back link */
+    .back-link{{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--mid);text-decoration:none;margin-bottom:40px}}
+    .back-link:hover{{color:var(--gold)}}
+    /* footer */
+    footer{{background:var(--ink);padding:56px 40px 32px}}
+    .footer-inner{{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:48px;padding-bottom:40px;border-bottom:1px solid rgba(184,150,90,0.15)}}
+    .footer-brand{{display:flex;align-items:center;gap:10px;margin-bottom:16px}}
+    .footer-tagline{{font-size:13px;color:rgba(245,242,236,0.3);line-height:1.75;font-weight:300}}
+    .footer-col-title{{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(184,150,90,0.5);margin-bottom:16px}}
+    .footer-col-links{{display:flex;flex-direction:column;gap:10px}}
+    .footer-col-links a{{font-size:13px;color:rgba(245,242,236,0.4);text-decoration:none;transition:color .15s}}
+    .footer-col-links a:hover{{color:var(--gold)}}
+    .footer-bottom{{max-width:1040px;margin:0 auto;padding-top:24px;display:flex;justify-content:space-between;font-size:12px;color:rgba(245,242,236,0.2);flex-wrap:wrap;gap:8px}}
+    .disclaimer{{background:var(--cream);border-top:1px solid var(--border);padding:18px 40px;font-size:11px;color:var(--mid);line-height:1.7;text-align:center}}
+    @media(max-width:768px){{
+      nav{{padding:0 20px}}
+      .nav-links{{display:none;position:fixed;top:62px;left:0;right:0;bottom:0;background:rgba(255,255,255,0.98);flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:9999}}
+      .nav-links.open{{display:flex}}
+      .nav-links a{{font-size:18px;padding:12px 28px}}
+      .mob-menu-btn{{display:flex}}
+      .article-hero{{padding:44px 24px 36px}}
+      .article-wrap{{padding:40px 24px 60px}}
+      footer{{padding:44px 24px 24px}}
+      .footer-inner{{grid-template-columns:1fr;gap:32px}}
+      .footer-bottom{{justify-content:center;text-align:center}}
+      .disclaimer{{padding:16px 24px}}
+    }}
+  </style>
+</head>
+<body>
+  <div class="deadline-banner">
+    AML/CTF obligations commence <strong>1 July 2026</strong> &nbsp;&middot;&nbsp; AUSTRAC enrolment deadline <strong>29 July 2026</strong>
+  </div>
+  <nav>
+    <a href="index-conveyancing.html" class="nav-logo">
+      <div class="logo-mark">SA</div>
+      SimpleAML
+    </a>
+    <button class="mob-menu-btn" id="mob-menu-btn" onclick="toggleMobileNav()">
+      <svg id="mob-icon-open" width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg id="mob-icon-close" width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index-conveyancing.html#how">How It Works</a></li>
+      <li><a href="templates-conveyancing.html">Free Templates</a></li>
+      <li><a href="faq-conveyancing.html">FAQ</a></li>
+      <li><a href="articles-conveyancing.html">Articles</a></li>
+      <li><a href="contact-conveyancing.html">Contact</a></li>
+      <li><a href="app-conveyancing.html" class="nav-cta">Open App &rarr;</a></li>
+    </ul>
+  </nav>
+  <div class="article-hero">
+    <div class="article-hero-inner">
+      <div class="article-tag">CDD</div>
+      <h1>CDD requirements for conveyancers &mdash; who do you need to <em>identify?</em></h1>
+      <p class="article-hero-deck">A practical guide to customer due diligence for conveyancers. Who must be identified, when CDD must be completed, and how the rules differ for purchases, sales, transfers and auctions.</p>
+      <div class="article-meta">
+        <span>📅 March 2026</span>
+        <span>⏱ 10 min read</span>
+        <span>✍️ Chris Wong, CPA</span>
+      </div>
+    </div>
+  </div>
+  <div class="article-wrap">
+    <a href="articles-conveyancing.html" class="back-link">&larr; All articles</a>
+
+    <h2>What is CDD and why does it apply to conveyancers?</h2>
+    <p>Customer Due Diligence (CDD) is the process of identifying and verifying the identity of your clients before or at the point of engagement. It is the foundation of an effective AML/CTF program — you cannot assess risk, spot red flags or file meaningful SMRs without knowing who you are dealing with.</p>
+    <p>For conveyancers, CDD must be conducted <strong>before you begin assisting in the planning or execution of a property transaction</strong>. This timing rule is specific to conveyancers and differs from the rules that apply to real estate agents.</p>
+
+    <div class="callout"><p><strong>Key principle:</strong> CDD is not a bureaucratic box-tick at settlement. It must be done at engagement — before you begin your work on the matter. If you can't complete CDD, you should not proceed with the matter.</p></div>
+
+    <h2>Who must be identified?</h2>
+    <p>You must conduct CDD on the <strong>client you are acting for</strong> — either the buyer or the seller, depending on which side you are acting. You are not required to conduct CDD on the other party to the transaction.</p>
+    <ul>
+      <li><strong>Acting for the buyer (purchase matters):</strong> Conduct CDD on the buyer — and on any representative acting on their behalf</li>
+      <li><strong>Acting for the seller (sale matters):</strong> Conduct CDD on the seller — and on any representative</li>
+      <li><strong>Transfer matters:</strong> CDD applies regardless of whether money changes hands. Family transfers, gifts and estate transfers are all in scope.</li>
+    </ul>
+    <p>If your client is a <strong>company, trust or SMSF</strong> rather than an individual, you must also identify and verify the beneficial owners and controllers of that entity — typically directors and shareholders holding 25% or more, trustees and appointors, or fund members.</p>
+
+    <h2>CDD timing rules — it depends on the matter type</h2>
+    <p>The timing of CDD differs depending on the matter type. This is one of the most important things to get right.</p>
+    <h3>Sale matters</h3>
+    <p>CDD must be completed <strong>at engagement</strong> — before you begin assisting the seller with the transaction. This means before contracts are reviewed, before any advice is given, and before any documents are prepared.</p>
+    <h3>Transfer matters</h3>
+    <p>Same rule as sale matters — CDD at engagement, before assisting in the planning or execution of the transfer.</p>
+    <h3>Purchase matters — private treaty</h3>
+    <p>CDD must be completed before settlement, but effectively at engagement. The exchange date acts as the practical outer deadline.</p>
+    <h3>Purchase matters — auction</h3>
+    <p>This is the most complex case. Where the buyer is only known after the hammer falls, initial CDD must be completed <strong>as soon as practicable after exchange</strong> — and before settlement or within 28 days of exchange, whichever is earlier.</p>
+    <div class="callout"><p><strong>Auction rule in practice:</strong> If exchange occurs on auction day and settlement is in 28 days, you have 28 days to complete CDD. If settlement is in 14 days, you have 14 days. Always take the earlier date.</p></div>
+
+    <h2>What does identification involve?</h2>
+    <p>For an <strong>individual</strong>, you must collect and verify:</p>
+    <ul>
+      <li>Full legal name</li>
+      <li>Date of birth</li>
+      <li>Residential address</li>
+      <li>Occupation</li>
+      <li>A government-issued photo ID (driver licence, passport, or equivalent)</li>
+    </ul>
+    <p>Verification can be done in person (sighting the original document), electronically (using a DVS-connected service), or by certified copy where in-person is not possible.</p>
+    <p>You must also conduct a <strong>PEP and sanctions check</strong> — screening the client against politically exposed person lists and DFAT's consolidated sanctions list. A clear check result should be recorded and retained.</p>
+
+    <h2>Enhanced CDD for high-risk clients</h2>
+    <p>If you assess a client as <strong>high risk</strong>, you must conduct enhanced CDD (EDD). This includes collecting additional information such as source of funds, source of wealth, and adverse media checks. High-risk matters also require written approval from your AMLCO before proceeding.</p>
+    <p>Factors that might push a client to high risk include: foreign residence, PEP status, complex ownership structures, cash-heavy transactions, or previous suspicious activity.</p>
+
+    <h2>Record keeping</h2>
+    <p>All CDD records must be retained for <strong>7 years</strong> from the date the business relationship ends or the transaction is completed. Use SimpleAML's Matter Register to record CDD electronically and export regular backups to secure storage.</p>
+
+    <div class="article-cta-box">
+      <h3>Get <em>compliant for free</em></h3>
+      <p>SimpleAML walks you through every step &mdash; practice profile, staff vetting, training, risk assessment, program and AUSTRAC enrolment. Browser-based, no account required.</p>
+      <a href="app-conveyancing.html" class="btn-primary">Open SimpleAML for Conveyancers &rarr;</a>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">
+          <div class="logo-mark">SA</div>
+          <div style="font-size:16px;font-weight:500;color:rgba(245,242,236,0.7);">SimpleAML</div>
+        </div>
+        <p class="footer-tagline">Free AML/CTF compliance for Australian conveyancing practices.<br><br>Developed by Click Seed Pty Ltd<br>ABN 87 656 256 567</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <div class="footer-col-links">
+          <a href="app-conveyancing.html">Open App &rarr;</a>
+          <a href="templates-conveyancing.html">Free Templates</a>
+          <a href="faq-conveyancing.html">FAQ</a>
+          <a href="articles-conveyancing.html">Articles</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-col-links">
+          <a href="index-conveyancing.html">Home</a>
+          <a href="contact-conveyancing.html">Contact</a>
+          <a href="privacy-policy-conveyancing.html">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 Click Seed Pty Ltd. All rights reserved.</div>
+      <div>conveyancing.simpleaml.com.au</div>
+    </div>
+  </footer>
+  <div class="disclaimer">
+    <strong>Important:</strong> SimpleAML is a compliance assistance tool only and does not constitute legal advice. Users are responsible for ensuring their own compliance with AUSTRAC requirements. Seek independent legal advice where required. Developed by Click Seed Pty Ltd ABN 87 656 256 567.
+  </div>
+  <script>
+    function toggleMobileNav(){
+      var nav=document.querySelector('.nav-links');
+      var open=document.getElementById('mob-icon-open');
+      var close=document.getElementById('mob-icon-close');
+      var isOpen=nav.classList.toggle('open');
+      open.style.display=isOpen?'none':'block';
+      close.style.display=isOpen?'block':'none';
+      document.body.style.overflow=isOpen?'hidden':'';
+    }
+    document.querySelectorAll('.nav-links a').forEach(function(link){
+      link.addEventListener('click',function(){
+        var nav=document.querySelector('.nav-links');
+        nav.classList.remove('open');
+        document.getElementById('mob-icon-open').style.display='block';
+        document.getElementById('mob-icon-close').style.display='none';
+        document.body.style.overflow='';
+      });
+    });
+  </script>
+</body>
+</html>
