@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z6L06TX2HB');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AML/CTF Articles for Australian Real Estate Agents | SimpleAML</title>
+<meta name="description" content="Plain-English guides on AML/CTF compliance for Australian real estate agents — AUSTRAC enrolment, AML programs, CDD requirements, deadlines, and penalties explained.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0F0A0A;
+  --bg2: #1A0F0F;
+  --red: #E84040;
+  --red2: #FF6060;
+  --red-dim: rgba(232,64,64,.12);
+  --white: #ffffff;
+  --text: #EDE8E8;
+  --muted: #9A8A8A;
+  --line: rgba(232,64,64,.2);
+  --font: 'Lato', sans-serif;
+  --mono: 'Roboto Mono', monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.4;
+}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 48px;
+  background:rgba(15,10,10,.88);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav-logo{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:900;color:var(--white);text-decoration:none;letter-spacing:-.02em;}
+.nav-logo-mark{width:36px;height:36px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:white;}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--red);}
+.nav-links a.active{color:var(--red);}
+.nav-world{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:6px 14px;border-radius:6px;}
+.nav-cta{background:var(--red);color:white;padding:9px 22px;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--red2);}
+
+.page-hero{
+  padding:9rem 48px 5rem;
+  max-width:1140px;margin:0 auto;
+  position:relative;z-index:1;
+}
+.page-hero-bg{
+  position:absolute;top:0;left:0;right:0;height:500px;
+  background:radial-gradient(ellipse 70% 60% at 50% -10%, rgba(232,64,64,.1) 0%, transparent 70%);
+  pointer-events:none;
+}
+.page-tag{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:10px;margin-bottom:1.2rem;}
+.page-tag::before{content:'';display:inline-block;width:24px;height:1px;background:var(--red);}
+.page-title{font-size:clamp(2.4rem,5vw,4rem);font-weight:900;line-height:1.05;color:var(--white);letter-spacing:-.03em;margin-bottom:1.2rem;}
+.page-title em{font-style:italic;color:var(--red);}
+.page-sub{font-size:17px;color:var(--muted);line-height:1.7;max-width:560px;}
+
+.articles-section{
+  position:relative;z-index:1;
+  max-width:1140px;margin:0 auto;
+  padding:0 48px 6rem;
+}
+
+.deadline-banner{
+  background:var(--red-dim);border:1px solid var(--line);
+  border-radius:10px;padding:1.5rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1.5rem;flex-wrap:wrap;
+  margin-bottom:3rem;
+}
+.deadline-left{display:flex;align-items:center;gap:1rem;}
+.deadline-dot{width:10px;height:10px;border-radius:50%;background:var(--red);animation:pulse 2s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.deadline-text{font-size:14px;color:var(--text);}
+.deadline-text strong{color:var(--red);}
+.deadline-countdown{font-family:var(--mono);font-size:13px;color:var(--muted);}
+.btn-primary{background:var(--red);color:white;padding:10px 22px;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none;transition:all .2s;white-space:nowrap;}
+.btn-primary:hover{background:var(--red2);}
+
+.article-featured{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;
+  background:var(--bg2);
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:2rem;
+  text-decoration:none;
+  transition:border-color .25s, transform .2s;
+}
+.article-featured:hover{border-color:var(--red);transform:translateY(-2px);}
+.article-featured-visual{
+  background:linear-gradient(135deg, rgba(232,64,64,.12) 0%, rgba(15,10,10,.8) 100%);
+  display:flex;align-items:center;justify-content:center;
+  min-height:260px;
+  position:relative;overflow:hidden;
+  border-right:1px solid var(--line);
+}
+.article-featured-visual::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(232,64,64,.04) 1px, transparent 1px),linear-gradient(90deg, rgba(232,64,64,.04) 1px, transparent 1px);
+  background-size:40px 40px;
+}
+.featured-num{
+  font-size:8rem;font-weight:900;
+  color:rgba(232,64,64,.15);
+  position:relative;z-index:1;
+  line-height:1;user-select:none;
+}
+.article-featured-body{padding:2.5rem;}
+.featured-tag{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:0.8rem;}
+.featured-title{font-size:1.7rem;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:0.8rem;letter-spacing:-.02em;}
+.featured-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;}
+.featured-meta{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.featured-read{font-size:11px;color:var(--muted);font-family:var(--mono);}
+.featured-cta{font-size:12px;font-weight:700;color:var(--red);letter-spacing:.06em;}
+
+.articles-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1.2rem;
+  margin-bottom:1.2rem;
+}
+
+.article-card{
+  background:var(--bg2);border:1px solid var(--line);
+  border-radius:10px;padding:2rem;
+  text-decoration:none;
+  display:flex;flex-direction:column;
+  transition:border-color .25s, transform .2s;
+  position:relative;overflow:hidden;
+}
+.article-card:hover{border-color:var(--red);transform:translateY(-2px);}
+.article-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);opacity:0;transition:opacity .2s;}
+.article-card:hover::before{opacity:1;}
+.card-num{font-family:var(--mono);font-size:10px;font-weight:500;color:rgba(232,64,64,.4);margin-bottom:0.8rem;letter-spacing:.08em;}
+.card-tag{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:0.6rem;}
+.card-title{font-size:1.2rem;font-weight:900;color:var(--white);line-height:1.25;margin-bottom:0.7rem;}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.65;flex:1;margin-bottom:1.2rem;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;}
+.card-read{font-size:11px;color:var(--muted);font-family:var(--mono);}
+.card-arrow{font-size:12px;color:var(--red);font-weight:700;}
+
+footer{border-top:1px solid var(--line);padding:3rem 3rem 2rem;position:relative;z-index:1;}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;padding-bottom:2rem;border-bottom:1px solid var(--line);margin-bottom:1.5rem;}
+.footer-logo{font-size:18px;font-weight:900;color:var(--white);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.footer-logo-mark{width:28px;height:28px;background:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:white;}
+.footer-text{font-size:11px;color:var(--muted);line-height:1.75;}
+.footer-col-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(232,64,64,.4);margin-bottom:14px;}
+.footer-col-links{display:flex;flex-direction:column;gap:10px;}
+.footer-col-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.footer-col-links a:hover{color:var(--red);}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11px;color:rgba(255,255,255,0.2);}
+.disclaimer{border-top:1px solid var(--line);padding:1.5rem 3rem;font-size:11px;color:rgba(255,255,255,0.15);line-height:1.75;position:relative;z-index:1;}
+
+@media(max-width:700px){
+  nav{padding:16px 20px;}
+  .nav-links{display:none;}
+  .page-hero{padding:7rem 20px 3rem;}
+  .articles-section{padding:0 20px 4rem;}
+  .article-featured{grid-template-columns:1fr;}
+  .article-featured-visual{min-height:120px;border-right:none;border-bottom:1px solid var(--line);}
+  .article-featured-body{padding:1.5rem;}
+  .articles-grid{grid-template-columns:1fr;}
+  footer{padding:2rem 20px 1.5rem;}
+  .footer-inner{grid-template-columns:1fr;gap:28px;}
+  .footer-bottom{flex-direction:column;align-items:flex-start;}
+  .disclaimer{padding:1.5rem 20px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index-realestate.html">
+    <div class="nav-logo-mark">SA</div>
+    SimpleAML
+  </a>
+  <div class="nav-links">
+    <a href="index-realestate.html#how">How It Works</a>
+    <a href="faq-realestate.html">FAQ</a>
+    <a href="templates-realestate.html">Templates</a>
+    <a href="articles-realestate.html" class="active">Articles</a>
+    <a href="contact-realestate.html">Contact</a>
+    <a href="https://simpleaml.com.au" class="nav-world">For accountants →</a>
+  </div>
+  <a href="app-realestate.html" class="nav-cta">Open App →</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <p class="page-tag">AML/CTF Articles</p>
+  <h1 class="page-title">Plain-English guides for<br><em>Australian real estate agents</em></h1>
+  <p class="page-sub">Everything you need to understand your AML/CTF obligations under Tranche 2 — from AUSTRAC enrolment to CDD requirements, written for real estate agents and principals.</p>
+</div>
+
+<div class="articles-section">
+
+  <div class="deadline-banner">
+    <div class="deadline-left">
+      <div class="deadline-dot"></div>
+      <div class="deadline-text"><strong>1 July 2026:</strong> AML/CTF obligations commence for real estate agents. Enrolment is now open.</div>
+    </div>
+    <div class="deadline-countdown" id="banner-countdown"></div>
+    <a href="app-realestate.html" class="btn-primary">Get compliant free →</a>
+  </div>
+
+  <!-- Featured article -->
+  <a class="article-featured" href="article-re-what-is-tranche-2.html">
+    <div class="article-featured-visual">
+      <div class="featured-num">01</div>
+    </div>
+    <div class="article-featured-body">
+      <div class="featured-tag">Tranche 2 · Start here · AUSTRAC</div>
+      <div class="featured-title">What is Tranche 2 AML for Real Estate Agents in Australia?</div>
+      <div class="featured-desc">Most real estate agents have never had to think about anti-money laundering law. That changes on 1 July 2026. This plain-English guide explains what Tranche 2 is, why real estate is in scope, and exactly what you need to do before the deadline.</div>
+      <div class="featured-meta">
+        <span class="featured-read">6 min read · March 2026</span>
+        <span class="featured-cta">Read guide →</span>
+      </div>
+    </div>
+  </a>
+
+  <div class="articles-grid">
+
+    <a class="article-card" href="article-re-austrac-enrolment.html">
+      <div class="card-num">02</div>
+      <div class="card-tag">AUSTRAC · Enrolment · Step by step</div>
+      <div class="card-title">AUSTRAC Enrolment for Real Estate Agents — Step by Step Guide</div>
+      <div class="card-desc">Enrolment opened 31 March 2026 and the deadline is 29 July 2026. This guide walks you through every step of the online enrolment process so you can get it done in under 20 minutes.</div>
+      <div class="card-footer">
+        <span class="card-read">5 min read</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="article-re-cdd-requirements.html">
+      <div class="card-num">03</div>
+      <div class="card-tag">CDD · Verification · Buyers &amp; Sellers</div>
+      <div class="card-title">AML/CTF CDD Requirements for Real Estate — Who Do You Need to Identify?</div>
+      <div class="card-desc">Customer due diligence is the most day-to-day part of your AML obligations. Find out who you need to verify, when, what documents to collect, and what the rules are for sellers vs buyers.</div>
+      <div class="card-footer">
+        <span class="card-read">7 min read</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="article-re-aml-program-templates.html">
+      <div class="card-num">04</div>
+      <div class="card-tag">AML Program · Templates · Free download</div>
+      <div class="card-title">Real Estate AML Program Templates Australia — Free Download</div>
+      <div class="card-desc">Every agent needs a written AML/CTF program before 1 July 2026. We've built free Word templates you can adapt for your agency in under an hour — no lawyers required.</div>
+      <div class="card-footer">
+        <span class="card-read">4 min read</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="article-re-penalties.html">
+      <div class="card-num">05</div>
+      <div class="card-tag">Penalties · Enforcement · Risk</div>
+      <div class="card-title">What Happens if a Real Estate Agent Doesn't Enrol with AUSTRAC by July 2026?</div>
+      <div class="card-desc">Civil penalties up to $31.3M. Criminal liability. Licence risk. This guide explains the real consequences of missing the deadline — and why AUSTRAC is taking real estate seriously.</div>
+      <div class="card-footer">
+        <span class="card-read">5 min read</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo"><div class="footer-logo-mark">SA</div>SimpleAML</div>
+      <p class="footer-text">Free AML/CTF compliance for Australian real estate agents.<br><br>Developed by Click Seed Pty Ltd<br>ABN 87 656 256 567</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Product</div>
+      <div class="footer-col-links">
+        <a href="app-realestate.html">Open App →</a>
+        <a href="templates-realestate.html">Free Templates</a>
+        <a href="faq-realestate.html">User Guide &amp; FAQ</a>
+        <a href="articles-realestate.html">Articles</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <div class="footer-col-links">
+        <a href="index-realestate.html">Home</a>
+        <a href="contact-realestate.html">Contact</a>
+        <a href="privacy-policy-realestate.html">Privacy Policy</a>
+        <a href="https://simpleaml.com.au">SimpleAML for Accountants</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Click Seed Pty Ltd. All rights reserved.</div>
+    <div>realestate.simpleaml.com.au</div>
+  </div>
+</footer>
+<div class="disclaimer">
+  <strong>Important:</strong> SimpleAML is a compliance assistance tool only and does not constitute legal advice. Users are responsible for ensuring their own compliance with AUSTRAC requirements. Seek independent legal advice where required. Developed by Click Seed Pty Ltd ABN 87 656 256 567.
+</div>
+
+<script>
+function updateCountdown() {
+  var deadline = new Date('2026-07-01T00:00:00+10:00');
+  var now = new Date();
+  var diff = deadline - now;
+  if (diff <= 0) { document.getElementById('banner-countdown').textContent = 'Deadline reached'; return; }
+  var days = Math.floor(diff / (1000*60*60*24));
+  document.getElementById('banner-countdown').textContent = days + ' days to go';
+}
+updateCountdown();
+setInterval(updateCountdown, 60000);
+</script>
+</body>
+</html>
