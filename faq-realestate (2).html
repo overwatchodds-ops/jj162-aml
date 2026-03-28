@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — AML/CTF for Real Estate Agents — SimpleAML</title>
+  <meta name="description" content="Frequently asked questions about AML/CTF obligations for Australian real estate agents under Tranche 2. CDD, AUSTRAC enrolment, seller and buyer obligations explained.">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0F1F3D;
+      --teal: #00A896;
+      --teal-light: #E0F7F4;
+      --amber: #F2A10A;
+      --border: #E4E2DC;
+      --off-white: #F8F7F4;
+      --text: #1A1A2E;
+      --text-mid: #4A5568;
+      --text-muted: #718096;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-sans: 'DM Sans', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); color: var(--text); background: #fff; line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 62px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; color: var(--navy); text-decoration: none; }
+    .logo-mark { width: 34px; height: 34px; background: var(--navy); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .nav-links a { font-size: 14px; color: var(--text-mid); text-decoration: none; padding: 6px 13px; border-radius: 7px; transition: background 0.15s; }
+    .nav-links a:hover { background: var(--off-white); color: var(--navy); }
+    .nav-cta { background: var(--navy) !important; color: white !important; font-weight: 500 !important; padding: 8px 18px !important; border-radius: 8px !important; }
+    .mob-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 4px; color: var(--navy); }
+
+    /* DEADLINE BANNER */
+    .deadline-banner { background: var(--navy); color: rgba(255,255,255,0.85); text-align: center; padding: 10px 20px; font-size: 14px; }
+    .deadline-banner strong { color: var(--amber); font-weight: 600; }
+
+    /* HERO */
+    .faq-hero { background: var(--off-white); border-bottom: 1px solid var(--border); padding: 56px 40px 48px; text-align: center; }
+    .hero-label { display: inline-flex; align-items: center; gap: 8px; background: var(--teal-light); color: var(--teal); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 20px; }
+    .faq-hero h1 { font-family: var(--font-display); font-size: clamp(30px, 5vw, 48px); color: var(--navy); line-height: 1.1; margin-bottom: 14px; }
+    .faq-hero h1 em { color: var(--teal); font-style: italic; }
+    .faq-hero p { font-size: 17px; color: var(--text-mid); max-width: 520px; margin: 0 auto 28px; font-weight: 400; }
+
+    /* SEARCH */
+    .search-wrap { max-width: 460px; margin: 0 auto; position: relative; }
+    .search-wrap input { width: 100%; padding: 13px 20px 13px 46px; border: 2px solid var(--border); border-radius: 12px; font-size: 15px; font-family: var(--font-sans); color: var(--text); background: white; outline: none; transition: border-color 0.15s; }
+    .search-wrap input:focus { border-color: var(--teal); }
+    .search-wrap input::placeholder { color: var(--text-muted); }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
+
+    /* SECTION PILLS */
+    .section-pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 24px 40px; border-bottom: 1px solid var(--border); background: white; }
+    .section-pill { font-size: 13px; font-weight: 500; color: var(--text-mid); padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border); text-decoration: none; transition: all 0.15s; white-space: nowrap; }
+    .section-pill:hover { background: var(--teal-light); color: var(--teal); border-color: var(--teal); }
+
+    /* MAIN */
+    .faq-main { max-width: 760px; margin: 0 auto; padding: 48px 24px 64px; }
+
+    /* SECTION */
+    .faq-section { margin-bottom: 48px; }
+    .faq-section-title { font-family: var(--font-display); font-size: 24px; color: var(--navy); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+
+    /* FAQ ITEMS */
+    .faq-item { border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+    .faq-question { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; cursor: pointer; background: white; user-select: none; }
+    .faq-question:hover { background: var(--off-white); }
+    .faq-item.open .faq-question { background: var(--off-white); }
+    .faq-question-text { font-size: 15px; font-weight: 500; color: var(--navy); line-height: 1.4; }
+    .faq-chevron { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; transition: transform 0.2s, background 0.15s; color: var(--text-mid); }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); background: var(--teal); color: white; }
+    .faq-answer { display: none; padding: 0 20px 20px; background: white; }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-answer p { font-size: 14px; color: var(--text-mid); line-height: 1.75; margin-bottom: 10px; }
+    .faq-answer p:last-child { margin-bottom: 0; }
+    .faq-answer strong { color: var(--navy); font-weight: 600; }
+    .faq-answer ul, .faq-answer ol { margin: 8px 0 10px 20px; }
+    .faq-answer li { font-size: 14px; color: var(--text-mid); line-height: 1.75; margin-bottom: 3px; }
+    .faq-answer a { color: var(--teal); font-weight: 500; text-decoration: none; border-bottom: 1px solid rgba(0,168,150,0.3); }
+    .faq-answer a:hover { border-bottom-color: var(--teal); }
+    .answer-note { background: var(--teal-light); border-left: 3px solid var(--teal); border-radius: 0 7px 7px 0; padding: 11px 14px; margin-top: 10px; font-size: 13px; color: #065f4a; line-height: 1.6; }
+    .answer-warn { background: #fffbeb; border-left: 3px solid var(--amber); border-radius: 0 7px 7px 0; padding: 11px 14px; margin-top: 10px; font-size: 13px; color: #78450a; line-height: 1.6; }
+
+    /* NO RESULTS */
+    .no-results { display: none; text-align: center; padding: 40px; color: var(--text-muted); font-size: 15px; }
+
+    /* CTA */
+    .faq-cta { background: var(--navy); padding: 56px 40px; text-align: center; }
+    .faq-cta h2 { font-family: var(--font-display); font-size: 30px; color: white; margin-bottom: 10px; }
+    .faq-cta p { font-size: 16px; color: rgba(255,255,255,0.65); margin-bottom: 24px; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: var(--teal); color: white; font-family: var(--font-sans); font-size: 15px; font-weight: 500; padding: 12px 28px; border-radius: 9px; text-decoration: none; }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-ghost-light { background: rgba(255,255,255,0.1); color: white; font-family: var(--font-sans); font-size: 15px; font-weight: 500; padding: 12px 28px; border-radius: 9px; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); }
+    .btn-ghost-light:hover { background: rgba(255,255,255,0.18); }
+
+    /* FOOTER */
+    footer { background: #0A1628; padding: 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+    .footer-brand { display: flex; align-items: center; gap: 12px; }
+    .footer-text { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.65; }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.75); }
+    .disclaimer { background: #0A1628; border-top: 1px solid rgba(255,255,255,0.05); padding: 20px 40px; font-size: 12px; color: rgba(255,255,255,0.2); line-height: 1.75; }
+
+    @media (max-width: 680px) {
+      nav { padding: 0 20px; }
+      .mob-menu-btn { display: block; }
+      .nav-links { display: none; position: absolute; top: 62px; left: 0; right: 0; background: white; flex-direction: column; padding: 16px; gap: 4px; border-bottom: 2px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.1); z-index: 9999; }
+      .nav-links.open { display: flex; }
+      .nav-links a { width: 100%; padding: 10px 14px; }
+      .faq-hero { padding: 40px 20px 36px; }
+      .section-pills { padding: 16px 20px; }
+      .faq-main { padding: 32px 16px 48px; }
+      footer { padding: 32px 20px; flex-direction: column; align-items: flex-start; }
+      .disclaimer { padding: 20px; }
+      .faq-cta { padding: 40px 20px; }
+    }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <div class="deadline-banner">
+    <strong>⚠ AUSTRAC Deadline: 1 July 2026</strong> — AML/CTF obligations commence for real estate agents. <strong id="days-left">Loading…</strong> remaining.
+  </div>
+
+  <nav>
+    <a href="index-realestate.html" class="nav-logo">
+      <div class="logo-mark">SA</div>
+      SimpleAML
+    </a>
+    <button class="mob-menu-btn" onclick="toggleNav()" aria-label="Toggle menu">
+      <svg id="mob-open" width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg id="mob-close" width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index-realestate.html">Home</a></li>
+      <li><a href="templates-realestate.html">Free Templates</a></li>
+      <li><a href="faq-realestate.html">FAQ</a></li>
+      <li><a href="contact-realestate.html">Contact</a></li>
+      <li><a href="app-realestate.html" class="nav-cta">Open App →</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="faq-hero">
+    <div class="hero-label">FAQ — Real Estate Agents</div>
+    <h1>Your AML/CTF questions<br><em>answered.</em></h1>
+    <p>Everything you need to know about your obligations under AUSTRAC Tranche 2 — plain English, no jargon.</p>
+    <div class="search-wrap">
+      <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <input type="text" id="faq-search" placeholder="Search questions…" oninput="searchFaq(this.value)">
+    </div>
+  </div>
+
+  <!-- SECTION PILLS -->
+  <div class="section-pills">
+    <a href="#basics" class="section-pill">The Basics</a>
+    <a href="#who" class="section-pill">Who It Applies To</a>
+    <a href="#cdd" class="section-pill">CDD Obligations</a>
+    <a href="#seller" class="section-pill">Seller CDD</a>
+    <a href="#buyer" class="section-pill">Buyer CDD</a>
+    <a href="#enrolment" class="section-pill">AUSTRAC Enrolment</a>
+    <a href="#program" class="section-pill">AML/CTF Program</a>
+    <a href="#app" class="section-pill">Using the App</a>
+    <a href="#penalties" class="section-pill">Penalties</a>
+  </div>
+
+  <!-- MAIN -->
+  <div class="faq-main">
+    <div class="no-results" id="no-results">No questions match your search. Try different keywords or <a href="contact-realestate.html">contact us</a>.</div>
+
+    <!-- THE BASICS -->
+    <div class="faq-section" id="basics">
+      <h2 class="faq-section-title">The Basics</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What is Tranche 2 and why does it affect me?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Tranche 2 refers to the second wave of reforms under Australia's Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (AML/CTF Act), enacted through the AML/CTF Amendment Act 2024.</p>
+          <p>From <strong>1 July 2026</strong>, real estate agents who act as a seller's agent in property transactions become "reporting entities" — meaning you have legal obligations to identify customers, assess risk, report suspicious activity and enrol with AUSTRAC.</p>
+          <p>Real estate is a known high-risk sector for money laundering globally. Property transactions involve large sums, can be complex, and have historically been used to move and conceal illicit funds. This is why AUSTRAC is bringing the sector into the AML/CTF framework.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What are the key dates I need to know?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <ul>
+            <li><strong>1 July 2026</strong> — AML/CTF obligations commence. Your program must be in place and you must be performing CDD on all transactions from this date.</li>
+            <li><strong>31 March 2026</strong> — AUSTRAC Online opens for Tranche 2 enrolment.</li>
+            <li><strong>29 July 2026</strong> — Enrolment deadline. You must be enrolled by this date.</li>
+            <li><strong>2027</strong> — First Annual Compliance Report (ACR) due. Exact date to be confirmed by AUSTRAC.</li>
+            <li><strong>~2029</strong> — First 3-year independent evaluation due (s.159 AML/CTF Act).</li>
+          </ul>
+          <div class="answer-warn">Don't wait until July. Your AML/CTF Program, staff vetting and training must all be in place <strong>before</strong> 1 July 2026 — not after.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What do I actually need to have in place by 1 July 2026?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Before 1 July 2026 you need:</p>
+          <ul>
+            <li>A documented <strong>AML/CTF Program</strong> — Part A (governance) and Part B (CDD procedures) — approved by a senior manager</li>
+            <li>A completed <strong>agency-level risk assessment</strong></li>
+            <li><strong>Staff vetting records</strong> — all staff who perform AML/CTF functions must be vetted before they start</li>
+            <li><strong>AML/CTF training</strong> completed by all relevant staff</li>
+            <li>A process for <strong>CDD on sellers and buyers</strong> for every property transaction</li>
+          </ul>
+          <p>By <strong>29 July 2026</strong> you also need to be enrolled with AUSTRAC.</p>
+          <div class="answer-note">SimpleAML guides you through all of this step by step. <a href="app-realestate.html">Open the app →</a></div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What is an AML/CTF Program?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Your AML/CTF Program is a written document that sets out how your agency will manage its money laundering and terrorism financing risks. Think of it as your compliance policy manual.</p>
+          <p>It has two parts:</p>
+          <ul>
+            <li><strong>Part A — General Program:</strong> Governance, AMLCO role, risk appetite, training requirements, reporting obligations and record keeping.</li>
+            <li><strong>Part B — CDD Procedures:</strong> How you identify and verify sellers and buyers, when CDD must be done, PEP and sanctions screening, and what to do with high-risk customers.</li>
+          </ul>
+          <p>It must be formally approved by a senior manager (your Principal or Licensee in Charge) and kept up to date — reviewed at least annually.</p>
+          <div class="answer-note">Download the free SimpleAML templates to build your program. <a href="templates-realestate.html">Get templates →</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHO IT APPLIES TO -->
+    <div class="faq-section" id="who">
+      <h2 class="faq-section-title">Who It Applies To</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">Does this apply to my agency?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>If your agency acts as a <strong>seller's agent</strong> in the sale of residential or commercial property — yes, it applies to you.</p>
+          <p>The following are <strong>exempt</strong> (not covered by Tranche 2):</p>
+          <ul>
+            <li>Residential leasing and property management</li>
+            <li>Standalone auctioneers (not acting as the listing agent)</li>
+            <li>Private sales (where no agent is involved)</li>
+          </ul>
+          <div class="answer-note">If you do both sales and property management, the obligations only apply to your sales activities — not your management portfolio.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What about buyer's agents?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Under the current Tranche 2 reforms, the designated service covers agents acting <strong>on behalf of the seller</strong>. Buyer's agents — agents who act exclusively for the buyer — are not currently included as a designated service in the same way.</p>
+          <p>However, this is an evolving area and AUSTRAC guidance may clarify this further. If you act for both sellers and buyers, the obligations apply to your seller's agency activities.</p>
+          <div class="answer-warn">If you are a buyer's agent only, seek specific legal advice on your obligations as AUSTRAC guidance develops.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">Does it apply to commercial property?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes. The designated service covers the sale of <strong>real property</strong> — which includes both residential and commercial property. If you sell commercial property as a seller's agent, the same obligations apply.</p>
+          <p>Commercial transactions may actually carry <strong>higher risk ratings</strong> due to larger transaction values, more complex ownership structures (companies, trusts) and potentially more complex funding arrangements.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What about off-the-plan sales and property developers?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Off-the-plan sales present additional complexity because the buyer's identity may be known well before settlement, and the transaction timeline can span years. The same CDD obligations apply — you must identify and verify the buyer, but the ongoing monitoring requirements are more involved given the extended timeline.</p>
+          <p>Property developers who sell direct to buyers without using a licensed real estate agent may have their own separate obligations under Tranche 2. SimpleAML is designed for licensed real estate agents acting as seller's agents — if you are a developer selling direct, seek specific legal advice.</p>
+          <div class="answer-warn">Off-the-plan CDD is complex. Seek legal advice if this is a significant part of your business.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What about stock and station agents?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Stock and station agents who sell rural and agricultural land are covered by Tranche 2 in the same way as residential and commercial real estate agents — the designated service applies to the sale of real property broadly.</p>
+          <p>SimpleAML is not specifically designed for the stock and station sector and may not cover all the nuances of rural property transactions. Seek specific guidance if this is your primary business.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CDD OBLIGATIONS -->
+    <div class="faq-section" id="cdd">
+      <h2 class="faq-section-title">CDD Obligations — Overview</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What is CDD and why do I have to do it?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>CDD stands for Customer Due Diligence. It's the process of identifying who your customers are, verifying that identity, and assessing the risk they pose for money laundering or terrorism financing.</p>
+          <p>Under the AML/CTF Act, you must perform CDD on both your seller and your buyer for every property transaction. The law requires this even if you've dealt with the customer before.</p>
+          <p>CDD involves:</p>
+          <ul>
+            <li>Collecting identifying information (name, date of birth, address, occupation)</li>
+            <li>Verifying that identity against acceptable documents (passport, driver's licence, DVS)</li>
+            <li>Identifying the beneficial owner if the customer is a company, trust or SMSF</li>
+            <li>Screening for PEP status and sanctions</li>
+            <li>Assigning a risk rating (Standard or High)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">Do I really have to do CDD on both the seller AND the buyer?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes — even though you act for the seller, you must perform CDD on <strong>both parties</strong>. This is one of the most commonly misunderstood aspects of the new obligations.</p>
+          <p>The law requires you to identify and verify all parties to the transaction, not just your client. The buyer is a party to the transaction and must be identified.</p>
+          <div class="answer-warn">You cannot skip buyer CDD on the basis that you are the seller's agent and have no relationship with the buyer. Both parties must be identified and verified.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What documents can I use to verify identity?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Acceptable identity documents include:</p>
+          <ul>
+            <li>Australian passport</li>
+            <li>Foreign passport</li>
+            <li>Australian driver's licence</li>
+            <li>Medicare card (as a secondary document)</li>
+            <li>Birth certificate</li>
+            <li>Australian citizenship certificate</li>
+          </ul>
+          <p>Identity should be verified using the <strong>Document Verification Service (DVS)</strong> — an electronic check against government records. DVS is fast, reliable and provides an auditable record. Services like NameScan provide DVS checking.</p>
+          <p>If DVS is not used, you must inspect the original document in person (or via video call) and keep a certified copy.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What is a PEP and do I need to screen for them?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>A Politically Exposed Person (PEP) is someone who holds or has held a prominent public position — such as a government minister, senior public official, judge, military officer, or senior executive of a state-owned enterprise — in Australia or overseas.</p>
+          <p>Yes — you must screen every seller and buyer against PEP lists. PEPs carry a higher risk of corruption and must be treated as high-risk customers, regardless of other factors.</p>
+          <p>You must also screen against the <strong>DFAT Consolidated Sanctions List</strong> and the <strong>UN Security Council Consolidated List</strong> for every customer.</p>
+          <div class="answer-warn">If you identify a PEP, do not proceed without AMLCO approval. If you identify a sanctioned individual, do not proceed at all — file an SMR with AUSTRAC.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SELLER CDD -->
+    <div class="faq-section" id="seller">
+      <h2 class="faq-section-title">Seller CDD</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">When do I need to complete CDD on the seller?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Seller CDD must be completed <strong>at listing</strong> — before or at the time of signing the agency agreement. You must not market or list the property until seller CDD is complete.</p>
+          <p>This is a hard rule — there is no grace period. If you list before completing seller CDD, you are in breach.</p>
+          <div class="answer-note">Build seller CDD into your listing workflow. When you sit down to sign the agency agreement, CDD should be done at the same meeting.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">Can I rely on another party for seller CDD?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p><strong>No.</strong> Legal reliance — where you rely on CDD performed by another reporting entity — is not available for seller CDD. You must always perform seller CDD directly.</p>
+          <p>This is different from buyer CDD, where legal reliance is available in certain circumstances.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What if the seller is a company, trust or SMSF?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p><strong>Company seller:</strong> Verify the company name and ACN via ASIC. Identify all directors and verify at least one. Identify any beneficial owner (25%+ ownership). Confirm who is authorised to sign.</p>
+          <p><strong>Trust seller:</strong> Obtain the trust deed. If individual trustee — verify as an individual. If corporate trustee — verify the company as above. Identify the settlor, beneficiaries and any person with effective control.</p>
+          <p><strong>SMSF seller:</strong> Verify all members' identities. Verify the trustee (individual or corporate).</p>
+          <div class="answer-note">Trust and SMSF sellers are common in property transactions. Build a checklist into your process so nothing is missed.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUYER CDD -->
+    <div class="faq-section" id="buyer">
+      <h2 class="faq-section-title">Buyer CDD</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">When do I need to complete CDD on the buyer?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>The timing depends on the sale method:</p>
+          <ul>
+            <li><strong>Private sale:</strong> Buyer CDD must be complete <strong>before exchange of contracts</strong>. You control the timing — do not allow exchange to proceed until CDD is done.</li>
+            <li><strong>Auction:</strong> Because the buyer may not be known before the auction, CDD must be completed <strong>within 28 days of exchange OR before settlement</strong> — whichever comes first.</li>
+          </ul>
+          <div class="answer-warn">For auctions — do not allow settlement to proceed if buyer CDD is still outstanding. This is the only case in the app where timing is genuinely critical after exchange.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What is legal reliance and can I use it for buyer CDD?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Legal reliance allows you to rely on CDD that has already been performed by another reporting entity (for example, the buyer's solicitor or mortgage broker) rather than performing CDD yourself.</p>
+          <p>To use legal reliance, all of the following conditions must be met:</p>
+          <ul>
+            <li>The third party is a reporting entity under the AML/CTF Act</li>
+            <li>They have performed CDD on the buyer that meets your requirements</li>
+            <li>They provide you with <strong>written confirmation</strong> of this</li>
+            <li>You keep a record of that written confirmation</li>
+          </ul>
+          <div class="answer-warn">Legal reliance does NOT cover PEP and sanctions screening. Even if you rely on another party for identity verification, you must still screen the buyer for PEPs and sanctions yourself.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What if the buyer refuses to provide ID?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>If a buyer refuses to provide identification, you <strong>cannot proceed with the transaction</strong>. CDD is a legal requirement — proceeding without it exposes you to serious penalties.</p>
+          <p>A buyer's refusal to provide ID is itself a significant red flag and should be escalated to your AMLCO. Consider whether a Suspicious Matter Report (SMR) is required.</p>
+          <div class="answer-note">Explain to buyers early in the process that identity verification is a legal requirement for all property transactions from 1 July 2026 — not a choice.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What are the red flags I should watch out for?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Common red flags in property transactions include:</p>
+          <ul>
+            <li>Buyer offers to pay entirely in cash or cryptocurrency</li>
+            <li>Purchase price significantly above or below market value with no clear explanation</li>
+            <li>Buyer is disinterested in property features but intensely focused on completing quickly</li>
+            <li>Buyer is reluctant or refuses to provide identification</li>
+            <li>Funds coming from multiple unrelated third parties</li>
+            <li>Buyer changes payment method or funding source unexpectedly</li>
+            <li>Complex ownership structures (multiple companies/trusts) with no clear business reason</li>
+            <li>Buyer is a foreign PEP or from a FATF high-risk jurisdiction</li>
+            <li>Property is sold and resold quickly at increasing prices</li>
+            <li>Seller accepts well below market value without explanation</li>
+          </ul>
+          <p>Red flags don't automatically mean the transaction is suspicious — but they must be escalated to your AMLCO for review.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AUSTRAC ENROLMENT -->
+    <div class="faq-section" id="enrolment">
+      <h2 class="faq-section-title">AUSTRAC Enrolment</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">How do I enrol with AUSTRAC?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Enrolment is done through <strong>AUSTRAC Online</strong> at <a href="https://online.austrac.gov.au" target="_blank" rel="noopener">online.austrac.gov.au</a>. The portal opens for Tranche 2 enrolments on <strong>31 March 2026</strong> and the deadline is <strong>29 July 2026</strong>.</p>
+          <p>During enrolment you will need to provide:</p>
+          <ul>
+            <li>Your agency name, ABN and licence number</li>
+            <li>Your AMLCO's name and contact details</li>
+            <li>The designated services you provide</li>
+            <li>Your commencement date (1 July 2026 for most agencies)</li>
+            <li>Fit and proper declarations for key personnel</li>
+          </ul>
+          <p>Once enrolled, AUSTRAC will issue you an <strong>Entity ID</strong> — record this in SimpleAML.</p>
+          <div class="answer-note">Complete steps 1–5 in SimpleAML before attempting enrolment — you'll need your agency profile, AMLCO details and program approval in place.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What is an AMLCO and does every agency need one?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>An AMLCO (AML/CTF Compliance Officer) is the person responsible for overseeing your agency's AML/CTF compliance. Every reporting entity must appoint one.</p>
+          <p>Your AMLCO must be a <strong>fit and proper person</strong> — typically your Principal or Licensee in Charge. For small agencies, the LIC is almost always the AMLCO.</p>
+          <p>The AMLCO must be <strong>notified to AUSTRAC by 29 July 2026</strong>.</p>
+          <div class="answer-note">For small agencies, the Principal/LIC is typically both the AMLCO and the approving senior manager. That's fine.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What is the Annual Compliance Report (ACR)?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Once enrolled, you must submit an Annual Compliance Report (ACR) to AUSTRAC each year. The ACR reports on your compliance activities — your program, training, CDD processes and any issues identified.</p>
+          <p>The first ACR for Tranche 2 entities will be due in <strong>2027</strong>, covering the period from 1 July 2026. AUSTRAC has not yet confirmed the exact due date.</p>
+          <p>SimpleAML's compliance evidence report is designed to help you prepare for this — it captures all the data AUSTRAC will want to see.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AML/CTF PROGRAM -->
+    <div class="faq-section" id="program">
+      <h2 class="faq-section-title">AML/CTF Program</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">Do I need a lawyer to write my AML/CTF Program?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>No — you don't need a lawyer to write your AML/CTF Program, but your completed program must accurately reflect your agency's actual circumstances, risk profile and procedures.</p>
+          <p>SimpleAML provides free Word document templates (Part A and Part B) that you can download, customise with your agency's details, and use as your program. These templates are AUSTRAC-aligned and cover everything required.</p>
+          <p>If your agency has complex or unusual circumstances, or if you are uncertain about your obligations, seeking legal advice is always a good idea.</p>
+          <div class="answer-note"><a href="templates-realestate.html">Download the free SimpleAML templates →</a></div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What is the 3-year independent evaluation?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Under section 159 of the AML/CTF Act, all reporting entities must arrange an <strong>independent evaluation</strong> of their AML/CTF Program at least every three years. The first evaluation for Tranche 2 entities is due approximately in 2029.</p>
+          <p>The evaluation must be conducted by a suitably qualified person who is independent of your agency — typically an external compliance consultant or auditor.</p>
+          <p>SimpleAML's compliance evidence report includes a <strong>Part B — Evaluation Support</strong> section specifically designed to help your evaluator assess your program.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What is the tipping-off prohibition?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>The tipping-off prohibition (section 123 of the AML/CTF Act) makes it a <strong>criminal offence</strong> to disclose to a customer that a Suspicious Matter Report (SMR) has been, is being, or may be filed in relation to them.</p>
+          <p>This means you cannot warn a seller or buyer that their transaction is being investigated or that you have filed a report with AUSTRAC. All staff must understand this obligation — a breach is serious.</p>
+          <div class="answer-warn">Tipping off is a criminal offence. If you file an SMR, do not tell the customer — not even indirectly. Train all staff on this obligation.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- USING THE APP -->
+    <div class="faq-section" id="app">
+      <h2 class="faq-section-title">Using SimpleAML</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">Is SimpleAML really free? What's the catch?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Yes — completely free. No account required, no subscription, no credit card. There is no catch.</p>
+          <p>SimpleAML was built by Chris Wong, CPA, because every existing AML compliance tool was built for banks and cost thousands per year. Independent real estate agencies deserve something built for them.</p>
+          <p>Your data stays in your browser — nothing is sent to any server. You own your data completely.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">Where is my data stored? Is it secure?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>All your data is stored in your browser's <strong>localStorage</strong> — on your device only. Nothing is transmitted to any server.</p>
+          <p>This means:</p>
+          <ul>
+            <li>Your data is private — nobody else can see it</li>
+            <li>It is only accessible on the device and browser you use</li>
+            <li>If you clear your browser data, your SimpleAML data will be lost — use the Export function regularly to back up</li>
+            <li>You are responsible for maintaining your records for 7 years as required by the AML/CTF Act</li>
+          </ul>
+          <div class="answer-warn">Back up your data regularly using the Export function in the app. AML/CTF records must be kept for 7 years.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">Can multiple staff use SimpleAML?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Currently SimpleAML is a single-user, single-device app. Multiple staff can use it but they would each be using their own local copy on their own device — data is not shared between devices.</p>
+          <p>For a small agency, the most practical approach is to have one designated device (typically the AMLCO's computer) where all compliance records are maintained, and staff add their records to that device.</p>
+          <p>Cloud sync and multi-user support are on the future roadmap.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What is the Compliance Evidence Report?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>The Compliance Evidence Report is a printable document that draws all your SimpleAML data together into a single structured compliance record. It is <strong>not submitted to AUSTRAC</strong> — it is held by your agency as evidence of compliance.</p>
+          <p>It has two parts:</p>
+          <ul>
+            <li><strong>Part A — Annual Evidence:</strong> Your enrolment details, program approval, risk assessment, staff vetting, training records and CDD register.</li>
+            <li><strong>Part B — Evaluation Support:</strong> A gap analysis, CDD timeliness check, high-risk transaction summary and a blank independent evaluator declaration page.</li>
+          </ul>
+          <p>Generate it <strong>after enrolment</strong> so your AUSTRAC Entity ID is included, making it a complete record from 1 July 2026.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PENALTIES -->
+    <div class="faq-section" id="penalties">
+      <h2 class="faq-section-title">Penalties & Consequences</h2>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">What happens if I don't comply by 1 July 2026?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>Non-compliance with the AML/CTF Act can result in serious consequences including:</p>
+          <ul>
+            <li><strong>Civil penalties</strong> — significant financial penalties per breach</li>
+            <li><strong>Criminal prosecution</strong> — for serious or wilful non-compliance</li>
+            <li><strong>Enforceable undertakings</strong> — AUSTRAC may require you to implement specific compliance measures</li>
+            <li><strong>Public naming</strong> — AUSTRAC publishes enforcement actions</li>
+            <li><strong>Loss of licence</strong> — non-compliance may affect your real estate licence</li>
+          </ul>
+          <div class="answer-warn">The deadline is real. AUSTRAC has significantly increased its enforcement activity in recent years. Don't assume you won't be audited.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-question-text">Does SimpleAML guarantee my compliance?</span>
+          <span class="faq-chevron"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></span>
+        </div>
+        <div class="faq-answer">
+          <p>No — SimpleAML is a compliance assistance tool, not a guarantee. It guides you through what AUSTRAC requires and helps you document your compliance, but you are ultimately responsible for ensuring your agency meets all its obligations.</p>
+          <p>SimpleAML does not constitute legal advice. If you are uncertain about your specific obligations, seek independent legal advice.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="faq-cta">
+    <h2>Ready to get compliant?</h2>
+    <p>SimpleAML guides you through every step — free, no account required.</p>
+    <div class="cta-btns">
+      <a href="app-realestate.html" class="btn-primary">Open SimpleAML Free →</a>
+      <a href="templates-realestate.html" class="btn-ghost-light">Download Free Templates</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <div class="logo-mark">SA</div>
+      <div class="footer-text">SimpleAML — Free AML/CTF compliance for Australian real estate agencies.<br>Developed by Click Seed Pty Ltd ABN 87 656 256 567</div>
+    </div>
+    <div class="footer-links">
+      <a href="index-realestate.html">Home</a>
+      <a href="app-realestate.html">Open App</a>
+      <a href="templates-realestate.html">Templates</a>
+      <a href="contact-realestate.html">Contact</a>
+      <a href="privacy-policy-realestate.html">Privacy</a>
+    </div>
+  </footer>
+
+  <div class="disclaimer">
+    <strong>Important:</strong> SimpleAML is a compliance assistance tool only and does not constitute legal advice. Users are responsible for ensuring their own compliance with AUSTRAC requirements. Seek independent legal advice where required. Developed by Click Seed Pty Ltd ABN 87 656 256 567.
+  </div>
+
+  <script>
+    // Countdown
+    function updateCountdown() {
+      var deadline = new Date('2026-07-01T00:00:00+10:00');
+      var now = new Date();
+      var diff = deadline - now;
+      if (diff <= 0) { var el = document.getElementById('days-left'); if(el) el.textContent = '0 days'; return; }
+      var days = Math.floor(diff / (1000*60*60*24));
+      var el = document.getElementById('days-left');
+      if (el) el.textContent = days + ' days';
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+
+    // Toggle FAQ
+    function toggleFaq(btn) {
+      var item = btn.parentElement;
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(i){ i.classList.remove('open'); });
+      if (!isOpen) item.classList.add('open');
+    }
+
+    // Search
+    function searchFaq(query) {
+      var q = query.toLowerCase().trim();
+      var items = document.querySelectorAll('.faq-item');
+      var sections = document.querySelectorAll('.faq-section');
+      var anyVisible = false;
+      if (!q) {
+        items.forEach(function(i){ i.classList.remove('hidden'); });
+        sections.forEach(function(s){ s.classList.remove('hidden'); });
+        document.getElementById('no-results').style.display = 'none';
+        return;
+      }
+      sections.forEach(function(section) {
+        var sectionVisible = false;
+        section.querySelectorAll('.faq-item').forEach(function(item) {
+          var text = item.textContent.toLowerCase();
+          if (text.includes(q)) { item.classList.remove('hidden'); sectionVisible = true; anyVisible = true; }
+          else { item.classList.add('hidden'); }
+        });
+        section.classList.toggle('hidden', !sectionVisible);
+      });
+      document.getElementById('no-results').style.display = anyVisible ? 'none' : 'block';
+    }
+
+    // Mobile nav
+    function toggleNav() {
+      var nav = document.getElementById('nav-links');
+      var open = document.getElementById('mob-open');
+      var close = document.getElementById('mob-close');
+      var isOpen = nav.classList.toggle('open');
+      open.style.display = isOpen ? 'none' : 'block';
+      close.style.display = isOpen ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
