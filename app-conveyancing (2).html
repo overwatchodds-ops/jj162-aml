@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SimpleAML | Conveyancing</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Z6L06TX2HB');</script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0f1117;--ink-mid:#1c2333;
+  --gold:#b8965a;--gold-light:#d4b07a;--gold-pale:rgba(184,150,90,0.10);--gold-rule:rgba(184,150,90,0.25);
+  --paper:#f5f2ec;--cream:#ede8df;--border:#ddd9d0;--border-2:#c8c3ba;
+  --text:#0f1117;--text-2:#4a4540;--text-3:#8a8278;
+  --amber:#c17d0a;--amber-bg:#fffbeb;--amber-line:#fde68a;
+  --red:#c0392b;--red-bg:#fdf2f1;--red-line:#f5c2bc;
+  --green:#2e7d32;--green-bg:#f1f8f1;--green-line:#a5d6a7;
+  --blue:#1565c0;--blue-bg:#e8f0fe;--blue-line:#90caf9;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --display:'Cormorant Garamond',Georgia,serif;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--sans);color:var(--text);background:var(--paper);font-size:14px;-webkit-font-smoothing:antialiased}
+.app{display:flex;height:100vh;flex-direction:column}
+.banner{background:var(--ink);color:var(--gold);text-align:center;padding:7px 16px;font-size:12px;font-weight:500;flex-shrink:0;border-bottom:1px solid var(--gold-rule)}
+.banner a{color:rgba(184,150,90,0.6)}
+.shell{display:flex;flex:1;min-height:0}
+.sidebar{width:224px;background:#fff;border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.sid-head{padding:18px 16px 14px;border-bottom:1px solid var(--border)}
+.sid-logo{display:flex;align-items:center;gap:10px;margin-bottom:2px}
+.sid-mark{width:32px;height:32px;background:var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--ink);font-size:12px;font-weight:700;font-family:var(--display);flex-shrink:0}
+.sid-name{font-size:14px;font-weight:600;color:var(--ink)}
+.sid-sub{font-size:10px;color:var(--text-3);margin-top:2px}
+.nav-sec{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);padding:16px 16px 5px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;font-size:12px;font-weight:400;color:var(--text-2);cursor:pointer;transition:all .12s;user-select:none;border-left:3px solid transparent;margin:1px 4px;border-radius:0 4px 4px 0}
+.nav-item svg{width:15px;height:15px;flex-shrink:0;opacity:.4}
+.nav-item:hover{background:var(--cream);color:var(--ink)}
+.nav-item.active{background:var(--gold-pale);color:var(--gold);font-weight:600;border-left-color:var(--gold)}
+.nav-item.active svg{opacity:1}
+.sid-foot{margin-top:auto;padding:14px 16px;border-top:1px solid var(--border);font-size:10px;color:var(--text-3)}
+.topbar{height:52px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:10px;flex-shrink:0}
+.breadcrumb{font-size:12px;color:var(--text-3)}
+.breadcrumb span{color:var(--text);font-weight:600}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.top-clock{font-family:monospace;font-size:11px;color:var(--text-3)}
+.practice-pill{font-size:11px;font-weight:600;color:var(--gold);background:var(--gold-pale);padding:4px 12px;border-radius:100px;cursor:pointer;border:1px solid var(--gold-rule)}
+.page{flex:1;overflow-y:auto;padding:28px 28px 40px;background:var(--paper)}
+.page.hidden{display:none}
+.pg-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:16px;flex-wrap:wrap}
+.pg-title{font-family:var(--display);font-size:22px;font-weight:400;color:var(--ink);letter-spacing:-.01em}
+.pg-sub{font-size:12px;color:var(--text-3);margin-top:2px}
+.card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:20px;box-shadow:0 1px 3px rgba(15,17,23,.04)}
+.card+.card{margin-top:16px}
+.card-title{font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:#fff;border:1px solid var(--border);border-radius:6px;padding:16px;position:relative;overflow:hidden}
+.kpi-top{height:2px;position:absolute;top:0;left:0;right:0}
+.kpi-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3);margin-bottom:8px}
+.kpi-num{font-family:var(--display);font-size:36px;font-weight:400;color:var(--text);line-height:1}
+.kpi-desc{font-size:10px;color:var(--text-3);margin-top:4px}
+.table-wrap{background:#fff;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--cream)}
+th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:11px 14px;font-size:12px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--paper)}
+.f-group{margin-bottom:14px}
+.f-label{display:block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-2);margin-bottom:5px}
+.f-input{width:100%;padding:9px 12px;border:1px solid var(--border-2);border-radius:4px;font-size:13px;font-family:var(--sans);color:var(--text);background:#fff;outline:none;transition:border .15s}
+.f-input:focus{border-color:var(--gold)}
+select.f-input{cursor:pointer}
+textarea.f-input{resize:vertical;min-height:80px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:4px;font-size:12px;font-weight:600;font-family:var(--sans);cursor:pointer;border:none;transition:all .15s}
+.btn-primary{background:var(--gold);color:var(--ink)}.btn-primary:hover{background:var(--gold-light)}
+.btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border-2)}.btn-ghost:hover{background:var(--cream)}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{opacity:.88}
+.btn-full{width:100%;justify-content:center}
+.badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:20px}
+.b-low{background:var(--green-bg);color:var(--green);border:1px solid var(--green-line)}
+.b-med{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-line)}
+.b-high{background:var(--red-bg);color:var(--red);border:1px solid var(--red-line)}
+.b-neutral{background:var(--cream);color:var(--text-3);border:1px solid var(--border)}
+.b-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-line)}
+.b-gold{background:var(--gold-pale);color:var(--gold);border:1px solid var(--gold-rule)}
+.alert{border-radius:6px;padding:14px 16px;margin-bottom:16px;font-size:12px;line-height:1.75}
+.alert-amber{background:var(--amber-bg);border:1px solid var(--amber-line);border-left:3px solid var(--amber)}
+.alert-red{background:var(--red-bg);border:1px solid var(--red-line);border-left:3px solid var(--red)}
+.alert-green{background:var(--green-bg);border:1px solid var(--green-line);border-left:3px solid var(--green)}
+.alert-blue{background:var(--blue-bg);border:1px solid var(--blue-line);border-left:3px solid var(--blue)}
+.alert-gold{background:var(--gold-pale);border:1px solid var(--gold-rule);border-left:3px solid var(--gold)}
+.alert-title{font-weight:700;margin-bottom:3px}
+.sec-head{display:flex;align-items:center;gap:10px;margin:24px 0 16px}
+.sec-num{width:24px;height:24px;background:var(--gold);color:var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.sec-title{font-size:13px;font-weight:600;color:var(--text)}
+.sec-sub{font-size:11px;color:var(--text-3);margin-top:1px}
+.deadline-bar{border-radius:6px;padding:11px 14px;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:500}
+.deadline-bar.grey{background:var(--cream);border:1px solid var(--border);color:var(--text-3)}
+.deadline-bar.amber{background:var(--amber-bg);border:1px solid var(--amber-line);color:var(--amber)}
+.deadline-bar.red{background:var(--red-bg);border:1px solid var(--red-line);color:var(--red)}
+.deadline-bar.green{background:var(--green-bg);border:1px solid var(--green-line);color:var(--green)}
+.deadline-bar.gold{background:var(--gold-pale);border:1px solid var(--gold-rule);color:var(--gold)}
+.person-card{background:var(--paper);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:8px}
+.person-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.person-card-label{font-size:11px;font-weight:600;color:var(--text-2)}
+.doc-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.doc-slot{background:#fff;border:1px dashed var(--border-2);border-radius:4px;padding:8px;text-align:center;cursor:pointer;transition:all .15s;font-size:10px;color:var(--text-3)}
+.doc-slot:hover{border-color:var(--gold);color:var(--gold)}
+.doc-slot.filed{border-style:solid;border-color:var(--green);background:var(--green-bg);color:var(--green)}
+.doc-slot input{display:none}
+.del-btn{background:none;border:none;cursor:pointer;color:var(--text-3);font-size:18px;line-height:1;padding:0}
+.del-btn:hover{color:var(--red)}
+.edd-block{background:#fff7ed;border:1px solid #fed7aa;border-left:3px solid #ea580c;border-radius:6px;padding:14px;margin-top:12px}
+.edd-title{font-size:11px;font-weight:700;color:#9a3412;margin-bottom:10px}
+.side-flag{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border:1px solid var(--border);border-radius:5px;cursor:pointer;font-size:12px;color:var(--text-2);line-height:1.5;transition:all .12s;margin-bottom:6px}
+.side-flag:hover{background:var(--red-bg);border-color:var(--red-line)}
+.side-flag input{margin-top:2px;flex-shrink:0;accent-color:var(--red)}
+.side-flag.checked{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.svc-chk{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border:1px solid var(--border);border-radius:5px;cursor:pointer;font-size:11px;color:var(--text-2);line-height:1.5;transition:background .12s}
+.svc-chk:hover{background:var(--cream)}
+.svc-chk input{margin-top:2px;flex-shrink:0}
+.checkpoint{display:flex;align-items:flex-start;gap:10px;padding:9px 10px;border-radius:5px;cursor:pointer;transition:background .12s;border:1px solid transparent}
+.checkpoint:hover{background:var(--cream);border-color:var(--border)}
+.checkbox-custom{width:18px;height:18px;border:2px solid var(--border-2);border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.checkpoint.checked .checkbox-custom{background:var(--gold);border-color:var(--gold)}
+.checkpoint.checked .checkbox-custom svg{stroke:var(--ink)}
+.chk-title{font-size:12px;font-weight:600;color:var(--text);line-height:1.4}
+.empty{text-align:center;padding:48px 20px;color:var(--text-3)}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);font-size:12px;font-weight:500;padding:10px 18px;border-radius:4px;opacity:0;transition:all .25s;z-index:9999;pointer-events:none;white-space:nowrap}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center}
+.modal-backdrop.open{display:flex}
+.modal{background:#fff;border-radius:8px;padding:28px;max-width:540px;width:90%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.18)}
+.mob-btn{display:none;background:none;border:none;cursor:pointer;color:var(--paper);padding:4px}
+@media(max-width:768px){
+  .sidebar{position:fixed;left:-224px;top:0;bottom:0;z-index:999;transition:left .2s}
+  .sidebar.open{left:0;box-shadow:4px 0 20px rgba(0,0,0,.1)}
+  .mob-btn{display:flex}
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .g2,.g3{grid-template-columns:1fr}
+  .page{padding:20px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="banner">SimpleAML for Conveyancers &mdash; Free AML/CTF compliance tool &middot; <a href="index-conveyancing.html">Back to Home &rarr;</a></div>
+<div class="shell">
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sid-head">
+    <div class="sid-logo">
+      <div class="sid-mark" id="sid-mark">SA</div>
+      <div class="sid-name" id="sid-name">SimpleAML</div>
+    </div>
+    <div class="sid-sub">Conveyancing AML/CTF</div>
+  </div>
+  <div class="nav-sec">Overview</div>
+  <div class="nav-item active" id="tab-dashboard" onclick="go('dashboard')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>Dashboard
+  </div>
+  <div class="nav-sec" id="nav-sec-practice">Complete before 1 July 2026</div>
+  <div class="nav-item" id="tab-profile" onclick="go('profile')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>1. Practice Profile
+  </div>
+  <div class="nav-item" id="tab-staff" onclick="go('staff')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>2. Staff Vetting
+  </div>
+  <div class="nav-item" id="tab-training" onclick="go('training')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6"/></svg>3. Training Register
+  </div>
+  <div class="nav-item" id="tab-riskass" onclick="go('riskass')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>4. Risk Assessment
+  </div>
+  <div class="nav-item" id="tab-program" onclick="go('program')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>5. AML/CTF Program
+  </div>
+  <div class="nav-sec" id="nav-sec-enrolment">Complete by 29 July 2026</div>
+  <div class="nav-item" id="tab-enrolment" onclick="go('enrolment')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>6. AUSTRAC Enrolment
+  </div>
+  <div class="nav-sec">After enrolment</div>
+  <div class="nav-item" id="tab-audit" onclick="go('audit')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>7. Save Compliance Report
+  </div>
+  <div class="nav-sec">Matters &mdash; ongoing from 1 July</div>
+  <div class="nav-item" id="tab-matters" onclick="go('matters')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>Matter Register
+  </div>
+  <div class="nav-item" id="tab-new" onclick="go('new')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>New Matter
+  </div>
+  <div class="nav-sec">Tools</div>
+  <div class="nav-item" onclick="exportData()">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>Backup Data
+  </div>
+  <div class="nav-item" onclick="document.getElementById('import-file-input').click()">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m4-8l-4-4m0 0L8 8m4-4v12"/></svg>Restore Backup
+  </div>
+  <input type="file" id="import-file-input" accept=".json" style="display:none" onchange="importData(this)">
+  <div class="nav-item" id="tab-about" onclick="go('about')">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>About &amp; Support
+  </div>
+  <div class="sid-foot">SimpleAML &middot; Conveyancing<br>conveyancing.simpleaml.com.au</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <button class="mob-btn" onclick="el('sidebar').classList.toggle('open')">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <span class="breadcrumb"><span id="breadcrumb">Dashboard</span></span>
+    <div class="top-right">
+      <span class="top-clock" id="clock"></span>
+      <span class="top-clock" id="countdown" style="color:var(--red);font-weight:600"></span>
+      <span class="practice-pill" id="practice-pill" onclick="go('profile')">My Practice</span>
+    </div>
+  </div>
+
+<!-- ===== DASHBOARD ===== -->
+<div class="page" id="view-dashboard">
+  <div class="pg-header">
+    <div><div class="pg-title">Dashboard</div><div class="pg-sub">AML/CTF compliance overview</div></div>
+    <button class="btn btn-primary" onclick="go('new')" id="dash-new-btn" style="display:none">+ New Matter</button>
+  </div>
+  <div id="setup-prompt" style="display:none">
+    <div style="background:#fff;border:2px solid var(--gold);border-radius:8px;padding:36px;text-align:center;margin-bottom:20px">
+      <div style="width:56px;height:56px;background:var(--gold-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+        <svg width="28" height="28" fill="none" stroke="var(--gold)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+      </div>
+      <div style="font-family:var(--display);font-size:22px;font-weight:400;color:var(--ink);margin-bottom:10px">Welcome to SimpleAML for Conveyancers</div>
+      <div style="font-size:13px;color:var(--text-2);max-width:460px;margin:0 auto 24px;line-height:1.75">Before recording your first matter, set up your practice profile. It only takes a few minutes and you'll need it for AUSTRAC enrolment.</div>
+      <button class="btn btn-primary" style="font-size:14px;padding:12px 28px" onclick="go('profile')">Start &mdash; Set Up My Practice &rarr;</button>
+    </div>
+  </div>
+  <div id="setup-checklist" style="display:none">
+    <div class="card" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div><div style="font-size:15px;font-weight:600;color:var(--ink)">Getting Ready for 1 July 2026</div><div style="font-size:12px;color:var(--text-3);margin-top:2px">Complete all 5 steps before your obligations commence</div></div>
+        <div id="checklist-progress-label" style="font-size:12px;font-weight:700;color:var(--gold)"></div>
+      </div>
+      <div style="height:4px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:20px">
+        <div id="checklist-progress-bar" style="height:4px;background:var(--gold);border-radius:4px;transition:width .4s"></div>
+      </div>
+      <div id="checklist-steps"></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-top" style="background:var(--gold)"></div><div class="kpi-label">Matters</div><div class="kpi-num" id="kpi-total">0</div><div class="kpi-desc">Total CDD records</div></div>
+      <div class="kpi"><div class="kpi-top" style="background:var(--red)"></div><div class="kpi-label">High Risk</div><div class="kpi-num" id="kpi-high">0</div><div class="kpi-desc">Require enhanced CDD</div></div>
+      <div class="kpi"><div class="kpi-top" style="background:var(--amber)"></div><div class="kpi-label">CDD Pending</div><div class="kpi-num" id="kpi-pending">0</div><div class="kpi-desc">Not yet complete</div></div>
+      <div class="kpi"><div class="kpi-top" style="background:var(--green)"></div><div class="kpi-label">Staff Vetted</div><div class="kpi-num" id="kpi-staff">0</div><div class="kpi-desc">Personnel on record</div></div>
+    </div>
+    <div class="card"><div class="card-title">Recent Matters</div><div id="recent-list"></div></div>
+  </div>
+  <div id="dash-main" style="display:none">
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-top" style="background:var(--gold)"></div><div class="kpi-label">Matters</div><div class="kpi-num" id="kpi-total-main">0</div><div class="kpi-desc">Total CDD records</div></div>
+      <div class="kpi"><div class="kpi-top" style="background:var(--red)"></div><div class="kpi-label">High Risk</div><div class="kpi-num" id="kpi-high-main">0</div><div class="kpi-desc">Require enhanced CDD</div></div>
+      <div class="kpi"><div class="kpi-top" style="background:var(--amber)"></div><div class="kpi-label">CDD Pending</div><div class="kpi-num" id="kpi-pending-main">0</div><div class="kpi-desc">Not yet complete</div></div>
+      <div class="kpi"><div class="kpi-top" style="background:var(--green)"></div><div class="kpi-label">Staff Vetted</div><div class="kpi-num" id="kpi-staff-main">0</div><div class="kpi-desc">Personnel on record</div></div>
+    </div>
+    <div class="card"><div class="card-title">Recent Matters</div><div id="recent-list-main"></div></div>
+  </div>
+</div>
+
+<!-- ===== MATTER REGISTER ===== -->
+<div class="page hidden" id="view-matters">
+  <div class="pg-header">
+    <div><div class="pg-title">Matter Register</div><div class="pg-sub">All CDD records &mdash; purchases, sales and transfers</div></div>
+    <button class="btn btn-primary" onclick="go('new')">+ New Matter</button>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Property</th><th>Type</th><th>Client Side</th><th>Method</th><th>Value</th><th>Client CDD</th><th>CDD Deadline</th><th>Settlement</th><th>Risk</th><th>Status</th><th></th></tr></thead>
+      <tbody id="matters-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== NEW MATTER ===== -->
+<div class="page hidden" id="view-new">
+  <div class="pg-header">
+    <div><div class="pg-title">New Matter</div><div class="pg-sub">CDD must be completed at engagement &mdash; before assisting in the planning or execution of the transfer</div></div>
+    <button class="btn btn-ghost" onclick="resetMatterForm()">Clear Form</button>
+  </div>
+
+  <!-- Screen 1: Matter Setup -->
+  <div class="card">
+    <div class="sec-head" style="margin-top:0">
+      <div class="sec-num">1</div>
+      <div><div class="sec-title">Matter Setup</div><div class="sec-sub">Property details and matter type &mdash; drives CDD timing rules</div></div>
+    </div>
+    <div class="f-group">
+      <label class="f-label">Property Address *</label>
+      <input class="f-input" id="m-address" placeholder="e.g. 12 Smith Street, Parramatta NSW 2150">
+    </div>
+    <div class="g3">
+      <div class="f-group">
+        <label class="f-label">Matter Type *</label>
+        <select class="f-input" id="m-type" onchange="updateMatterType()">
+          <option value="">Select...</option>
+          <option value="purchase">Purchase &mdash; acting for buyer</option>
+          <option value="sale">Sale &mdash; acting for seller</option>
+          <option value="transfer">Transfer &mdash; no sale price (gift, family)</option>
+        </select>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Transaction Method *</label>
+        <select class="f-input" id="m-method" onchange="updateMethodDates()">
+          <option value="">Select...</option>
+          <option value="private">Private treaty</option>
+          <option value="auction">Auction</option>
+          <option value="off-market">Off-market / direct transfer</option>
+        </select>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Property Type</label>
+        <select class="f-input" id="m-proptype">
+          <option value="residential">Residential</option>
+          <option value="commercial">Commercial &mdash; higher risk</option>
+          <option value="rural">Rural / rural residential</option>
+          <option value="vacant">Vacant land</option>
+          <option value="strata">Strata / apartment</option>
+        </select>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="f-group">
+        <label class="f-label">Transaction Value</label>
+        <select class="f-input" id="m-value">
+          <option value="0">Not disclosed / unknown</option>
+          <option value="500000">Under $500,000</option>
+          <option value="1000000">$500,001 &ndash; $1,000,000</option>
+          <option value="1500000">$1,000,001 &ndash; $1,500,000</option>
+          <option value="2000000">$1,500,001 &ndash; $2,000,000</option>
+          <option value="3000000">$2,000,001 &ndash; $3,000,000</option>
+          <option value="5000000">$3,000,001 &ndash; $5,000,000</option>
+          <option value="99999999">Over $5,000,000</option>
+        </select>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Engagement Date *</label>
+        <input class="f-input" id="m-engagement" type="date">
+        <div style="font-size:10px;color:var(--text-3);margin-top:4px">When you were first engaged by the client</div>
+      </div>
+    </div>
+    <!-- Private treaty dates -->
+    <div id="private-dates" style="display:none">
+      <div class="g2">
+        <div class="f-group"><label class="f-label">Exchange of Contracts Date</label><input class="f-input" id="m-exchange" type="date" onchange="updateCddDeadline()"></div>
+        <div class="f-group"><label class="f-label">Settlement Date</label><input class="f-input" id="m-settlement-private" type="date"></div>
+      </div>
+    </div>
+    <!-- Auction dates -->
+    <div id="auction-dates" style="display:none">
+      <div class="alert alert-gold" style="margin-bottom:12px"><strong>Auction CDD rule:</strong> Where the buyer is only known after the hammer falls, initial CDD must be completed as soon as practicable after exchange &mdash; before settlement or within 28 days of exchange, whichever is earlier.</div>
+      <div class="g3">
+        <div class="f-group"><label class="f-label">Auction Date</label><input class="f-input" id="m-auction-date" type="date"></div>
+        <div class="f-group"><label class="f-label">Exchange of Contracts Date</label><input class="f-input" id="m-exchange-auction" type="date" onchange="updateAuctionDeadline()"></div>
+        <div class="f-group"><label class="f-label">Settlement Date</label><input class="f-input" id="m-settlement-auction" type="date" onchange="updateAuctionDeadline()"></div>
+      </div>
+    </div>
+    <div id="cdd-deadline-bar" class="deadline-bar grey">Select matter type and transaction method above to see CDD timing rule</div>
+    <div id="trust-account-block" style="display:none;margin-top:4px">
+      <div class="f-group">
+        <label class="f-label">Trust Account Involved?</label>
+        <select class="f-input" id="m-trust">
+          <option value="yes">Yes &mdash; client funds held in practice trust account</option>
+          <option value="no">No &mdash; funds managed directly by financial institution</option>
+        </select>
+        <div style="font-size:10px;color:var(--text-3);margin-top:4px">Trust accounts are a key ML/TF risk factor &mdash; apply additional scrutiny to source of funds if yes.</div>
+      </div>
+    </div>
+    <div id="tier-banner" style="display:none;margin-top:8px"></div>
+  </div>
+
+  <!-- Screen 2: Client CDD -->
+  <div class="card" style="margin-top:16px">
+    <div class="sec-head" style="margin-top:0">
+      <div class="sec-num">2</div>
+      <div><div class="sec-title" id="client-section-title">Client CDD</div><div class="sec-sub" id="client-section-sub">Identity verification and risk assessment for your client</div></div>
+    </div>
+    <div class="deadline-bar amber" id="client-cdd-timing-bar">&#9888; CDD must be completed at or before engagement &mdash; before assisting in the planning or execution of the transfer</div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label" id="client-name-label">Client Full Name *</label><input class="f-input" id="c-name" placeholder="Full legal name"></div>
+      <div class="f-group"><label class="f-label">Date of Birth *</label><input class="f-input" id="c-dob" type="date"></div>
+    </div>
+    <div class="f-group"><label class="f-label">Residential Address *</label><input class="f-input" id="c-address" placeholder="Full residential address"></div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">Occupation *</label><input class="f-input" id="c-occupation" placeholder="e.g. Teacher, Director, Retired"></div>
+      <div class="f-group">
+        <label class="f-label">Country of Residence</label>
+        <select class="f-input" id="c-country"><option value="AU">Australia</option><option value="other">Other &mdash; specify in notes</option></select>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="f-group">
+        <label class="f-label">Acting for themselves or as representative?</label>
+        <select class="f-input" id="c-acting" onchange="updateClientRepBlock()">
+          <option value="self">Themselves</option>
+          <option value="rep">As representative / authorised person</option>
+        </select>
+      </div>
+      <div class="f-group">
+        <label class="f-label" id="purpose-label">Purpose of Transaction</label>
+        <select class="f-input" id="c-purpose">
+          <option value="">Select...</option>
+          <option>Primary residence</option><option>Investment property</option>
+          <option>Holiday home</option><option>SMSF investment</option>
+          <option>Business use</option><option>Family transfer / estate</option><option>Other</option>
+        </select>
+      </div>
+    </div>
+    <div id="source-of-funds-block" style="display:none">
+      <div class="f-group">
+        <label class="f-label">How will purchase be funded?</label>
+        <select class="f-input" id="c-funding">
+          <option value="">Select...</option>
+          <option>Mortgage (Australian lender) + savings</option>
+          <option>Savings / cash only</option>
+          <option>Proceeds from property sale</option>
+          <option>Inheritance or gift</option>
+          <option>Business funds</option>
+          <option>Foreign funds</option>
+          <option>Combination / other</option>
+        </select>
+      </div>
+    </div>
+    <!-- Rep block -->
+    <div id="c-rep-block" style="display:none;background:var(--paper);border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:4px">
+      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:10px">Representative Details</div>
+      <div class="g2">
+        <div class="f-group"><label class="f-label">Representative Full Name *</label><input class="f-input" id="c-rep-name" placeholder="Full legal name"></div>
+        <div class="f-group"><label class="f-label">Representative DOB</label><input class="f-input" id="c-rep-dob" type="date"></div>
+      </div>
+      <div class="g2">
+        <div class="f-group"><label class="f-label">Authority to Act</label><select class="f-input" id="c-rep-authority"><option>Power of Attorney</option><option>Company Officer</option><option>Trustee</option><option>Other written authority</option></select></div>
+        <div class="f-group"><label class="f-label">Occupation</label><input class="f-input" id="c-rep-occupation" placeholder="e.g. Solicitor, Accountant"></div>
+      </div>
+    </div>
+    <!-- Entity type -->
+    <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin:16px 0 10px">Identity Verification</div>
+    <div class="f-group">
+      <label class="f-label">Entity Type *</label>
+      <select class="f-input" id="c-entity" onchange="updateClientEntityFields()">
+        <option value="">Select...</option>
+        <option value="Individual">Individual</option>
+        <option value="Company">Company</option>
+        <option value="Trust">Trust</option>
+        <option value="SMSF">SMSF</option>
+      </select>
+    </div>
+    <!-- Individual -->
+    <div id="c-ext-individual" style="display:none">
+      <div class="g2">
+        <div class="f-group"><label class="f-label">ID Document Type *</label>
+          <select class="f-input" id="c-id-type"><option value="">Select...</option><option>Australian Driver Licence</option><option>Australian Passport</option><option>Foreign Passport</option><option>Medicare Card</option><option>Other government-issued photo ID</option></select>
+        </div>
+        <div class="f-group"><label class="f-label">Verification Method</label>
+          <select class="f-input" id="c-id-method"><option>In-person &mdash; sighted original document</option><option>Electronic verification (DVS)</option><option>Certified copy received</option></select>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="f-group"><label class="f-label">Verification Date *</label><input class="f-input" id="c-id-date" type="date"></div>
+        <div class="f-group"><label class="f-label">PEP Status *</label>
+          <select class="f-input" id="c-pep-status"><option value="No">Not a PEP</option><option value="Domestic">Domestic PEP</option><option value="Foreign">Foreign PEP</option><option value="Associate">PEP Associate / Family Member</option></select>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="f-group"><label class="f-label">Sanctions Check Outcome *</label>
+          <select class="f-input" id="c-sanctions-outcome"><option value="">Select...</option><option value="Clear">Clear &mdash; not listed</option><option value="Match">Match found &mdash; refer to AMLCO</option></select>
+        </div>
+        <div class="f-group"><label class="f-label">Sanctions Check Date</label><input class="f-input" id="c-sanctions-date" type="date"></div>
+      </div>
+      <div class="doc-slots" style="margin-bottom:8px">
+        <label class="doc-slot" id="c-dvs-slot"><div style="font-weight:600;margin-bottom:2px">ID Copy</div><div id="c-dvs-label">Upload</div><input type="file" onchange="markSlot('c-dvs-slot','c-dvs-label',this)"></label>
+        <label class="doc-slot" id="c-pep-slot"><div style="font-weight:600;margin-bottom:2px">PEP Check</div><div id="c-pep-label">Upload</div><input type="file" onchange="markSlot('c-pep-slot','c-pep-label',this)"></label>
+        <label class="doc-slot" id="c-sanctions-slot"><div style="font-weight:600;margin-bottom:2px">Sanctions</div><div id="c-sanctions-label">Upload</div><input type="file" onchange="markSlot('c-sanctions-slot','c-sanctions-label',this)"></label>
+      </div>
+    </div>
+    <!-- Company -->
+    <div id="c-ext-company" style="display:none">
+      <div class="g2">
+        <div class="f-group"><label class="f-label">Company Name</label><input class="f-input" id="c-co-name" placeholder="Full registered name"></div>
+        <div class="f-group"><label class="f-label">ACN</label><input class="f-input" id="c-co-acn" placeholder="e.g. 123 456 789"><a href="https://connectonline.asic.gov.au" target="_blank" style="font-size:10px;color:var(--gold);display:block;margin-top:4px">Verify on ASIC Connect &rarr;</a></div>
+      </div>
+      <div class="card-title" style="margin-top:8px">Directors &mdash; DVS, PEP &amp; Sanctions required for each</div>
+      <div id="c-co-directors"></div>
+      <button class="btn btn-ghost" style="font-size:11px;padding:6px 12px" onclick="addMatterPerson('c-co-directors','c-co-dir','Director')">+ Add Director</button>
+      <div class="card-title" style="margin-top:12px">Beneficial Owners (&ge;25% shareholding)</div>
+      <div id="c-co-bos"></div>
+      <button class="btn btn-ghost" style="font-size:11px;padding:6px 12px" onclick="addMatterPerson('c-co-bos','c-co-bo','Beneficial Owner')">+ Add Beneficial Owner</button>
+    </div>
+    <!-- Trust -->
+    <div id="c-ext-trust" style="display:none">
+      <div class="f-group"><label class="f-label">Trust Name</label><input class="f-input" id="c-t-name" placeholder="e.g. Smith Family Trust"></div>
+      <div class="g2">
+        <div class="f-group"><label class="f-label">Trust Deed</label><label class="doc-slot" id="c-t-deed-slot" style="display:block;max-width:200px"><div style="font-weight:600;margin-bottom:2px">Trust Deed</div><div id="c-t-deed-label">Upload</div><input type="file" onchange="markSlot('c-t-deed-slot','c-t-deed-label',this)"></label></div>
+        <div class="f-group"><label class="f-label">Appointor Name</label><input class="f-input" id="c-t-appointor" placeholder="Person with power to remove trustees"></div>
+      </div>
+      <div class="f-group"><label class="f-label">Beneficiaries</label><input class="f-input" id="c-t-beneficiaries" placeholder="e.g. Smith family members"></div>
+      <div class="card-title" style="margin-top:8px">Trustees &mdash; DVS, PEP &amp; Sanctions required for each</div>
+      <div id="c-t-trustees"></div>
+      <button class="btn btn-ghost" style="font-size:11px;padding:6px 12px" onclick="addMatterPerson('c-t-trustees','c-t-tr','Trustee')">+ Add Trustee</button>
+    </div>
+    <!-- SMSF -->
+    <div id="c-ext-smsf" style="display:none">
+      <div class="g2">
+        <div class="f-group"><label class="f-label">Fund Name</label><input class="f-input" id="c-s-fundname" placeholder="e.g. Smith Super Fund"></div>
+        <div class="f-group"><label class="f-label">ABN</label><input class="f-input" id="c-s-abn" placeholder="e.g. 12 345 678 901"><a href="https://www.abr.business.gov.au" target="_blank" style="font-size:10px;color:var(--gold);display:block;margin-top:4px">Verify on ABR &rarr;</a></div>
+      </div>
+      <div class="f-group"><label class="f-label">Trustee Type</label><select class="f-input" id="c-s-trusteetype" onchange="updateSmsfClientType()"><option value="individual">Individual trustees</option><option value="corporate">Corporate trustee</option></select></div>
+      <div id="c-s-individual-trustees">
+        <div class="card-title">Individual Trustees &mdash; DVS, PEP &amp; Sanctions required for each</div>
+        <div id="c-s-trustees"></div>
+        <button class="btn btn-ghost" style="font-size:11px;padding:6px 12px" onclick="addMatterPerson('c-s-trustees','c-s-tr','Trustee')">+ Add Trustee</button>
+      </div>
+      <div id="c-s-corporate-trustee" style="display:none">
+        <div class="g2">
+          <div class="f-group"><label class="f-label">Corporate Trustee Name</label><input class="f-input" id="c-s-corpname" placeholder="Trustee Pty Ltd"></div>
+          <div class="f-group"><label class="f-label">ACN</label><input class="f-input" id="c-s-corpacn" placeholder="e.g. 123 456 789"></div>
+        </div>
+        <div class="card-title">Corporate Trustee Directors</div>
+        <div id="c-s-corpdirectors"></div>
+        <button class="btn btn-ghost" style="font-size:11px;padding:6px 12px" onclick="addMatterPerson('c-s-corpdirectors','c-s-cd','Director')">+ Add Director</button>
+      </div>
+      <div class="card-title" style="margin-top:12px">Fund Members (beneficial owners)</div>
+      <div id="c-s-members"></div>
+      <button class="btn btn-ghost" style="font-size:11px;padding:6px 12px" onclick="addMatterPerson('c-s-members','c-s-mb','Member')">+ Add Member</button>
+    </div>
+    <!-- Client risk -->
+    <div style="margin-top:16px">
+      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:10px">Client Risk Assessment</div>
+      <div class="f-group">
+        <label class="f-label">Client ML/TF Risk Rating *</label>
+        <select class="f-input" id="c-risk" onchange="updateClientEdd()">
+          <option value="">Select...</option>
+          <option value="Low">Low &mdash; no risk factors identified</option>
+          <option value="Medium">Medium &mdash; one or more moderate risk factors</option>
+          <option value="High">High &mdash; significant risk factors present</option>
+        </select>
+      </div>
+      <div id="c-edd-block" class="edd-block" style="display:none">
+        <div class="edd-title">&#9888; Enhanced CDD Required &mdash; High Risk Client</div>
+        <div class="g2">
+          <div class="f-group"><label class="f-label">Source of Funds</label><input class="f-input" id="c-sof" placeholder="e.g. Savings, mortgage drawdown, sale proceeds"></div>
+          <div class="f-group"><label class="f-label">Source of Wealth</label><input class="f-input" id="c-sow" placeholder="e.g. Employment income, inherited property"></div>
+        </div>
+        <div class="f-group"><label class="f-label">Adverse Media Check</label><select class="f-input" id="c-adversemedia"><option value="">Select outcome...</option><option value="clear">Clear &mdash; no adverse findings</option><option value="findings">Findings &mdash; noted in comments</option></select></div>
+        <div class="alert alert-red" style="margin-top:8px;margin-bottom:0"><div class="alert-title">AMLCO Written Approval Required</div>High risk clients require written approval from your AML/CTF Compliance Officer before proceeding.</div>
+        <div class="f-group" style="margin-top:10px;margin-bottom:0"><label class="f-label">AMLCO Approval &mdash; Name &amp; Date</label><input class="f-input" id="c-amlco-approval" placeholder="e.g. Jane Smith, AMLCO &mdash; approved 22 Mar 2026"></div>
+      </div>
+      <div class="f-group" style="margin-top:10px"><label class="f-label">Client CDD Notes</label><textarea class="f-input" id="c-notes" placeholder="Any additional observations, risk factors or context"></textarea></div>
+    </div>
+  </div>
+
+  <!-- Screen 3: Risk & Reporting -->
+  <div class="card" style="margin-top:16px">
+    <div class="sec-head" style="margin-top:0">
+      <div class="sec-num">3</div>
+      <div><div class="sec-title">Risk &amp; Reporting</div><div class="sec-sub">Overall matter risk, red flags and suspicious matter reporting</div></div>
+    </div>
+    <div class="f-group">
+      <label class="f-label">Overall Matter ML/TF Risk Rating *</label>
+      <select class="f-input" id="m-risk">
+        <option value="">Select overall risk for this matter...</option>
+        <option value="Low">Low &mdash; no unusual risk factors</option>
+        <option value="Medium">Medium &mdash; one or more factors require monitoring</option>
+        <option value="High">High &mdash; significant risk; escalate to AMLCO</option>
+      </select>
+    </div>
+    <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin:14px 0 8px">Red Flag Indicators &mdash; tick if present</div>
+    <div id="flag-warning" style="display:none" class="alert alert-red"><div class="alert-title">&#9888; Red flags present &mdash; consider SMR obligations</div>One or more red flags are ticked. Review whether you have reasonable grounds to suspect ML/TF activity and consider filing a Suspicious Matter Report with AUSTRAC.</div>
+    <div id="mflag-0" class="side-flag"><input type="checkbox" onclick="flagToggle(0)"> Unusually complex or unexplained ownership structure</div>
+    <div id="mflag-1" class="side-flag"><input type="checkbox" onclick="flagToggle(1)"> Client reluctant to provide ID or keeps changing story</div>
+    <div id="mflag-2" class="side-flag"><input type="checkbox" onclick="flagToggle(2)"> Transaction price significantly above or below market value</div>
+    <div id="mflag-3" class="side-flag"><input type="checkbox" onclick="flagToggle(3)"> Client appears to be acting on behalf of undisclosed third party</div>
+    <div id="mflag-4" class="side-flag"><input type="checkbox" onclick="flagToggle(4)"> Funds received from unexpected or unexplained third party</div>
+    <div id="mflag-5" class="side-flag"><input type="checkbox" onclick="flagToggle(5)"> Large cash component or unusual payment method</div>
+    <div id="mflag-6" class="side-flag"><input type="checkbox" onclick="flagToggle(6)"> Client in or connected to sanctioned or high-risk jurisdiction</div>
+    <div id="mflag-7" class="side-flag"><input type="checkbox" onclick="flagToggle(7)"> Transaction speed or urgency inconsistent with normal conveyancing</div>
+    <div class="g2" style="margin-top:16px">
+      <div class="f-group">
+        <label class="f-label">Suspicious Matter Report (SMR) Filed?</label>
+        <div style="display:flex;gap:16px;margin-top:6px">
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="radio" name="smr" value="No" checked> No</label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="radio" name="smr" value="Yes"> Yes</label>
+        </div>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Matter Status</label>
+        <select class="f-input" id="m-status">
+          <option value="Active">Active &mdash; in progress</option>
+          <option value="Settled">Settled &mdash; completed</option>
+          <option value="Withdrawn">Withdrawn &mdash; did not proceed</option>
+          <option value="On hold">On hold</option>
+        </select>
+      </div>
+    </div>
+    <div class="f-group"><label class="f-label">Conveyancer Handling This Matter</label><input class="f-input" id="m-conveyancer" placeholder="Name of conveyancer managing this file"></div>
+    <div class="f-group"><label class="f-label">Internal Notes</label><textarea class="f-input" id="m-notes" placeholder="Any additional context about this matter"></textarea></div>
+    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="saveMatter()">Save Matter</button>
+      <button class="btn btn-ghost" onclick="resetMatterForm()">Clear Form</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PRACTICE PROFILE ===== -->
+<div class="page hidden" id="view-profile">
+  <div class="pg-header">
+    <div><div class="pg-title">Practice Profile</div><div class="pg-sub">Complete all fields &mdash; required for AUSTRAC enrolment</div></div>
+    <button class="btn btn-primary" onclick="saveProfile()">Save Profile</button>
+  </div>
+  <div class="card">
+    <div class="card-title">Practice Identity</div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">Legal Entity Name *</label><input class="f-input" id="p-name" placeholder="e.g. Smith Conveyancing Pty Ltd"></div>
+      <div class="f-group"><label class="f-label">Trading Name (if different)</label><input class="f-input" id="p-trading" placeholder="e.g. Smith &amp; Associates Conveyancers"></div>
+    </div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">ABN *</label><input class="f-input" id="p-abn" placeholder="e.g. 12 345 678 901"></div>
+      <div class="f-group"><label class="f-label">ACN (if company)</label><input class="f-input" id="p-acn" placeholder="e.g. 123 456 789"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Licence &amp; State</div>
+    <div class="g2">
+      <div class="f-group">
+        <label class="f-label">State / Territory *</label>
+        <select class="f-input" id="p-state"><option value="">Select...</option><option>NSW</option><option>VIC</option><option>QLD</option><option>SA</option><option>WA</option><option>TAS</option><option>ACT</option><option>NT</option><option>Multiple states</option></select>
+        <div style="font-size:10px;color:var(--text-3);margin-top:4px">Conveyancers are licensed separately in each state.</div>
+      </div>
+      <div class="f-group"><label class="f-label">Conveyancing Licence Number</label><input class="f-input" id="p-licence" placeholder="e.g. 00123456"></div>
+    </div>
+    <div class="g2">
+      <div class="f-group">
+        <label class="f-label">Practice Type</label>
+        <select class="f-input" id="p-type"><option value="conveyancer">Licensed conveyancing practice</option><option value="lawyer-conv">Law firm providing conveyancing services</option><option value="sole">Sole practitioner</option></select>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Trust Account Held?</label>
+        <select class="f-input" id="p-trust"><option value="yes">Yes &mdash; practice holds trust account</option><option value="no">No &mdash; funds managed via financial institution</option></select>
+        <div style="font-size:10px;color:var(--text-3);margin-top:4px">Trust accounts are a key ML/TF risk factor documented in your risk assessment.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Contact &amp; Premises</div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">Business Address *</label><input class="f-input" id="p-address" placeholder="Street address"></div>
+      <div class="f-group"><label class="f-label">Suburb / City</label><input class="f-input" id="p-suburb" placeholder="e.g. Parramatta NSW 2150"></div>
+    </div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">Phone</label><input class="f-input" id="p-phone" placeholder="e.g. (02) 9000 0000"></div>
+      <div class="f-group"><label class="f-label">Email</label><input class="f-input" id="p-email" placeholder="info@practice.com.au"></div>
+    </div>
+    <div class="f-group"><label class="f-label">Website</label><input class="f-input" id="p-website" placeholder="https://www.practice.com.au"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Reporting Group</div>
+    <div class="f-group">
+      <label class="f-label">Part of a Reporting Group?</label>
+      <select class="f-input" id="p-reportinggroup"><option value="no">No &mdash; independent practice</option><option value="lead">Yes &mdash; we are the lead entity</option><option value="member">Yes &mdash; we are a member (not the lead)</option></select>
+      <div style="font-size:10px;color:var(--text-3);margin-top:4px">Most independent conveyancing practices select "No".</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Principal Conveyancer</div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">Full Name *</label><input class="f-input" id="p-principal" placeholder="Full legal name"></div>
+      <div class="f-group"><label class="f-label">Title / Role</label><input class="f-input" id="p-principal-title" placeholder="e.g. Principal, Director, Sole Practitioner"></div>
+    </div>
+    <div class="f-group"><label class="f-label">Email</label><input class="f-input" id="p-principal-email" placeholder="principal@practice.com.au"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">AML/CTF Compliance Officer (AMLCO)</div>
+    <div class="alert alert-gold" style="margin-bottom:14px">Your AMLCO must be a fit and proper person &mdash; typically your Principal Conveyancer or a senior manager. You must notify AUSTRAC of your AMLCO by <strong>29 July 2026</strong>. For small practices, the principal is usually also the AMLCO.</div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">AMLCO Full Name *</label><input class="f-input" id="p-amlco" placeholder="Full legal name"></div>
+      <div class="f-group"><label class="f-label">Title / Role</label><input class="f-input" id="p-amlco-title" placeholder="e.g. Principal Conveyancer, Director"></div>
+    </div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">Appointment Date</label><input class="f-input" id="p-amlco-date" type="date"></div>
+      <div class="f-group"><label class="f-label">Email</label><input class="f-input" id="p-amlco-email" placeholder="amlco@practice.com.au"></div>
+    </div>
+    <div class="f-group"><label class="f-label">Phone</label><input class="f-input" id="p-amlco-phone" placeholder="Direct number for AMLCO"></div>
+  </div>
+  <div id="profile-next-step" style="display:none;margin-top:4px"></div>
+</div>
+
+<!-- ===== STAFF VETTING ===== -->
+<div class="page hidden" id="view-staff">
+  <div class="pg-header">
+    <div><div class="pg-title">Staff Vetting</div><div class="pg-sub">Personnel due diligence &mdash; required before 1 July 2026</div></div>
+    <button class="btn btn-primary" onclick="openStaffForm()">+ Add Staff Member</button>
+  </div>
+  <div id="staff-setup-banner" style="display:none" class="alert alert-gold">
+    <div id="staff-setup-banner-content" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div><strong>Setting up?</strong> Once you've vetted all staff, head back to the dashboard to complete remaining steps.</div>
+      <button class="btn btn-ghost" style="white-space:nowrap;font-size:12px" onclick="go('dashboard')">&larr; Back to Setup</button>
+    </div>
+  </div>
+  <div class="alert alert-gold" style="margin-bottom:16px"><strong>First time setting up?</strong> If adding your first staff member, select <strong>Initial &mdash; Pre-Appointment</strong> as the vetting type. This applies to all staff joining at or before 1 July 2026.</div>
+  <div class="card" id="staff-form" style="display:none;margin-bottom:16px">
+    <div class="card-title" id="staff-form-title">Staff Vetting Record</div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">Full Name *</label><input class="f-input" id="s-name-staff" placeholder="Full legal name"></div>
+      <div class="f-group"><label class="f-label">Role / Title *</label><input class="f-input" id="s-role" placeholder="e.g. Conveyancer, AMLCO, Admin"></div>
+    </div>
+    <div class="g3">
+      <div class="f-group">
+        <label class="f-label">AML/CTF Role Level *</label>
+        <select class="f-input" id="s-level" onchange="updateStaffRoleGuidance()">
+          <option value="">Select...</option>
+          <option value="1">Level 1 &mdash; Admin / support (lighter checks)</option>
+          <option value="2">Level 2 &mdash; Conveyancer / file handler (standard checks)</option>
+          <option value="3">Level 3 &mdash; AMLCO / Principal / trust account access (thorough checks)</option>
+        </select>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Vetting Type</label>
+        <select class="f-input" id="s-vetting-type">
+          <option value="initial">Initial &mdash; Pre-Appointment</option>
+          <option value="periodic">Periodic review</option>
+          <option value="trigger">Trigger-based review (role change, concern raised)</option>
+        </select>
+      </div>
+      <div class="f-group"><label class="f-label">Vetting Date *</label><input class="f-input" id="s-date" type="date"></div>
+    </div>
+    <div id="s-role-guidance" style="display:none" class="alert alert-blue"></div>
+    <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin:14px 0 10px">Checks Performed</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
+      <label class="svc-chk"><input type="checkbox" id="s-chk-interview"> <span><strong>Interview conducted</strong> &mdash; skills, knowledge and AML/CTF responsibilities confirmed</span></label>
+      <label class="svc-chk"><input type="checkbox" id="s-chk-reference"> <span><strong>Reference check</strong> &mdash; at least one reference verifying integrity and suitability</span></label>
+      <label class="svc-chk"><input type="checkbox" id="s-chk-attestation"> <span><strong>Self-attestation signed</strong> &mdash; confirmed no disqualifying history</span></label>
+      <label class="svc-chk"><input type="checkbox" id="s-chk-criminal"> <span><strong>Criminal history check</strong> &mdash; national police certificate (recommended for Level 3 / AMLCO)</span></label>
+    </div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">Skills &amp; Knowledge Assessment</label>
+        <select class="f-input" id="s-skills"><option value="">Select outcome...</option><option value="confirmed">Confirmed &mdash; has required AML/CTF knowledge or will acquire with training</option><option value="training-required">Training required before commencing AML/CTF functions</option><option value="not-assessed">Not yet assessed</option></select>
+      </div>
+      <div class="f-group"><label class="f-label">Integrity Assessment</label>
+        <select class="f-input" id="s-integrity"><option value="">Select outcome...</option><option value="suitable">Suitable &mdash; no integrity concerns identified</option><option value="concerns">Concerns noted &mdash; see notes</option></select>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">Next Review Date</label><input class="f-input" id="s-review" type="date"></div>
+      <div class="f-group"><label class="f-label">Vetted By (AMLCO name)</label><input class="f-input" id="s-vetted-by" placeholder="Name of person who conducted vetting"></div>
+    </div>
+    <div class="f-group"><label class="f-label">Notes</label><textarea class="f-input" id="s-notes-staff" placeholder="Any observations, conditions or context about this vetting"></textarea></div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-primary" id="s-save-btn" onclick="saveStaff()">Save Record</button>
+      <button class="btn btn-ghost" onclick="closeStaffForm()">Cancel</button>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Name</th><th>Role</th><th>Level</th><th>Vetting Type</th><th>Vetted</th><th>Skills</th><th>Integrity</th><th>Next Review</th><th>Status</th><th></th></tr></thead>
+      <tbody id="staff-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== TRAINING REGISTER ===== -->
+<div class="page hidden" id="view-training">
+  <div class="pg-header">
+    <div><div class="pg-title">Training Register</div><div class="pg-sub">AML/CTF training records for all staff</div></div>
+    <button class="btn btn-primary" onclick="openTrainingForm()">+ Log Training</button>
+  </div>
+  <div id="training-setup-banner" style="display:none" class="alert alert-gold">
+    <div id="training-setup-banner-content" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div>Training records saved. Head back to the dashboard.</div>
+      <button class="btn btn-ghost" style="white-space:nowrap;font-size:12px" onclick="go('dashboard')">&larr; Back to Setup</button>
+    </div>
+  </div>
+  <div class="card" id="training-form" style="display:none;margin-bottom:16px">
+    <div class="card-title" id="training-form-title">Log Training Record</div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">Staff Member *</label><select class="f-input" id="t-staff" onchange="populateStaffRole()"><option value="">Select staff member...</option></select></div>
+      <div class="f-group"><label class="f-label">Role</label><input class="f-input" id="t-role" placeholder="Auto-filled from staff record"></div>
+    </div>
+    <div class="g2">
+      <div class="f-group">
+        <label class="f-label">Training Type *</label>
+        <select class="f-input" id="t-type">
+          <option value="">Select...</option>
+          <option>AML/CTF Initial Training &mdash; Tranche 2 Overview</option>
+          <option>AML/CTF Program &mdash; Policies &amp; Procedures</option>
+          <option>Customer Due Diligence (CDD)</option>
+          <option>Suspicious Matter Reporting (SMR)</option>
+          <option>Trust Account &amp; ML/TF Risk</option>
+          <option>Annual Refresher Training</option>
+          <option>Role-Specific AML/CTF Training</option>
+          <option>Other AML/CTF Training</option>
+        </select>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Delivery Format *</label>
+        <select class="f-input" id="t-format">
+          <option value="">Select...</option>
+          <option>Online &mdash; AUSTRAC training portal</option>
+          <option>Online &mdash; third-party provider</option>
+          <option>In-person workshop</option>
+          <option>Internal training session</option>
+          <option>Webinar / live online</option>
+          <option>Self-directed reading / review</option>
+        </select>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">Training Date *</label><input class="f-input" id="t-date" type="date"></div>
+      <div class="f-group"><label class="f-label">Expiry / Next Due Date</label><input class="f-input" id="t-expiry" type="date"></div>
+    </div>
+    <div class="f-group"><label class="f-label">Training Provider / Content Description</label><input class="f-input" id="t-provider" placeholder="e.g. AUSTRAC online module, or describe content covered"></div>
+    <div class="g2">
+      <div class="f-group"><label class="f-label">Assessment Outcome</label>
+        <select class="f-input" id="t-assessment"><option value="">Select...</option><option value="passed">Passed &mdash; competency confirmed</option><option value="verbal">Verbal confirmation</option><option value="follow-up">Follow-up required</option></select>
+      </div>
+      <div class="f-group"><label class="f-label">Notes</label><input class="f-input" id="t-notes" placeholder="Any additional notes about this training"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-primary" id="t-save-btn" onclick="saveTraining()">Save Record</button>
+      <button class="btn btn-ghost" onclick="closeTrainingForm()">Cancel</button>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Staff Member</th><th>Training Type</th><th>Date</th><th>Expiry</th><th>Assessment</th><th>Status</th><th></th></tr></thead>
+      <tbody id="training-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== RISK ASSESSMENT ===== -->
+<div class="page hidden" id="view-riskass">
+  <div class="pg-header">
+    <div><div class="pg-title">Practice Risk Assessment</div><div class="pg-sub">ML/TF/PF risk assessment &mdash; required before finalising your AML/CTF Program</div></div>
+    <button class="btn btn-primary" onclick="saveRiskAssessment()">Save</button>
+  </div>
+  <div id="riskass-setup-banner" style="display:none" class="alert alert-gold">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div><strong>Setting up?</strong> Once saved, head back to the dashboard.</div>
+      <button class="btn btn-ghost" style="white-space:nowrap;font-size:12px" onclick="go('dashboard')">&larr; Back to Setup</button>
+    </div>
+  </div>
+  <div class="alert alert-gold" style="margin-bottom:20px">
+    <strong>What this is:</strong> A documented assessment of the ML/TF/PF risks your practice faces. Your AML/CTF Program must be built on this assessment. Use the AUSTRAC Conveyancing Starter Kit template, then record your findings here.
+    <div style="margin-top:8px"><a href="https://www.austrac.gov.au/reforms/sector-specific-guidance/conveyancer-guidance/conveyancing-program-starter-kit" target="_blank" rel="noopener" style="font-size:11px;font-weight:600;color:var(--gold);text-decoration:none">AUSTRAC Conveyancing Starter Kit &rarr;</a></div>
+  </div>
+  <div class="g2">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card">
+        <div class="card-title" style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:50%;background:var(--red);display:inline-block"></span> Transaction &amp; Property Risk</div>
+        <div style="font-size:11px;color:var(--text-2);margin-bottom:12px;line-height:1.6">Consider: high-value transfers, commercial property, off-market transactions, unusual settlement structures, third-party payments.</div>
+        <div class="f-group"><label class="f-label">Risk Description</label><textarea class="f-input" id="ra-tx-risk" rows="4" placeholder="e.g. Practice handles predominantly residential sales/purchases under $2M. Occasional commercial matters..."></textarea></div>
+        <div class="f-group"><label class="f-label">Rating</label>
+          <select class="f-input" id="ra-tx-rating"><option value="">&#8212; Select &#8212;</option><option value="Low">Low &#8212; Mostly standard residential, no unusual payment patterns</option><option value="Medium">Medium &#8212; Mix of residential and commercial, some high-value</option><option value="High">High &#8212; High-value, commercial or complex transactions common</option></select>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:50%;background:#f59e0b;display:inline-block"></span> Trust Account Risk</div>
+        <div style="font-size:11px;color:var(--text-2);margin-bottom:12px;line-height:1.6">Trust accounts are a key ML/TF risk specific to conveyancers. Consider: deposit handling, settlement funds, third-party payments into trust, cash deposits.</div>
+        <div class="f-group"><label class="f-label">Trust Account Risk Description</label><textarea class="f-input" id="ra-trust-risk" rows="4" placeholder="e.g. Practice holds trust account for deposits and settlement funds. All trust receipts reconciled daily. Cash deposits not accepted..."></textarea></div>
+        <div class="f-group"><label class="f-label">Rating</label>
+          <select class="f-input" id="ra-trust-rating"><option value="">&#8212; Select &#8212;</option><option value="Low">Low &#8212; Standard settlement funds only, no unusual payments</option><option value="Medium">Medium &#8212; Occasional third-party funds or unusual payment sources</option><option value="High">High &#8212; Frequent third-party, cash, or overseas-sourced funds</option><option value="N/A">N/A &#8212; Practice does not hold trust account</option></select>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:50%;background:#8b5cf6;display:inline-block"></span> Proliferation Financing (PF) Risk</div>
+        <div style="font-size:11px;color:var(--text-2);margin-bottom:12px;line-height:1.6">Required under the reformed AML/CTF Act. All practices must document PF exposure regardless of size.</div>
+        <div class="f-group"><label class="f-label">PF Exposure Assessment</label><textarea class="f-input" id="ra-pf-risk" rows="4" placeholder="e.g. Practice does not knowingly deal with entities involved in weapons proliferation. All clients screened against DFAT consolidated sanctions list on engagement..."></textarea></div>
+        <div class="f-group"><label class="f-label">PF Rating</label>
+          <select class="f-input" id="ra-pf-rating"><option value="">&#8212; Select &#8212;</option><option value="Low">Low &#8212; No exposure to sanctioned jurisdictions or entities</option><option value="Medium">Medium &#8212; Some international clients requiring monitoring</option><option value="High">High &#8212; Significant international or high-risk sector exposure</option></select>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card">
+        <div class="card-title" style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:50%;background:#3b82f6;display:inline-block"></span> Customer Risk</div>
+        <div style="font-size:11px;color:var(--text-2);margin-bottom:12px;line-height:1.6">Consider: foreign buyers/sellers, PEPs, companies, trusts, SMSFs, clients unknown to the practice.</div>
+        <div class="f-group"><label class="f-label">Customer Risk Commentary</label><textarea class="f-input" id="ra-cust-risk" rows="4" placeholder="e.g. Majority of clients are Australian residents. Occasional foreign buyers. Company and trust purchasers represent approx 15% of matters..."></textarea></div>
+        <div class="f-group"><label class="f-label">Rating</label>
+          <select class="f-input" id="ra-cust-rating"><option value="">&#8212; Select &#8212;</option><option value="Low">Low &#8212; Predominantly Australian individuals, known to practice</option><option value="Medium">Medium &#8212; Some foreign clients or complex entities</option><option value="High">High &#8212; Frequent PEPs, foreign clients or complex structures</option></select>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:50%;background:#3b82f6;display:inline-block"></span> Geographic Risk</div>
+        <div style="font-size:11px;color:var(--text-2);margin-bottom:12px;line-height:1.6">Consider: overseas buyers/sellers, foreign-sourced funds, clients from FATF high-risk jurisdictions. Check: <a href="https://www.fatf-gafi.org/en/topics/high-risk-and-other-monitored-jurisdictions.html" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600;text-decoration:none">FATF list</a> &middot; <a href="https://www.dfat.gov.au/international-relations/security/sanctions" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600;text-decoration:none">DFAT Sanctions</a></div>
+        <div class="f-group"><label class="f-label">Geographic Risk Commentary</label><textarea class="f-input" id="ra-geo-risk" rows="4" placeholder="e.g. Practice primarily operates in Sydney metropolitan area. Approximately 10% of buyers are overseas residents..."></textarea></div>
+        <div class="f-group"><label class="f-label">Rating</label>
+          <select class="f-input" id="ra-geo-rating"><option value="">&#8212; Select &#8212;</option><option value="Low">Low &#8212; Australian clients only, domestic funds</option><option value="Medium">Medium &#8212; Some overseas clients or foreign-sourced funds</option><option value="High">High &#8212; Frequent overseas buyers or high-risk jurisdiction exposure</option></select>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="display:flex;align-items:center;gap:8px"><span style="width:10px;height:10px;border-radius:50%;background:#059669;display:inline-block"></span> Overall Practice Risk Rating</div>
+        <div class="f-group"><label class="f-label">Overall ML/TF/PF Risk Rating</label>
+          <select class="f-input" id="ra-overall-rating"><option value="">&#8212; Review all categories above first &#8212;</option><option value="Low">Low &#8212; Limited exposure across all categories</option><option value="Medium">Medium &#8212; Moderate exposure in one or more categories</option><option value="High">High &#8212; Significant exposure requiring enhanced controls</option></select>
+        </div>
+        <div class="f-group"><label class="f-label">Key Controls &amp; Mitigants</label><textarea class="f-input" id="ra-controls" rows="4" placeholder="e.g. CDD completed on all clients at engagement. All staff complete annual AML/CTF training. DFAT sanctions screening on every client. AMLCO reviews all high-risk matters. Trust account receipts reconciled daily..."></textarea></div>
+        <div class="g2">
+          <div class="f-group"><label class="f-label">Assessment Date</label><input class="f-input" type="date" id="ra-date"></div>
+          <div class="f-group"><label class="f-label">Next Review Date</label><input class="f-input" type="date" id="ra-next-date"></div>
+        </div>
+        <div class="f-group"><label class="f-label">Assessed By</label><input class="f-input" type="text" id="ra-by" placeholder="Full name of person who completed this assessment"></div>
+      </div>
+    </div>
+  </div>
+  <div id="ra-next-step" style="display:none;margin-top:4px"></div>
+</div>
+
+<!-- ===== AML/CTF PROGRAM ===== -->
+<div class="page hidden" id="view-program">
+  <div class="pg-header">
+    <div><div class="pg-title">AML/CTF Program</div><div class="pg-sub">Document your program and record senior manager approval</div></div>
+    <button class="btn btn-primary" onclick="saveProgram()">Save</button>
+  </div>
+  <div id="program-setup-banner" style="display:none" class="alert alert-gold">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div><strong>Setting up?</strong> Once program approval is recorded, head back to the dashboard.</div>
+      <button class="btn btn-ghost" style="white-space:nowrap;font-size:12px" onclick="go('dashboard')">&larr; Back to Setup</button>
+    </div>
+  </div>
+  <div class="alert alert-gold" style="margin-bottom:20px">
+    <strong>What this is:</strong> Your AML/CTF Program must be in place <strong>before 1 July 2026</strong> and approved by a senior manager. Use AUSTRAC's conveyancing starter kit to build it, then upload and record approval here.
+    <div style="margin-top:8px">
+      <a href="https://www.austrac.gov.au/reforms/sector-specific-guidance/conveyancer-guidance/conveyancing-program-starter-kit" target="_blank" rel="noopener" style="font-size:11px;font-weight:600;color:var(--gold);text-decoration:none">AUSTRAC Conveyancing Starter Kit &rarr;</a>&nbsp;&nbsp;
+      <a href="templates-conveyancing.html" target="_blank" rel="noopener" style="font-size:11px;font-weight:600;color:var(--gold);text-decoration:none">SimpleAML Templates &rarr;</a>
+    </div>
+  </div>
+  <div class="g2">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card">
+        <div class="card-title">Program Documents</div>
+        <div style="font-size:11px;color:var(--text-2);margin-bottom:14px;line-height:1.6">The AUSTRAC starter kit produces a <strong>Policy document</strong> (what your rules are) and a <strong>Process / CDD document</strong> (how staff carry them out). Upload both once customised. Stored locally in your browser only.</div>
+        <div style="font-size:10px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Policy Document (Part A)</div>
+        <div onclick="document.getElementById('progPolicyFile').click()" style="border:2px dashed var(--border-2);border-radius:6px;padding:20px;text-align:center;cursor:pointer;transition:border-color .15s;margin-bottom:12px" onmouseenter="this.style.borderColor='var(--gold)'" onmouseleave="this.style.borderColor=''">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--text-3);margin-bottom:6px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+          <div id="prog-policy-filename" style="font-size:11px;color:var(--text-2)">Click to upload Policy PDF or Word</div>
+          <input type="file" id="progPolicyFile" style="display:none" accept=".pdf,.doc,.docx" onchange="handleProgramUpload(this,'policy')">
+        </div>
+        <div style="font-size:10px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Process / CDD Document (Part B)</div>
+        <div onclick="document.getElementById('progProcessFile').click()" style="border:2px dashed var(--border-2);border-radius:6px;padding:20px;text-align:center;cursor:pointer;transition:border-color .15s" onmouseenter="this.style.borderColor='var(--gold)'" onmouseleave="this.style.borderColor=''">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--text-3);margin-bottom:6px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+          <div id="prog-process-filename" style="font-size:11px;color:var(--text-2)">Click to upload Process PDF or Word</div>
+          <input type="file" id="progProcessFile" style="display:none" accept=".pdf,.doc,.docx" onchange="handleProgramUpload(this,'process')">
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Program Approval</div>
+        <div style="font-size:11px;color:var(--text-2);margin-bottom:12px;line-height:1.6">Your program must be approved by a senior manager before 1 July 2026. For sole practitioners, approval by the principal conveyancer is sufficient.</div>
+        <div id="prog-signed-state" style="display:none"></div>
+        <div class="g2">
+          <div class="f-group"><label class="f-label">Last Review Date</label><input class="f-input" id="prog-last-review" type="date"></div>
+          <div class="f-group"><label class="f-label">Next Review Date</label><input class="f-input" id="prog-next-review" type="date"></div>
+        </div>
+        <div class="g2">
+          <div class="f-group"><label class="f-label">Approved By (full name) *</label><input class="f-input" id="prog-appr-name" placeholder="Full name of approver"></div>
+          <div class="f-group"><label class="f-label">Title</label><input class="f-input" id="prog-appr-title" placeholder="e.g. Principal Conveyancer, Director"></div>
+        </div>
+        <div class="g2">
+          <div class="f-group"><label class="f-label">Approval Date *</label><input class="f-input" id="prog-appr-date" type="date"></div>
+          <div class="f-group"><label class="f-label">Staff Notified Date</label><input class="f-input" id="prog-appr-notified" type="date"></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card">
+        <div class="card-title">Implementation Checklist</div>
+        <div style="font-size:11px;color:var(--text-2);margin-bottom:12px;line-height:1.6">Tick each item as you complete it. All must be done before 1 July 2026.</div>
+        <div style="height:4px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:8px"><div id="prog-chk-bar" style="height:4px;background:var(--gold);border-radius:4px;width:0;transition:width .3s"></div></div>
+        <div id="prog-chk-label" style="font-size:10px;color:var(--text-3);margin-bottom:14px">0 / 7 complete</div>
+        <div style="display:flex;flex-direction:column;gap:6px" id="prog-checklist"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Designated Services</div>
+        <div style="font-size:11px;color:var(--text-2);margin-bottom:12px;line-height:1.6">Tick all services you provide &mdash; you'll declare these when completing AUSTRAC enrolment.</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label class="svc-chk"><input type="checkbox" id="svc-1"> <span><strong>Assisting in planning or execution of a sale of real estate</strong> &mdash; acting for a seller client</span></label>
+          <label class="svc-chk"><input type="checkbox" id="svc-2"> <span><strong>Assisting in planning or execution of a purchase of real estate</strong> &mdash; acting for a buyer client</span></label>
+          <label class="svc-chk"><input type="checkbox" id="svc-3"> <span><strong>Assisting in planning or execution of a transfer of real estate</strong> &mdash; family transfers, gifts, estate transfers</span></label>
+          <label class="svc-chk"><input type="checkbox" id="svc-4"> <span><strong>Assisting with body corporate or legal arrangement transactions</strong> &mdash; transfers involving companies, trusts or legal arrangements</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="prog-next-step" style="display:none;margin-top:4px"></div>
+</div>
+
+<!-- ===== AUSTRAC ENROLMENT ===== -->
+<div class="page hidden" id="view-enrolment">
+  <div class="pg-header">
+    <div><div class="pg-title">AUSTRAC Enrolment</div><div class="pg-sub">Enrol on AUSTRAC Online &mdash; deadline 29 July 2026</div></div>
+    <button class="btn btn-primary" onclick="saveEnrolment()">Save</button>
+  </div>
+  <div class="g2">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card" id="enrol-readiness-card">
+        <div class="card-title">Readiness Check</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div style="flex:1;height:4px;background:var(--border);border-radius:4px;overflow:hidden"><div id="enrol-ready-bar" style="height:4px;background:var(--gold);border-radius:4px;width:0;transition:width .4s"></div></div>
+          <div id="enrol-ready-pct" style="font-size:12px;font-weight:700;color:var(--gold);min-width:36px">0%</div>
+        </div>
+        <div id="enrol-readiness-steps"></div>
+        <div id="enrol-readiness-cta" style="margin-top:14px"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Enrolment Status</div>
+        <div id="e-status-badge" style="margin-bottom:14px"></div>
+        <div class="f-group"><label class="f-label">Status</label>
+          <select class="f-input" id="e-status" onchange="updateEnrolBadge()"><option>Not Started</option><option>Preparing</option><option>Submitted</option><option>Enrolled</option></select>
+        </div>
+        <div class="f-group"><label class="f-label">Commencement Date</label><input class="f-input" id="e-commence" type="date"></div>
+        <div class="g2">
+          <div class="f-group"><label class="f-label">Enrolment Date</label><input class="f-input" id="e-date" type="date"></div>
+          <div class="f-group"><label class="f-label">Enrolled By</label><input class="f-input" id="e-by" placeholder="Name of person who submitted"></div>
+        </div>
+        <div class="f-group"><label class="f-label">AUSTRAC Entity ID <span style="font-size:10px;color:var(--text-3)">(provided once enrolled)</span></label><input class="f-input" id="e-id" placeholder="e.g. 100123456"></div>
+        <div class="f-group"><label class="f-label">Notes</label><textarea class="f-input" id="e-notes" rows="2" placeholder="Any notes about the enrolment process"></textarea></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card">
+        <div class="card-title">Fit &amp; Proper Declaration</div>
+        <div style="font-size:11px;color:var(--text-2);margin-bottom:14px;line-height:1.6">AUSTRAC's enrolment form requires you to declare adverse proceedings. Answer honestly &mdash; false declarations are a serious offence.</div>
+        <div class="f-group"><label class="f-label">Has the practice been subject to a civil penalty order under the AML/CTF Act?</label>
+          <select class="f-input" id="e-penalty"><option value="No">No</option><option value="Yes">Yes &mdash; details in notes</option></select>
+        </div>
+        <div class="f-group"><label class="f-label">Has the practice or any key personnel been subject to adverse civil or criminal proceedings relating to management, commercial or professional activities?</label>
+          <select class="f-input" id="e-proceedings"><option value="No">No</option><option value="Yes">Yes &mdash; details in notes</option></select>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Industry Levy</div>
+        <div class="f-group"><label class="f-label">Were your business earnings (and any related entities) $100 million or more in the previous financial year?</label>
+          <select class="f-input" id="e-ebitda"><option value="No">No &mdash; under $100 million</option><option value="Yes">Yes &mdash; $100 million or more</option></select>
+        </div>
+        <div class="alert alert-gold" style="margin-top:4px">For virtually all conveyancing practices the answer is <strong>No</strong>.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Annual Compliance Report (ACR)</div>
+        <div style="font-size:11px;color:var(--text-2);margin-bottom:12px;line-height:1.6">All enrolled entities must submit an ACR to AUSTRAC each year.</div>
+        <div class="alert alert-amber" style="margin-bottom:12px"><strong>First ACR due 2027</strong> &mdash; covering the period from 1 July 2026. AUSTRAC has not yet confirmed the exact due date.<br><a href="https://www.austrac.gov.au/business/core-guidance/annual-compliance-report" target="_blank" rel="noopener" style="font-size:11px;font-weight:600;color:#92400e;text-decoration:none;margin-top:6px;display:inline-block">Check AUSTRAC for updates &rarr;</a></div>
+        <div class="f-group"><label class="f-label">Next ACR Due <span style="font-size:10px;color:var(--text-3)">(update once AUSTRAC confirms)</span></label><input class="f-input" id="e-acr-next" type="date"></div>
+      </div>
+    </div>
+  </div>
+  <div id="enrol-next-step" style="display:none;margin-top:4px"></div>
+</div>
+
+<!-- ===== SAVE COMPLIANCE REPORT ===== -->
+<div class="page hidden" id="view-audit">
+  <div class="pg-header"><div><div class="pg-title">Save Compliance Report</div><div class="pg-sub">Generate your AML/CTF compliance evidence report</div></div></div>
+  <div class="g2">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card">
+        <div class="card-title">Compliance Evidence Report</div>
+        <div style="font-size:13px;color:var(--text-2);line-height:1.75;margin-bottom:20px">Generate a printable compliance evidence report documenting your full AML/CTF setup. Use as evidence for AUSTRAC inspections, your independent evaluation, or internal review.</div>
+        <div style="font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Report includes:</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px">
+          <div style="font-size:12px;color:var(--text-2);display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">&#10003;</span> Practice Profile &amp; AMLCO details</div>
+          <div style="font-size:12px;color:var(--text-2);display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">&#10003;</span> Staff vetting records</div>
+          <div style="font-size:12px;color:var(--text-2);display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">&#10003;</span> Training register</div>
+          <div style="font-size:12px;color:var(--text-2);display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">&#10003;</span> Practice risk assessment summary</div>
+          <div style="font-size:12px;color:var(--text-2);display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">&#10003;</span> AML/CTF Program approval record</div>
+          <div style="font-size:12px;color:var(--text-2);display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">&#10003;</span> AUSTRAC enrolment details</div>
+          <div style="font-size:12px;color:var(--text-2);display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">&#10003;</span> Matter register summary</div>
+        </div>
+        <button class="btn btn-primary btn-full" style="font-size:14px;padding:14px" onclick="openComplianceReport()">Generate Compliance Report &rarr;</button>
+        <div style="font-size:10px;color:var(--text-3);margin-top:8px;text-align:center">Opens report-conveyancing.html in a new tab</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Independent Evaluation</div>
+        <div style="font-size:11px;color:var(--text-2);margin-bottom:12px;line-height:1.6">Under the AML/CTF Act, you must arrange an independent evaluation of your AML/CTF program at least every 3 years. For newly regulated entities, this is expected to be due no earlier than 1 July 2029.</div>
+        <div class="alert alert-amber"><strong>Due date:</strong> No earlier than 1 July 2029 for newly regulated entities.</div>
+        <div class="f-group" style="margin-top:12px"><label class="f-label">Planned Evaluation Date</label><input class="f-input" id="eval-date" type="date"></div>
+        <div class="f-group"><label class="f-label">Evaluator / Firm</label><input class="f-input" id="eval-firm" placeholder="Name of independent evaluator or firm"></div>
+        <button class="btn btn-ghost" style="margin-top:4px" onclick="saveEvaluation()">Save</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card">
+        <div class="card-title">Data Management</div>
+        <div style="font-size:11px;color:var(--text-2);margin-bottom:14px;line-height:1.6">All data is stored locally in your browser. Export a backup regularly. AUSTRAC requires records to be kept for <strong>7 years</strong>.</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <button class="btn btn-ghost btn-full" onclick="exportData()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>Backup Data (.json)</button>
+          <button class="btn btn-ghost btn-full" onclick="document.getElementById('import-file-input').click()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m4-8l-4-4m0 0L8 8m4-4v12"/></svg>Import Backup</button>
+          <button class="btn btn-red btn-full" onclick="clearData()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>Clear All Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ABOUT & SUPPORT ===== -->
+<div class="page hidden" id="view-about">
+  <div class="pg-header"><div><div class="pg-title">About &amp; Support</div><div class="pg-sub">SimpleAML for Conveyancers</div></div></div>
+  <div class="g2">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+          <div id="about-logo-mark" style="width:48px;height:48px;background:var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:20px;font-weight:400;color:var(--ink);flex-shrink:0">SA</div>
+          <div><div style="font-family:var(--display);font-size:18px;font-weight:400;color:var(--ink)">SimpleAML for Conveyancers</div><div style="font-size:11px;color:var(--text-3)">Free AML/CTF compliance tool &middot; conveyancing.simpleaml.com.au</div></div>
+        </div>
+        <div style="font-size:12px;color:var(--text-2);line-height:1.75;margin-bottom:16px">SimpleAML helps small conveyancing practices comply with AUSTRAC Tranche 2 AML/CTF obligations by 1 July 2026. All data is stored locally in your browser &mdash; nothing is sent to a server.</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <a href="faq-conveyancing.html" target="_blank" class="btn btn-ghost btn-full">FAQ &rarr;</a>
+          <a href="templates-conveyancing.html" target="_blank" class="btn btn-ghost btn-full">Free Templates &rarr;</a>
+          <a href="contact-conveyancing.html" target="_blank" class="btn btn-ghost btn-full">Contact &rarr;</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Key Dates</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:12px">
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-2)">Enrolment opens</span><span style="font-weight:600">31 March 2026</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-2)">Obligations commence</span><span style="font-weight:600;color:var(--red)">1 July 2026</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-2)">Enrolment deadline</span><span style="font-weight:600;color:var(--red)">29 July 2026</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-2)">AMLCO notification</span><span style="font-weight:600">29 July 2026</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-2)">First ACR due</span><span style="font-weight:600">2027 &mdash; TBC</span></div>
+          <div style="display:flex;justify-content:space-between;padding:6px 0"><span style="color:var(--text-2)">Independent evaluation</span><span style="font-weight:600">No earlier than 2029</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card">
+        <div class="card-title">Legal Disclaimer</div>
+        <div style="font-size:11px;color:var(--text-2);line-height:1.75">SimpleAML is a compliance assistance tool only and does not constitute legal advice. Users are responsible for ensuring their own compliance with AUSTRAC requirements. Seek independent legal advice where required.<br><br>Users are solely responsible for the maintenance, backup, and storage of their own data to meet the 7-year record retention requirement under AML/CTF legislation.<br><br>Developed by Click Seed Pty Ltd ABN 87 656 256 567.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Useful Links</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:12px">
+          <a href="https://www.austrac.gov.au/reforms/sector-specific-guidance/conveyancer-guidance" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none">AUSTRAC Conveyancer Guidance &rarr;</a>
+          <a href="https://www.austrac.gov.au/reforms/sector-specific-guidance/conveyancer-guidance/conveyancing-program-starter-kit" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none">Conveyancing Starter Kit &rarr;</a>
+          <a href="https://online.austrac.gov.au" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none">AUSTRAC Online (Enrolment) &rarr;</a>
+          <a href="https://www.dfat.gov.au/international-relations/security/sanctions" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none">DFAT Sanctions List &rarr;</a>
+          <a href="https://www.fatf-gafi.org/en/topics/high-risk-and-other-monitored-jurisdictions.html" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none">FATF High-Risk Jurisdictions &rarr;</a>
+          <a href="https://connectonline.asic.gov.au" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none">ASIC Connect (company verification) &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+</div><!-- /shell -->
+</div><!-- /app -->
+<div id="toast"></div>
+<script>
+var KEY='conv_v1';
+var C={};
+var TABS=['dashboard','matters','new','profile','staff','training','riskass','program','enrolment','audit','about'];
+var PROG_CHKS=['pc1','pc2','pc3','pc4','pc5','pc6','pc7'];
+var PROG_LABELS=[
+  'Risk assessment completed and documented',
+  'AML/CTF policies drafted and approved',
+  'CDD procedures documented (buyer and seller matters)',
+  'Trust account controls documented (if applicable)',
+  'Staff training completed before go-live',
+  'All staff vetted before 1 July 2026',
+  'Program approved by senior manager / principal'
+];
+
+function el(id){return document.getElementById(id);}
+
+function load(){
+  C={practice:{name:''},matters:[],training:[],staff:[],profile:{},riskass:{},program:{},enrolment:{},evaluation:{}};
+  try{
+    var raw=localStorage.getItem(KEY);
+    if(raw){var p=JSON.parse(raw);
+      C.practice=p.practice||{name:''};C.matters=p.matters||[];C.training=p.training||[];
+      C.staff=p.staff||[];C.profile=p.profile||{};C.riskass=p.riskass||{};
+      C.program=p.program||{};C.enrolment=p.enrolment||{};C.evaluation=p.evaluation||{};
+    }
+  }catch(e){}
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(C));}catch(e){}}
+
+function fmt(d){
+  if(!d)return '\u2014';
+  var parts=d.split('-');if(parts.length!==3)return d;
+  var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return parts[2]+' '+m[parseInt(parts[1],10)-1]+' '+parts[0];
+}
+function toast(msg){var t=el('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500);}
+function markSlot(slotId,labelId,input){if(!input.files[0])return;var s=el(slotId),l=el(labelId);if(s)s.classList.add('filed');if(l)l.textContent='\u2713 Filed';}
+
+function go(id){
+  TABS.forEach(function(t){var p=el('view-'+t),n=el('tab-'+t);if(p)p.classList.add('hidden');if(n)n.classList.remove('active');});
+  var page=el('view-'+id),tab=el('tab-'+id);
+  if(page)page.classList.remove('hidden');if(tab)tab.classList.add('active');
+  var labels={dashboard:'Dashboard',matters:'Matter Register',new:'New Matter',profile:'Practice Profile',
+    staff:'Staff Vetting',training:'Training Register',riskass:'Risk Assessment',
+    program:'AML/CTF Program',enrolment:'AUSTRAC Enrolment',audit:'Save Compliance Report',about:'About & Support'};
+  var bc=el('breadcrumb');if(bc)bc.textContent=labels[id]||id;
+  if(id==='dashboard')renderDashboard();
+  if(id==='matters')renderMatters();
+  if(id==='staff'){renderStaff();renderStaffSetupBanner();}
+  if(id==='training')renderTraining();
+  if(id==='riskass')loadRiskAssessment();
+  if(id==='program')loadProgram();
+  if(id==='enrolment'){loadEnrolment();renderEnrolReadiness();}
+  if(id==='profile')loadProfile();
+  if(id==='about')loadAbout();
+  if(id==='new')resetMatterForm();
+}
+
+function tick(){
+  var now=new Date();
+  var c=el('clock');if(c)c.textContent=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  var deadline=new Date('2026-07-01T00:00:00+10:00'),diff=deadline-now;
+  var cd=el('countdown');
+  if(cd){if(diff>0){cd.textContent=Math.floor(diff/(864e5))+'d to 1 Jul';cd.style.display='inline';}else{cd.style.display='none';}}
+}
+
+function applyPractice(){
+  var name=(C.profile&&C.profile.name)||'My Practice';
+  var pill=el('practice-pill'),mark=el('sid-mark'),sname=el('sid-name');
+  if(pill)pill.textContent=name;
+  var ini=name.split(' ').map(function(w){return w[0]||'';}).join('').toUpperCase().slice(0,2)||'SA';
+  if(mark)mark.textContent=ini;if(sname)sname.textContent=name;
+  var allSetup=!!(C.profile&&C.profile.name)&&C.staff.length>0&&C.training.length>0&&!!(C.riskass&&C.riskass.overallRating)&&!!(C.program&&C.program.approvalDate);
+  var enrolled=!!(C.enrolment&&C.enrolment.status==='Enrolled');
+  var sp=el('nav-sec-practice');if(sp)sp.textContent=allSetup?'Practice \u2014 Compliant \u2713':'Complete before 1 July 2026';
+  var se=el('nav-sec-enrolment');if(se)se.textContent=enrolled?'AUSTRAC \u2014 Enrolled \u2713':'Complete by 29 July 2026';
+}
+
+function renderDashboard(){
+  applyPractice();
+  var hasProfile=!!(C.profile&&C.profile.name&&C.profile.name!=='My Practice');
+  var setupComplete=hasProfile&&C.staff.length>0&&C.training.length>0&&!!(C.riskass&&C.riskass.overallRating)&&!!(C.program&&C.program.approvalDate)&&!!(C.enrolment&&C.enrolment.status&&['Preparing','Submitted','Enrolled'].indexOf(C.enrolment.status)>=0);
+  el('setup-prompt').style.display=!hasProfile?'block':'none';
+  el('setup-checklist').style.display=(hasProfile&&!setupComplete)?'block':'none';
+  el('dash-main').style.display=(hasProfile&&setupComplete)?'block':'none';
+  el('dash-new-btn').style.display=hasProfile?'flex':'none';
+  if(hasProfile){
+    var total=C.matters.length,high=C.matters.filter(function(m){return m.risk==='High';}).length;
+    var pending=C.matters.filter(function(m){return m.status==='Active'&&!m.cddDone;}).length,staff=C.staff.length;
+    ['kpi-total','kpi-total-main'].forEach(function(id){var e=el(id);if(e)e.textContent=total;});
+    ['kpi-high','kpi-high-main'].forEach(function(id){var e=el(id);if(e)e.textContent=high;});
+    ['kpi-pending','kpi-pending-main'].forEach(function(id){var e=el(id);if(e)e.textContent=pending;});
+    ['kpi-staff','kpi-staff-main'].forEach(function(id){var e=el(id);if(e)e.textContent=staff;});
+    var recent=C.matters.slice(0,5);
+    var rHtml=recent.length?recent.map(function(m){
+      var badge=m.risk==='High'?'<span class="badge b-high">High</span>':m.risk==='Medium'?'<span class="badge b-med">Med</span>':m.risk==='Low'?'<span class="badge b-low">Low</span>':'<span class="badge b-neutral">\u2014</span>';
+      var type=m.type==='purchase'?'Purchase':m.type==='sale'?'Sale':'Transfer';
+      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);gap:8px">'+
+        '<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+m.address+'</div>'+
+        '<div style="font-size:10px;color:var(--text-3);margin-top:2px">'+type+' \xb7 '+fmt(m.engagement)+'</div></div><div>'+badge+'</div></div>';
+    }).join(''):'<div style="padding:20px;text-align:center;font-size:12px;color:var(--text-3)">No matters yet</div>';
+    ['recent-list','recent-list-main'].forEach(function(id){var e=el(id);if(e)e.innerHTML=rHtml;});
+    if(!setupComplete)renderSetupChecklist();
+  }
+}
+
+function renderSetupChecklist(){
+  var steps=[
+    {label:'1. Practice Profile',done:!!(C.profile&&C.profile.name),tab:'profile'},
+    {label:'2. Staff Vetting',done:C.staff.length>0,tab:'staff'},
+    {label:'3. Training Register',done:C.training.length>0,tab:'training'},
+    {label:'4. Risk Assessment',done:!!(C.riskass&&C.riskass.overallRating),tab:'riskass'},
+    {label:'5. AML/CTF Program',done:!!(C.program&&C.program.approvalDate),tab:'program'}
+  ];
+  var done=steps.filter(function(s){return s.done;}).length,pct=Math.round(done/steps.length*100);
+  var bar=el('checklist-progress-bar'),lbl=el('checklist-progress-label');
+  if(bar)bar.style.width=pct+'%';if(lbl)lbl.textContent=done+' of 5 complete';
+  var container=el('checklist-steps');if(!container)return;
+  container.innerHTML=steps.map(function(s){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">'+
+      '<div style="width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;'+(s.done?'background:#dcfce7;color:#16a34a':'background:var(--red-bg);color:var(--red)')+'">'+(s.done?'\u2713':'!')+
+      '</div><div style="flex:1;font-size:12px;font-weight:'+(s.done?'400':'600')+'">'+s.label+'</div>'+
+      (!s.done?'<button onclick="go(\''+s.tab+'\')" style="font-size:10px;color:var(--gold);background:none;border:none;cursor:pointer;padding:0;font-weight:600;white-space:nowrap">Complete \u2192</button>':'')+
+      '</div>';
+  }).join('');
+}
+
+function renderMatters(){
+  var tbody=el('matters-tbody');
+  if(!C.matters.length){tbody.innerHTML='<tr><td colspan="11" style="text-align:center;padding:32px;color:var(--text-3)">No matters yet \u2014 click + New Matter above</td></tr>';return;}
+  tbody.innerHTML=C.matters.map(function(m,i){
+    var rb=m.risk==='High'?'<span class="badge b-high">High</span>':m.risk==='Medium'?'<span class="badge b-med">Med</span>':m.risk==='Low'?'<span class="badge b-low">Low</span>':'<span class="badge b-neutral">\u2014</span>';
+    var sb=m.status==='Settled'?'<span class="badge b-low">Settled</span>':m.status==='Withdrawn'?'<span class="badge b-neutral">Withdrawn</span>':'<span class="badge b-blue">Active</span>';
+    var cb=m.cddDone?'<span class="badge b-low">Done</span>':'<span class="badge b-med">Pending</span>';
+    var tl=m.type==='purchase'?'Purchase':m.type==='sale'?'Sale':'Transfer';
+    var sl=m.type==='purchase'?'Buyer side':m.type==='sale'?'Seller side':'Transfer';
+    var ml=m.method==='auction'?'Auction':m.method==='private'?'Private treaty':'Off-market';
+    var vl=m.value>=5000000?'$5M+':m.value>=2000000?'$2M\u20135M':m.value>=1000000?'$1M\u20132M':m.value>0?'<$1M':'\u2014';
+    return '<tr><td style="font-weight:500">'+m.address+'</td><td>'+tl+'</td>'+
+      '<td><span class="badge b-gold">'+sl+'</span></td><td>'+ml+'</td><td>'+vl+'</td>'+
+      '<td>'+cb+'</td><td style="font-size:11px">'+(m.cddDeadline?fmt(m.cddDeadline):'\u2014')+'</td>'+
+      '<td style="font-size:11px">'+(m.settlement?fmt(m.settlement):'\u2014')+'</td>'+
+      '<td>'+rb+'</td><td>'+sb+'</td>'+
+      '<td style="white-space:nowrap"><button onclick="editMatter('+i+')" style="background:none;border:1px solid var(--border-2);cursor:pointer;color:var(--text-2);font-size:11px;padding:3px 8px;border-radius:4px;font-family:var(--sans);margin-right:4px">Edit</button>'+
+      '<button onclick="delMatter('+i+')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:18px;padding:0;line-height:1">\xd7</button></td></tr>';
+  }).join('');
+}
+function delMatter(i){if(!confirm('Delete this matter record?'))return;C.matters.splice(i,1);save();renderMatters();toast('Deleted');}
+
+var matterEditIndex=-1,matterPersonCounters={},matterPeople={};
+
+function resetMatterForm(){
+  matterEditIndex=-1;
+  var page=el('view-new');if(!page)return;
+  page.querySelectorAll('input:not([type="radio"]):not([type="checkbox"]):not([type="file"]),select,textarea').forEach(function(i){i.value=i.tagName==='SELECT'?(i.options[0]?i.options[0].value:''):'';});
+  page.querySelectorAll('input[type="radio"]').forEach(function(r){r.checked=r.value==='No';});
+  [0,1,2,3,4,5,6,7].forEach(function(n){var f=el('mflag-'+n);if(f){f.classList.remove('checked');var c=f.querySelector('input');if(c)c.checked=false;}});
+  el('flag-warning').style.display='none';
+  ['individual','company','trust','smsf'].forEach(function(t){var e=el('c-ext-'+t);if(e)e.style.display='none';});
+  var edd=el('c-edd-block');if(edd)edd.style.display='none';
+  var rep=el('c-rep-block');if(rep)rep.style.display='none';
+  el('private-dates').style.display='none';el('auction-dates').style.display='none';
+  el('trust-account-block').style.display='none';
+  var sof=el('source-of-funds-block');if(sof)sof.style.display='none';
+  var tb=el('tier-banner');if(tb)tb.style.display='none';
+  el('cdd-deadline-bar').className='deadline-bar grey';
+  el('cdd-deadline-bar').textContent='Select matter type and transaction method above to see CDD timing rule';
+  el('client-cdd-timing-bar').className='deadline-bar amber';
+  el('client-cdd-timing-bar').textContent='\u26a0 CDD must be completed at or before engagement \u2014 before assisting in the planning or execution of the transfer';
+  ['c-dvs-slot','c-pep-slot','c-sanctions-slot'].forEach(function(id){var s=el(id);if(s)s.classList.remove('filed');});
+  ['c-dvs-label','c-pep-label','c-sanctions-label'].forEach(function(id){var l=el(id);if(l)l.textContent='Upload';});
+  matterPeople={};matterPersonCounters={};
+  // Clear person card containers
+  ['c-co-directors','c-co-bos','c-t-trustees','c-s-trustees','c-s-corpdirectors','c-s-members'].forEach(function(id){var e=el(id);if(e)e.innerHTML='';});
+}
+
+function updateMatterType(){
+  var type=el('m-type').value;
+  var nl=el('client-name-label'),st=el('client-section-title'),ss=el('client-section-sub'),pl=el('purpose-label'),sof=el('source-of-funds-block'),tb=el('client-cdd-timing-bar');
+  if(type==='purchase'){
+    if(nl)nl.textContent='Buyer Full Name *';if(st)st.textContent='Buyer CDD';if(ss)ss.textContent='Identity verification and risk assessment for your buyer client';
+    if(pl)pl.textContent='Purpose of Purchase';if(sof)sof.style.display='block';
+    if(tb){tb.className='deadline-bar amber';tb.textContent='\u26a0 Buyer CDD \u2014 complete at engagement. For auction matters, as soon as practicable after exchange, before settlement or within 28 days of exchange';}
+  }else if(type==='sale'){
+    if(nl)nl.textContent='Seller Full Name *';if(st)st.textContent='Seller CDD';if(ss)ss.textContent='Identity verification and risk assessment for your seller client';
+    if(pl)pl.textContent='Purpose of Sale';if(sof)sof.style.display='none';
+    if(tb){tb.className='deadline-bar amber';tb.textContent='\u26a0 Seller CDD \u2014 complete at engagement, before assisting with the sale or transfer';}
+  }else if(type==='transfer'){
+    if(nl)nl.textContent='Client Full Name *';if(st)st.textContent='Client CDD';if(ss)ss.textContent='Identity verification and risk assessment for your client';
+    if(pl)pl.textContent='Purpose of Transfer';if(sof)sof.style.display='none';
+    if(tb){tb.className='deadline-bar amber';tb.textContent='\u26a0 CDD required even for family transfers or gifts \u2014 obligations apply regardless of consideration';}
+  }
+  el('trust-account-block').style.display=type?'block':'none';
+  updateCddDeadline();
+}
+
+function updateMethodDates(){
+  var method=el('m-method').value;
+  el('private-dates').style.display=(method==='private')?'block':'none';
+  el('auction-dates').style.display=(method==='auction')?'block':'none';
+  updateCddDeadline();
+}
+
+function updateCddDeadline(){
+  var type=el('m-type').value,method=el('m-method').value,bar=el('cdd-deadline-bar');
+  if(!type||!method){bar.className='deadline-bar grey';bar.textContent='Select matter type and transaction method above';return;}
+  if(type==='sale'||type==='transfer'){bar.className='deadline-bar amber';bar.textContent='\u26a0 CDD due at engagement \u2014 before assisting in the planning or execution of the sale/transfer';}
+  else if(type==='purchase'&&method==='private'){
+    var exc=el('m-exchange')?el('m-exchange').value:'';
+    bar.className='deadline-bar amber';bar.textContent=exc?'\u26a0 Private treaty purchase \u2014 CDD required before settlement. Exchange date: '+fmt(exc)+'.':'\u26a0 Private treaty purchase \u2014 CDD required before settlement. Enter exchange date above.';
+  }else if(type==='purchase'&&method==='auction'){
+    bar.className='deadline-bar amber';bar.textContent='\u26a0 Auction purchase \u2014 CDD as soon as practicable after exchange, before settlement or within 28 days of exchange, whichever is earlier';
+  }else{bar.className='deadline-bar grey';bar.textContent='Enter dates above to calculate CDD deadline';}
+}
+
+function updateAuctionDeadline(){
+  var exchange=el('m-exchange-auction')?el('m-exchange-auction').value:'';
+  var settlement=el('m-settlement-auction')?el('m-settlement-auction').value:'';
+  if(!exchange)return;
+  var exDate=new Date(exchange),d28=new Date(exDate);d28.setDate(d28.getDate()+28);
+  var deadline=d28;
+  if(settlement&&new Date(settlement)<d28)deadline=new Date(settlement);
+  var bar=el('cdd-deadline-bar');bar.className='deadline-bar red';
+  bar.textContent='\u26a0 Auction CDD deadline: '+fmt(deadline.toISOString().slice(0,10))+' (28 days from exchange or settlement, whichever is earlier)';
+}
+
+function updateClientRepBlock(){var acting=el('c-acting').value,block=el('c-rep-block');if(block)block.style.display=(acting==='rep')?'block':'none';}
+function updateClientEntityFields(){
+  var entity=el('c-entity').value;
+  ['individual','company','trust','smsf'].forEach(function(t){var e=el('c-ext-'+t);if(e)e.style.display=(entity.toLowerCase()===t)?'block':'none';});
+}
+function updateSmsfClientType(){
+  var type=el('c-s-trusteetype').value;
+  var ind=el('c-s-individual-trustees'),corp=el('c-s-corporate-trustee');
+  if(ind)ind.style.display=(type==='individual')?'block':'none';if(corp)corp.style.display=(type==='corporate')?'block':'none';
+}
+function updateClientEdd(){var risk=el('c-risk').value,block=el('c-edd-block');if(block)block.style.display=(risk==='High')?'block':'none';}
+
+function addMatterPerson(containerId,prefix,label){
+  if(!matterPersonCounters[prefix])matterPersonCounters[prefix]=0;
+  var i=matterPersonCounters[prefix]++,pid=prefix+'-'+i;
+  var container=el(containerId);if(!container)return;
+  var div=document.createElement('div');div.className='person-card';div.id='pc-'+pid;
+  div.innerHTML='<div class="person-card-head"><span class="person-card-label">'+label+' '+(i+1)+'</span><button class="del-btn" onclick="this.closest(\'.person-card\').remove()">\xd7</button></div>'+
+    '<div class="g2"><div class="f-group"><label class="f-label">Full Name</label><input class="f-input" placeholder="Full legal name"></div>'+
+    '<div class="f-group"><label class="f-label">Date of Birth</label><input class="f-input" type="date"></div></div>'+
+    '<div class="doc-slots"><label class="doc-slot"><div style="font-weight:600;margin-bottom:2px">ID Copy</div><div>Upload</div><input type="file"></label>'+
+    '<label class="doc-slot"><div style="font-weight:600;margin-bottom:2px">PEP Check</div><div>Upload</div><input type="file"></label>'+
+    '<label class="doc-slot"><div style="font-weight:600;margin-bottom:2px">Sanctions</div><div>Upload</div><input type="file"></label></div>';
+  container.appendChild(div);
+}
+
+function flagToggle(i){
+  var item=el('mflag-'+i),chk=item.querySelector('input');item.classList.toggle('checked',chk.checked);
+  var any=[0,1,2,3,4,5,6,7].some(function(n){var c=el('mflag-'+n);return c&&c.querySelector('input')&&c.querySelector('input').checked;});
+  el('flag-warning').style.display=any?'block':'none';
+}
+
+function saveMatter(){
+  var address=el('m-address').value.trim(),type=el('m-type').value,clientName=el('c-name').value.trim();
+  if(!address||!type){toast('Property address and matter type are required');return;}
+  if(!clientName){toast('Client name is required');return;}
+  var val=parseFloat(el('m-value').value||'0'),method=el('m-method').value;
+  var settlement=method==='private'?(el('m-settlement-private')?el('m-settlement-private').value:''):(method==='auction'?(el('m-settlement-auction')?el('m-settlement-auction').value:''):'');
+  var cddDeadline='';
+  if(type==='purchase'&&method==='private')cddDeadline=el('m-exchange')?el('m-exchange').value:'';
+  if(type==='purchase'&&method==='auction'){
+    var exc=el('m-exchange-auction')?el('m-exchange-auction').value:'',set=el('m-settlement-auction')?el('m-settlement-auction').value:'';
+    if(exc){var d28=new Date(exc);d28.setDate(d28.getDate()+28);var dl=d28;if(set&&new Date(set)<d28)dl=new Date(set);cddDeadline=dl.toISOString().slice(0,10);}
+  }
+  var smrEl=document.querySelector('input[name="smr"]:checked');
+  var record={
+    address:address,type:type,method:method,proptype:el('m-proptype').value,value:val,
+    engagement:el('m-engagement').value,exchangeDate:el('m-exchange')?el('m-exchange').value:'',
+    auctionDate:el('m-auction-date')?el('m-auction-date').value:'',
+    exchangeAuction:el('m-exchange-auction')?el('m-exchange-auction').value:'',
+    settlement:settlement,cddDeadline:cddDeadline,trust:el('m-trust')?el('m-trust').value:'no',
+    clientName:clientName,clientDob:el('c-dob').value,clientAddress:el('c-address').value.trim(),
+    clientOccupation:el('c-occupation').value.trim(),clientCountry:el('c-country').value,
+    clientActing:el('c-acting').value,clientPurpose:el('c-purpose').value,
+    clientFunding:el('c-funding')?el('c-funding').value:'',clientEntity:el('c-entity').value,
+    clientIdType:el('c-id-type')?el('c-id-type').value:'',clientIdMethod:el('c-id-method')?el('c-id-method').value:'',
+    clientIdDate:el('c-id-date')?el('c-id-date').value:'',clientPep:el('c-pep-status')?el('c-pep-status').value:'',
+    clientSanctions:el('c-sanctions-outcome')?el('c-sanctions-outcome').value:'',
+    clientRisk:el('c-risk').value,cddDone:!!(clientName&&el('c-risk').value),
+    risk:el('m-risk').value,status:el('m-status').value,smr:smrEl?smrEl.value:'No',
+    conveyancer:el('m-conveyancer').value.trim(),notes:el('m-notes').value.trim()
+  };
+  if(matterEditIndex>=0){C.matters[matterEditIndex]=record;toast('Matter updated \u2713');}
+  else{C.matters.unshift(record);toast('Matter saved \u2713');}
+  matterEditIndex=-1;save();resetMatterForm();go('matters');
+}
+
+function editMatter(i){
+  matterEditIndex=i;var m=C.matters[i];
+  var fv=function(id,val){var e=el(id);if(e)e.value=val||'';};
+  fv('m-address',m.address);fv('m-type',m.type);fv('m-method',m.method);fv('m-proptype',m.proptype);
+  fv('m-value',m.value);fv('m-engagement',m.engagement);fv('m-exchange',m.exchangeDate);
+  fv('m-settlement-private',m.settlement);fv('m-auction-date',m.auctionDate);
+  fv('m-exchange-auction',m.exchangeAuction);fv('m-settlement-auction',m.settlement);
+  fv('c-name',m.clientName);fv('c-dob',m.clientDob);fv('c-address',m.clientAddress);
+  fv('c-occupation',m.clientOccupation);fv('c-country',m.clientCountry);fv('c-acting',m.clientActing);
+  fv('c-purpose',m.clientPurpose);fv('c-entity',m.clientEntity);fv('c-id-type',m.clientIdType);
+  fv('c-id-method',m.clientIdMethod);fv('c-id-date',m.clientIdDate);fv('c-pep-status',m.clientPep);
+  fv('c-sanctions-outcome',m.clientSanctions);fv('c-risk',m.clientRisk);
+  fv('m-risk',m.risk);fv('m-status',m.status);fv('m-conveyancer',m.conveyancer);fv('m-notes',m.notes);
+  if(m.smr)document.querySelectorAll('input[name="smr"]').forEach(function(r){r.checked=(r.value===m.smr);});
+  updateMatterType();updateMethodDates();updateClientEntityFields();updateClientEdd();
+  go('new');
+}
+
+function loadProfile(){
+  var p=C.profile||{};
+  var fv=function(id,val){var e=el(id);if(e)e.value=val||'';};
+  fv('p-name',p.name);fv('p-trading',p.trading);fv('p-abn',p.abn);fv('p-acn',p.acn);
+  fv('p-state',p.state);fv('p-licence',p.licence);fv('p-type',p.type);fv('p-trust',p.trust);
+  fv('p-address',p.address);fv('p-suburb',p.suburb);fv('p-phone',p.phone);fv('p-email',p.email);
+  fv('p-website',p.website);fv('p-reportinggroup',p.reportinggroup);
+  fv('p-principal',p.principal);fv('p-principal-title',p.principalTitle);fv('p-principal-email',p.principalEmail);
+  fv('p-amlco',p.amlco);fv('p-amlco-title',p.amlcoTitle);fv('p-amlco-date',p.amlcoDate);
+  fv('p-amlco-email',p.amlcoEmail);fv('p-amlco-phone',p.amlcoPhone);
+}
+function saveProfile(){
+  var gv=function(id){var e=el(id);return e?e.value.trim():'';};
+  var name=gv('p-name');if(!name){toast('Legal entity name is required');return;}
+  C.profile={name:name,trading:gv('p-trading'),abn:gv('p-abn'),acn:gv('p-acn'),
+    state:gv('p-state'),licence:gv('p-licence'),type:gv('p-type'),trust:gv('p-trust'),
+    address:gv('p-address'),suburb:gv('p-suburb'),phone:gv('p-phone'),email:gv('p-email'),
+    website:gv('p-website'),reportinggroup:gv('p-reportinggroup'),
+    principal:gv('p-principal'),principalTitle:gv('p-principal-title'),principalEmail:gv('p-principal-email'),
+    amlco:gv('p-amlco'),amlcoTitle:gv('p-amlco-title'),amlcoDate:gv('p-amlco-date'),
+    amlcoEmail:gv('p-amlco-email'),amlcoPhone:gv('p-amlco-phone')};
+  C.practice={name:name};save();applyPractice();toast('Practice profile saved \u2713');
+  var banner=el('profile-next-step');if(!banner)return;
+  banner.style.display='block';
+  banner.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--green-bg);border:1px solid var(--green-line);border-radius:6px;padding:16px 20px">'+
+    '<div><div style="font-size:13px;font-weight:600;color:var(--green);margin-bottom:3px">\u2713 Practice profile saved</div>'+
+    '<div style="font-size:11px;color:var(--text-2)">Next step: vetting your staff before 1 July 2026.</div></div>'+
+    '<button class="btn btn-primary" onclick="go(\''+(C.staff.length>0?'training':'staff')+'\')">Next: '+(C.staff.length>0?'Training Register':'Staff Vetting')+' \u2192</button></div>';
+}
+
+var staffEditIndex=-1;
+function openStaffForm(i){
+  staffEditIndex=(i!==undefined)?i:-1;
+  var title=el('staff-form-title'),btn=el('s-save-btn');
+  var fv=function(id,val){var e=el(id);if(e)e.value=val||'';};
+  if(staffEditIndex>=0){
+    var s=C.staff[staffEditIndex];
+    fv('s-name-staff',s.name);fv('s-role',s.role);fv('s-level',s.level);
+    fv('s-vetting-type',s.vettingType);fv('s-date',s.date);fv('s-review',s.review);
+    fv('s-vetted-by',s.vettedBy);fv('s-notes-staff',s.notes);fv('s-skills',s.skills);fv('s-integrity',s.integrity);
+    el('s-chk-interview').checked=!!s.chkInterview;el('s-chk-reference').checked=!!s.chkReference;
+    el('s-chk-attestation').checked=!!s.chkAttestation;el('s-chk-criminal').checked=!!s.chkCriminal;
+    if(title)title.textContent='Edit Staff Vetting Record';if(btn)btn.textContent='Update Record';
+  }else{
+    ['s-name-staff','s-role','s-date','s-review','s-vetted-by','s-notes-staff'].forEach(function(id){var e=el(id);if(e)e.value='';});
+    ['s-level','s-vetting-type','s-skills','s-integrity'].forEach(function(id){var e=el(id);if(e)e.value='';});
+    ['s-chk-interview','s-chk-reference','s-chk-attestation','s-chk-criminal'].forEach(function(id){var e=el(id);if(e)e.checked=false;});
+    if(title)title.textContent='Staff Vetting Record';if(btn)btn.textContent='Save Record';
+  }
+  var form=el('staff-form');form.style.display='block';form.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function closeStaffForm(){el('staff-form').style.display='none';staffEditIndex=-1;}
+function updateStaffRoleGuidance(){
+  var level=el('s-level').value,g=el('s-role-guidance');if(!g)return;
+  var msgs={'1':'<strong>Level 1 (Admin/Support):</strong> Interview and self-attestation are the minimum. Reference check recommended.',
+    '2':'<strong>Level 2 (Conveyancer/File Handler):</strong> Interview, reference check and self-attestation all required. Criminal history check recommended.',
+    '3':'<strong>Level 3 (AMLCO/Principal/Trust Account):</strong> All checks required including criminal history check.'};
+  if(msgs[level]){g.style.display='block';g.innerHTML=msgs[level];}else g.style.display='none';
+}
+function renderStaffSetupBanner(){
+  var banner=el('staff-setup-banner'),content=el('staff-setup-banner-content');if(!banner||!content)return;
+  var setupDone=!!(C.profile&&C.profile.name)&&C.staff.length>0&&C.training.length>0&&!!(C.riskass&&C.riskass.overallRating)&&!!(C.program&&C.program.approvalDate)&&!!(C.enrolment&&C.enrolment.status&&['Preparing','Submitted','Enrolled'].indexOf(C.enrolment.status)>=0);
+  banner.style.display=(!setupDone&&C.staff.length>0)?'block':'none';
+  if(!setupDone&&C.staff.length>0){
+    var ht=C.training.length>0,nt=ht?'riskass':'training',nl=ht?'Next: Risk Assessment \u2192':'Next: Training Register \u2192',nd=ht?'Next: complete your practice risk assessment.':'Next: log training for all staff.';
+    content.innerHTML='<div><strong>Staff vetting saved.</strong> '+nd+'</div>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-ghost" style="white-space:nowrap;font-size:12px" onclick="go(\'dashboard\')">\u2190 Dashboard</button>'+
+      '<button class="btn btn-primary" style="white-space:nowrap;font-size:12px" onclick="go(\''+nt+'\')">'+nl+'</button></div>';
+  }
+}
+function saveStaff(){
+  var name=el('s-name-staff').value.trim(),date=el('s-date').value;
+  if(!name||!date){toast('Name and vetting date are required');return;}
+  var record={name:name,role:el('s-role').value.trim(),level:el('s-level').value,vettingType:el('s-vetting-type').value,
+    date:date,review:el('s-review').value,vettedBy:el('s-vetted-by').value.trim(),notes:el('s-notes-staff').value.trim(),
+    skills:el('s-skills').value,integrity:el('s-integrity').value,
+    chkInterview:el('s-chk-interview').checked,chkReference:el('s-chk-reference').checked,
+    chkAttestation:el('s-chk-attestation').checked,chkCriminal:el('s-chk-criminal').checked};
+  if(staffEditIndex>=0){C.staff[staffEditIndex]=record;toast('Staff record updated \u2713');}
+  else{C.staff.unshift(record);toast('Staff record saved \u2713');}
+  save();applyPractice();closeStaffForm();renderStaff();renderStaffSetupBanner();
+}
+function renderStaff(){
+  var tbody=el('staff-tbody');
+  if(!C.staff.length){tbody.innerHTML='<tr><td colspan="10" style="text-align:center;padding:32px;color:var(--text-3)">No staff records yet \u2014 click + Add Staff Member above</td></tr>';return;}
+  tbody.innerHTML=C.staff.map(function(s,i){
+    var ll=s.level==='1'?'Admin':s.level==='2'?'Conveyancer':s.level==='3'?'AMLCO':'\u2014';
+    var vl=s.vettingType==='initial'?'Initial':s.vettingType==='periodic'?'Periodic':'Trigger';
+    var exp=s.review&&new Date(s.review)<new Date(),soon=s.review&&!exp&&(new Date(s.review)-new Date())<30*864e5;
+    var stb=exp?'<span class="badge b-high">Review Due</span>':soon?'<span class="badge b-med">Due Soon</span>':'<span class="badge b-low">Current</span>';
+    var skb=s.skills==='confirmed'?'<span class="badge b-low">Confirmed</span>':s.skills==='training-required'?'<span class="badge b-med">Training Req\'d</span>':'<span class="badge b-neutral">\u2014</span>';
+    var itb=s.integrity==='suitable'?'<span class="badge b-low">Suitable</span>':s.integrity==='concerns'?'<span class="badge b-high">Concerns</span>':'<span class="badge b-neutral">\u2014</span>';
+    return '<tr><td style="font-weight:500">'+s.name+'</td><td>'+s.role+'</td><td><span class="badge b-neutral">'+ll+'</span></td><td>'+vl+'</td><td>'+fmt(s.date)+'</td>'+
+      '<td>'+skb+'</td><td>'+itb+'</td><td style="font-size:11px;color:'+(exp?'var(--red)':soon?'var(--amber)':'inherit')+'">'+fmt(s.review)+'</td><td>'+stb+'</td>'+
+      '<td style="white-space:nowrap"><button onclick="openStaffForm('+i+')" style="background:none;border:1px solid var(--border-2);cursor:pointer;color:var(--text-2);font-size:11px;padding:3px 8px;border-radius:4px;font-family:var(--sans);margin-right:4px">Edit</button>'+
+      '<button onclick="delStaff('+i+')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:18px;padding:0;line-height:1">\xd7</button></td></tr>';
+  }).join('');
+}
+function delStaff(i){if(!confirm('Delete this staff vetting record?'))return;C.staff.splice(i,1);save();renderStaff();toast('Deleted');}
+
+var trainingEditIndex=-1;
+function populateStaffDropdown(){
+  var sel=el('t-staff');if(!sel)return;var cur=sel.value;
+  sel.innerHTML='<option value="">Select staff member...</option>';
+  if(!C.staff.length){var opt=document.createElement('option');opt.disabled=true;opt.textContent='\u2014 No staff added yet \u2014 go to Staff Vetting first \u2014';sel.appendChild(opt);}
+  C.staff.forEach(function(s){var opt=document.createElement('option');opt.value=s.name;opt.textContent=s.name+(s.role?' \u2014 '+s.role:'');sel.appendChild(opt);});
+  if(cur)sel.value=cur;
+}
+function populateStaffRole(){var name=el('t-staff').value,re=el('t-role');if(!re)return;var m=C.staff.find(function(s){return s.name===name;});re.value=m?(m.role||''):''; }
+function openTrainingForm(i){
+  trainingEditIndex=(i!==undefined)?i:-1;populateStaffDropdown();
+  var form=el('training-form'),title=el('training-form-title'),btn=el('t-save-btn');
+  if(trainingEditIndex>=0){
+    var t=C.training[trainingEditIndex];
+    el('t-staff').value=t.staff||'';el('t-role').value=t.role||'';el('t-type').value=t.type||'';
+    el('t-format').value=t.format||'';el('t-date').value=t.date||'';el('t-expiry').value=t.expiry||'';
+    el('t-provider').value=t.provider||'';el('t-assessment').value=t.assessment||'';el('t-notes').value=t.notes||'';
+    if(title)title.textContent='Edit Training Record';if(btn)btn.textContent='Update Record';
+  }else{
+    ['t-date','t-expiry','t-provider','t-notes'].forEach(function(id){var e=el(id);if(e)e.value='';});
+    ['t-staff','t-role','t-type','t-format','t-assessment'].forEach(function(id){var e=el(id);if(e)e.value='';});
+    if(title)title.textContent='Log Training Record';if(btn)btn.textContent='Save Record';
+  }
+  form.style.display='block';form.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function closeTrainingForm(){el('training-form').style.display='none';trainingEditIndex=-1;}
+function saveTraining(){
+  var staff=el('t-staff').value,date=el('t-date').value,type=el('t-type').value,format=el('t-format').value;
+  if(!staff||!date||!type||!format){toast('Staff member, type, format and date are required');return;}
+  var record={staff:staff,role:el('t-role').value,type:type,format:format,date:date,expiry:el('t-expiry').value,
+    provider:el('t-provider').value.trim(),assessment:el('t-assessment').value,notes:el('t-notes').value.trim()};
+  if(trainingEditIndex>=0){C.training[trainingEditIndex]=record;toast('Training record updated \u2713');}
+  else{C.training.unshift(record);toast('Training record saved \u2713');}
+  save();applyPractice();closeTrainingForm();renderTraining();
+}
+function renderTraining(){
+  var sb=el('training-setup-banner'),bc=el('training-setup-banner-content');
+  if(sb){
+    var sd=!!(C.profile&&C.profile.name)&&C.staff.length>0&&C.training.length>0&&!!(C.riskass&&C.riskass.overallRating)&&!!(C.program&&C.program.approvalDate)&&!!(C.enrolment&&C.enrolment.status&&['Preparing','Submitted','Enrolled'].indexOf(C.enrolment.status)>=0);
+    sb.style.display=(!sd&&C.training.length>0)?'block':'none';
+    if(!sd&&C.training.length>0&&bc){
+      var hr=!!(C.riskass&&C.riskass.overallRating),nt=hr?'program':'riskass',nl=hr?'Next: AML/CTF Program \u2192':'Next: Risk Assessment \u2192',nd=hr?'Next: approve your AML/CTF Program.':'Next: complete your practice risk assessment.';
+      bc.innerHTML='<div><strong>Training records saved.</strong> '+nd+'</div>'+
+        '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-ghost" style="white-space:nowrap;font-size:12px" onclick="go(\'dashboard\')">\u2190 Dashboard</button>'+
+        '<button class="btn btn-primary" style="white-space:nowrap;font-size:12px" onclick="go(\''+nt+'\')">'+nl+'</button></div>';
+    }
+  }
+  var tbody=el('training-tbody');
+  if(!C.training.length){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--text-3)">No training records yet \u2014 click + Log Training above</td></tr>';return;}
+  tbody.innerHTML=C.training.map(function(t,i){
+    var exp=t.expiry&&new Date(t.expiry)<new Date(),soon=t.expiry&&!exp&&(new Date(t.expiry)-new Date())<30*864e5;
+    var badge=exp?'<span class="badge b-high">Overdue</span>':soon?'<span class="badge b-med">Due Soon</span>':'<span class="badge b-low">Current</span>';
+    var ab=t.assessment==='passed'?'<span class="badge b-low">Passed</span>':t.assessment==='verbal'?'<span class="badge b-blue">Verbal</span>':t.assessment==='follow-up'?'<span class="badge b-high">Follow-up</span>':'<span class="badge b-neutral">\u2014</span>';
+    return '<tr><td><div style="font-weight:500">'+t.staff+'</div>'+(t.role?'<div style="font-size:10px;color:var(--text-3);margin-top:2px">'+t.role+'</div>':'')+
+      '</td><td style="font-size:12px">'+t.type+'</td><td style="font-size:11px">'+fmt(t.date)+'</td>'+
+      '<td style="font-size:11px;color:'+(exp?'var(--red)':soon?'var(--amber)':'inherit')+'">'+(t.expiry?fmt(t.expiry):'\u2014')+'</td>'+
+      '<td>'+ab+'</td><td>'+badge+'</td>'+
+      '<td style="white-space:nowrap"><button onclick="openTrainingForm('+i+')" style="background:none;border:1px solid var(--border-2);cursor:pointer;color:var(--text-2);font-size:11px;padding:3px 8px;border-radius:4px;font-family:var(--sans);margin-right:4px">Edit</button>'+
+      '<button onclick="delTraining('+i+')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:18px;padding:0;line-height:1">\xd7</button></td></tr>';
+  }).join('');
+}
+function delTraining(i){if(!confirm('Delete this training record?'))return;C.training.splice(i,1);save();renderTraining();toast('Deleted');}
+
+function loadRiskAssessment(){
+  var r=C.riskass||{};var fv=function(id,val){var e=el(id);if(e)e.value=val||'';};
+  fv('ra-tx-risk',r.txRisk);fv('ra-tx-rating',r.txRating);fv('ra-trust-risk',r.trustRisk);fv('ra-trust-rating',r.trustRating);
+  fv('ra-pf-risk',r.pfRisk);fv('ra-pf-rating',r.pfRating);fv('ra-cust-risk',r.custRisk);fv('ra-cust-rating',r.custRating);
+  fv('ra-geo-risk',r.geoRisk);fv('ra-geo-rating',r.geoRating);fv('ra-overall-rating',r.overallRating);
+  fv('ra-controls',r.controls);fv('ra-date',r.date);fv('ra-next-date',r.nextDate);fv('ra-by',r.by);
+  var sb=el('riskass-setup-banner');if(sb){
+    var sd=!!(C.profile&&C.profile.name)&&C.staff.length>0&&C.training.length>0&&!!(C.riskass&&C.riskass.overallRating)&&!!(C.program&&C.program.approvalDate)&&!!(C.enrolment&&C.enrolment.status&&['Preparing','Submitted','Enrolled'].indexOf(C.enrolment.status)>=0);
+    sb.style.display=!sd?'block':'none';
+  }
+}
+function saveRiskAssessment(){
+  var gv=function(id){var e=el(id);return e?e.value.trim():'';};
+  C.riskass={txRisk:gv('ra-tx-risk'),txRating:gv('ra-tx-rating'),trustRisk:gv('ra-trust-risk'),trustRating:gv('ra-trust-rating'),
+    pfRisk:gv('ra-pf-risk'),pfRating:gv('ra-pf-rating'),custRisk:gv('ra-cust-risk'),custRating:gv('ra-cust-rating'),
+    geoRisk:gv('ra-geo-risk'),geoRating:gv('ra-geo-rating'),overallRating:gv('ra-overall-rating'),
+    controls:gv('ra-controls'),date:gv('ra-date'),nextDate:gv('ra-next-date'),by:gv('ra-by')};
+  save();applyPractice();toast('Risk assessment saved \u2713');
+  var banner=el('ra-next-step');if(!banner)return;
+  var hp=!!(C.program&&C.program.approvalDate);
+  var nt=hp?'dashboard':'program',nl=hp?'\u2190 Back to Dashboard':'Next: AML/CTF Program \u2192',nd=hp?'Program already recorded. Check your setup progress.':'Your risk assessment is done. Now document and approve your AML/CTF Program.';
+  banner.style.display='block';
+  banner.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--green-bg);border:1px solid var(--green-line);border-radius:6px;padding:16px 20px">'+
+    '<div><div style="font-size:13px;font-weight:600;color:var(--green);margin-bottom:3px">\u2713 Risk assessment saved</div>'+
+    '<div style="font-size:11px;color:var(--text-2)">'+nd+'</div></div>'+
+    '<button class="btn btn-primary" onclick="go(\''+nt+'\')">'+nl+'</button></div>';
+}
+
+function buildProgChecklist(){
+  var container=el('prog-checklist');if(!container)return;
+  var chks=(C.program&&C.program.chks)||{};
+  container.innerHTML=PROG_CHKS.map(function(k,i){
+    var checked=!!(chks[k]),shortKey=k.slice(1);
+    return '<div id="pwrap-'+shortKey+'" class="checkpoint'+(checked?' checked':'')+'" onclick="toggleProgChk(\''+k+'\')">'+
+      '<div class="checkbox-custom"><svg id="ptick-'+k+'" width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="'+(checked?'':'display:none')+'"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>'+
+      '<div><div class="chk-title">'+PROG_LABELS[i]+'</div></div></div>';
+  }).join('');
+}
+function loadProgram(){
+  var sb=el('program-setup-banner');if(sb){
+    var sd=!!(C.profile&&C.profile.name)&&C.staff.length>0&&C.training.length>0&&!!(C.riskass&&C.riskass.overallRating)&&!!(C.program&&C.program.approvalDate)&&!!(C.enrolment&&C.enrolment.status&&['Preparing','Submitted','Enrolled'].indexOf(C.enrolment.status)>=0);
+    sb.style.display=!sd?'block':'none';
+  }
+  var p=C.program||{};var fv=function(id,val){var e=el(id);if(e)e.value=val||'';};
+  fv('prog-last-review',p.lastReview);fv('prog-next-review',p.nextReview);
+  fv('prog-appr-name',p.approvalName);fv('prog-appr-title',p.approvalTitle);
+  fv('prog-appr-date',p.approvalDate);fv('prog-appr-notified',p.approvalNotified);
+  if(p.policyFilename)el('prog-policy-filename').textContent='\ud83d\udcc4 '+p.policyFilename;
+  if(p.processFilename)el('prog-process-filename').textContent='\ud83d\udcc4 '+p.processFilename;
+  buildProgChecklist();updateProgChkBar();
+  if(p.approvalDate&&p.approvalName)showProgramSigned(p);
+}
+function toggleProgChk(key){
+  if(!C.program)C.program={};if(!C.program.chks)C.program.chks={};
+  var sk=key.slice(1),wrap=el('pwrap-'+sk),tick=el('ptick-'+key),checked=!wrap.classList.contains('checked');
+  wrap.classList.toggle('checked',checked);if(tick)tick.style.display=checked?'block':'none';
+  C.program.chks[key]=checked;updateProgChkBar();save();
+}
+function updateProgChkBar(){
+  var chks=(C.program&&C.program.chks)||{};
+  var done=PROG_CHKS.filter(function(k){return chks[k];}).length,pct=Math.round(done/PROG_CHKS.length*100);
+  var bar=el('prog-chk-bar'),lbl=el('prog-chk-label');
+  if(bar)bar.style.width=pct+'%';if(lbl)lbl.textContent=done+' / '+PROG_CHKS.length+' complete';
+}
+function handleProgramUpload(input,type){
+  if(input.files&&input.files[0]){
+    var name=input.files[0].name;if(!C.program)C.program={};
+    if(type==='policy'){C.program.policyFilename=name;el('prog-policy-filename').textContent='\ud83d\udcc4 '+name;}
+    else{C.program.processFilename=name;el('prog-process-filename').textContent='\ud83d\udcc4 '+name;}
+    save();
+  }
+}
+function saveProgram(){
+  var gv=function(id){var e=el(id);return e?e.value.trim():'';};
+  var name=gv('prog-appr-name'),date=gv('prog-appr-date');
+  if(!name||!date){toast('Approved By and Approval Date are required');return;}
+  if(!C.program)C.program={};
+  C.program.lastReview=gv('prog-last-review');C.program.nextReview=gv('prog-next-review');
+  C.program.approvalName=name;C.program.approvalTitle=gv('prog-appr-title');
+  C.program.approvalDate=date;C.program.approvalNotified=gv('prog-appr-notified');
+  save();applyPractice();showProgramSigned(C.program);toast('AML/CTF Program approval recorded \u2713');
+  var banner=el('prog-next-step');if(!banner)return;
+  var he=!!(C.enrolment&&C.enrolment.status&&['Preparing','Submitted','Enrolled'].indexOf(C.enrolment.status)>=0);
+  var nt=he?'dashboard':'enrolment',nl=he?'\u2190 Back to Dashboard':'Next: AUSTRAC Enrolment \u2192',nd=he?'All steps complete \u2014 view your compliance dashboard.':'Program approved. Last step \u2014 track your AUSTRAC enrolment (opens 31 March 2026, deadline 29 July 2026).';
+  banner.style.display='block';
+  banner.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--green-bg);border:1px solid var(--green-line);border-radius:6px;padding:16px 20px">'+
+    '<div><div style="font-size:13px;font-weight:600;color:var(--green);margin-bottom:3px">\u2713 AML/CTF Program approved</div>'+
+    '<div style="font-size:11px;color:var(--text-2)">'+nd+'</div></div>'+
+    '<button class="btn btn-primary" onclick="go(\''+nt+'\')">'+nl+'</button></div>';
+}
+function showProgramSigned(p){
+  var state=el('prog-signed-state');if(!state)return;
+  state.style.display='block';
+  state.innerHTML='<div style="background:var(--green-bg);border:1px solid var(--green-line);border-radius:6px;padding:14px 16px;margin-bottom:14px">'+
+    '<div style="font-size:12px;font-weight:600;color:var(--green);margin-bottom:4px">\u2713 Program approved</div>'+
+    '<div style="font-size:11px;color:var(--text-2)">Approved by <strong>'+p.approvalName+'</strong>'+(p.approvalTitle?' ('+p.approvalTitle+')':'')+' on <strong>'+fmt(p.approvalDate)+'</strong></div></div>';
+}
+
+function loadEnrolment(){
+  var e=C.enrolment||{};var fv=function(id,val){var f=el(id);if(f)f.value=val||'';};
+  fv('e-status',e.status||'Not Started');fv('e-commence',e.commence);fv('e-date',e.date);fv('e-by',e.by);
+  fv('e-id',e.id);fv('e-notes',e.notes);fv('e-penalty',e.penalty||'No');fv('e-proceedings',e.proceedings||'No');
+  fv('e-ebitda',e.ebitda||'No');fv('e-acr-next',e.acrNext);updateEnrolBadge();
+}
+function saveEnrolment(){
+  var gv=function(id){var e=el(id);return e?e.value.trim():'';};
+  C.enrolment={status:gv('e-status'),commence:gv('e-commence'),date:gv('e-date'),by:gv('e-by'),id:gv('e-id'),
+    notes:gv('e-notes'),penalty:gv('e-penalty'),proceedings:gv('e-proceedings'),ebitda:gv('e-ebitda'),acrNext:gv('e-acr-next')};
+  save();applyPractice();toast('Enrolment record saved \u2713');
+  var banner=el('enrol-next-step');if(!banner)return;
+  var allDone=!!(C.enrolment.status&&['Preparing','Submitted','Enrolled'].indexOf(C.enrolment.status)>=0)&&!!(C.profile&&C.profile.name)&&C.staff.length>0&&C.training.length>0&&!!(C.riskass&&C.riskass.overallRating)&&!!(C.program&&C.program.approvalDate);
+  banner.style.display='block';
+  if(allDone){
+    banner.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--green-bg);border:1px solid var(--green-line);border-radius:6px;padding:16px 20px">'+
+      '<div><div style="font-size:14px;font-weight:600;color:var(--green);margin-bottom:4px">\ud83c\udf89 Setup complete \u2014 you\'re ready for 1 July 2026</div>'+
+      '<div style="font-size:11px;color:var(--text-2)">All 6 steps done. Head to the Dashboard to see your practice compliance status and start recording matters.</div></div>'+
+      '<button class="btn btn-primary" onclick="go(\'dashboard\')">Go to Dashboard \u2192</button></div>';
+  }else{
+    banner.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:16px 20px">'+
+      '<div style="font-size:11px;color:var(--text-2)">Enrolment record saved. Complete remaining setup steps to finish.</div>'+
+      '<button class="btn btn-ghost" onclick="go(\'dashboard\')">\u2190 Back to Setup Checklist</button></div>';
+  }
+}
+function updateEnrolBadge(){
+  var status=el('e-status')?el('e-status').value:(C.enrolment.status||'Not Started');
+  var badge=el('e-status-badge');if(!badge)return;
+  var map={'Not Started':['b-neutral','Not Started'],'Preparing':['b-med','Preparing \u2014 gathering documents'],'Submitted':['b-blue','Submitted \u2014 awaiting AUSTRAC confirmation'],'Enrolled':['b-low','\u2713 Enrolled with AUSTRAC']};
+  var val=map[status]||map['Not Started'];badge.innerHTML='<span class="badge '+val[0]+'">'+val[1]+'</span>';
+}
+function renderEnrolReadiness(){
+  var steps=[
+    {label:'1. Practice Profile',done:!!(C.profile&&C.profile.name&&C.profile.name!=='My Practice'),tab:'profile'},
+    {label:'2. Staff Vetting',done:C.staff.length>0,tab:'staff'},
+    {label:'3. Training Register',done:C.training.length>0,tab:'training'},
+    {label:'4. Risk Assessment',done:!!(C.riskass&&C.riskass.overallRating),tab:'riskass'},
+    {label:'5. AML/CTF Program',done:!!(C.program&&C.program.approvalDate),tab:'program'}
+  ];
+  var done=steps.filter(function(s){return s.done;}).length,pct=Math.round(done/steps.length*100),ready=done===steps.length;
+  var bar=el('enrol-ready-bar'),pctEl=el('enrol-ready-pct');
+  if(bar){bar.style.width=pct+'%';bar.style.background=ready?'var(--green)':'var(--gold)';}
+  if(pctEl){pctEl.textContent=pct+'%';pctEl.style.color=ready?'var(--green)':'var(--gold)';}
+  var container=el('enrol-readiness-steps');if(!container)return;
+  container.innerHTML=steps.map(function(s){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">'+
+      '<div style="width:18px;height:18px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;'+(s.done?'background:#dcfce7;color:#16a34a':'background:var(--red-bg);color:var(--red)')+'">'+(s.done?'\u2713':'!')+
+      '</div><div style="flex:1;font-size:12px;font-weight:'+(s.done?'400':'600')+'">'+s.label+'</div>'+
+      (!s.done?'<button onclick="go(\''+s.tab+'\')" style="font-size:10px;color:var(--gold);background:none;border:none;cursor:pointer;padding:0;font-weight:600;white-space:nowrap">Complete \u2192</button>':'')+
+      '</div>';
+  }).join('');
+  var cta=el('enrol-readiness-cta');if(!cta)return;
+  if(ready){
+    cta.innerHTML='<div style="background:var(--green-bg);border:1px solid var(--green-line);border-radius:6px;padding:14px 16px">'+
+      '<div style="font-size:12px;font-weight:600;color:var(--green);margin-bottom:6px">\u2713 Ready to enrol</div>'+
+      '<div style="font-size:11px;color:var(--text-2);margin-bottom:12px;line-height:1.6">Enrolment opens <strong>31 March 2026</strong>. Complete it on AUSTRAC\'s website, then record your AUSTRAC Entity ID below.</div>'+
+      '<a href="https://online.austrac.gov.au" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:#16a34a;color:#fff;font-size:12px;font-weight:600;padding:10px 18px;border-radius:4px;text-decoration:none;margin-bottom:8px">Enrol on AUSTRAC Online \u2192</a>'+
+      '<div style="font-size:10px;color:var(--text-3)">Opens austrac.gov.au in a new tab.</div></div>';
+  }else{
+    cta.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">'+
+      '<div style="font-size:11px;color:var(--text-3)">Complete steps 1\u20135 above before enrolling with AUSTRAC.</div>'+
+      '<button class="btn btn-ghost" style="font-size:11px" onclick="go(\'dashboard\')">\u2190 Back to Setup</button></div>';
+  }
+}
+
+function saveEvaluation(){
+  C.evaluation={date:el('eval-date')?el('eval-date').value:'',firm:el('eval-firm')?el('eval-firm').value.trim():''};
+  save();toast('Evaluation record saved \u2713');
+}
+function openComplianceReport(){window.open('report-conveyancing.html','_blank');}
+function loadAbout(){
+  var mark=el('about-logo-mark');if(!mark)return;
+  var name=C.practice.name||'My Practice';
+  mark.textContent=name.split(' ').map(function(w){return w[0]||'';}).join('').toUpperCase().slice(0,2)||'SA';
+}
+
+function exportData(){
+  var name=((C.practice&&C.practice.name)||'SimpleAML-Conv').replace(/[^a-z0-9]/gi,'_');
+  var date=new Date().toISOString().slice(0,10);
+  var blob=new Blob([JSON.stringify({exported:new Date().toISOString(),app:'SimpleAML Conveyancing',version:'1.0',data:C},null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name+'_AML_backup_'+date+'.json';a.click();
+  toast('Backup exported \u2713');
+}
+function importData(input){
+  var file=input.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      var parsed=JSON.parse(e.target.result),data=parsed.data||parsed;
+      if(!data.profile&&!data.practice&&!data.matters){toast('Invalid file \u2014 not a SimpleAML Conveyancing backup');input.value='';return;}
+      if(!confirm('Restore this backup? This will replace ALL current data and cannot be undone. Make sure you have exported a backup of your current data first.')){input.value='';return;}
+      C.practice=data.practice||{name:''};C.matters=data.matters||[];C.training=data.training||[];
+      C.staff=data.staff||[];C.profile=data.profile||{};C.riskass=data.riskass||{};
+      C.program=data.program||{};C.enrolment=data.enrolment||{};C.evaluation=data.evaluation||{};
+      save();applyPractice();renderDashboard();toast('Data restored from backup \u2713');input.value='';
+    }catch(err){toast('Could not read file \u2014 check it is a valid backup');input.value='';}
+  };reader.readAsText(file);
+}
+function clearData(){
+  if(!confirm('Clear ALL data? This permanently deletes everything and cannot be undone.\n\nExport a backup first if you want to keep your records.'))return;
+  localStorage.removeItem(KEY);load();applyPractice();go('dashboard');toast('All data cleared');
+}
+
+// ── START ──────────────────────────────────────────────────────
+load();applyPractice();tick();setInterval(tick,1000);
+TABS.forEach(function(t){var p=el('view-'+t);if(p)p.classList.add('hidden');});
+el('view-dashboard').classList.remove('hidden');
+renderDashboard();buildProgChecklist();
+</script>
+</body>
+</html>
