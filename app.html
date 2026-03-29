@@ -1242,119 +1242,105 @@ tbody tr:hover td{background:var(--surface-2);}
     <div class="empty hidden" id="pdd-empty"><svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg><div class="empty-text">No PDD records yet</div></div>
 
     <!-- Add new record form — always visible -->
-<div class="g2 mb16" id="pdd-form-section">
-  <div class="card">
-    <div class="card-header">
-      <div class="card-header-label">
-        <div class="card-accent" style="background:#b45309;"></div>
-        Add Staff Vetting Record
-      </div>
+<div class="card mb16" id="pdd-form-section">
+  <div class="card-header">
+    <div class="card-header-label">
+      <div class="card-accent" style="background:var(--brand);"></div>
+      Add Staff Vetting Record
     </div>
+  </div>
 
-    <!-- Staff details -->
-    <div class="f-group">
-      <label class="f-label">Staff Member Name *</label>
-      <input class="f-input" id="pdd-name" type="text" placeholder="Full legal name">
-    </div>
-    <div class="f-group">
-      <label class="f-label">Role / Position</label>
-      <input class="f-input" id="pdd-role" type="text" placeholder="e.g. AML Compliance Officer, Senior Accountant">
-    </div>
-    <div class="f-group">
-      <label class="f-label">Staff Type *</label>
-      <select class="f-input" id="pdd-staff-type" onchange="toggleKeyPersonnelFields()">
-        <option value="standard">Standard Staff</option>
-        <option value="high-risk">High-Risk Staff</option>
-        <option value="key-personnel">Key Personnel (Director / AMLCO)</option>
-      </select>
-    </div>
+  <div class="card-content" style="display:flex;flex-direction:column;gap:16px;padding-top:4px;">
 
-    <!-- Vetting dates -->
+    <div class="section-label">1. Staff Identity</div>
+    <div class="f-group">
+      <label class="f-label">Full Legal Name *</label>
+      <input class="f-input" id="pdd-name" type="text" placeholder="e.g. Sarah Jones">
+    </div>
+    
     <div class="g2" style="gap:10px;">
       <div class="f-group">
-        <label class="f-label">PDD Date *</label>
-        <input class="f-input" id="pdd-date" type="date">
+        <label class="f-label">Role / Position</label>
+        <input class="f-input" id="pdd-role" type="text" placeholder="e.g. Compliance Officer">
       </div>
       <div class="f-group">
-        <label class="f-label">Next Review Due</label>
-        <input class="f-input" id="pdd-next" type="date">
+        <label class="f-label">Staff Type *</label>
+        <select class="f-input" id="pdd-staff-type" onchange="toggleKeyPersonnelFields()" style="border-color:var(--brand-line);">
+          <option value="standard">Standard Staff</option>
+          <option value="key-personnel">Key Personnel (Director / Partner / AMLCO)</option>
+        </select>
       </div>
     </div>
 
-    <!-- Checks -->
-    <div class="f-group"><label class="f-label">Checks Completed</label>
-      <div style="display:flex;flex-direction:column;gap:7px;margin-top:6px;">
-        <label class="flex-c gap8" style="cursor:pointer;">
-          <input type="checkbox" id="pdd-chk-id" style="accent-color:#b45309;">
-          <span style="font-size:10px;">Identity verified</span>
-        </label>
-        <label class="flex-c gap8" style="cursor:pointer;">
-          <input type="checkbox" id="pdd-chk-ref" style="accent-color:#b45309;">
-          <span style="font-size:10px;">Reference / background check</span>
-        </label>
-        <label class="flex-c gap8" style="cursor:pointer;">
-          <input type="checkbox" id="pdd-chk-skills" style="accent-color:#b45309;">
-          <span style="font-size:10px;">Skills, knowledge & expertise assessed</span>
-        </label>
-        <label class="flex-c gap8" style="cursor:pointer;">
-          <input type="checkbox" id="pdd-chk-fit" style="accent-color:#b45309;">
-          <span style="font-size:10px;">Fit & proper assessment (for AMLCO)</span>
-        </label>
+    <div class="section-label">2. Vetting & Integrity Checks</div>
+    <div class="f-group">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--surface-2);padding:12px;border-radius:8px;">
+        <label class="flex-c gap8 font-medium" style="font-size:12px;"><input type="checkbox" id="pdd-chk-id"> Identity Verified</label>
+        <label class="flex-c gap8 font-medium" style="font-size:12px;"><input type="checkbox" id="pdd-chk-ref"> References Checked</label>
+        <label class="flex-c gap8 font-medium" style="font-size:12px;"><input type="checkbox" id="pdd-chk-skills"> Skills/CPA Verified</label>
+        <label class="flex-c gap8 font-medium" style="font-size:12px;"><input type="checkbox" id="pdd-chk-fit"> Fit & Proper Assessed</label>
       </div>
     </div>
 
-    <!-- Sanctions / PEP check -->
     <div class="f-group">
-      <label class="f-label">Sanctions / PEP Check (NameScan)</label>
-      <div class="g2" style="gap:10px;align-items:center;">
-        <button class="btn btn-outline-gold" onclick="runNameScan()">Run NameScan</button>
-        <input class="f-input" id="pdd-namescan-date" type="date" placeholder="Check date">
-        <input class="f-input" id="pdd-namescan-result" type="text" placeholder="Result (Clear / Hit)">
-        <input class="f-input" id="pdd-namescan-ref" type="text" placeholder="Reference number">
+      <label class="f-label">Sanctions & PEP Check (NameScan)</label>
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <input class="f-input" id="pdd-namescan-ref" type="text" placeholder="NameScan Ref #">
+        <input class="f-input" id="pdd-namescan-date" type="date">
+      </div>
+      <input class="f-input" id="pdd-namescan-result" type="text" placeholder="Result (e.g. No Matches / Clear)">
+    </div>
+
+    <div id="key-personnel-uploads" style="display:none; padding:16px; background:var(--gold-dim); border:1px solid var(--gold-line); border-radius:8px; margin-bottom:12px;">
+      <div class="alert-title" style="color:var(--gold); font-size:10px; margin-bottom:12px;">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v4a1 1 0 102 0V7zm-1 8a1 1 0 100-2 1 1 0 000 2z"/></svg>
+        Evidence Required for Key Personnel
+      </div>
+      
+      <div class="f-group">
+        <label class="f-label" style="color:var(--text);">National Police Certificate *</label>
+        <input type="file" id="pdd-police-upload" class="f-input" style="background:#fff;">
+        <p class="txt-muted" style="font-size:10px; margin-top:4px;">Must be dated within the last 6 months.</p>
+      </div>
+      
+      <div class="f-group" style="margin-bottom:0;">
+        <label class="f-label" style="color:var(--text);">Bankruptcy Search Evidence *</label>
+        <input type="file" id="pdd-bankruptcy-upload" class="f-input" style="background:#fff;">
+        <p class="txt-muted" style="font-size:10px; margin-top:4px;">Upload screenshot of AFSA/NPII result.</p>
       </div>
     </div>
 
-    <!-- Key Personnel uploads (only visible for key personnel) -->
-    <div class="f-group" id="key-personnel-uploads" style="display:none;">
-      <label class="f-label">National Police Certificate (Upload) *</label>
-      <input type="file" id="pdd-police-upload" accept=".pdf,.jpg,.png">
-
-      <label class="f-label" style="margin-top:8px;">Bankruptcy / Insolvency Clearance (Upload) *</label>
-      <input type="file" id="pdd-bankruptcy-upload" accept=".pdf,.jpg,.png">
+    <div class="section-label">3. Training & Declaration</div>
+    <div class="g2" style="gap:10px;">
+      <div class="f-group">
+        <label class="f-label">AML Training Date</label>
+        <input class="f-input" id="pdd-aml-date" type="date">
+      </div>
+      <div class="f-group">
+        <label class="f-label">Assessment Score</label>
+        <input class="f-input" id="pdd-aml-score" type="text" placeholder="e.g. 100% / Pass">
+      </div>
     </div>
 
-    <!-- AML Training -->
-    <div class="f-group">
-      <label class="f-label">AML Training Completion</label>
-      <input class="f-input" id="pdd-aml-date" type="date" placeholder="Date completed">
-      <input class="f-input" id="pdd-aml-score" type="text" placeholder="Score / Notes">
-    </div>
-
-    <!-- Annual Declaration -->
-    <div class="f-group">
-      <label class="f-label">Annual Declaration</label>
-      <label class="flex-c gap8" style="cursor:pointer;">
-        <input type="checkbox" id="pdd-annual-declaration" style="accent-color:#b45309;">
-        <span style="font-size:10px;">I declare no new criminal convictions or bankruptcies in the past 12 months</span>
+    <div class="f-group" style="background:var(--green-dim); padding:12px; border-radius:8px; border:1px solid var(--green-line);">
+      <label class="flex-c gap8" style="cursor:pointer; font-size:12px; font-weight:600; color:var(--green);">
+        <input type="checkbox" id="pdd-annual-declaration"> Annual Integrity Declaration Signed
       </label>
+      <p style="font-size:10px; color:var(--green); margin-top:4px; margin-left:24px;">"I confirm no new criminal convictions or bankruptcies in the last 12 months."</p>
     </div>
 
-    <!-- Notes -->
-    <div class="f-group">
-      <label class="f-label">Notes</label>
-      <textarea class="f-input" id="pdd-notes" rows="3" placeholder="Any relevant findings or observations…"></textarea>
-    </div>
-
-    <button class="btn btn-gold btn-full" onclick="savePddRecord()">Add Staff Vetting Record</button>
+    <button class="btn btn-gold btn-full" onclick="savePddRecord()" style="margin-top:8px;">
+      Save Staff Vetting Record
+    </button>
   </div>
 </div>
 
 <script>
-  function toggleKeyPersonnelFields() {
-    const staffType = document.getElementById('pdd-staff-type').value;
-    const uploads = document.getElementById('key-personnel-uploads');
-    uploads.style.display = staffType === 'key-personnel' ? 'block' : 'none';
-  }
+function toggleKeyPersonnelFields() {
+  const staffType = document.getElementById('pdd-staff-type').value;
+  const uploadSection = document.getElementById('key-personnel-uploads');
+  uploadSection.style.display = staffType === 'key-personnel' ? 'block' : 'none';
+}
 </script>
 
   <!-- ══════════ POLICY & APPROVAL ══════════════════════════════ -->
