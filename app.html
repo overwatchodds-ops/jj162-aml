@@ -1242,29 +1242,120 @@ tbody tr:hover td{background:var(--surface-2);}
     <div class="empty hidden" id="pdd-empty"><svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg><div class="empty-text">No PDD records yet</div></div>
 
     <!-- Add new record form — always visible -->
-    <div class="g2 mb16" id="pdd-form-section">
-      <div class="card">
-        <div class="card-header"><div class="card-header-label"><div class="card-accent" style="background:#b45309;"></div>Add Staff Vetting Record</div></div>
-        <div class="f-group"><label class="f-label">Staff Member Name *</label><input class="f-input" id="pdd-name" type="text" placeholder="Full legal name"></div>
-        <div class="f-group"><label class="f-label">Role / Position</label><input class="f-input" id="pdd-role" type="text" placeholder="e.g. AML Compliance Officer, Senior Accountant"></div>
-        <div class="f-group"><label class="f-label">PDD Type</label><select class="f-input" id="pdd-type"><option value="Initial">Initial — Pre-Appointment</option><option value="Ongoing">Ongoing — Annual Review</option></select></div>
-        <div class="g2" style="gap:10px;">
-          <div class="f-group"><label class="f-label">PDD Date *</label><input class="f-input" id="pdd-date" type="date"></div>
-          <div class="f-group"><label class="f-label">Next Review Due</label><input class="f-input" id="pdd-next" type="date"></div>
-        </div>
-        <div class="f-group"><label class="f-label">Checks Completed</label>
-          <div style="display:flex;flex-direction:column;gap:7px;margin-top:6px;">
-            <label class="flex-c gap8" style="cursor:pointer;"><input type="checkbox" id="pdd-chk-id" style="accent-color:#b45309;"><span style="font-size:10px;">Identity verified</span></label>
-            <label class="flex-c gap8" style="cursor:pointer;"><input type="checkbox" id="pdd-chk-ref" style="accent-color:#b45309;"><span style="font-size:10px;">Reference / background check</span></label>
-            <label class="flex-c gap8" style="cursor:pointer;"><input type="checkbox" id="pdd-chk-skills" style="accent-color:#b45309;"><span style="font-size:10px;">Skills, knowledge & expertise assessed</span></label>
-            <label class="flex-c gap8" style="cursor:pointer;"><input type="checkbox" id="pdd-chk-fit" style="accent-color:#b45309;"><span style="font-size:10px;">Fit & proper assessment (for AMLCO)</span></label>
-          </div>
-        </div>
-        <div class="f-group"><label class="f-label">Notes</label><textarea class="f-input" id="pdd-notes" rows="3" placeholder="Any relevant findings or observations…"></textarea></div>
-        <button class="btn btn-gold btn-full" onclick="savePddRecord()">Add Staff Vetting Record</button>
+<div class="g2 mb16" id="pdd-form-section">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-label">
+        <div class="card-accent" style="background:#b45309;"></div>
+        Add Staff Vetting Record
       </div>
     </div>
+
+    <!-- Staff details -->
+    <div class="f-group">
+      <label class="f-label">Staff Member Name *</label>
+      <input class="f-input" id="pdd-name" type="text" placeholder="Full legal name">
+    </div>
+    <div class="f-group">
+      <label class="f-label">Role / Position</label>
+      <input class="f-input" id="pdd-role" type="text" placeholder="e.g. AML Compliance Officer, Senior Accountant">
+    </div>
+    <div class="f-group">
+      <label class="f-label">Staff Type *</label>
+      <select class="f-input" id="pdd-staff-type" onchange="toggleKeyPersonnelFields()">
+        <option value="standard">Standard Staff</option>
+        <option value="high-risk">High-Risk Staff</option>
+        <option value="key-personnel">Key Personnel (Director / AMLCO)</option>
+      </select>
+    </div>
+
+    <!-- Vetting dates -->
+    <div class="g2" style="gap:10px;">
+      <div class="f-group">
+        <label class="f-label">PDD Date *</label>
+        <input class="f-input" id="pdd-date" type="date">
+      </div>
+      <div class="f-group">
+        <label class="f-label">Next Review Due</label>
+        <input class="f-input" id="pdd-next" type="date">
+      </div>
+    </div>
+
+    <!-- Checks -->
+    <div class="f-group"><label class="f-label">Checks Completed</label>
+      <div style="display:flex;flex-direction:column;gap:7px;margin-top:6px;">
+        <label class="flex-c gap8" style="cursor:pointer;">
+          <input type="checkbox" id="pdd-chk-id" style="accent-color:#b45309;">
+          <span style="font-size:10px;">Identity verified</span>
+        </label>
+        <label class="flex-c gap8" style="cursor:pointer;">
+          <input type="checkbox" id="pdd-chk-ref" style="accent-color:#b45309;">
+          <span style="font-size:10px;">Reference / background check</span>
+        </label>
+        <label class="flex-c gap8" style="cursor:pointer;">
+          <input type="checkbox" id="pdd-chk-skills" style="accent-color:#b45309;">
+          <span style="font-size:10px;">Skills, knowledge & expertise assessed</span>
+        </label>
+        <label class="flex-c gap8" style="cursor:pointer;">
+          <input type="checkbox" id="pdd-chk-fit" style="accent-color:#b45309;">
+          <span style="font-size:10px;">Fit & proper assessment (for AMLCO)</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Sanctions / PEP check -->
+    <div class="f-group">
+      <label class="f-label">Sanctions / PEP Check (NameScan)</label>
+      <div class="g2" style="gap:10px;align-items:center;">
+        <button class="btn btn-outline-gold" onclick="runNameScan()">Run NameScan</button>
+        <input class="f-input" id="pdd-namescan-date" type="date" placeholder="Check date">
+        <input class="f-input" id="pdd-namescan-result" type="text" placeholder="Result (Clear / Hit)">
+        <input class="f-input" id="pdd-namescan-ref" type="text" placeholder="Reference number">
+      </div>
+    </div>
+
+    <!-- Key Personnel uploads (only visible for key personnel) -->
+    <div class="f-group" id="key-personnel-uploads" style="display:none;">
+      <label class="f-label">National Police Certificate (Upload) *</label>
+      <input type="file" id="pdd-police-upload" accept=".pdf,.jpg,.png">
+
+      <label class="f-label" style="margin-top:8px;">Bankruptcy / Insolvency Clearance (Upload) *</label>
+      <input type="file" id="pdd-bankruptcy-upload" accept=".pdf,.jpg,.png">
+    </div>
+
+    <!-- AML Training -->
+    <div class="f-group">
+      <label class="f-label">AML Training Completion</label>
+      <input class="f-input" id="pdd-aml-date" type="date" placeholder="Date completed">
+      <input class="f-input" id="pdd-aml-score" type="text" placeholder="Score / Notes">
+    </div>
+
+    <!-- Annual Declaration -->
+    <div class="f-group">
+      <label class="f-label">Annual Declaration</label>
+      <label class="flex-c gap8" style="cursor:pointer;">
+        <input type="checkbox" id="pdd-annual-declaration" style="accent-color:#b45309;">
+        <span style="font-size:10px;">I declare no new criminal convictions or bankruptcies in the past 12 months</span>
+      </label>
+    </div>
+
+    <!-- Notes -->
+    <div class="f-group">
+      <label class="f-label">Notes</label>
+      <textarea class="f-input" id="pdd-notes" rows="3" placeholder="Any relevant findings or observations…"></textarea>
+    </div>
+
+    <button class="btn btn-gold btn-full" onclick="savePddRecord()">Add Staff Vetting Record</button>
   </div>
+</div>
+
+<script>
+  function toggleKeyPersonnelFields() {
+    const staffType = document.getElementById('pdd-staff-type').value;
+    const uploads = document.getElementById('key-personnel-uploads');
+    uploads.style.display = staffType === 'key-personnel' ? 'block' : 'none';
+  }
+</script>
 
   <!-- ══════════ POLICY & APPROVAL ══════════════════════════════ -->
   <div class="page tab-view hidden" id="view-policy">
