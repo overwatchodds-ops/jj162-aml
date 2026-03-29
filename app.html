@@ -1260,15 +1260,15 @@ tbody tr:hover td{background:var(--surface-2);}
     
     <div class="g2" style="gap:10px;">
       <div class="f-group">
-        <label class="f-label">Role / Position</label>
-        <input class="f-input" id="pdd-role" type="text" placeholder="e.g. Compliance Officer">
+        <label class="f-label">Staff Type *</label>
+        <select class="f-input" id="pdd-staff-type" onchange="toggleKeyPersonnelFields()">
+          <option value="standard">Standard Staff</option>
+          <option value="key-personnel">Key Personnel (Director / AMLCO)</option>
+        </select>
       </div>
       <div class="f-group">
-        <label class="f-label">Staff Type *</label>
-        <select class="f-input" id="pdd-staff-type" onchange="toggleKeyPersonnelFields()" style="border-color:var(--brand-line);">
-          <option value="standard">Standard Staff</option>
-          <option value="key-personnel">Key Personnel (Director / Partner / AMLCO)</option>
-        </select>
+        <label class="f-label">PDD Vetting Date *</label>
+        <input class="f-input" id="pdd-date" type="date">
       </div>
     </div>
 
