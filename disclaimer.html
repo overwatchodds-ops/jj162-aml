@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z6L06TX2HB');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disclaimer &amp; Terms of Use — SimpleAML</title>
+<meta name="description" content="Disclaimer and Terms of Use for SimpleAML, an AML/CTF compliance tool for Australian accountants. Developed by Click Seed Pty Ltd ABN 87 656 256 567.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0F1F3D;
+    --navy-mid: #1A3260;
+    --teal: #00A896;
+    --teal-light: #E0F7F4;
+    --border: #E4E2DC;
+    --off-white: #F8F7F4;
+    --text: #1A1A2E;
+    --text-mid: #4A5568;
+    --text-muted: #718096;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--text);
+    background: #fff;
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 62px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--navy);
+    text-decoration: none;
+  }
+
+  .logo-mark {
+    width: 34px;
+    height: 34px;
+    background: var(--navy);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    color: var(--text-mid);
+    text-decoration: none;
+    padding: 6px 13px;
+    border-radius: 7px;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .nav-links a:hover { background: var(--off-white); color: var(--navy); }
+
+  .nav-cta {
+    background: var(--navy) !important;
+    color: white !important;
+    font-weight: 500 !important;
+    padding: 8px 18px !important;
+    border-radius: 8px !important;
+  }
+  .nav-cta:hover { background: var(--navy-mid) !important; }
+  .mob-menu-btn { display: none; background: none; border: none; color: var(--navy); cursor: pointer; padding: 4px; z-index: 1001; }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    background: var(--off-white);
+    border-bottom: 1px solid var(--border);
+    padding: 56px 40px 52px;
+    text-align: center;
+  }
+
+  .page-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .page-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 48px);
+    color: var(--navy);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .page-hero p {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .last-updated {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+    background: white;
+    border: 1px solid var(--border);
+    padding: 4px 14px;
+    border-radius: 100px;
+  }
+
+  /* ── CONTENT ── */
+  .content-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 40px 96px;
+  }
+
+  /* Table of contents */
+  .toc {
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 56px;
+  }
+
+  .toc-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .toc ol {
+    list-style: none;
+    counter-reset: toc-counter;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+  }
+
+  .toc li {
+    counter-increment: toc-counter;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .toc li::before {
+    content: counter(toc-counter, decimal-leading-zero);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--teal);
+    flex-shrink: 0;
+  }
+
+  .toc a {
+    color: var(--text-mid);
+    text-decoration: none;
+    transition: color 0.15s;
+    line-height: 1.4;
+  }
+
+  .toc a:hover { color: var(--teal); }
+
+  /* Sections */
+  .policy-section {
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .policy-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .section-num {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+
+  .policy-section h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    color: var(--navy);
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .policy-section p {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .policy-section p:last-child { margin-bottom: 0; }
+
+  .policy-section ul, .policy-section ol {
+    margin: 16px 0 16px 20px;
+  }
+
+  .policy-section li {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.75;
+    margin-bottom: 8px;
+  }
+
+  .policy-section li:last-child { margin-bottom: 0; }
+
+  /* Highlight box */
+  .highlight-box {
+    background: var(--teal-light);
+    border-left: 3px solid var(--teal);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px;
+    margin: 24px 0;
+  }
+
+  .highlight-box p {
+    font-size: 14px;
+    color: #0F4A44;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .highlight-box strong { color: #0A3530; }
+
+  /* Warning box */
+  .warning-box {
+    background: #FEF7E0;
+    border-left: 3px solid #F2A10A;
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px;
+    margin: 24px 0;
+  }
+
+  .warning-box p {
+    font-size: 14px;
+    color: #5A3E00;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Contact card */
+  .contact-card {
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 32px;
+    margin-top: 24px;
+  }
+
+  .contact-card h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: white;
+    margin-bottom: 8px;
+  }
+
+  .contact-card p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .contact-detail { display: flex; flex-direction: column; gap: 10px; }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  .contact-label {
+    color: rgba(255,255,255,0.4);
+    min-width: 80px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .contact-value { color: white; }
+  .contact-value a { color: var(--teal); text-decoration: none; }
+  .contact-value a:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  footer { background: #0A1628; padding: 56px 40px 40px; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .footer-brand { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+  .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.75; max-width: 280px; }
+  .footer-col-title { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 14px; }
+  .footer-col-links { display: flex; flex-direction: column; gap: 10px; }
+  .footer-col-links a { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.15s; }
+  .footer-col-links a:hover { color: rgba(255,255,255,0.85); }
+  .footer-bottom { max-width: 1100px; margin: 28px auto 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 12px; color: rgba(255,255,255,0.2); }
+  .disclaimer { background: #0A1628; border-top: 1px solid rgba(255,255,255,0.05); padding: 24px 40px; font-size: 12px; color: rgba(255,255,255,0.2); line-height: 1.75; }
+
+  @media (max-width: 680px) {
+    nav { padding: 0 20px; }
+    .mob-menu-btn { display: block; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 62px;
+      left: 0;
+      right: 0;
+      background: white;
+      flex-direction: column;
+      padding: 16px;
+      gap: 4px;
+      border-bottom: 2px solid var(--border);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      z-index: 9999;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { width: 100%; }
+    .nav-links a { display: block; padding: 12px 16px; font-size: 16px; border-radius: 8px; color: var(--navy); font-weight: 500; }
+    .nav-links a:hover { background: var(--off-white); }
+    .nav-cta { background: var(--navy) !important; color: white !important; text-align: center; padding: 12px 16px !important; }
+    .page-hero { padding: 48px 20px; }
+    .content-wrap { padding: 48px 20px 72px; }
+    .toc ol { grid-template-columns: 1fr; }
+    footer { padding: 40px 20px 32px; }
+    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+    .disclaimer { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">SA</div>
+    SimpleAML
+  </a>
+  <button class="mob-menu-btn" id="mob-menu-btn" onclick="toggleMobileNav()">
+    <svg id="mob-icon-open" width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <svg id="mob-icon-close" width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="index.html#how">How It Works</a></li>
+    <li><a href="articles.html">Guides</a></li>
+    <li><a href="templates.html">Templates</a></li>
+    <li><a href="partners.html">Partners</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="app.html" class="nav-cta">Open App →</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <p class="page-label">Legal</p>
+  <h1>Disclaimer &amp; Terms of Use</h1>
+  <p>Please read this disclaimer carefully before using SimpleAML. By using this tool you agree to these terms.</p>
+  <span class="last-updated">Last updated: March 2026</span>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- Table of contents -->
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ol>
+      <li><a href="#scope">Scope of service</a></li>
+      <li><a href="#not-advice">Not legal or professional advice</a></li>
+      <li><a href="#evidence">Evidence and document management</a></li>
+      <li><a href="#no-role">No AML/CTF role or delegation</a></li>
+      <li><a href="#accuracy">Accuracy and completeness</a></li>
+      <li><a href="#liability">Limitation of liability</a></li>
+      <li><a href="#ip">Intellectual property</a></li>
+      <li><a href="#governing-law">Governing law</a></li>
+      <li><a href="#acknowledgement">User acknowledgement</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. Scope -->
+  <div class="policy-section" id="scope">
+    <div class="section-num">01</div>
+    <h2>Scope of service</h2>
+    <p>SimpleAML, provided by <strong>Click Seed Pty Ltd</strong> (ABN 87 656 256 567), is a compliance assistance tool designed to record customer due diligence (CDD) and other AML/CTF checks. It is intended to support firms in managing their AML/CTF obligations under Australian law.</p>
+    <div class="highlight-box">
+      <p><strong>SimpleAML is a compliance register.</strong> It records that checks and assessments have occurred, and points to where underlying evidence is stored. It is not a document management system, vault, or archive.</p>
+    </div>
+  </div>
+
+  <!-- 2. Not legal advice -->
+  <div class="policy-section" id="not-advice">
+    <div class="section-num">02</div>
+    <h2>Not legal or professional advice</h2>
+    <p>The information and guidance provided by SimpleAML:</p>
+    <ul>
+      <li>Does not constitute legal, financial, or professional advice;</li>
+      <li>Is for compliance assistance only; and</li>
+      <li>Should not be relied upon as a substitute for independent legal or professional advice.</li>
+    </ul>
+    <p>Users are solely responsible for ensuring that they:</p>
+    <ul>
+      <li>Comply with all applicable AML/CTF laws, regulations, and AUSTRAC obligations;</li>
+      <li>Apply professional judgment in using the tool; and</li>
+      <li>Maintain their own internal compliance policies and procedures.</li>
+    </ul>
+    <div class="warning-box">
+      <p><strong>Important:</strong> If you are unsure about your AML/CTF obligations, seek independent legal advice from a qualified Australian lawyer with expertise in financial crime compliance.</p>
+    </div>
+  </div>
+
+  <!-- 3. Evidence and document management -->
+  <div class="policy-section" id="evidence">
+    <div class="section-num">03</div>
+    <h2>Evidence and document management</h2>
+    <p>SimpleAML is a compliance register only. It:</p>
+    <ul>
+      <li>Records that checks and assessments have occurred;</li>
+      <li>Points to the location of underlying evidence; and</li>
+      <li>Does not store, hold, encrypt, or manage original compliance documents, identity verification records, or other artefacts.</li>
+    </ul>
+    <p>The collection, maintenance, secure storage, and protection of all underlying evidence — including identification documents, screening records, and compliance program documents — is the <strong>sole responsibility of the user and their firm</strong>.</p>
+    <div class="highlight-box">
+      <p><strong>Your obligations as the user:</strong> You are responsible for securely storing all underlying evidence, maintaining records for the mandatory 7-year retention period required under the AML/CTF Act, encrypting and protecting sensitive client documents, and ensuring continuity of access to records in the event of staff changes or system changes.</p>
+    </div>
+    <p>Click Seed Pty Ltd, SimpleAML, and any associated parties accept no responsibility for the loss, theft, unauthorised access, or destruction of documents and artefacts held by the user.</p>
+  </div>
+
+  <!-- 3b. No AML/CTF Role -->
+  <div class="policy-section" id="no-role">
+    <div class="section-num">04</div>
+    <h2>No AML/CTF role, function or delegation</h2>
+    <p>SimpleAML, Click Seed Pty Ltd, and any associated parties do not perform, assume, or accept any AML/CTF compliance role, function, duty, or responsibility on behalf of any user or firm.</p>
+    <p>SimpleAML must not be relied upon as:</p>
+    <ul>
+      <li>an AML/CTF Compliance Officer;</li>
+      <li>a compliance function;</li>
+      <li>a risk assessment function;</li>
+      <li>a customer due diligence function;</li>
+      <li>an ongoing monitoring function; or</li>
+      <li>a substitute for the user's AML/CTF Program, policies, procedures, or professional judgment.</li>
+    </ul>
+    <div class="warning-box">
+      <p><strong>Use of SimpleAML does not constitute delegation of any AML/CTF obligation</strong> under the <em>Anti-Money Laundering and Counter-Terrorism Financing Act 2006</em> or AUSTRAC Rules. All AML/CTF obligations remain solely with the reporting entity and its appointed personnel.</p>
+    </div>
+  </div>
+
+  <!-- 4. Accuracy -->
+  <div class="policy-section" id="accuracy">
+    <div class="section-num">05</div>
+    <h2>Accuracy and completeness</h2>
+    <p>Click Seed Pty Ltd, SimpleAML, and associated parties:</p>
+    <ul>
+      <li>Make no representations or warranties regarding the accuracy, completeness, reliability, or fitness for any particular purpose of the tool or its outputs; and</li>
+      <li>Accept no liability for any loss, damage, or expense arising from the use or inability to use the tool, including indirect, incidental, or consequential losses.</li>
+    </ul>
+    <p>AML/CTF laws and AUSTRAC guidance change over time. While we endeavour to keep SimpleAML current, users should not rely solely on this tool to reflect the latest regulatory requirements. Always verify obligations against current AUSTRAC guidance at <a href="https://www.austrac.gov.au" target="_blank" rel="noopener" style="color: var(--teal);">austrac.gov.au</a>.</p>
+  </div>
+
+  <!-- 5. Limitation of liability -->
+  <div class="policy-section" id="liability">
+    <div class="section-num">06</div>
+    <h2>Limitation of liability</h2>
+    <p>To the maximum extent permitted by law, Click Seed Pty Ltd and its affiliates disclaim all liability for:</p>
+    <ul>
+      <li>Any direct, indirect, special, or consequential loss or damage;</li>
+      <li>Any reliance on information, recommendations, or guidance in the tool; and</li>
+      <li>Any failure to comply with AML/CTF obligations while using SimpleAML.</li>
+    </ul>
+    <div class="warning-box">
+      <p><strong>Regulatory liability remains with you.</strong> Use of SimpleAML does not transfer any compliance obligation or regulatory liability from the user to Click Seed Pty Ltd. AUSTRAC enforcement action, penalties, or findings arising from non-compliance remain the sole responsibility of the reporting entity.</p>
+    </div>
+  </div>
+
+  <!-- 6. Intellectual property -->
+  <div class="policy-section" id="ip">
+    <div class="section-num">07</div>
+    <h2>Intellectual property</h2>
+    <p>All content, software, logos, and materials in SimpleAML are the property of Click Seed Pty Ltd and are protected by Australian and international intellectual property laws.</p>
+    <p>Users may access and use the tool solely for lawful compliance purposes, and may not reproduce, distribute, or create derivative works without express written permission from Click Seed Pty Ltd.</p>
+  </div>
+
+  <!-- 7. Governing law -->
+  <div class="policy-section" id="governing-law">
+    <div class="section-num">08</div>
+    <h2>Governing law and jurisdiction</h2>
+    <p>These terms are governed by the laws of New South Wales, Australia. Any disputes arising in connection with this disclaimer or the use of SimpleAML will be subject to the exclusive jurisdiction of the courts of New South Wales.</p>
+  </div>
+
+  <!-- 8. Acknowledgement -->
+  <div class="policy-section" id="acknowledgement">
+    <div class="section-num">09</div>
+    <h2>User acknowledgement</h2>
+    <p>By using SimpleAML, you acknowledge that you have read, understood, and agreed to this disclaimer, and that you assume full responsibility for all compliance obligations and any consequences arising from your use of the tool.</p>
+
+    <div class="contact-card">
+      <h3>Click Seed Pty Ltd</h3>
+      <p>Questions about this disclaimer? Contact us and we will respond promptly.</p>
+      <div class="contact-detail">
+        <div class="contact-row">
+          <span class="contact-label">ABN</span>
+          <span class="contact-value">87 656 256 567</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">State</span>
+          <span class="contact-value">New South Wales, Australia</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">Contact</span>
+          <span class="contact-value"><a href="contact.html">simpleaml.com.au/contact.html</a></span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">Website</span>
+          <span class="contact-value"><a href="https://simpleaml.com.au">simpleaml.com.au</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        <div class="logo-mark">SA</div>
+        <div style="font-size:16px;font-weight:600;color:white;">SimpleAML</div>
+      </div>
+      <p class="footer-tagline">AML/CTF compliance for Australian accountants, lawyers &amp; real estate agents.<br><br>Developed by Click Seed Pty Ltd<br>ABN 87 656 256 567</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Product</div>
+      <div class="footer-col-links">
+        <a href="app.html">Open App →</a>
+        <a href="templates.html">Templates</a>
+        <a href="faq.html">User Guide &amp; FAQ</a>
+        <a href="training-providers.html">Training Providers</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <div class="footer-col-links">
+        <a href="index.html">Home</a>
+        <a href="partners.html">Partners</a>
+        <a href="articles.html">Guides</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>&copy; 2026 Click Seed Pty Ltd. All rights reserved.</div>
+    <div>simpleaml.com.au</div>
+  </div>
+</footer>
+
+<div class="disclaimer">
+  <strong>Important:</strong> SimpleAML is a compliance assistance tool only and does not constitute legal advice. Users are responsible for ensuring their own compliance with AUSTRAC requirements. Seek independent legal advice where required. Click Seed Pty Ltd ABN 87 656 256 567.
+</div>
+
+<script>
+function toggleMobileNav() {
+  var nav = document.querySelector('.nav-links');
+  var open = document.getElementById('mob-icon-open');
+  var close = document.getElementById('mob-icon-close');
+  var isOpen = nav.classList.toggle('open');
+  open.style.display = isOpen ? 'none' : 'block';
+  close.style.display = isOpen ? 'block' : 'none';
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.remove('open');
+    document.getElementById('mob-icon-open').style.display = 'block';
+    document.getElementById('mob-icon-close').style.display = 'none';
+    document.body.style.overflow = '';
+  });
+});
+</script>
+</body>
+</html>
