@@ -8,3 +8,4 @@ export { Sidebar }     from './sidebar.js';
 export { ratingBadge } from './badges.js';
 export { infoBtn, infoPop } from './infobox.js';
 export { ratingRow }   from './ratingrow.js';
+
