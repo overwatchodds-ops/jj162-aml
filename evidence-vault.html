@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);} 
+  gtag('js', new Date());
+  gtag('config', 'G-Z6L06TX2HB');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document Register — AML/CTF Recordkeeping | SimpleAML</title>
+<meta name="description" content="Understand your AML/CTF recordkeeping obligations under AUSTRAC Tranche 2. Learn what records you must keep, how long to keep them, and how SimpleAML supports recordkeeping with local in-browser storage.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0F1F3D;
+    --navy-mid: #1A3260;
+    --teal: #00A896;
+    --teal-light: #E0F7F4;
+    --border: #E4E2DC;
+    --off-white: #F8F7F4;
+    --text: #1A1A2E;
+    --text-mid: #4A5568;
+    --text-muted: #718096;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-sans: 'DM Sans', system-ui, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--text);
+    background: #fff;
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 62px;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 34px;
+    height: 34px;
+    background: var(--navy);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 14px;
+    color: var(--text-mid);
+    text-decoration: none;
+    padding: 6px 13px;
+    border-radius: 7px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-links a:hover { background: var(--off-white); color: var(--navy); }
+  .nav-cta {
+    background: var(--navy) !important;
+    color: white !important;
+    font-weight: 500 !important;
+    padding: 8px 18px !important;
+    border-radius: 8px !important;
+  }
+  .nav-cta:hover { background: var(--navy-mid) !important; }
+  .mob-menu-btn { display: none; background: none; border: none; color: var(--navy); cursor: pointer; padding: 4px; z-index: 1001; }
+  .feature-hero {
+    background: var(--navy);
+    padding: 72px 40px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-hero::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(0,168,150,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .feature-breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 28px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    position: relative;
+  }
+  .feature-breadcrumb a { color: var(--teal); text-decoration: none; }
+  .feature-hero-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(0,168,150,0.2);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+  .feature-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 52px);
+    color: white;
+    line-height: 1.1;
+    max-width: 700px;
+    margin: 0 auto 16px;
+    position: relative;
+  }
+  .feature-hero h1 em { color: var(--teal); font-style: italic; }
+  .feature-hero-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.55);
+    max-width: 620px;
+    margin: 0 auto;
+    font-weight: 300;
+    line-height: 1.75;
+    position: relative;
+  }
+  .feature-content {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 72px 40px 96px;
+  }
+  .feature-section {
+    margin-bottom: 56px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--border);
+  }
+  .feature-section:last-of-type { border-bottom: none; }
+  .feature-section-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+  .feature-section h2 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3vw, 34px);
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  .feature-section p {
+    font-size: 16px;
+    color: var(--text-mid);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .feature-section p:last-child { margin-bottom: 0; }
+  .info-box, .warn-box {
+    border-radius: 0 12px 12px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .info-box {
+    background: var(--teal-light);
+    border-left: 3px solid var(--teal);
+  }
+  .warn-box {
+    background: #FEF7E0;
+    border-left: 3px solid #F2A10A;
+  }
+  .info-box p, .warn-box p {
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0;
+  }
+  .info-box p { color: #0A4A44; }
+  .warn-box p { color: #5A3E00; }
+  .checklist {
+    list-style: none;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+  .checklist li::before {
+    content: '✓';
+    width: 20px;
+    height: 20px;
+    background: var(--teal);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: white;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .app-feature-box {
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 32px;
+    margin: 24px 0;
+  }
+  .app-feature-box h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: white;
+    margin-bottom: 16px;
+  }
+  .app-feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .app-feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15px;
+    color: rgba(255,255,255,0.68);
+    line-height: 1.65;
+  }
+  .app-feature-list li::before {
+    content: '→';
+    color: var(--teal);
+    flex-shrink: 0;
+    font-weight: 600;
+  }
+  .feature-cta {
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    margin-top: 64px;
+  }
+  .feature-cta h2 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .feature-cta p {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    line-height: 1.7;
+  }
+  .btn-primary {
+    background: var(--navy);
+    color: white;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 500;
+    padding: 14px 28px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(15,31,61,0.2);
+  }
+  .btn-primary:hover { background: var(--navy-mid); transform: translateY(-1px); }
+  .related-features {
+    margin-top: 72px;
+    padding-top: 56px;
+    border-top: 1px solid var(--border);
+  }
+  .related-features h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 24px;
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .related-card {
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: block;
+  }
+  .related-card:hover { background: white; border-color: var(--teal); transform: translateY(-1px); }
+  .related-icon { font-size: 20px; margin-bottom: 10px; display: block; }
+  .related-title { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .related-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+  footer {
+    background: #0A1628;
+    padding: 56px 40px 40px;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-brand { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+  .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.75; max-width: 280px; }
+  .footer-col-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 14px;
+  }
+  .footer-col-links { display: flex; flex-direction: column; gap: 10px; }
+  .footer-col-links a { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.15s; }
+  .footer-col-links a:hover { color: rgba(255,255,255,0.85); }
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 28px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+  }
+  .disclaimer {
+    background: #0A1628;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 24px 40px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+    line-height: 1.75;
+  }
+  @media (max-width: 680px) {
+    nav { padding: 0 20px; }
+    .mob-menu-btn { display: block; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 62px;
+      left: 0;
+      right: 0;
+      background: white;
+      flex-direction: column;
+      padding: 16px;
+      gap: 4px;
+      border-bottom: 2px solid var(--border);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      z-index: 9999;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { width: 100%; }
+    .nav-links a { display: block; padding: 12px 16px; font-size: 16px; border-radius: 8px; color: var(--navy); font-weight: 500; }
+    .nav-links a:hover { background: var(--off-white); }
+    .nav-cta { background: var(--navy) !important; color: white !important; text-align: center; padding: 12px 16px !important; }
+    .feature-hero { padding: 56px 20px 48px; }
+    .feature-content { padding: 48px 20px 72px; }
+    .related-grid { grid-template-columns: 1fr; }
+    footer { padding: 40px 20px 32px; }
+    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+    .disclaimer { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo"><div class="logo-mark">SA</div>SimpleAML</a>
+  <button class="mob-menu-btn" id="mob-menu-btn" onclick="toggleMobileNav()">
+    <svg id="mob-icon-open" width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <svg id="mob-icon-close" width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="index.html#how">How It Works</a></li>
+    <li><a href="articles.html">Guides</a></li>
+    <li><a href="templates.html">Templates</a></li>
+    <li><a href="partners.html">Partners</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="app.html" class="nav-cta">Open App →</a></li>
+  </ul>
+</nav>
+
+<div class="feature-hero">
+  <div class="feature-breadcrumb"><a href="index.html">Home</a> <span>›</span> <a href="index.html#features">Features</a> <span>›</span> Document Register</div>
+  <div class="feature-hero-icon">📂</div>
+  <h1>Document Register<br><em>&amp; Recordkeeping</em></h1>
+  <p class="feature-hero-sub">Keep AML/CTF records clearly organised, stored locally in your browser on your device, and regularly exported for backup and retention.</p>
+</div>
+
+<div class="feature-content">
+  <div class="feature-section">
+    <div class="feature-section-label">The Requirement</div>
+    <h2>What records do you need to keep?</h2>
+    <p>Under the AML/CTF Act, it is not enough to complete checks. You also need to keep a clear record that those checks were completed, what the result was, and when the record was created or reviewed.</p>
+    <p>For most accounting practices, that means keeping a record of:</p>
+    <ul class="checklist">
+      <li>Client identification and verification steps completed</li>
+      <li>PEP and sanctions screening dates and results</li>
+      <li>Client risk ratings and review dates</li>
+      <li>Beneficial ownership checks completed</li>
+      <li>Suspicious matter and incident review records</li>
+      <li>Training, personnel due diligence, and AML/CTF program approval records</li>
+    </ul>
+    <div class="info-box">
+      <p><strong>7-year retention requirement.</strong> AML/CTF records generally need to be retained for at least 7 years. Your firm remains responsible for meeting those retention obligations.</p>
+    </div>
+  </div>
+
+  <div class="feature-section">
+    <div class="feature-section-label">How SimpleAML Works</div>
+    <h2>What SimpleAML does — and what it does not do</h2>
+    <p>SimpleAML is a compliance register. It helps you keep a clear record of what checks were completed, who completed them, when they were done, and where supporting evidence is kept.</p>
+    <p><strong>SimpleAML stores records locally in your browser on your device. It does not currently provide multi-user cloud sync. You should export and back up your records regularly.</strong></p>
+    <div class="warn-box">
+      <p><strong>SimpleAML is not a hosted document repository.</strong> It does not replace your firm’s own filing system for identity documents, screening reports, AML/CTF program files, or other source materials.</p>
+    </div>
+  </div>
+
+  <div class="feature-section">
+    <div class="feature-section-label">Plain-English Summary</div>
+    <h2>Who this is best for</h2>
+    <div class="info-box">
+      <p><strong>Best for sole practitioners and small firms.</strong> SimpleAML is most suitable for sole practitioners and smaller firms where one person mainly manages AML/CTF compliance.</p>
+    </div>
+    <div class="info-box">
+      <p><strong>Browser-based local storage.</strong> Data is stored in the browser on your device, not in a shared cloud account run by SimpleAML.</p>
+    </div>
+    <div class="info-box">
+      <p><strong>Regular export and backups required.</strong> You should export and save backups regularly because browser data may be lost if your device, browser, or settings change.</p>
+    </div>
+    <div class="info-box">
+      <p><strong>Multi-user cloud sync not currently available.</strong> SimpleAML does not currently support shared cloud syncing across multiple users or devices.</p>
+    </div>
+  </div>
+
+  <div class="feature-section">
+    <div class="feature-section-label">What the App Helps You Record</div>
+    <h2>What the register can help you track</h2>
+    <div class="app-feature-box">
+      <h3>Recordkeeping support</h3>
+      <ul class="app-feature-list">
+        <li>Client AML/CTF record trail, including risk rating and review status</li>
+        <li>Dates and outcomes of PEP, sanctions, and identity checks</li>
+        <li>Training and personnel due diligence recordkeeping</li>
+        <li>Incident and SMR review records</li>
+        <li>Program approval, review dates, and compliance summary information</li>
+        <li>Regular export for backup and record retention purposes</li>
+      </ul>
+    </div>
+    <p>SimpleAML is designed to help smaller firms stay organised and audit-ready without introducing a separate hosted storage system.</p>
+  </div>
+
+  <div class="feature-cta">
+    <h2>Keep your AML/CTF records organised</h2>
+    <p>Use SimpleAML to keep a clear compliance register while continuing to store source documents in your own systems.</p>
+    <a href="app.html" class="btn-primary">Open the app →</a>
+  </div>
+
+  <div class="related-features">
+    <h3>Related features</h3>
+    <div class="related-grid">
+      <a href="client-risk-profiling.html" class="related-card">
+        <span class="related-icon">👤</span>
+        <div class="related-title">Client Register &amp; CDD</div>
+        <p class="related-desc">Complete CDD and keep a record of client-level AML/CTF checks.</p>
+      </a>
+      <a href="smr-incident-register.html" class="related-card">
+        <span class="related-icon">⚠️</span>
+        <div class="related-title">SMR &amp; Incident Register</div>
+        <p class="related-desc">Record suspicious matters, review outcomes, and incident status.</p>
+      </a>
+      <a href="aml-ctf-compliance-report.html" class="related-card">
+        <span class="related-icon">📊</span>
+        <div class="related-title">AML/CTF Compliance Report</div>
+        <p class="related-desc">Generate a summary of your firm’s compliance position.</p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        <div class="logo-mark">SA</div>
+        <div style="font-size:16px;font-weight:600;color:white;">SimpleAML</div>
+      </div>
+      <p class="footer-tagline">Free AML/CTF compliance for Australian accountants.<br><br>Developed by Click Seed Pty Ltd<br>ABN 87 656 256 567</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Product</div>
+      <div class="footer-col-links">
+        <a href="app.html">Open App →</a>
+        <a href="templates.html">Templates</a>
+        <a href="faq.html">User Guide &amp; FAQ</a>
+        <a href="training-providers.html">Training Providers</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <div class="footer-col-links">
+        <a href="index.html">Home</a>
+        <a href="partners.html">Partners</a>
+        <a href="articles.html">Guides</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Click Seed Pty Ltd. All rights reserved.</div>
+    <div>simpleaml.com.au</div>
+  </div>
+</footer>
+
+<div class="disclaimer"><strong>Important:</strong> SimpleAML is a compliance assistance tool only and does not constitute legal advice. Users are responsible for ensuring their own compliance with AUSTRAC requirements. Seek independent legal advice where required. Click Seed Pty Ltd ABN 87 656 256 567.</div>
+
+<script>
+function toggleMobileNav() {
+  var nav = document.querySelector('.nav-links');
+  var open = document.getElementById('mob-icon-open');
+  var close = document.getElementById('mob-icon-close');
+  var isOpen = nav.classList.toggle('open');
+  open.style.display = isOpen ? 'none' : 'block';
+  close.style.display = isOpen ? 'block' : 'none';
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.remove('open');
+    document.getElementById('mob-icon-open').style.display = 'block';
+    document.getElementById('mob-icon-close').style.display = 'none';
+    document.body.style.overflow = '';
+  });
+});
+</script>
+</body>
+</html>
