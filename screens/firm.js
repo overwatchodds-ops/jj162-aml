@@ -108,7 +108,7 @@ window.fillAllRoles = function() {
     const el = document.getElementById(`appt-${k}-name`);
     if (el) el.value = name;
   });
-
+}; 
 window.saveFirm = function() {
   const name = document.getElementById('fp-name')?.value?.trim();
   if (!name) { toast('Firm name is required', 'err'); return; }
