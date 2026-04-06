@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z6L06TX2HB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="SimpleAML — AML/CTF compliance tool for Australian accountants. Manage your firm's AML/CTF obligations under the Anti-Money Laundering and Counter-Terrorism Financing Act 2006.">
+  <title>SimpleAML — Accountant AML/CTF Compliance</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 font-sans text-slate-800">
+<div id="app"></div>
+<div id="toast" style="display:none" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-sm px-5 py-3 rounded-xl shadow-xl z-50"></div>
+
+<script type="module">
+// ─── IMPORTS ──────────────────────────────────────────────────────────────────
+import { S, save, load } from './state/index.js';
+import { Sidebar } from './components/index.js';
+
+import * as ScreenDashboard   from './screens/dashboard.js';
+import * as ScreenFirm        from './screens/firm.js';
+import * as ScreenRisk        from './screens/risk.js';
+import * as ScreenProgram     from './screens/program.js';
+import * as ScreenStaff       from './screens/staff.js';
+import * as ScreenTraining    from './screens/training.js';
+import * as ScreenEnrolment   from './screens/enrolment.js';
+import * as ScreenClients     from './screens/clients.js';
+import * as ScreenNewClient   from './screens/newclient.js';
+import * as ScreenAddService  from './screens/addservice.js';
+import * as ScreenIncidents   from './screens/incidents.js';
+import * as ScreenNewIncident from './screens/newincident.js';
+import * as ScreenReport      from './screens/report.js';
+import * as ScreenAbout       from './screens/about.js';
+
+// ─── SCREEN REGISTRY ──────────────────────────────────────────────────────────
+const Screens = {
+  dashboard:   ScreenDashboard.screen,
+  firm:        ScreenFirm.screen,
+  risk:        ScreenRisk.screen,
+  program:     ScreenProgram.screen,
+  staff:       ScreenStaff.screen,
+  training:    ScreenTraining.screen,
+  enrolment:   ScreenEnrolment.screen,
+  clients:     ScreenClients.screen,
+  newclient:   ScreenNewClient.screen,
+  addservice:  ScreenAddService.screen,
+  incidents:   ScreenIncidents.screen,
+  newincident: ScreenNewIncident.screen,
+  report:      ScreenReport.screen,
+  about:       ScreenAbout.screen,
+};
+
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+window.go = function(screen) {
+  const sameScreen = S.currentScreen === screen;
+  S.currentScreen = screen; save(); render();
+  if (!sameScreen) window.scrollTo(0, 0);
+};
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function render() {
+  const screenFn = Screens[S.currentScreen] || Screens.dashboard;
+  document.getElementById('app').innerHTML = `
+    <div class="flex min-h-screen">
+      <div class="w-60 flex-shrink-0">${Sidebar()}</div>
+      <main class="flex-1 ml-60 min-h-screen overflow-y-auto">${screenFn()}</main>
+    </div>`;
+}
+
+// ─── STYLES ───────────────────────────────────────────────────────────────────
+const style = document.createElement('style');
+style.textContent = `.inp{display:block;width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;background:#f8fafc;outline:none;transition:border-color .15s}.inp:focus{border-color:#6366f1;background:#fff}textarea.inp{resize:vertical}`;
+document.head.appendChild(style);
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+load();
+document.addEventListener('click', function(e) {
+  var tip = document.getElementById('ds-info-tip');
+  if (tip && tip.style.display === 'block' && !tip.contains(e.target) && !e.target.textContent.trim().startsWith('i')) tip.style.display = 'none';
+});
+render();
+</script>
+</body>
+</html>
