@@ -599,3 +599,4 @@ window.saveClient = function() {
   delete S._clientDraft; delete S._clientEditIdx;
   save(); go('clients');
 };
+
