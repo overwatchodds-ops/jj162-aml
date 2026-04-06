@@ -8,7 +8,7 @@
           "value": "realestate.simpleaml.com.au"
         }
       ],
-      "destination": "/index-realestate.html",
+      "destination": "RE/index-realestate.html",
       "permanent": false
     },
     {
@@ -19,7 +19,7 @@
           "value": "conveyancing.simpleaml.com.au"
         }
       ],
-      "destination": "/index-conveyancing.html",
+      "destination": "CON/index-conveyancing.html",
       "permanent": false
     }
   ]
