@@ -26,7 +26,7 @@
 <script type="module">
 // ─── IMPORTS ──────────────────────────────────────────────────────────────────
 import { S, save, load } from './state/index.js';
-import { Sidebar, TopNav } from './components/index.js';
+import { Sidebar, TopNav, RightCol } from './components/index.js';
 
 import * as ScreenDashboard          from './screens/dashboard.js';
 import * as ScreenFirm               from './screens/firm.js';
@@ -80,13 +80,12 @@ window.go = function(screen) {
 function render() {
   const screenFn = Screens[S.currentScreen] || Screens.dashboard;
   document.getElementById('app').innerHTML = `
+    ${Sidebar()}
     ${TopNav()}
-    <div style="padding-top:48px;padding-left:224px;min-height:100vh;">
-      ${Sidebar()}
-      <main style="min-height:100vh;display:flex;justify-content:center;padding:0 24px;">
-        <div style="width:100%;max-width:860px;">${screenFn()}</div>
-      </main>
-    </div>`;
+    ${RightCol()}
+    <main style="margin-left:224px;margin-right:256px;padding-top:48px;min-height:100vh;display:flex;justify-content:center;padding-right:24px;padding-left:24px;box-sizing:border-box;">
+      <div style="width:100%;max-width:860px;">${screenFn()}</div>
+    </main>`;
 }
 
 // ─── STYLES ───────────────────────────────────────────────────────────────────
