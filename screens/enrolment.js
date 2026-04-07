@@ -1,4 +1,5 @@
 import { S, save } from '../state/index.js';
+import { autoServiceRiskFromChecks, autoClientRisk, autoGeoRisk, autoOverallRisk } from '../logic/index.js';
 import { infoBtn, infoPop, ratingBadge, toast} from '../components/index.js';
 
 export function screen() {

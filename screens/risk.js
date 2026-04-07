@@ -1,5 +1,5 @@
 import { S, DS_LIST, PF_TEXT, save } from '../state/index.js';
-import { autoServiceRiskFromChecks, autoClientRisk, autoGeoRisk, autoOverallRisk } from '../logic/index.js';
+import { complianceScore, autoServiceRiskFromChecks, autoClientRisk, autoGeoRisk, autoResidualRisk, autoOverallRisk } from '../logic/index.js';
 import { ratingBadge, infoBtn, infoPop, ratingRow, toast} from '../components/index.js';
 
 export function screen() {
