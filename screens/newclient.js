@@ -2,6 +2,17 @@ import { S, DS_LIST, save } from '../state/index.js';
 import { autoClientRiskRating } from '../logic/index.js';
 import { toast } from '../components/index.js';
 
+// ─── ROLE GUIDANCE ────────────────────────────────────────────────────────────
+const ROLE_GUIDANCE = {
+  'Individual / Sole Trader': { roles: ['Sole Trader','Authorised Representative'], note: 'Verify the individual\'s identity and screen for PEP/sanctions.' },
+  'Private Company':  { roles: ['Director','Beneficial Owner (≥25%)','Secretary','Authorised Representative','Other'], note: 'Record all directors and anyone who owns or controls ≥25% of shares or voting rights.' },
+  'Partnership':      { roles: ['Partner','Authorised Representative','Other'], note: 'Record all partners and any person with significant control.' },
+  'Trust':            { roles: ['Trustee (Individual)','Trustee (Corporate)','Settlor','Appointor / Protector','Beneficiary (≥25% unit holder)','Beneficial Owner','Other'], note: 'Record the trustee(s), settlor, appointor/protector, and any unit holders ≥25%. For corporate trustees, also record their directors.' },
+  'SMSF':             { roles: ['Trustee / Member','Corporate Trustee Director','Other'], note: 'Record all trustees and members. If a corporate trustee, also record its directors.' },
+  'Other':            { roles: ['Director','Owner','Authorised Representative','Other'], note: 'Record all individuals who own, control, or can benefit from this entity.' },
+};
+
+
 export function screen() {
   if (!S._clientDraft) S._clientDraft = {};
   const d = S._clientDraft;
