@@ -1,4 +1,5 @@
-import { S, save } from '../state/index.js';
+import { S, DS_LIST, save } from '../state/index.js';
+import { autoClientRiskRating } from '../logic/index.js';
 import { toast } from '../components/index.js';
 
 export function screen() {

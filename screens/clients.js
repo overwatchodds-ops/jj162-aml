@@ -1,4 +1,5 @@
-import { S, save } from '../state/index.js';
+import { S, DS_LIST, save } from '../state/index.js';
+import { autoClientRiskRating } from '../logic/index.js';
 
 export function screen() {
   const clients = S.clients || [];
@@ -599,4 +600,3 @@ window.saveClient = function() {
   delete S._clientDraft; delete S._clientEditIdx;
   save(); go('clients');
 };
-
