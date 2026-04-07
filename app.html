@@ -26,39 +26,47 @@
 <script type="module">
 // ─── IMPORTS ──────────────────────────────────────────────────────────────────
 import { S, save, load } from './state/index.js';
-import { Sidebar } from './components/index.js';
+import { Sidebar, TopNav } from './components/index.js';
 
-import * as ScreenDashboard   from './screens/dashboard.js';
-import * as ScreenFirm        from './screens/firm.js';
-import * as ScreenRisk        from './screens/risk.js';
-import * as ScreenProgram     from './screens/program.js';
-import * as ScreenStaff       from './screens/staff.js';
-import * as ScreenTraining    from './screens/training.js';
-import * as ScreenEnrolment   from './screens/enrolment.js';
-import * as ScreenClients     from './screens/clients.js';
-import * as ScreenNewClient   from './screens/newclient.js';
-import * as ScreenAddService  from './screens/addservice.js';
-import * as ScreenIncidents   from './screens/incidents.js';
-import * as ScreenNewIncident from './screens/newincident.js';
-import * as ScreenReport      from './screens/report.js';
-import * as ScreenAbout       from './screens/about.js';
+import * as ScreenDashboard          from './screens/dashboard.js';
+import * as ScreenFirm               from './screens/firm.js';
+import * as ScreenRisk               from './screens/risk.js';
+import * as ScreenProgram            from './screens/program.js';
+import * as ScreenStaff              from './screens/staff.js';
+import * as ScreenTraining           from './screens/training.js';
+import * as ScreenEnrolment          from './screens/enrolment.js';
+import * as ScreenClients            from './screens/clients.js';
+import * as ScreenNewClient          from './screens/newclient.js';
+import * as ScreenAddService         from './screens/addservice.js';
+import * as ScreenIncidents          from './screens/incidents.js';
+import * as ScreenNewIncident        from './screens/newincident.js';
+import * as ScreenReport             from './screens/report.js';
+import * as ScreenAbout              from './screens/about.js';
+import * as ScreenClientsOverview    from './screens/clients-overview.js';
+import * as ScreenPersonnelOverview  from './screens/personnel-overview.js';
+import * as ScreenComplianceOverview from './screens/compliance-overview.js';
+import * as ScreenReportsOverview    from './screens/reports-overview.js';
 
 // ─── SCREEN REGISTRY ──────────────────────────────────────────────────────────
 const Screens = {
-  dashboard:   ScreenDashboard.screen,
-  firm:        ScreenFirm.screen,
-  risk:        ScreenRisk.screen,
-  program:     ScreenProgram.screen,
-  staff:       ScreenStaff.screen,
-  training:    ScreenTraining.screen,
-  enrolment:   ScreenEnrolment.screen,
-  clients:     ScreenClients.screen,
-  newclient:   ScreenNewClient.screen,
-  addservice:  ScreenAddService.screen,
-  incidents:   ScreenIncidents.screen,
-  newincident: ScreenNewIncident.screen,
-  report:      ScreenReport.screen,
-  about:       ScreenAbout.screen,
+  dashboard:            ScreenDashboard.screen,
+  firm:                 ScreenFirm.screen,
+  risk:                 ScreenRisk.screen,
+  program:              ScreenProgram.screen,
+  staff:                ScreenStaff.screen,
+  training:             ScreenTraining.screen,
+  enrolment:            ScreenEnrolment.screen,
+  clients:              ScreenClients.screen,
+  newclient:            ScreenNewClient.screen,
+  addservice:           ScreenAddService.screen,
+  incidents:            ScreenIncidents.screen,
+  newincident:          ScreenNewIncident.screen,
+  report:               ScreenReport.screen,
+  about:                ScreenAbout.screen,
+  'clients-overview':   ScreenClientsOverview.screen,
+  'personnel-overview': ScreenPersonnelOverview.screen,
+  'compliance-overview':ScreenComplianceOverview.screen,
+  'reports-overview':   ScreenReportsOverview.screen,
 };
 
 // ─── NAVIGATION ───────────────────────────────────────────────────────────────
@@ -72,9 +80,10 @@ window.go = function(screen) {
 function render() {
   const screenFn = Screens[S.currentScreen] || Screens.dashboard;
   document.getElementById('app').innerHTML = `
-    <div class="flex min-h-screen">
-      <div class="w-60 flex-shrink-0">${Sidebar()}</div>
-      <main class="flex-1 ml-60 min-h-screen overflow-y-auto">${screenFn()}</main>
+    ${TopNav()}
+    <div class="flex" style="padding-top:48px;">
+      <div style="width:224px;flex-shrink:0;">${Sidebar()}</div>
+      <main class="flex-1 min-h-screen overflow-y-auto" style="margin-left:224px;">${screenFn()}</main>
     </div>`;
 }
 
