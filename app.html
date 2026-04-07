@@ -81,9 +81,11 @@ function render() {
   const screenFn = Screens[S.currentScreen] || Screens.dashboard;
   document.getElementById('app').innerHTML = `
     ${TopNav()}
-    <div class="flex" style="padding-top:48px;">
-      <div style="width:224px;flex-shrink:0;">${Sidebar()}</div>
-      <main class="flex-1 min-h-screen overflow-y-auto" style="margin-left:224px;"><div style="max-width:900px;margin:0 auto;">${screenFn()}</div></main>
+    <div style="padding-top:48px;padding-left:224px;min-height:100vh;">
+      ${Sidebar()}
+      <main style="min-height:100vh;display:flex;justify-content:center;padding:0 24px;">
+        <div style="width:100%;max-width:860px;">${screenFn()}</div>
+      </main>
     </div>`;
 }
 
