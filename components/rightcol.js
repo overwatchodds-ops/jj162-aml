@@ -26,46 +26,21 @@ const REGULATORY_UPDATES = [
 
 // ─── RIGHT COLUMN ─────────────────────────────────────────────────────────────
 export function RightCol() {
-  const f = S.firm;
-  const firmName = f.name || 'My Firm';
-  const amlco = f.appt?.amlco?.name || '—';
-  const abn = f.abn || '—';
+  const firmName = S.firm.name || 'My Firm';
 
   return `
     <div class="w-64 flex-shrink-0 fixed top-0 right-0 bottom-0 flex flex-col z-40 bg-slate-50 border-l border-slate-200">
 
       <!-- FIRM HEADER — flush with top nav height -->
-      <button onclick="go('firm')" class="h-12 flex items-center gap-2.5 px-4 border-b border-slate-200 hover:bg-slate-100 transition text-left flex-shrink-0 bg-white">
-        <div class="w-7 h-7 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
-          <span class="text-indigo-700 font-bold text-xs">${firmName.charAt(0).toUpperCase()}</span>
-        </div>
+      <button onclick="go('firm')" class="h-12 flex items-center gap-2 px-4 border-b border-slate-200 hover:bg-slate-100 transition text-left flex-shrink-0 bg-white w-full">
         <div class="overflow-hidden">
-          <div class="text-xs font-semibold text-slate-800 truncate">${firmName}</div>
-          <div class="text-[10px] text-slate-400">Firm Profile →</div>
+          <div class="text-sm font-semibold text-slate-800 truncate">${firmName}</div>
+          <div class="text-[10px] text-indigo-500 font-medium">Firm Profile →</div>
         </div>
       </button>
 
       <!-- SCROLLABLE CONTENT -->
       <div class="flex-1 overflow-y-auto p-4 space-y-4">
-
-        <!-- FIRM DETAILS -->
-        <div class="bg-white border border-slate-200 rounded-xl p-3 space-y-2 text-xs">
-          <div class="font-semibold text-slate-500 uppercase tracking-wide text-[10px]">Firm Details</div>
-          <div class="space-y-1.5">
-            <div class="flex justify-between gap-2">
-              <span class="text-slate-400">ABN</span>
-              <span class="font-medium text-slate-700 text-right">${abn}</span>
-            </div>
-            <div class="flex justify-between gap-2">
-              <span class="text-slate-400">AMLCO</span>
-              <span class="font-medium text-slate-700 text-right truncate max-w-[120px]">${amlco}</span>
-            </div>
-            <div class="flex justify-between gap-2">
-              <span class="text-slate-400">Obligations from</span>
-              <span class="font-medium text-slate-700">1 Jul 2026</span>
-            </div>
-          </div>
-        </div>
 
         <!-- REGULATORY UPDATES -->
         <div class="space-y-2">
