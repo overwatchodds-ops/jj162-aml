@@ -35,15 +35,8 @@ export function TopNav() {
     { id: 'compliance', label: 'Compliance Profile',  screen: 'compliance-overview' },
     { id: 'reports',    label: 'Reports',             screen: 'reports-overview' },
   ];
-  const firmName = S.firm.name || 'My Firm';
   return `
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200 h-12 flex items-center px-4">
-
-      <!-- LEFT: Logo -->
-      <div class="flex items-center gap-2 flex-shrink-0 w-56">
-        <img src="/favicon.png" alt="SimpleAML" class="w-6 h-6 rounded-md flex-shrink-0">
-        <span class="font-black text-slate-900 text-base tracking-tight">SimpleAML</span>
-      </div>
+    <nav class="fixed top-0 right-0 z-50 bg-white border-b border-slate-200 h-12 flex items-center px-4" style="left:224px;">
 
       <!-- CENTRE: Nav tabs -->
       <div class="flex-1 flex items-center justify-center gap-1">
@@ -56,18 +49,7 @@ export function TopNav() {
         }).join('')}
       </div>
 
-      <!-- RIGHT: Firm name -->
-      <div class="flex-shrink-0 w-56 flex justify-end">
-        <button onclick="go('firm')" class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition text-right">
-          <div>
-            <div class="text-xs font-semibold text-slate-700 truncate max-w-[160px]">${firmName}</div>
-            <div class="text-[10px] text-slate-400">Firm Profile</div>
-          </div>
-          <div class="w-7 h-7 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
-            <span class="text-indigo-700 font-bold text-xs">${firmName.charAt(0).toUpperCase()}</span>
-          </div>
-        </button>
-      </div>
+
 
     </nav>`;
 }
@@ -106,7 +88,11 @@ export function Sidebar() {
   };
 
   return `
-    <div class="w-56 bg-white border-r border-slate-200 flex flex-col fixed top-12 bottom-0 overflow-y-auto z-40">
+    <div class="w-56 bg-white border-r border-slate-200 flex flex-col fixed top-0 bottom-0 overflow-y-auto z-40">
+      <div class="flex items-center gap-2 px-4 h-12 border-b border-slate-200 flex-shrink-0">
+        <img src="/favicon.png" alt="SimpleAML" class="w-6 h-6 rounded-md flex-shrink-0">
+        <span class="font-black text-slate-900 text-base tracking-tight">SimpleAML</span>
+      </div>
       <div class="p-4 border-b border-slate-100">
         <div class="flex justify-between text-xs text-slate-400 mb-1"><span>Setup progress</span><span>${score}%</span></div>
         <div class="w-full bg-slate-100 h-1.5 rounded-full">
