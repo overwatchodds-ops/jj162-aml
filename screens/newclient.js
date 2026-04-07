@@ -13,6 +13,116 @@ const ROLE_GUIDANCE = {
 };
 
 
+
+// ─── ENTITY PART A ────────────────────────────────────────────────────────────
+function entityPartA(d) {
+  const t = d.entityType || 'Individual / Sole Trader';
+  const f = (label, id, val, placeholder, type) =>
+    `<div><label class="text-xs text-slate-500">${label}</label><input id="${id}" type="${type||'text'}" class="inp mt-1" value="${val||''}" placeholder="${placeholder||''}"></div>`;
+
+  if (t === 'Individual / Sole Trader') return `
+    <div class="grid grid-cols-2 gap-3">
+      ${f('ABN (if sole trader)','cl-abn',d.abn,'12 345 678 901')}
+      ${f('Occupation / industry','cl-industry',d.industry,'e.g. Plumber, Retail')}
+      ${f('Residential / business address','cl-reg-address',d.regAddress,'12 Main St, Sydney NSW')}
+      ${f('Source of funds','cl-source-funds',d.sourceFunds,'e.g. Business income, salary')}
+    </div>`;
+
+  if (t === 'Private Company' || t === 'Partnership') return `
+    <div class="grid grid-cols-2 gap-3">
+      ${f('ABN *','cl-abn',d.abn,'12 345 678 901')}
+      ${f('ACN','cl-acn',d.acn,'123 456 789')}
+      ${f('Registered address','cl-reg-address',d.regAddress,'123 Collins St, Melbourne VIC')}
+      ${f('Principal place of business','cl-business-address',d.businessAddress,'(if different from registered)')}
+      ${f('Jurisdiction of incorporation','cl-jurisdiction',d.jurisdiction,'e.g. Australia, Hong Kong')}
+      ${f('Date of incorporation','cl-inc-date',d.incDate,'','date')}
+      ${f('Industry / sector','cl-industry',d.industry,'e.g. Construction, Finance, Retail')}
+      ${f('Source of funds / wealth','cl-source-funds',d.sourceFunds,'e.g. Operating revenue, investment')}
+    </div>
+    <div class="mt-3 space-y-2">
+      <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-offshore" ${d.offshoreJurisdiction?'checked':''} onchange="updateClientDraftCheck('offshoreJurisdiction',this.checked)"> Offshore jurisdiction or foreign ownership involved</label>
+      <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-complex" ${d.complexStructure?'checked':''} onchange="updateClientDraftCheck('complexStructure',this.checked)"> Complex or multi-tiered ownership structure</label>
+      <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-cash" ${d.cashIntensiveIndustry?'checked':''} onchange="updateClientDraftCheck('cashIntensiveIndustry',this.checked)"> Cash-intensive industry (hospitality, retail, construction)</label>
+      <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-pep-ctrl" ${d.pepAmongControllers?'checked':''} onchange="updateClientDraftCheck('pepAmongControllers',this.checked)"> PEP identified among owners or directors</label>
+    </div>
+    <div class="mt-3">
+      <label class="text-xs text-slate-500">Shareholding / ownership structure notes</label>
+      <textarea id="cl-structure-notes" class="inp mt-1 text-xs" rows="2" placeholder="e.g. 100% owned by John Smith. No foreign ownership.">${d.structureNotes||''}</textarea>
+    </div>
+    <div class="mt-3 bg-slate-50 border rounded-xl p-3">
+      <div class="text-xs font-semibold text-slate-600 mb-2">Verification attestation</div>
+      <div class="space-y-2">
+        <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-abn-checked" ${d.abnChecked?'checked':''} onchange="updateClientDraftCheck('abnChecked',this.checked)"> ABN/ASIC registration confirmed via lookup</label>
+        <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-registry-checked" ${d.registryChecked?'checked':''} onchange="updateClientDraftCheck('registryChecked',this.checked)"> Share registry / company constitution sighted</label>
+        <div><label class="text-xs text-slate-500">Supporting document storage location</label><input id="cl-doc-location" type="text" class="inp mt-1 text-xs" value="${d.docLocation||''}" placeholder="e.g. SharePoint > Clients > Acme Holdings > CDD"></div>
+      </div>
+    </div>`;
+
+  if (t === 'Trust') return `
+    <div class="grid grid-cols-2 gap-3">
+      ${f('Trust name *','cl-trust-name',d.trustName,'e.g. Smith Family Trust')}
+      ${f('ABN / TFN','cl-abn',d.abn,'12 345 678 901')}
+      <div><label class="text-xs text-slate-500">Trust type *</label>
+        <select id="cl-trust-type" class="inp mt-1">
+          ${['Discretionary / Family','Unit Trust','Hybrid','Charitable','Testamentary','Other'].map(o=>`<option ${d.trustType===o?'selected':''}>${o}</option>`).join('')}
+        </select>
+      </div>
+      ${f('Jurisdiction','cl-jurisdiction',d.jurisdiction,'e.g. Australia')}
+      ${f('Source of funds / wealth','cl-source-funds',d.sourceFunds,'e.g. Investment income, property')}
+      ${f('Purpose of relationship','cl-trust-purpose',d.trustPurpose,'e.g. Property holding, investment management')}
+    </div>
+    <div class="mt-3 space-y-2">
+      <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-offshore" ${d.offshoreJurisdiction?'checked':''} onchange="updateClientDraftCheck('offshoreJurisdiction',this.checked)"> Offshore jurisdiction or foreign controllers involved</label>
+      <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-complex" ${d.complexStructure?'checked':''} onchange="updateClientDraftCheck('complexStructure',this.checked)"> Complex structure (e.g. corporate trustee with offshore ownership)</label>
+      <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-pep-ctrl" ${d.pepAmongControllers?'checked':''} onchange="updateClientDraftCheck('pepAmongControllers',this.checked)"> PEP identified among trustees, settlor or appointor</label>
+    </div>
+    <div class="mt-3 bg-slate-50 border rounded-xl p-3">
+      <div class="text-xs font-semibold text-slate-600 mb-2">Verification attestation</div>
+      <div class="space-y-2">
+        <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-deed-sighted" ${d.deedSighted?'checked':''} onchange="updateClientDraftCheck('deedSighted',this.checked)"> Trust deed sighted and reviewed</label>
+        <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-abn-checked" ${d.abnChecked?'checked':''} onchange="updateClientDraftCheck('abnChecked',this.checked)"> ABN / TFN confirmed</label>
+        <div><label class="text-xs text-slate-500">Trust deed storage location</label><input id="cl-doc-location" type="text" class="inp mt-1 text-xs" value="${d.docLocation||''}" placeholder="e.g. SharePoint > Clients > Smith Family Trust > CDD"></div>
+      </div>
+    </div>`;
+
+  if (t === 'SMSF') return `
+    <div class="grid grid-cols-2 gap-3">
+      ${f('Fund name *','cl-trust-name',d.trustName,'e.g. Smith Superannuation Fund')}
+      ${f('ABN *','cl-abn',d.abn,'12 345 678 901')}
+      <div><label class="text-xs text-slate-500">Trustee type *</label>
+        <select id="cl-trustee-type" class="inp mt-1">
+          ${['Individual Trustees','Corporate Trustee'].map(o=>`<option ${d.trusteeType===o?'selected':''}>${o}</option>`).join('')}
+        </select>
+      </div>
+      ${f('Source of contributions','cl-source-funds',d.sourceFunds,'e.g. Salary sacrifice, rollover from another fund')}
+    </div>
+    <div class="mt-3 space-y-2">
+      <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-complex" ${d.complexStructure?'checked':''} onchange="updateClientDraftCheck('complexStructure',this.checked)"> Unusual or complex investment arrangements</label>
+      <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-offshore" ${d.offshoreJurisdiction?'checked':''} onchange="updateClientDraftCheck('offshoreJurisdiction',this.checked)"> Foreign contributions or overseas assets</label>
+    </div>
+    <div class="mt-3 bg-slate-50 border rounded-xl p-3">
+      <div class="text-xs font-semibold text-slate-600 mb-2">Verification attestation</div>
+      <div class="space-y-2">
+        <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-abn-checked" ${d.abnChecked?'checked':''} onchange="updateClientDraftCheck('abnChecked',this.checked)"> ATO registration confirmed (ABN lookup)</label>
+        <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-abn-checked2" ${d.fundActive?'checked':''} onchange="updateClientDraftCheck('fundActive',this.checked)"> Fund confirmed as active and compliant</label>
+        <div><label class="text-xs text-slate-500">Supporting document storage location</label><input id="cl-doc-location" type="text" class="inp mt-1 text-xs" value="${d.docLocation||''}" placeholder="e.g. SharePoint > Clients > Smith SMSF > CDD"></div>
+      </div>
+    </div>`;
+
+  // Other
+  return `
+    <div class="grid grid-cols-2 gap-3">
+      ${f('ABN / registration number','cl-abn',d.abn,'')}
+      ${f('Registered address','cl-reg-address',d.regAddress,'')}
+      ${f('Jurisdiction','cl-jurisdiction',d.jurisdiction,'e.g. Australia')}
+      ${f('Source of funds','cl-source-funds',d.sourceFunds,'')}
+    </div>
+    <div class="mt-3 space-y-2">
+      <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-offshore" ${d.offshoreJurisdiction?'checked':''} onchange="updateClientDraftCheck('offshoreJurisdiction',this.checked)"> Offshore jurisdiction involved</label>
+      <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-complex" ${d.complexStructure?'checked':''} onchange="updateClientDraftCheck('complexStructure',this.checked)"> Complex structure</label>
+    </div>`;
+}
+
 export function screen() {
   if (!S._clientDraft) S._clientDraft = {};
   const d = S._clientDraft;
