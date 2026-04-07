@@ -36,7 +36,7 @@ export function TopNav() {
     { id: 'reports',    label: 'Reports',             screen: 'reports-overview' },
   ];
   return `
-    <nav class="fixed top-0 right-0 z-50 bg-white border-b border-slate-200 h-12 flex items-center px-4" style="left:224px;">
+    <nav class="fixed z-50 bg-white border-b border-slate-200 h-12 flex items-center px-4" style="left:224px;right:256px;">
 
       <!-- CENTRE: Nav tabs -->
       <div class="flex-1 flex items-center justify-center gap-1">
