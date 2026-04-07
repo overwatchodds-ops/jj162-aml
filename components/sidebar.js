@@ -100,15 +100,17 @@ export function TopNav() {
     { id: 'reports',    label: 'Reports',             screen: 'reports-overview' },
   ];
   return `
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200 h-12 flex items-center px-4 gap-1">
-      <div class="font-black text-slate-900 text-base tracking-tight mr-6 flex-shrink-0">SimpleAML</div>
-      ${tabs.map(t => {
-        const active = activeGroup === t.id;
-        const cls = active
-          ? 'text-indigo-700 font-semibold border-b-2 border-indigo-600'
-          : 'text-slate-500 hover:text-slate-800 border-b-2 border-transparent';
-        return `<button onclick="go('${t.screen}')" class="flex items-center h-12 px-3 text-sm transition ${cls} whitespace-nowrap">${t.label}${dot(t.id)}</button>`;
-      }).join('')}
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200 h-12 flex items-center">
+      <div class="w-full max-w-screen-xl mx-auto flex items-center px-4 gap-1">
+        <div class="font-black text-slate-900 text-base tracking-tight mr-6 flex-shrink-0">SimpleAML</div>
+        ${tabs.map(t => {
+          const active = activeGroup === t.id;
+          const cls = active
+            ? 'text-indigo-700 font-semibold border-b-2 border-indigo-600'
+            : 'text-slate-500 hover:text-slate-800 border-b-2 border-transparent';
+          return `<button onclick="go('${t.screen}')" class="flex items-center h-12 px-3 text-sm transition ${cls} whitespace-nowrap">${t.label}${dot(t.id)}</button>`;
+        }).join('')}
+      </div>
     </nav>`;
 }
 
