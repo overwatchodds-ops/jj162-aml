@@ -282,7 +282,6 @@ function entityPartA(d) {
       <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-complex" ${d.complexStructure?'checked':''} onchange="updateClientDraftCheck('complexStructure',this.checked)"> Complex structure</label>
     </div>`;
 }
-}
 
 // ─── ACTIONS ──────────────────────────────────────────────────────────────────
 window.updateClientDraftCheck = function(key, val) {
