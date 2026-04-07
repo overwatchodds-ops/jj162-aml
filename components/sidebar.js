@@ -1,5 +1,4 @@
 import { S } from '../state/index.js';
-import { complianceScore } from '../logic/index.js';
 
 // ─── GROUP MAP ────────────────────────────────────────────────────────────────
 // Maps every screen to its group. Used to derive active group from active screen.
@@ -59,10 +58,8 @@ export function Sidebar() {
   const activeGroup = SCREEN_GROUP[S.currentScreen] || 'dashboard';
   const cur = S.currentScreen;
   const a = (s) => cur === s
-    ? 'bg-indigo-50 text-indigo-700 font-semibold'
-    : 'text-slate-600 hover:bg-slate-50';
-  const score = complianceScore();
-
+    ? 'bg-indigo-50 text-indigo-700 font-medium'
+    : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700';
   const sidebarItems = {
     dashboard: `
       <button onclick="go('dashboard')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('dashboard')}">Overview</button>
@@ -78,10 +75,10 @@ export function Sidebar() {
       <button onclick="go('training')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('training')}">Training Register</button>`,
     compliance: `
       <button onclick="go('compliance-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('compliance-overview')}">Overview</button>
-      <button onclick="go('firm')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm')}">1. Firm Profile</button>
-      <button onclick="go('risk')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('risk')}">2. Risk Assessment</button>
-      <button onclick="go('program')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('program')}">3. AML/CTF Program</button>
-      <button onclick="go('enrolment')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('enrolment')}">4. AUSTRAC Enrolment</button>`,
+      <button onclick="go('firm')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm')}">Firm Profile</button>
+      <button onclick="go('risk')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('risk')}">Risk Assessment</button>
+      <button onclick="go('program')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('program')}">AML/CTF Program</button>
+      <button onclick="go('enrolment')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('enrolment')}">AUSTRAC Enrolment</button>`,
     reports: `
       <button onclick="go('reports-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('reports-overview')}">Overview</button>
       <button onclick="go('report')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('report')}">Compliance Report</button>`,
@@ -93,15 +90,8 @@ export function Sidebar() {
         <img src="/favicon.png" alt="SimpleAML" class="w-6 h-6 rounded-md flex-shrink-0">
         <span class="font-black text-slate-900 text-base tracking-tight">SimpleAML</span>
       </div>
-      <div class="p-4 border-b border-slate-100">
-        <div class="flex justify-between text-xs text-slate-400 mb-1"><span>Setup progress</span><span>${score}%</span></div>
-        <div class="w-full bg-slate-100 h-1.5 rounded-full">
-          <div class="bg-indigo-500 h-1.5 rounded-full transition-all" style="width:${score}%"></div>
-        </div>
-      </div>
-      <div class="px-2 py-2 bg-amber-50 border-b border-amber-100">
-        <p class="text-[10px] text-amber-700 leading-relaxed">Obligations from <strong>1 July 2026</strong>. Complete CDD before providing designated services.</p>
-      </div>
+
+
       <nav class="p-2 flex-1 space-y-0.5 text-sm">
         ${sidebarItems[activeGroup] || sidebarItems.dashboard}
       </nav>
