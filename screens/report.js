@@ -1,4 +1,5 @@
-import { S, save } from '../state/index.js';
+import { S, DS_LIST, save } from '../state/index.js';
+import { autoServiceRiskFromChecks, autoClientRisk, autoGeoRisk, autoOverallRisk } from '../logic/index.js';
 
 export function screen() {
   const reportHistory = S.report?.history || [];
