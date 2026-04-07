@@ -162,17 +162,6 @@ export function screen() {
 
 // NEW CLIENT
 // ─── Auto risk rating ───────────────────────────────────────────────────────
-function autoClientRiskRating(entityType, service, screenResult, extra) {
-  extra = extra || {};
-  if (screenResult === 'PEP' || screenResult === 'Sanctions') return 'High';
-  if (extra.offshoreJurisdiction) return 'High';
-  if (extra.complexStructure)     return 'High';
-  if (extra.pepAmongControllers)  return 'High';
-  if (entityType === 'Trust' || entityType === 'SMSF') {
-    if (['ds3','ds7','ds8','ds5'].includes(service)) return 'High';
-    if (extra.cashIntensiveIndustry) return 'High';
-    return 'Medium';
-  }
   if (['ds3','ds7','ds8','ds5'].includes(service)) return 'High';
   if (['ds1','ds6','ds4','ds2'].includes(service)) return 'Medium';
   if (entityType === 'Private Company' || entityType === 'Partnership') return 'Medium';
@@ -301,17 +290,6 @@ function entityPartA(d) {
 }
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
-function autoClientRiskRating(entityType, service, screenResult, extra) {
-  extra = extra || {};
-  if (screenResult === 'PEP' || screenResult === 'Sanctions') return 'High';
-  if (extra.offshoreJurisdiction) return 'High';
-  if (extra.complexStructure)     return 'High';
-  if (extra.pepAmongControllers)  return 'High';
-  if (entityType === 'Trust' || entityType === 'SMSF') {
-    if (['ds3','ds7','ds8','ds5'].includes(service)) return 'High';
-    if (extra.cashIntensiveIndustry) return 'High';
-    return 'Medium';
-  }
   if (['ds3','ds7','ds8','ds5'].includes(service)) return 'High';
   if (['ds1','ds6','ds4','ds2'].includes(service)) return 'Medium';
   if (entityType === 'Private Company' || entityType === 'Partnership') return 'Medium';
