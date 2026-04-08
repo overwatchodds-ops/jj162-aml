@@ -37,7 +37,7 @@ ${row('Appointments', !!f.appt?.amlco?.name, f.appt?.amlco?.name ? 'Complete' : 
 
       ${firmDone ? `
       <div class="bg-white border border-slate-200 rounded-xl p-5 space-y-3">
-        <h2 class="text-sm font-bold text-slate-700">Practice Details</h2>
+        <h2 class="text-sm font-bold text-slate-700">Firm Details</h2>
         <div class="grid grid-cols-2 gap-3 text-xs">
           <div><span class="text-slate-400">Firm name</span><div class="font-medium text-slate-700 mt-0.5">${f.name}</div></div>
           <div><span class="text-slate-400">ABN</span><div class="font-medium text-slate-700 mt-0.5">${f.abn || '—'}</div></div>
