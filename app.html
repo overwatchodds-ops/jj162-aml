@@ -29,7 +29,6 @@ import { S, save, load } from './state/index.js';
 import { Sidebar, TopNav, RightCol } from './components/index.js';
 
 import * as ScreenDashboard          from './screens/dashboard.js';
-import * as ScreenFirm               from './screens/firm.js';
 import * as ScreenRisk               from './screens/risk.js';
 import * as ScreenProgram            from './screens/program.js';
 import * as ScreenStaff              from './screens/staff.js';
@@ -54,7 +53,7 @@ import * as ScreenReportsOverview    from './screens/reports-overview.js';
 // ─── SCREEN REGISTRY ──────────────────────────────────────────────────────────
 const Screens = {
   dashboard:            ScreenDashboard.screen,
-  firm:                 ScreenFirm.screen,
+  firm:                 ScreenFirmDetails.screen,
   risk:                 ScreenRisk.screen,
   program:              ScreenProgram.screen,
   staff:                ScreenStaff.screen,
