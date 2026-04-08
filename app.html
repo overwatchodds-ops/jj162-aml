@@ -29,7 +29,7 @@ import { S, save, load } from './state/index.js';
 import { Sidebar, TopNav, RightCol } from './components/index.js';
 
 import * as ScreenDashboard          from './screens/dashboard.js';
-import * as ScreenFirm               from './screens/firm-details.js';
+import * as ScreenFirm               from './screens/firm.js';
 import * as ScreenRisk               from './screens/risk.js';
 import * as ScreenProgram            from './screens/program.js';
 import * as ScreenStaff              from './screens/staff.js';
@@ -42,6 +42,7 @@ import * as ScreenIncidents          from './screens/incidents.js';
 import * as ScreenNewIncident        from './screens/newincident.js';
 import * as ScreenReport             from './screens/report.js';
 import * as ScreenAbout              from './screens/about.js';
+import * as ScreenAccountBackup      from './screens/account-backup.js';
 import * as ScreenClientsOverview    from './screens/clients-overview.js';
 import * as ScreenPersonnelOverview  from './screens/personnel-overview.js';
 import * as ScreenComplianceOverview from './screens/compliance-overview.js';
@@ -66,6 +67,7 @@ const Screens = {
   newincident:          ScreenNewIncident.screen,
   report:               ScreenReport.screen,
   about:                ScreenAbout.screen,
+  'account-backup':     ScreenAccountBackup.screen,
   'clients-overview':   ScreenClientsOverview.screen,
   'personnel-overview': ScreenPersonnelOverview.screen,
   'compliance-overview':ScreenComplianceOverview.screen,
