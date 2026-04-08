@@ -9,10 +9,10 @@ export const SCREEN_GROUP = {
   firm:                 'firm',
   'firm-details':       'firm',
   'firm-appointments':  'firm',
-  enrolment:            'firm',
   'compliance-overview':'compliance',
   risk:                 'compliance',
   program:              'compliance',
+  enrolment:            'compliance',
   'personnel-overview': 'personnel',
   staff:                'personnel',
   training:             'personnel',
@@ -70,12 +70,12 @@ export function Sidebar() {
       <button onclick="go('about')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('about')}">About &amp; Support</button>`,
     firm: `
       <button onclick="go('firm-details')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm-details')}">Firm Details</button>
-      <button onclick="go('firm-appointments')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm-appointments')}">Appointments</button>
-      <button onclick="go('enrolment')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('enrolment')}">AUSTRAC</button>`,
+      <button onclick="go('firm-appointments')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm-appointments')}">Appointments</button>`,
     compliance: `
       <button onclick="go('compliance-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('compliance-overview')}">Overview</button>
       <button onclick="go('risk')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('risk')}">Risk Assessment</button>
-      <button onclick="go('program')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('program')}">AML/CTF Program</button>`,
+      <button onclick="go('program')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('program')}">AML/CTF Program</button>
+      <button onclick="go('enrolment')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('enrolment')}">AUSTRAC Enrolment</button>`,
     personnel: `
       <button onclick="go('personnel-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('personnel-overview')}">Overview</button>
       <button onclick="go('staff')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('staff')}">Key Personnel Vetting</button>
