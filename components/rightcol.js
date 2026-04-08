@@ -35,7 +35,7 @@ export function RightCol() {
       <button onclick="go('firm')" class="h-12 flex items-center gap-2 px-4 border-b border-slate-200 hover:bg-slate-100 transition text-left flex-shrink-0 bg-white w-full">
         <div class="overflow-hidden">
           <div class="text-sm font-semibold text-slate-800 truncate">${firmName}</div>
-          <div class="text-[10px] text-indigo-500 font-medium">Firm Profile →</div>
+          <div class="text-[10px] text-indigo-500 font-medium">Firm Details →</div>
         </div>
       </button>
 
