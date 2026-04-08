@@ -6,14 +6,15 @@ export function screen() {
 
   const riskDone    = !!(S.scope.overallRating || S.scope.noneConfirmed);
   const programDone = !!(S.program.approvedBy);
+  const enrolDone   = !!(S.enrolment.enrolled || S.austracConfirmed);
 
   const riskReview  = days(S.scope.nextReview);
   const progReview  = days(S.program.nextReview);
   const riskOverdue = riskReview !== null && riskReview < 0;
   const progOverdue = progReview !== null && progReview < 0;
 
-  const total = 2;
-  const done  = [riskDone, programDone].filter(Boolean).length;
+  const total = 3;
+  const done  = [riskDone, programDone, enrolDone].filter(Boolean).length;
 
   const statusBadge = (ok, warn, label) => {
     const cls = ok ? 'bg-green-100 text-green-700' : warn ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700';
@@ -58,6 +59,7 @@ export function screen() {
               !riskDone ? 'Not completed' : riskOverdue ? `Review overdue ${Math.abs(riskReview)}d` : riskReview !== null && riskReview <= 30 ? `Review due in ${riskReview}d` : 'Complete', 'risk')}
             ${row('AML/CTF Program', programDone && !progOverdue, progOverdue,
               !programDone ? 'Not approved' : progOverdue ? `Review overdue ${Math.abs(progReview)}d` : progReview !== null && progReview <= 30 ? `Review due in ${progReview}d` : 'Complete', 'program')}
+            ${row('AUSTRAC Enrolment', enrolDone, false, enrolDone ? 'Confirmed' : 'Not yet confirmed', 'enrolment')}}
           </tbody>
         </table>
       </div>
