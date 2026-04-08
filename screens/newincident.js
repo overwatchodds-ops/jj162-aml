@@ -16,7 +16,7 @@ export function screen() {
   const clientInds = selectedClient ? (selectedClient.individuals||[]) : [];
 
   return `
-    <div class="p-8 max-w-2xl space-y-6">
+    <div class="py-8 space-y-6">
       <div class="flex items-center gap-4">
         <button onclick="go('incidents')" class="text-slate-400 hover:text-slate-600 text-sm">← Incident Register</button>
         <h1 class="text-2xl font-bold">${isEdit ? 'Edit Incident' : 'New Incident'}</h1>

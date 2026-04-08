@@ -5,7 +5,7 @@ export function screen() {
   const incidents = S.incidents || [];
   const fmtDate = (d) => d ? new Date(d).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '—';
   return `
-    <div class="p-8 max-w-5xl mx-auto space-y-6">
+    <div class="py-8 space-y-6">
       <div class="flex items-center justify-between">
         <div>
           <h1 class="text-2xl font-bold">SMR &amp; Incident Register</h1>

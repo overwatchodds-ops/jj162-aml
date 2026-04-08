@@ -150,7 +150,7 @@ export function screen() {
     </div>`;
 
   return `
-    <div class="p-8 max-w-5xl mx-auto space-y-4">
+    <div class="py-8 space-y-4">
       <div class="flex items-center justify-between">
         <div>
           <h1 class="text-2xl font-bold">Client Register</h1>

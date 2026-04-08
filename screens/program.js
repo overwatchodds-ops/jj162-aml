@@ -11,7 +11,7 @@ export function screen() {
     ['poltr','Training Policy','How and when staff are trained'],
   ];
   return `
-    <div class="p-8 max-w-2xl space-y-6">
+    <div class="py-8 space-y-6">
       <div><h1 class="text-2xl font-bold">AML/CTF Program</h1><p class="text-slate-400 text-sm mt-1">Attach your program documents and record senior manager sign-off.</p></div>
       <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 text-xs text-blue-700">These documents are <strong>internal records held by your firm — not submitted to AUSTRAC</strong>. They are the primary evidence reviewed in your annual compliance program review and examined by your independent evaluator every 3 years (~2029).</div>
 

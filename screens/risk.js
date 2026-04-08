@@ -22,7 +22,7 @@ export function screen() {
   const effectiveGR = sc.geoRatingOverride     || autoGR;
   const effectiveOR = sc.overallRatingOverride || autoOR;
 
-  return `<div class="p-8 max-w-2xl space-y-6">
+  return `<div class="py-8 space-y-6">
     <div>
       <h1 class="text-2xl font-bold">Risk Assessment</h1>
       <p class="text-slate-400 text-sm mt-1">Work through each section top to bottom. Risk ratings are calculated automatically from your selections.</p>

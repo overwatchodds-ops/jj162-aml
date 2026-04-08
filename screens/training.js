@@ -6,7 +6,7 @@ export function screen() {
   const d = S._trainingDraft || {};
   const thCls = 'text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-4 py-3';
   return `
-    <div class="p-8 max-w-5xl mx-auto space-y-6">
+    <div class="py-8 space-y-6">
       <div class="flex items-center justify-between">
         <div>
           <div class="flex items-center gap-2">

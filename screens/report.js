@@ -5,7 +5,7 @@ export function screen() {
   const reportHistory = S.report?.history || [];
   const storageLocation = S.report?.storageLocation || '';
   return `
-    <div class="p-8 max-w-2xl space-y-6">
+    <div class="py-8 space-y-6">
       <div>
         <h1 class="text-2xl font-bold">AML/CTF Compliance Report</h1>
         <p class="text-slate-400 text-sm mt-1">Generate a summary of your firm's AML/CTF compliance records to assist in completing AUSTRAC's Compliance Report when requested.</p>

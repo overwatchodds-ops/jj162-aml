@@ -140,7 +140,7 @@ export function screen() {
   const guidance = ROLE_GUIDANCE[entityType] || ROLE_GUIDANCE['Other'];
 
   return `
-    <div class="p-8 max-w-2xl space-y-6">
+    <div class="py-8 space-y-6">
       <div class="flex items-center gap-4 flex-wrap">
         <button onclick="go('clients')" class="text-slate-400 hover:text-slate-600 text-sm">← Client Register</button>
         <h1 class="text-2xl font-bold">${S._clientEditIdx !== undefined ? 'Edit Client — '+(S.clients[S._clientEditIdx]?.name||'') : 'New Client'}</h1>

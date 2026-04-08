@@ -2,7 +2,7 @@ import { S, save } from '../state/index.js';
 
 export function screen() {
   return `
-    <div class="p-8 max-w-2xl space-y-6">
+    <div class="py-8 space-y-6">
       <div>
         <h1 class="text-2xl font-bold">About &amp; Support</h1>
         <p class="text-slate-400 text-sm mt-1">Product information and contact details</p>

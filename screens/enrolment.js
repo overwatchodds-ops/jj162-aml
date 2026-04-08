@@ -40,7 +40,7 @@ export function screen() {
   const residualCls = residualRisk==='High' ? 'text-red-600' : residualRisk==='Medium' ? 'text-amber-600' : 'text-green-600';
 
   return `
-    <div class="p-8 max-w-2xl space-y-6">
+    <div class="py-8 space-y-6">
       <div>
         <h1 class="text-2xl font-bold">AUSTRAC Enrolment</h1>
         <p class="text-slate-400 text-sm mt-1">Complete your controls declaration before enrolling. This is the final step before your obligations begin.</p>

@@ -21,7 +21,7 @@ export function screen() {
   const currentRiskCls = client.risk==='High'?'bg-red-100 text-red-700':client.risk==='Medium'?'bg-amber-100 text-amber-700':'bg-green-100 text-green-700';
   const riskChanged = newServiceId && autoRisk !== client.risk;
   return `
-    <div class="p-8 max-w-2xl space-y-6">
+    <div class="py-8 space-y-6">
       <div class="flex items-center gap-4">
         <button onclick="go('clients')" class="text-slate-400 hover:text-slate-600 text-sm">← Client Register</button>
         <h1 class="text-2xl font-bold">Add Service — ${client.name}</h1>
