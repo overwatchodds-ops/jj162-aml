@@ -5,20 +5,21 @@ import { S } from '../state/index.js';
 export const SCREEN_GROUP = {
   dashboard:            'dashboard',
   about:                'dashboard',
+  'firm-overview':      'firm',
+  firm:                 'firm',
+  enrolment:            'firm',
+  'compliance-overview':'compliance',
+  risk:                 'compliance',
+  program:              'compliance',
+  'personnel-overview': 'personnel',
+  staff:                'personnel',
+  training:             'personnel',
   'clients-overview':   'clients',
   clients:              'clients',
   newclient:            'clients',
   addservice:           'clients',
   incidents:            'clients',
   newincident:          'clients',
-  'personnel-overview': 'personnel',
-  staff:                'personnel',
-  training:             'personnel',
-  'compliance-overview':'compliance',
-  firm:                 'compliance',
-  risk:                 'compliance',
-  program:              'compliance',
-  enrolment:            'compliance',
   'reports-overview':   'reports',
   report:               'reports',
 };
@@ -28,11 +29,12 @@ export const SCREEN_GROUP = {
 export function TopNav() {
   const activeGroup = SCREEN_GROUP[S.currentScreen] || 'dashboard';
   const tabs = [
-    { id: 'dashboard',  label: 'Dashboard',          screen: 'dashboard' },
-    { id: 'clients',    label: 'Clients',             screen: 'clients-overview' },
-    { id: 'personnel',  label: 'Personnel',           screen: 'personnel-overview' },
-    { id: 'compliance', label: 'Compliance Profile',  screen: 'compliance-overview' },
-    { id: 'reports',    label: 'Reports',             screen: 'reports-overview' },
+    { id: 'dashboard',  label: 'Dashboard',   screen: 'dashboard' },
+    { id: 'firm',       label: 'Firm',        screen: 'firm' },
+    { id: 'compliance', label: 'Compliance',  screen: 'compliance-overview' },
+    { id: 'personnel',  label: 'Personnel',   screen: 'personnel-overview' },
+    { id: 'clients',    label: 'Clients',     screen: 'clients-overview' },
+    { id: 'reports',    label: 'Reports',     screen: 'reports-overview' },
   ];
   return `
     <nav class="fixed z-50 bg-white border-b border-slate-200 h-12 flex items-center px-4" style="left:224px;right:256px;">
@@ -64,21 +66,22 @@ export function Sidebar() {
     dashboard: `
       <button onclick="go('dashboard')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('dashboard')}">Overview</button>
       <button onclick="go('about')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('about')}">About &amp; Support</button>`,
+    firm: `
+      <button onclick="go('firm')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm')}">Firm Profile</button>
+      <button onclick="go('enrolment')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('enrolment')}">AUSTRAC Enrolment</button>`,
+    compliance: `
+      <button onclick="go('compliance-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('compliance-overview')}">Overview</button>
+      <button onclick="go('risk')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('risk')}">Risk Assessment</button>
+      <button onclick="go('program')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('program')}">AML/CTF Program</button>`,
+    personnel: `
+      <button onclick="go('personnel-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('personnel-overview')}">Overview</button>
+      <button onclick="go('staff')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('staff')}">Key Personnel Vetting</button>
+      <button onclick="go('training')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('training')}">Training Register</button>`,
     clients: `
       <button onclick="go('clients-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('clients-overview')}">Overview</button>
       <button onclick="go('clients')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('clients')}">Client Register</button>
       <button onclick="go('newclient')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('newclient')}">↳ New Client (CDD)</button>
       <button onclick="go('incidents')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('incidents')}">SMR &amp; Incident Register</button>`,
-    personnel: `
-      <button onclick="go('personnel-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('personnel-overview')}">Overview</button>
-      <button onclick="go('staff')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('staff')}">Key Personnel Vetting</button>
-      <button onclick="go('training')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('training')}">Training Register</button>`,
-    compliance: `
-      <button onclick="go('compliance-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('compliance-overview')}">Overview</button>
-      <button onclick="go('firm')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm')}">Firm Profile</button>
-      <button onclick="go('risk')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('risk')}">Risk Assessment</button>
-      <button onclick="go('program')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('program')}">AML/CTF Program</button>
-      <button onclick="go('enrolment')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('enrolment')}">AUSTRAC Enrolment</button>`,
     reports: `
       <button onclick="go('reports-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('reports-overview')}">Overview</button>
       <button onclick="go('report')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('report')}">Compliance Report</button>`,
