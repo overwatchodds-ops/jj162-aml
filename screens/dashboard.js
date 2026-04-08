@@ -77,7 +77,7 @@ export function screen() {
             </tr>
           </thead>
           <tbody>
-            ${statusRow('Firm Profile', firmDone, false, null, 'firm')}
+            ${statusRow('Firm Details', firmDone, false, null, 'firm')}
             ${statusRow('AML/CTF Risk Assessment', riskDone && !riskOverdue, riskDueSoon, riskOverdue ? `Overdue ${Math.abs(riskReview)}d` : riskDueSoon ? `Due in ${riskReview}d` : null, 'risk')}
             ${statusRow('AML/CTF Program', programDone && !progOverdue, progDueSoon, progOverdue ? `Review overdue` : progDueSoon ? `Review in ${progReview}d` : null, 'program')}
             ${statusRow('AUSTRAC Enrolment', enrolDone, false, null, 'enrolment')}
