@@ -61,7 +61,7 @@ export function screen() {
       <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4 flex items-start justify-between gap-4">
         <div>
           <div class="text-sm font-semibold text-indigo-800 mb-0.5">New to AML/CTF?</div>
-          <div class="text-xs text-indigo-700">Complete the first 3 items in the sidebar — Firm Profile, Risk Assessment, and AML/CTF Program — to be ready for 1 July 2026.</div>
+          <div class="text-xs text-indigo-700">Complete the first 3 items in the sidebar — Firm Details, Risk Assessment, and AML/CTF Program — to be ready for 1 July 2026.</div>
         </div>
         <button onclick="go('firm')" class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg font-semibold hover:bg-indigo-700 transition whitespace-nowrap flex-shrink-0">Start here →</button>
       </div>` : ''}
