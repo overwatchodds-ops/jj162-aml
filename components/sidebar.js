@@ -7,6 +7,8 @@ export const SCREEN_GROUP = {
   about:                'dashboard',
   'firm-overview':      'firm',
   firm:                 'firm',
+  'firm-details':       'firm',
+  'firm-appointments':  'firm',
   enrolment:            'firm',
   'compliance-overview':'compliance',
   risk:                 'compliance',
@@ -30,7 +32,7 @@ export function TopNav() {
   const activeGroup = SCREEN_GROUP[S.currentScreen] || 'dashboard';
   const tabs = [
     { id: 'dashboard',  label: 'Dashboard',   screen: 'dashboard' },
-    { id: 'firm',       label: 'Firm',        screen: 'firm' },
+    { id: 'firm',       label: 'Firm',        screen: 'firm-details' },
     { id: 'compliance', label: 'Compliance',  screen: 'compliance-overview' },
     { id: 'personnel',  label: 'Personnel',   screen: 'personnel-overview' },
     { id: 'clients',    label: 'Clients',     screen: 'clients-overview' },
@@ -67,8 +69,9 @@ export function Sidebar() {
       <button onclick="go('dashboard')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('dashboard')}">Overview</button>
       <button onclick="go('about')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('about')}">About &amp; Support</button>`,
     firm: `
-      <button onclick="go('firm')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm')}">Firm Profile</button>
-      <button onclick="go('enrolment')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('enrolment')}">AUSTRAC Enrolment</button>`,
+      <button onclick="go('firm-details')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm-details')}">Firm Details</button>
+      <button onclick="go('firm-appointments')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm-appointments')}">Appointments</button>
+      <button onclick="go('enrolment')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('enrolment')}">AUSTRAC</button>`,
     compliance: `
       <button onclick="go('compliance-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('compliance-overview')}">Overview</button>
       <button onclick="go('risk')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('risk')}">Risk Assessment</button>
