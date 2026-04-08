@@ -32,7 +32,7 @@ export function TopNav() {
   const activeGroup = SCREEN_GROUP[S.currentScreen] || 'dashboard';
   const tabs = [
     { id: 'dashboard',  label: 'Dashboard',   screen: 'dashboard' },
-    { id: 'firm',       label: 'Firm',        screen: 'firm-details' },
+    { id: 'firm',       label: 'Firm',        screen: 'firm-overview' },
     { id: 'compliance', label: 'Compliance',  screen: 'compliance-overview' },
     { id: 'personnel',  label: 'Personnel',   screen: 'personnel-overview' },
     { id: 'clients',    label: 'Clients',     screen: 'clients-overview' },
