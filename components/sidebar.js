@@ -5,6 +5,7 @@ import { S } from '../state/index.js';
 export const SCREEN_GROUP = {
   dashboard:            'dashboard',
   about:                'dashboard',
+  'account-backup':     'dashboard',
   'firm-overview':      'firm',
   firm:                 'firm',
   'firm-details':       'firm',
@@ -32,7 +33,7 @@ export function TopNav() {
   const activeGroup = SCREEN_GROUP[S.currentScreen] || 'dashboard';
   const tabs = [
     { id: 'dashboard',  label: 'Dashboard',   screen: 'dashboard' },
-    { id: 'firm',       label: 'Firm',        screen: 'firm-overview' },
+    { id: 'firm',       label: 'Firm',        screen: 'firm-details' },
     { id: 'compliance', label: 'Compliance',  screen: 'compliance-overview' },
     { id: 'personnel',  label: 'Personnel',   screen: 'personnel-overview' },
     { id: 'clients',    label: 'Clients',     screen: 'clients-overview' },
@@ -67,7 +68,11 @@ export function Sidebar() {
   const sidebarItems = {
     dashboard: `
       <button onclick="go('dashboard')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('dashboard')}">Overview</button>
-      <button onclick="go('about')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('about')}">About &amp; Support</button>`,
+      <button onclick="go('about')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('about')}">About</button>
+      <button onclick="go('account-backup')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('account-backup')}">Account Backup</button>
+      <a href="https://simpleaml.com.au/faq.html" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block text-sm">FAQ ↗</a>
+      <a href="https://simpleaml.com.au/contact.html" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block text-sm">Contact ↗</a>
+      <a href="https://simpleaml.com.au/disclaimer.html" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block text-sm">Disclaimer ↗</a>`,
     firm: `
       <button onclick="go('firm-details')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm-details')}">Firm Details</button>
       <button onclick="go('firm-appointments')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm-appointments')}">Appointments</button>`,
