@@ -4,18 +4,16 @@ export function screen() {
   const now = new Date();
   const days = (d) => d ? Math.ceil((new Date(d) - now) / (1000 * 60 * 60 * 24)) : null;
 
-  const firmDone    = Object.keys(S.firm).length > 2;
   const riskDone    = !!(S.scope.overallRating || S.scope.noneConfirmed);
   const programDone = !!(S.program.approvedBy);
-  const enrolDone   = !!(S.enrolment.enrolled);
 
   const riskReview  = days(S.scope.nextReview);
   const progReview  = days(S.program.nextReview);
   const riskOverdue = riskReview !== null && riskReview < 0;
   const progOverdue = progReview !== null && progReview < 0;
 
-  const total = 4;
-  const done  = [firmDone, riskDone, programDone, enrolDone].filter(Boolean).length;
+  const total = 2;
+  const done  = [riskDone, programDone].filter(Boolean).length;
 
   const statusBadge = (ok, warn, label) => {
     const cls = ok ? 'bg-green-100 text-green-700' : warn ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700';
@@ -34,8 +32,8 @@ export function screen() {
     <div class="p-8 max-w-3xl mx-auto space-y-6">
       <div class="flex items-start justify-between">
         <div>
-          <h1 class="text-2xl font-bold">Compliance Profile</h1>
-          <p class="text-slate-400 text-sm mt-1">Your firm's AML/CTF program foundation — firm details, risk assessment, program approval, and AUSTRAC enrolment.</p>
+          <h1 class="text-2xl font-bold">Compliance</h1>
+          <p class="text-slate-400 text-sm mt-1">Your AML/CTF risk assessment and program approval.</p>
         </div>
         <div class="text-right">
           <div class="text-3xl font-black ${done === total ? 'text-green-600' : done > 0 ? 'text-amber-500' : 'text-red-500'}">${done}/${total}</div>
@@ -56,12 +54,10 @@ export function screen() {
         <div class="px-4 py-2.5 bg-slate-50 border-b text-xs font-semibold text-slate-500 uppercase tracking-wide">Section Status</div>
         <table class="w-full text-sm border-collapse">
           <tbody>
-            ${row('Firm Profile', firmDone, false, firmDone ? 'Complete' : 'Not started', 'firm')}
             ${row('AML/CTF Risk Assessment', riskDone && !riskOverdue, riskOverdue, 
               !riskDone ? 'Not completed' : riskOverdue ? `Review overdue ${Math.abs(riskReview)}d` : riskReview !== null && riskReview <= 30 ? `Review due in ${riskReview}d` : 'Complete', 'risk')}
             ${row('AML/CTF Program', programDone && !progOverdue, progOverdue,
               !programDone ? 'Not approved' : progOverdue ? `Review overdue ${Math.abs(progReview)}d` : progReview !== null && progReview <= 30 ? `Review due in ${progReview}d` : 'Complete', 'program')}
-            ${row('AUSTRAC Enrolment', enrolDone, false, enrolDone ? 'Recorded' : 'Not recorded', 'enrolment')}
           </tbody>
         </table>
       </div>
