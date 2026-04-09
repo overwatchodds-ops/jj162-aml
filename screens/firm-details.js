@@ -99,5 +99,9 @@ window.saveFirmDetails = function() {
     phone:    document.getElementById('fp-phone')?.value||'',
     appt:     existingAppt,
   };
+  const isFirstSave = !S.firm.newsletterShown;
   save(); toast('Firm details saved');
+  if (isFirstSave && typeof window.showNewsletterModal === 'function') {
+    window.showNewsletterModal();
+  }
 };
