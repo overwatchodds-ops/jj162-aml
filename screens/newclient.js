@@ -480,9 +480,11 @@ export function screen() {
           <div class="text-sm font-bold text-slate-800">${d.entityType}</div>
         </div>
       </div>
+      ${!isEditing ? `
       <button onclick="changeEntityType()" class="text-xs text-amber-600 border border-amber-200 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-lg font-semibold transition">
         Change ↓
-      </button>
+      </button>` : `
+      <span class="text-xs text-slate-400 italic">Entity type is locked for existing records</span>`}
     </div>` : ''}
 
     <!-- PANEL A: ENTITY & IDENTITY -->
