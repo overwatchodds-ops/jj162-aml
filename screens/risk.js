@@ -1,4 +1,5 @@
 import { S, DS_LIST, PF_TEXT, save } from '../state/index.js';
+import { classify, resolveGreyZone } from '../logic/classifier.js';
 import { complianceScore, autoServiceRiskFromChecks, autoClientRisk, autoGeoRisk, autoResidualRisk, autoOverallRisk } from '../logic/index.js';
 import { ratingBadge, infoBtn, infoPop, ratingRow, toast} from '../components/index.js';
 
@@ -28,37 +29,101 @@ export function screen() {
       <p class="text-slate-400 text-sm mt-1">Work through each section top to bottom. Risk ratings are calculated automatically from your selections.</p>
     </div>
 
-    <!-- SECTION 1 -->
-    <div class="bg-white border rounded-xl p-5 space-y-4">
+    <!-- SECTION 1: CLASSIFIER -->
+    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-5">
       <div class="flex items-center gap-2">
-        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold">1</span>
-        <h2 class="text-sm font-bold text-slate-700">Designated services</h2>
+        <h2 class="text-sm font-bold text-slate-700">Designated Services</h2>
         ${infoBtn('ds-tip')}
       </div>
       ${infoPop('ds-tip', `<strong class="text-indigo-300 block mb-2">Why your designated services matter</strong>
-        What you tick here is the foundation of your entire compliance program. AUSTRAC uses your selections to determine:
-        <ul class="mt-2 space-y-1.5">
-          <li>✓ <strong>Whether you are a reporting entity</strong> — if none apply, you don't need to enrol</li>
-          <li>✓ <strong>Your firm's inherent risk profile</strong> — automatically calculated below</li>
-          <li>✓ <strong>What your Risk Assessment must cover</strong></li>
-          <li>✓ <strong>What your AML/CTF Program must contain</strong></li>
-          <li>✓ <strong>The level of CDD required for each client</strong></li>
-        </ul>
-        <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">Tick every service you provide — no more, no less. Under-ticking leaves gaps in your program. Over-ticking creates obligations you don't need.</p>`)}
-      <p class="text-xs text-slate-400">Tick every service your firm provides. Your risk ratings below are calculated automatically from these selections.</p>
-      <div class="space-y-2">
-        ${DS_LIST.map(ds=>`
-          <label class="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-slate-50 ${services.includes(ds.id)?'bg-indigo-50 border-indigo-200':''}">
-            <input type="checkbox" class="mt-0.5 flex-shrink-0" ${services.includes(ds.id)?'checked':''} onchange="toggleDs('${ds.id}',this)">
-            <div><div class="text-sm font-medium">${ds.name}</div><div class="text-xs text-slate-400">${ds.desc}</div></div>
-          </label>`).join('')}
-        <label class="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-slate-50 ${dsNone?'bg-green-50 border-green-200':'bg-slate-50'}">
-          <input type="checkbox" class="mt-0.5 flex-shrink-0" id="ds-none" ${dsNone?'checked':''} onchange="toggleDsNone(this)">
-          <div><div class="text-sm font-medium text-slate-500">None of the above — my firm does not provide any designated services</div></div>
-        </label>
+        <p>Your designated services are the foundation of your entire compliance program. AUSTRAC uses them to determine your inherent risk profile, what your program must contain, and the level of CDD required for each client.</p>
+        <p class="mt-2">Describe what your firm does in plain English. SimpleAML will map it to AUSTRAC Table 6 automatically.</p>`)}
+
+      <div class="space-y-3">
+        <label class="text-xs text-slate-500">What services does your firm provide?</label>
+        <textarea id="classifier-input" class="inp text-sm" rows="4"
+          placeholder="e.g. We set up companies and trusts, act as company secretary for some clients, process payroll and pay supplier bills..."
+          >${sc.classifierInput||''}</textarea>
+        <div class="text-xs text-slate-400 space-y-1">
+          <div class="font-medium text-slate-500">Examples:</div>
+          <div>· "We set up trusts and companies"</div>
+          <div>· "We do bookkeeping and pay bills for clients"</div>
+          <div>· "We help clients buy and sell businesses"</div>
+          <div>· "We prepare valuations and act as company secretary"</div>
+        </div>
+        <button onclick="runClassifier()" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">
+          Analyse My Services →
+        </button>
       </div>
-      ${dsNone ? `<div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-700"><strong>Your firm does not appear to fall within scope.</strong> You do not need to enrol with AUSTRAC or complete an AML/CTF program. We recommend confirming this with your professional body (CPA Australia, CA ANZ or IPA).</div>` : ''}
-      ${inScope ? `<div class="bg-blue-50 border border-blue-100 rounded-xl p-3 text-xs text-blue-700 flex items-center gap-2"><span>✓</span> Your firm provides designated services and must comply with AML/CTF obligations from 1 July 2026.</div>` : ''}
+
+      <!-- GREY ZONE CARD -->
+      ${sc.greyZonePending ? `
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-3">
+        <div class="text-sm font-semibold text-amber-800">⚠ Clarification needed</div>
+        <p class="text-sm text-amber-700">You mentioned <strong>valuation reports</strong>. Are these valuations used to help clients buy or sell a business?</p>
+        <div class="space-y-2">
+          <label class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+            <input type="radio" name="grey-zone" value="no" ${sc.greyZoneAnswer==='no'?'checked':''} onchange="resolveGrey('no')">
+            No — for tax or internal reporting only
+          </label>
+          <label class="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+            <input type="radio" name="grey-zone" value="yes" ${sc.greyZoneAnswer==='yes'?'checked':''} onchange="resolveGrey('yes')">
+            Yes — used as part of a sale or acquisition
+          </label>
+        </div>
+      </div>` : ''}
+
+      <!-- RESULTS TABLE -->
+      ${sc.classifierMatched && sc.classifierMatched.length > 0 ? `
+      <div class="space-y-4">
+        <h3 class="text-sm font-bold text-slate-700">How AUSTRAC sees your firm</h3>
+        <div class="border border-slate-200 rounded-xl overflow-hidden">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200">
+                <th class="text-left text-xs font-semibold text-slate-500 px-4 py-3">Task / Service</th>
+                <th class="text-left text-xs font-semibold text-slate-500 px-4 py-3 w-32">Table 6</th>
+                <th class="text-left text-xs font-semibold text-slate-500 px-4 py-3 w-40">AUSTRAC Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${sc.classifierMatched.map(r => `
+              <tr class="border-b border-slate-50 last:border-0">
+                <td class="px-4 py-3 text-slate-700">${r.task}</td>
+                <td class="px-4 py-3 text-xs text-slate-500">${r.table6||'—'}</td>
+                <td class="px-4 py-3"><span class="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700">✓ Designated Service</span></td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+
+        <p class="text-sm text-slate-600">
+          Based on what you described, your firm provides
+          <strong>${sc.classifierMatched.length} designated service${sc.classifierMatched.length !== 1 ? 's' : ''}</strong>
+          under AUSTRAC Table 6.
+        </p>
+
+        ${sc.classifierNotDesignated && sc.classifierNotDesignated.length > 0 ? `
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2">
+          <div class="text-xs font-semibold text-slate-500">Services you mentioned that are <em>not</em> designated services</div>
+          ${sc.classifierNotDesignated.map(r => `
+          <div class="flex items-start gap-2 text-xs text-slate-500">
+            <span class="text-green-500 flex-shrink-0 mt-0.5">✓</span>${r.task}
+          </div>`).join('')}
+        </div>` : ''}
+
+        <p class="text-xs text-slate-400">Not quite right? Edit your description above and re-analyse.</p>
+      </div>` : sc.classifierRan ? `
+      <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-500">
+        No designated services identified from your description. If your firm provides services not listed, try describing them differently and re-analyse.
+        <div class="mt-3">
+          <label class="flex items-center gap-2 cursor-pointer text-slate-600">
+            <input type="checkbox" id="ds-none" ${dsNone?'checked':''} onchange="toggleDsNone(this)">
+            <span>Confirm: my firm does not provide any designated services</span>
+          </label>
+        </div>
+        ${dsNone ? `<div class="mt-3 text-green-700 font-semibold">✓ Confirmed — your firm does not need to enrol with AUSTRAC.</div>` : ''}
+      </div>` : ''}
     </div>
 
     <!-- SECTION 2 -->
@@ -333,6 +398,59 @@ export function screen() {
 }
 
 // ─── ACTIONS ──────────────────────────────────────────────────────────────────
+// ─── CLASSIFIER ACTIONS ───────────────────────────────────────────────────────
+window.runClassifier = function() {
+  const input = document.getElementById('classifier-input')?.value?.trim();
+  if (!input) { toast('Describe your services first', 'err'); return; }
+
+  const { matched, notDesignated, greyZone } = classify(input);
+
+  S.scope.classifierInput = input;
+  S.scope.classifierRan = true;
+  S.scope.greyZonePending = greyZone.length > 0;
+  S.scope.greyZoneAnswer = null;
+
+  // Store results — grey zone rows not yet added to matched
+  S.scope.classifierMatched = matched;
+  S.scope.classifierNotDesignated = notDesignated;
+  S.scope.classifierGreyZone = greyZone;
+
+  // Feed into serviceChecks for downstream risk calculation
+  // Map matched IN rows to high-risk service IDs where applicable
+  S.scope.serviceChecks = matched
+    .filter(r => r.table6)
+    .map(r => r.table6)
+    .filter((v, i, a) => a.indexOf(v) === i); // dedupe
+
+  // Mark as in-scope if any designated services found
+  if (matched.length > 0) {
+    S.scope.noneConfirmed = false;
+  }
+
+  save(); go('risk');
+};
+
+window.resolveGrey = function(answer) {
+  S.scope.greyZoneAnswer = answer;
+  const greyRows = S.scope.classifierGreyZone || [];
+  if (answer === 'yes' && greyRows.length > 0) {
+    // Add resolved grey zone row to matched
+    const resolved = { ...greyRows[0], status: 'IN', resolved: true };
+    const already = (S.scope.classifierMatched || []).find(r => r.id === resolved.id);
+    if (!already) {
+      S.scope.classifierMatched = [...(S.scope.classifierMatched || []), resolved];
+    }
+  }
+  S.scope.greyZonePending = false;
+  save(); go('risk');
+};
+
+window.toggleDsNone = function(cb) {
+  if (cb.checked) { S.scope.services = []; S.scope.noneConfirmed = true; S.scope.classifierMatched = []; }
+  else { S.scope.noneConfirmed = false; }
+  save(); go('risk');
+};
+
 window.toggleDs = function(id, cb) {
   if (!S.scope.services) S.scope.services = [];
   if (cb.checked) { if (!S.scope.services.includes(id)) S.scope.services.push(id); S.scope.noneConfirmed = false; }
@@ -340,11 +458,7 @@ window.toggleDs = function(id, cb) {
   save(); renderRiskRatings();
 };
 
-window.toggleDsNone = function(cb) {
-  if (cb.checked) { S.scope.services = []; S.scope.noneConfirmed = true; }
-  else { S.scope.noneConfirmed = false; }
-  save(); go('risk');
-};
+
 
 window.scopeField = function(key, val) { S.scope[key] = val; save(); };
 window.toggleCheck = function(key, id, cb) {
