@@ -4,28 +4,32 @@ import { infoBtn, infoPop, toast } from '../components/index.js';
 
 export function screen() {
   const sc = S.scope;
-
   return `<div class="py-8 space-y-6">
-    <div>
-      <h1 class="text-2xl font-bold text-slate-900">Designated Services Identification</h1>
-      <p class="text-slate-400 text-sm mt-1">Describe what your firm does. SimpleAML will map it to AUSTRAC Table 6 automatically.</p>
+
+    <div class="flex items-start justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-slate-900">Designated Services</h1>
+        <p class="text-sm text-slate-400 mt-1">AUSTRAC obligations only apply to firms providing designated services. This step determines whether your firm is in scope and what your program must cover.</p>
+      </div>
     </div>
 
-    <!-- CARD 1: INPUT -->
+    <!-- INPUT CARD -->
     <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-5">
       <div class="flex items-center gap-2">
         <h2 class="text-sm font-bold text-slate-700">Describe your firm's services</h2>
         ${infoBtn('ds-tip')}
       </div>
-      ${infoPop('ds-tip', `<strong class="text-indigo-300 block mb-2">How to get an accurate result</strong>
+      ${infoPop('ds-tip', `
+        <strong class="text-indigo-300 block mb-2">How to get an accurate result</strong>
         <p>Describe what your firm actually does for clients — not your job title. Include:</p>
         <ul class="mt-2 space-y-1">
           <li>· The types of entities you set up (companies, trusts, SMSFs)</li>
-          <li>· Financial tasks you perform on behalf of clients (paying bills, payroll)</li>
-          <li>· Transactions you help clients with (buying or selling businesses, property)</li>
+          <li>· Financial tasks you perform on behalf of clients (paying bills, payroll, bank accounts)</li>
+          <li>· Transactions you help clients with (buying or selling businesses, property settlements)</li>
           <li>· Any governance roles you hold (company secretary, trustee, nominee director)</li>
         </ul>
-        <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">The more specific you are, the more accurate your result.</p>`)}
+        <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">SimpleAML matches your description against the AUSTRAC Table 6 matrix and returns only the services that apply to your firm. You then confirm the result before it is recorded.</p>
+      `)}
 
       <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-500 space-y-1">
         <div class="font-semibold text-slate-600 mb-1">Examples:</div>
@@ -35,7 +39,7 @@ export function screen() {
       </div>
 
       <textarea id="classifier-input" class="inp text-sm" rows="5"
-        placeholder='Describe what your firm does for clients in two or three sentences...'
+        placeholder="Describe what your firm does for clients in two or three sentences..."
       >${sc.classifierInput || ''}</textarea>
       <div id="classifier-nudge" style="display:none" class="text-xs text-amber-600 font-medium">
         Your description seems brief — the more detail you provide, the more accurate your result.
@@ -78,11 +82,13 @@ function renderResults(sc) {
             </tbody>
           </table>
         </div>
+
         ${notDes.length > 0 ? `
         <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-1.5">
           <div class="text-xs font-semibold text-slate-500 mb-1">Also mentioned — not designated services</div>
           ${notDes.map(r => `<div class="flex items-start gap-2 text-xs text-slate-500"><span class="text-green-500 flex-shrink-0">✓</span>${r.task}</div>`).join('')}
         </div>` : ''}
+
         <div class="border-t border-slate-100 pt-4">
           <label class="flex items-start gap-3 cursor-pointer">
             <input type="checkbox" ${sc.classifierConfirmed ? 'checked' : ''} onchange="confirmClassifier(this.checked)" class="mt-0.5 flex-shrink-0">
@@ -101,7 +107,7 @@ function renderResults(sc) {
       <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
         <div class="bg-green-50 border border-green-200 rounded-xl p-5 space-y-3">
           <div class="text-sm font-bold text-green-800">✓ Your services are outside AUSTRAC's designated service list</div>
-          <p class="text-sm text-green-700 leading-relaxed">The following services were identified — none are designated services under AUSTRAC Table 6.</p>
+          <p class="text-sm text-green-700 leading-relaxed">The following services were identified — none are designated services under AUSTRAC Table 6. Your firm does not appear to have AML/CTF obligations for these activities.</p>
           <div class="space-y-1.5">
             ${notDes.map(r => `<div class="flex items-start gap-2 text-sm text-green-700"><span class="flex-shrink-0">✓</span>${r.task}</div>`).join('')}
           </div>
@@ -120,7 +126,7 @@ function renderResults(sc) {
     <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
       <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 space-y-3">
         <div class="text-sm font-bold text-amber-800">⚠ We could not match your description</div>
-        <p class="text-sm text-amber-700 leading-relaxed">SimpleAML could not find your services in the AUSTRAC Table 6 matrix. Try describing your services in more detail.</p>
+        <p class="text-sm text-amber-700 leading-relaxed">SimpleAML could not find your services in the AUSTRAC Table 6 matrix. This does not mean you are out of scope — try describing your services in more detail.</p>
       </div>
       <div class="bg-white border border-slate-200 rounded-xl p-4 text-xs text-slate-500 space-y-1.5">
         <div class="font-semibold text-slate-600 mb-1">Try describing your services like this:</div>
