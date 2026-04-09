@@ -2,11 +2,9 @@ import { MATRIX } from '../state/matrix.js';
 
 // ─── CLASSIFIER ───────────────────────────────────────────────────────────────
 // Maps free-text service descriptions to AUSTRAC Table 6.
-// Returns matched IN rows, OUT rows mentioned, and grey zone rows needing
-// a clarifying question before they can be resolved.
+// Uses synonym matching with simple stemming to handle plurals and variants.
 
 // ─── TOKENISE ─────────────────────────────────────────────────────────────────
-// Break input into normalised tokens for matching.
 function tokenise(text) {
   return text
     .toLowerCase()
@@ -15,75 +13,101 @@ function tokenise(text) {
     .filter(t => t.length > 2);
 }
 
-// ─── SCORE ────────────────────────────────────────────────────────────────────
-// Score a single matrix row against the user input.
-// Returns a match score — higher = stronger match.
-// A score > 0 means at least one synonym phrase or keyword matched.
-function scoreRow(row, inputText, inputTokens) {
+// ─── STEM ─────────────────────────────────────────────────────────────────────
+// Strip common suffixes so "trusts"→"trust", "secretarial"→"secretari"
+function stem(w) {
+  for (const suffix of ['ing', 'tion', 'ies', 'ial', 'ed', 'es', 's']) {
+    if (w.endsWith(suffix) && w.length - suffix.length >= 3) {
+      return w.slice(0, w.length - suffix.length);
+    }
+  }
+  return w;
+}
+
+// ─── TOKEN MATCH ──────────────────────────────────────────────────────────────
+// Match if stemmed forms are equal or one is a prefix of the other
+function tokensMatch(a, b) {
+  const sa = stem(a);
+  const sb = stem(b);
+  return sa === sb ||
+    (sa.length >= 4 && sb.startsWith(sa)) ||
+    (sb.length >= 4 && sa.startsWith(sb));
+}
+
+// ─── SCORE ROW ────────────────────────────────────────────────────────────────
+// Score a single matrix row against user input.
+// Only uses explicit synonyms — not task name words.
+function scoreRow(synonyms, inputText, inputTokens) {
   let score = 0;
-  const input = inputText.toLowerCase();
-
-  // Full phrase match (strongest signal)
-  for (const syn of row.synonyms) {
-    if (syn.length > 4 && input.includes(syn)) {
+  for (const syn of synonyms) {
+    // Full phrase match (strongest signal)
+    if (syn.length > 5 && inputText.includes(syn)) {
       score += 10;
+      continue;
     }
-  }
-
-  // Partial phrase match — check if all words in a synonym appear in input
-  for (const syn of row.synonyms) {
     const synTokens = tokenise(syn);
+    if (!synTokens.length) continue;
+
     if (synTokens.length >= 2) {
-      const allMatch = synTokens.every(st => inputTokens.includes(st));
-      if (allMatch) score += 6;
-    } else if (synTokens.length === 1 && inputTokens.includes(synTokens[0])) {
-      score += 2;
+      // Count how many synonym tokens match any input token (with stemming)
+      const matched = synTokens.filter(st =>
+        inputTokens.some(it => tokensMatch(st, it))
+      ).length;
+      // Require at least 66% of synonym tokens to match
+      if (matched / synTokens.length >= 0.66) {
+        score += 6;
+      }
+    } else {
+      // Single-word synonym — only count if it matches an input token
+      if (inputTokens.some(it => tokensMatch(synTokens[0], it))) {
+        score += 3;
+      }
     }
   }
-
   return score;
 }
 
 // ─── GREY ZONE DETECTION ─────────────────────────────────────────────────────
-// Returns true if the input mentions valuation in a transaction context.
+// Valuation grey zone is handled separately — triggered by keyword presence
 function mentionsValuation(inputText) {
-  const input = inputText.toLowerCase();
-  const valuationWords = ['valuation', 'valuation report', 'business valuation', 'value a business', 'prepare valuation'];
-  return valuationWords.some(w => input.includes(w));
+  return ['valuation', 'value a business', 'business valuation', 'prepare valuations']
+    .some(w => inputText.includes(w));
 }
 
 // ─── CLASSIFY ─────────────────────────────────────────────────────────────────
-// Main entry point. Takes user input string.
+// Main entry point.
 // Returns { matched, notDesignated, greyZone }
-// matched       — IN rows the classifier found
-// notDesignated — OUT rows that were mentioned (reassurance list)
-// greyZone      — rows needing clarification (grey zone)
 export function classify(inputText) {
+  const input = inputText.toLowerCase();
   const inputTokens = tokenise(inputText);
-  const THRESHOLD = 4; // minimum score to count as a match
+  const THRESHOLD = 6;
 
-  const matched = [];       // IN rows
-  const notDesignated = []; // OUT rows mentioned
-  const greyZone = [];      // Grey zone rows
+  const matched = [];
+  const notDesignated = [];
+  const greyZone = [];
 
   for (const row of MATRIX) {
-    const score = scoreRow(row, inputText, inputTokens);
+    // Grey zone rows handled via keyword detection, not scoring
+    if (row.status.includes('GREY')) {
+      if (mentionsValuation(input)) {
+        greyZone.push(row);
+      }
+      continue;
+    }
+
+    // Build synonym list — exclude synonyms that just repeat the task name
+    const synonyms = (row.synonyms || []).filter(
+      s => s.length > 3 && s !== row.task.toLowerCase()
+    );
+
+    const score = scoreRow(synonyms, input, inputTokens);
     if (score < THRESHOLD) continue;
 
     if (row.status === 'IN') {
       matched.push({ ...row, score });
     } else if (row.status === 'OUT') {
       notDesignated.push({ ...row, score });
-    } else if (row.status.includes('GREY')) {
-      greyZone.push({ ...row, score });
     }
-  }
-
-  // Special case: if user mentions valuation but grey zone not scored,
-  // still trigger the clarifying question
-  if (mentionsValuation(inputText) && greyZone.length === 0) {
-    const greyRow = MATRIX.find(r => r.status.includes('GREY'));
-    if (greyRow) greyZone.push({ ...greyRow, score: 5 });
   }
 
   // Sort by score descending
@@ -94,14 +118,10 @@ export function classify(inputText) {
 }
 
 // ─── RESOLVE GREY ZONE ────────────────────────────────────────────────────────
-// Called after user answers the grey zone clarifying question.
 // answer: 'yes' | 'no'
-// Returns the resolved row to add to matched or discard.
 export function resolveGreyZone(row, answer) {
   if (answer === 'yes') {
-    // Valuation is part of a transaction — it IS a designated service
-    return { ...row, status: 'IN', resolved: true };
+    return { ...row, status: 'IN', table6: 'Item 2 (Buying/Selling Entities)', resolved: true };
   }
-  // Valuation is for tax/reporting only — OUT
   return { ...row, status: 'OUT', resolved: true };
 }
