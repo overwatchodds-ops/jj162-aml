@@ -1,4 +1,4 @@
-import { MATRIX } from '../state/matrix.js';
+import { MATRIX, TABLE6_RISKS, TABLE6_LABELS } from '../state/matrix.js';
 
 // ─── CLASSIFIER ───────────────────────────────────────────────────────────────
 // Maps free-text service descriptions to AUSTRAC Table 6.
@@ -120,6 +120,27 @@ export function countTable6Items(matched) {
   return [...items].sort((a, b) =>
     parseInt(a.replace('Item ', '')) - parseInt(b.replace('Item ', ''))
   );
+}
+
+// ─── EXTRACT RISK PATTERNS ───────────────────────────────────────────────────
+// From matched IN rows, extract unique Table 6 item numbers and return
+// the corresponding risk patterns. Deduplicated — one pattern per item.
+export function extractRisks(matched) {
+  const seen = new Set();
+  const risks = [];
+  for (const row of matched) {
+    for (const itemNum of (row.table6_items || [])) {
+      if (!seen.has(itemNum) && TABLE6_RISKS[itemNum]) {
+        seen.add(itemNum);
+        risks.push({
+          item: itemNum,
+          label: TABLE6_LABELS[itemNum],
+          risk: TABLE6_RISKS[itemNum],
+        });
+      }
+    }
+  }
+  return risks.sort((a, b) => a.item - b.item);
 }
 
 // ─── RESOLVE GREY ZONE ────────────────────────────────────────────────────────
