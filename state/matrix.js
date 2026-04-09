@@ -1,8 +1,8 @@
 // ─── AUSTRAC TASK MATRIX ─────────────────────────────────────────────────────
-// Source: AUSTRAC Table 6, mapped to accounting firm services.
+// Source: AUSTRAC Table 6 mapped to accounting firm services.
 // 57 rows: 34 IN, 22 OUT, 1 GREY ZONE.
-// This is the source of truth for the classification engine.
-// DO NOT show this directly to users.
+// explicit: true = synonyms from spreadsheet, false = derived from task name.
+// Rows with explicit:false require a higher match threshold in the classifier.
 // Update only when AUSTRAC releases new rules.
 
 export const MATRIX = [
@@ -17,10 +17,9 @@ export const MATRIX = [
       "register company",
       "incorporate pty ltd",
       "new company registration",
-      "asic company setup",
-      "company",
-      "incorporation"
-    ]
+      "asic company setup"
+    ],
+    "explicit": true
   },
   {
     "id": 1,
@@ -33,14 +32,9 @@ export const MATRIX = [
       "create trust",
       "establish family trust",
       "unit trust setup",
-      "draft trust deed",
-      "trust",
-      "deed",
-      "establishment",
-      "family,",
-      "unit,",
-      "etc."
-    ]
+      "draft trust deed"
+    ],
+    "explicit": true
   },
   {
     "id": 2,
@@ -52,12 +46,9 @@ export const MATRIX = [
       "registered office",
       "use our address",
       "company registered address",
-      "asic address",
-      "providing",
-      "registered",
-      "office",
-      "address"
-    ]
+      "asic address"
+    ],
+    "explicit": true
   },
   {
     "id": 3,
@@ -69,12 +60,9 @@ export const MATRIX = [
       "mailing address",
       "business address",
       "correspondence address",
-      "virtual office address",
-      "providing",
-      "business",
-      "correspondence",
-      "address"
-    ]
+      "virtual office address"
+    ],
+    "explicit": true
   },
   {
     "id": 4,
@@ -86,11 +74,9 @@ export const MATRIX = [
       "company secretarial role",
       "corporate secretary",
       "act as cosec",
-      "secretarial services",
-      "acting",
-      "company",
-      "secretary"
-    ]
+      "secretarial services"
+    ],
+    "explicit": true
   },
   {
     "id": 5,
@@ -102,12 +88,9 @@ export const MATRIX = [
       "nominee director",
       "nominee shareholder",
       "straw director",
-      "third party director",
-      "appointing",
-      "nominee",
-      "director",
-      "shareholder"
-    ]
+      "third party director"
+    ],
+    "explicit": true
   },
   {
     "id": 6,
@@ -120,16 +103,9 @@ export const MATRIX = [
       "change director",
       "share transfer",
       "update company details",
-      "form 484",
-      "updating",
-      "asic",
-      "records",
-      "share",
-      "transfers,",
-      "director",
-      "changes,",
-      "etc."
-    ]
+      "form 484"
+    ],
+    "explicit": true
   },
   {
     "id": 7,
@@ -141,11 +117,9 @@ export const MATRIX = [
       "shareholder agreement",
       "sha drafting",
       "owners agreement",
-      "equity agreement",
-      "drafting",
-      "shareholder",
-      "agreements"
-    ]
+      "equity agreement"
+    ],
+    "explicit": true
   },
   {
     "id": 8,
@@ -157,11 +131,9 @@ export const MATRIX = [
       "director resolution",
       "board resolution",
       "minutes drafting",
-      "company minutes",
-      "drafting",
-      "director",
-      "resolutions"
-    ]
+      "company minutes"
+    ],
+    "explicit": true
   },
   {
     "id": 9,
@@ -172,11 +144,9 @@ export const MATRIX = [
     "synonyms": [
       "amend constitution",
       "update constitution",
-      "replace constitution",
-      "changing",
-      "company",
-      "constitution"
-    ]
+      "replace constitution"
+    ],
+    "explicit": true
   },
   {
     "id": 10,
@@ -185,15 +155,14 @@ export const MATRIX = [
     "table6": "Item 6 (Managing Entities)",
     "status": "IN",
     "synonyms": [
-      "filing asic forms (officeholder updates, annual review)",
-      "filing",
       "asic",
       "forms",
       "officeholder",
-      "updates,",
+      "updates",
       "annual",
       "review"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 11,
@@ -202,12 +171,10 @@ export const MATRIX = [
     "table6": "Item 6 (Managing Entities)",
     "status": "IN",
     "synonyms": [
-      "drafting trust amendments / variations",
-      "drafting",
-      "trust",
       "amendments",
       "variations"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 12,
@@ -219,12 +186,9 @@ export const MATRIX = [
       "bank signatory",
       "payment authority",
       "bank access",
-      "operate bank account",
-      "signatory",
-      "client",
-      "bank",
-      "account"
-    ]
+      "operate bank account"
+    ],
+    "explicit": true
   },
   {
     "id": 13,
@@ -236,13 +200,9 @@ export const MATRIX = [
       "payroll aba",
       "upload aba",
       "pay wages",
-      "process payroll payments",
-      "processing",
-      "payroll",
-      "payments",
-      "upload",
-      "auth"
-    ]
+      "process payroll payments"
+    ],
+    "explicit": true
   },
   {
     "id": 14,
@@ -254,13 +214,9 @@ export const MATRIX = [
       "pay bills",
       "supplier payments",
       "accounts payable payments",
-      "aba creditors",
-      "paying",
-      "supplier",
-      "invoices",
-      "authority",
-      "spend"
-    ]
+      "aba creditors"
+    ],
+    "explicit": true
   },
   {
     "id": 15,
@@ -271,11 +227,9 @@ export const MATRIX = [
     "synonyms": [
       "trust account handling",
       "hold client funds",
-      "operate trust account",
-      "managing",
-      "trust",
-      "account"
-    ]
+      "operate trust account"
+    ],
+    "explicit": true
   },
   {
     "id": 16,
@@ -284,12 +238,13 @@ export const MATRIX = [
     "table6": "Item 3 (Managing Assets)",
     "status": "IN",
     "synonyms": [
-      "petty cash management (cash on hand)",
       "petty",
       "cash",
       "management",
+      "cash",
       "hand"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 17,
@@ -298,13 +253,12 @@ export const MATRIX = [
     "table6": "Item 4 (Managing Accounts)",
     "status": "IN",
     "synonyms": [
-      "credit card payments on client behalf",
       "credit",
       "card",
       "payments",
-      "client",
       "behalf"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 18,
@@ -313,12 +267,11 @@ export const MATRIX = [
     "table6": "Item 3 (Managing Assets)",
     "status": "IN",
     "synonyms": [
-      "reconciling loan / financing accounts",
-      "reconciling",
       "loan",
       "financing",
       "accounts"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 19,
@@ -327,13 +280,10 @@ export const MATRIX = [
     "table6": "Item 4 (Managing Accounts)",
     "status": "IN",
     "synonyms": [
-      "authorising payment runs (client funds)",
-      "authorising",
       "payment",
-      "runs",
-      "client",
-      "funds"
-    ]
+      "runs"
+    ],
+    "explicit": false
   },
   {
     "id": 20,
@@ -342,11 +292,10 @@ export const MATRIX = [
     "table6": "Item 4 (Managing Accounts)",
     "status": "IN",
     "synonyms": [
-      "processing refunds / rebates",
-      "processing",
       "refunds",
       "rebates"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 21,
@@ -357,12 +306,9 @@ export const MATRIX = [
     "synonyms": [
       "bank recs",
       "reconcile bank",
-      "bank reconciliation work",
-      "bank",
-      "reconciliations",
-      "read-only",
-      "access"
-    ]
+      "bank reconciliation work"
+    ],
+    "explicit": true
   },
   {
     "id": 22,
@@ -374,13 +320,9 @@ export const MATRIX = [
       "invoicing",
       "raise invoices",
       "accounts receivable entry",
-      "debtor entry",
-      "data",
-      "entry",
-      "accounts",
-      "receivable",
-      "only"
-    ]
+      "debtor entry"
+    ],
+    "explicit": true
   },
   {
     "id": 23,
@@ -389,11 +331,9 @@ export const MATRIX = [
     "table6": "",
     "status": "OUT",
     "synonyms": [
-      "generating reports (read-only)",
-      "generating",
-      "reports",
-      "read-only"
-    ]
+      "read"
+    ],
+    "explicit": false
   },
   {
     "id": 24,
@@ -402,13 +342,10 @@ export const MATRIX = [
     "table6": "",
     "status": "OUT",
     "synonyms": [
-      "payroll processing without fund movement",
       "payroll",
-      "processing",
-      "without",
-      "fund",
       "movement"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 25,
@@ -417,11 +354,11 @@ export const MATRIX = [
     "table6": "",
     "status": "OUT",
     "synonyms": [
-      "bas / gst calculation (no payment authority)",
       "calculation",
       "payment",
       "authority"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 26,
@@ -433,11 +370,9 @@ export const MATRIX = [
       "sell business",
       "m&a support",
       "business disposal",
-      "sale mandate",
-      "assisting",
-      "business",
-      "sale"
-    ]
+      "sale mandate"
+    ],
+    "explicit": true
   },
   {
     "id": 27,
@@ -445,13 +380,8 @@ export const MATRIX = [
     "task": "Helping a Client Buy a Business / Trust",
     "table6": "Item 2 (Buying/Selling Entities)",
     "status": "IN",
-    "synonyms": [
-      "helping a client buy a business / trust",
-      "helping",
-      "client",
-      "business",
-      "trust"
-    ]
+    "synonyms": [],
+    "explicit": false
   },
   {
     "id": 28,
@@ -460,14 +390,13 @@ export const MATRIX = [
     "table6": "Item 5 (Contributions / Financing)",
     "status": "IN",
     "synonyms": [
-      "organizing debt / equity funding (capital raising)",
-      "organizing",
       "debt",
       "equity",
       "funding",
       "capital",
       "raising"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 29,
@@ -476,12 +405,11 @@ export const MATRIX = [
     "table6": "Item 1 (Real Estate Transactions)",
     "status": "IN",
     "synonyms": [
-      "assisting in property settlement / transfer",
-      "assisting",
       "property",
       "settlement",
       "transfer"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 30,
@@ -490,13 +418,12 @@ export const MATRIX = [
     "table6": "Item 6 / 7 (Managing Entities / Formation Agent)",
     "status": "IN",
     "synonyms": [
-      "drafting deeds / legal documents for transactions",
-      "drafting",
       "deeds",
       "legal",
       "documents",
       "transactions"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 31,
@@ -505,13 +432,10 @@ export const MATRIX = [
     "table6": "Item 7 (Formation Agent)",
     "status": "IN",
     "synonyms": [
-      "facilitating client signatures / execution of documents",
-      "facilitating",
-      "client",
       "signatures",
-      "execution",
       "documents"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 32,
@@ -520,13 +444,10 @@ export const MATRIX = [
     "table6": "",
     "status": "OUT",
     "synonyms": [
-      "valuation reports – tax/internal reporting only",
       "valuation",
-      "reports",
-      "internal",
-      "reporting",
-      "only"
-    ]
+      "reporting"
+    ],
+    "explicit": false
   },
   {
     "id": 33,
@@ -535,14 +456,10 @@ export const MATRIX = [
     "table6": "Item 2 (Buying/Selling Entities)",
     "status": "GREY ZONE / IN (context dependent)",
     "synonyms": [
-      "valuation reports – transaction execution (part of deal)",
       "valuation",
-      "reports",
-      "transaction",
-      "execution",
-      "part",
-      "deal"
-    ]
+      "transaction"
+    ],
+    "explicit": false
   },
   {
     "id": 34,
@@ -554,12 +471,9 @@ export const MATRIX = [
       "advisory only",
       "strategy advice",
       "consulting only",
-      "no implementation",
-      "general",
-      "strategic",
-      "advice",
-      "implementation"
-    ]
+      "no implementation"
+    ],
+    "explicit": true
   },
   {
     "id": 35,
@@ -571,12 +485,9 @@ export const MATRIX = [
       "valuation report",
       "business appraisal",
       "company valuation",
-      "valuation certificate",
-      "business",
-      "valuation",
-      "stand-alone",
-      "report"
-    ]
+      "valuation certificate"
+    ],
+    "explicit": true
   },
   {
     "id": 36,
@@ -585,13 +496,9 @@ export const MATRIX = [
     "table6": "",
     "status": "OUT",
     "synonyms": [
-      "advising on structuring a new company / trust (no execution)",
-      "advising",
-      "structuring",
-      "company",
-      "trust",
-      "execution"
-    ]
+      "structuring"
+    ],
+    "explicit": false
   },
   {
     "id": 37,
@@ -600,13 +507,11 @@ export const MATRIX = [
     "table6": "Item 5 (Contributions / Financing)",
     "status": "IN",
     "synonyms": [
-      "preparing loan / funding agreements (execution)",
-      "preparing",
       "loan",
       "funding",
-      "agreements",
-      "execution"
-    ]
+      "agreements"
+    ],
+    "explicit": false
   },
   {
     "id": 38,
@@ -615,12 +520,11 @@ export const MATRIX = [
     "table6": "Item 2 (Buying/Selling Entities)",
     "status": "IN",
     "synonyms": [
-      "negotiating contracts on client’s behalf",
-      "negotiating",
       "contracts",
       "client’s",
       "behalf"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 39,
@@ -632,11 +536,9 @@ export const MATRIX = [
       "tax return",
       "itr prep",
       "lodge tax return",
-      "tax compliance",
-      "income",
-      "return",
-      "preparation"
-    ]
+      "tax compliance"
+    ],
+    "explicit": true
   },
   {
     "id": 40,
@@ -648,10 +550,9 @@ export const MATRIX = [
       "bas prep",
       "ias prep",
       "bas lodge",
-      "gst reporting",
-      "preparation",
-      "lodgement"
-    ]
+      "gst reporting"
+    ],
+    "explicit": true
   },
   {
     "id": 41,
@@ -662,12 +563,9 @@ export const MATRIX = [
     "synonyms": [
       "fbt return",
       "payroll tax return",
-      "state tax compliance",
-      "payroll",
-      "compliance",
-      "reporting",
-      "only"
-    ]
+      "state tax compliance"
+    ],
+    "explicit": true
   },
   {
     "id": 42,
@@ -678,11 +576,9 @@ export const MATRIX = [
     "synonyms": [
       "prepare financials",
       "annual accounts",
-      "financial reports",
-      "financial",
-      "statement",
-      "preparation"
-    ]
+      "financial reports"
+    ],
+    "explicit": true
   },
   {
     "id": 43,
@@ -693,11 +589,9 @@ export const MATRIX = [
     "synonyms": [
       "audit services",
       "smsf audit",
-      "independent audit",
-      "external",
-      "audit",
-      "smsf"
-    ]
+      "independent audit"
+    ],
+    "explicit": true
   },
   {
     "id": 44,
@@ -706,12 +600,11 @@ export const MATRIX = [
     "table6": "",
     "status": "OUT",
     "synonyms": [
-      "bookkeeping / accounting for reporting only",
       "bookkeeping",
       "accounting",
-      "reporting",
-      "only"
-    ]
+      "reporting"
+    ],
+    "explicit": false
   },
   {
     "id": 45,
@@ -720,12 +613,11 @@ export const MATRIX = [
     "table6": "",
     "status": "OUT",
     "synonyms": [
-      "advisory on tax planning / structuring (no execution)",
       "advisory",
       "planning",
-      "structuring",
-      "execution"
-    ]
+      "structuring"
+    ],
+    "explicit": false
   },
   {
     "id": 46,
@@ -734,12 +626,10 @@ export const MATRIX = [
     "table6": "",
     "status": "OUT",
     "synonyms": [
-      "preparing compliance checklists & reports",
-      "preparing",
       "compliance",
-      "checklists",
-      "reports"
-    ]
+      "checklists"
+    ],
+    "explicit": false
   },
   {
     "id": 47,
@@ -748,12 +638,11 @@ export const MATRIX = [
     "table6": "",
     "status": "OUT",
     "synonyms": [
-      "payroll calculations only (no payments)",
       "payroll",
       "calculations",
-      "only",
       "payments"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 48,
@@ -762,13 +651,12 @@ export const MATRIX = [
     "table6": "",
     "status": "OUT",
     "synonyms": [
-      "superannuation compliance (employer reporting only)",
       "superannuation",
       "compliance",
       "employer",
-      "reporting",
-      "only"
-    ]
+      "reporting"
+    ],
+    "explicit": false
   },
   {
     "id": 49,
@@ -777,11 +665,10 @@ export const MATRIX = [
     "table6": "",
     "status": "OUT",
     "synonyms": [
-      "fbt / payroll tax reporting only",
       "payroll",
-      "reporting",
-      "only"
-    ]
+      "reporting"
+    ],
+    "explicit": false
   },
   {
     "id": 50,
@@ -790,12 +677,12 @@ export const MATRIX = [
     "table6": "",
     "status": "OUT",
     "synonyms": [
-      "insolvency advisory / reporting (non-court)",
       "insolvency",
       "advisory",
       "reporting",
-      "non-court"
-    ]
+      "court"
+    ],
+    "explicit": false
   },
   {
     "id": 51,
@@ -804,12 +691,12 @@ export const MATRIX = [
     "table6": "Item 3 (Managing Assets)",
     "status": "IN",
     "synonyms": [
-      "acting as court-appointed trustee / receiver",
-      "acting",
-      "court-appointed",
+      "court",
+      "appointed",
       "trustee",
       "receiver"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 52,
@@ -818,15 +705,12 @@ export const MATRIX = [
     "table6": "Item 3 (Managing Assets)",
     "status": "IN",
     "synonyms": [
-      "acting as voluntary liquidator / external administrator (fund control)",
-      "acting",
       "voluntary",
       "liquidator",
-      "external",
       "administrator",
-      "fund",
       "control"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 53,
@@ -835,14 +719,9 @@ export const MATRIX = [
     "table6": "Item 3 (Managing Assets)",
     "status": "IN",
     "synonyms": [
-      "administering client trust funds (execution authority)",
-      "administering",
-      "client",
-      "trust",
-      "funds",
-      "execution",
       "authority"
-    ]
+    ],
+    "explicit": false
   },
   {
     "id": 54,
@@ -851,14 +730,12 @@ export const MATRIX = [
     "table6": "Item 4 (Managing Accounts)",
     "status": "IN",
     "synonyms": [
-      "signing contracts or authorizing payments on behalf of clients",
-      "signing",
       "contracts",
       "authorizing",
       "payments",
-      "behalf",
-      "clients"
-    ]
+      "behalf"
+    ],
+    "explicit": false
   },
   {
     "id": 55,
@@ -867,12 +744,10 @@ export const MATRIX = [
     "table6": "Item 3 (Managing Assets)",
     "status": "IN",
     "synonyms": [
-      "holding securities or assets for clients",
-      "holding",
       "securities",
-      "assets",
-      "clients"
-    ]
+      "assets"
+    ],
+    "explicit": false
   },
   {
     "id": 56,
@@ -881,12 +756,8 @@ export const MATRIX = [
     "table6": "",
     "status": "OUT",
     "synonyms": [
-      "preparing reports only (no fund control)",
-      "preparing",
-      "reports",
-      "only",
-      "fund",
       "control"
-    ]
+    ],
+    "explicit": false
   }
 ];
