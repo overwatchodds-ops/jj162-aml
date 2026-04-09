@@ -18,6 +18,8 @@
   <meta name="description" content="SimpleAML — AML/CTF compliance tool for Australian accountants. Manage your firm's AML/CTF obligations under the Anti-Money Laundering and Counter-Terrorism Financing Act 2006.">
   <title>SimpleAML — Accountant AML/CTF Compliance</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Brevo newsletter form styles -->
+  <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
 </head>
 <body class="bg-slate-100 font-sans text-slate-800">
 <div id="app"></div>
@@ -116,5 +118,118 @@ document.head.appendChild(style);
 load();
 render();
 </script>
+
+<!-- ─── NEWSLETTER MODAL ──────────────────────────────────────────────────── -->
+<div id="newsletter-backdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;padding:32px;max-width:480px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+
+    <div style="margin-bottom:6px;font-size:20px;font-weight:700;color:#0f172a;">Stay up to date</div>
+    <div style="margin-bottom:20px;font-size:14px;color:#64748b;line-height:1.6;">Get notified when SimpleAML updates, new AUSTRAC guidance is released, or when Pro features launch.</div>
+
+    <!-- Brevo form -->
+    <div id="sib-container" style="text-align:left;">
+      <form id="sib-form" method="POST"
+        action="https://070d782a.sibforms.com/serve/MUIFAK4IjlmfCGKleSE_Mrhe06gWko3rBs9m1XX9vzkC7HX-xh-usXTX_3jjHwtqZaZLksgYMYsgqm-ApmqbCWg6-d4pb9FgVRKe1sD6YzlMYfb24foNM7rgra575sing2v6UkKNYw_QpECE06LPSH-CiFHI623ubPpLCzlAL6E-PcnuJsuJZCccgsBMwidzKjgVCyzcR9k_mk23RQ=="
+        data-type="subscription">
+
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:12px;font-weight:600;color:#374151;margin-bottom:4px;" for="nl-firstname">First name</label>
+          <input id="nl-firstname" name="FIRSTNAME" type="text" required autocomplete="off"
+            placeholder="Jane"
+            style="display:block;width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;background:#f8fafc;outline:none;box-sizing:border-box;">
+        </div>
+
+        <div style="margin-bottom:20px;">
+          <label style="display:block;font-size:12px;font-weight:600;color:#374151;margin-bottom:4px;" for="nl-email">Email address</label>
+          <input id="nl-email" name="EMAIL" type="email" required autocomplete="off"
+            placeholder="jane@firm.com.au"
+            style="display:block;width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;background:#f8fafc;outline:none;box-sizing:border-box;">
+        </div>
+
+        <div id="nl-error" style="display:none;margin-bottom:12px;font-size:12px;color:#991b1b;background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:8px 12px;">
+          Could not subscribe. Please check your details and try again.
+        </div>
+        <div id="nl-success" style="display:none;margin-bottom:12px;font-size:12px;color:#065f46;background:#ecfdf5;border:1px solid #6ee7b7;border-radius:8px;padding:8px 12px;">
+          ✓ Subscribed — thanks for staying in touch!
+        </div>
+
+        <input type="text" name="email_address_check" value="" style="display:none;">
+        <input type="hidden" name="locale" value="en">
+
+        <button type="submit" form="sib-form"
+          style="width:100%;padding:10px;background:#4f46e5;color:#fff;font-size:14px;font-weight:600;border:none;border-radius:10px;cursor:pointer;">
+          Subscribe →
+        </button>
+      </form>
+    </div>
+
+    <div style="margin-top:16px;text-align:center;">
+      <button onclick="dismissNewsletter()"
+        style="background:none;border:none;font-size:12px;color:#94a3b8;cursor:pointer;text-decoration:underline;">
+        No thanks, continue →
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Brevo scripts -->
+<script>
+  window.REQUIRED_CODE_ERROR_MESSAGE = 'Please choose a country code';
+  window.LOCALE = 'en';
+  window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "Please enter a valid email address.";
+  window.REQUIRED_ERROR_MESSAGE = "This field cannot be left blank.";
+  window.GENERIC_INVALID_MESSAGE = "The information provided is invalid. Please try again.";
+  window.translation = { common: { selectedList: '{quantity} list selected', selectedLists: '{quantity} lists selected' } };
+  var AUTOHIDE = Boolean(0);
+</script>
+<script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+
+<script>
+  // ─── NEWSLETTER MODAL CONTROLLER ─────────────────────────────────────────────
+  window.showNewsletterModal = function() {
+    var el = document.getElementById('newsletter-backdrop');
+    if (el) el.style.display = 'flex';
+
+    // Handle Brevo form success/error via form submit
+    var form = document.getElementById('sib-form');
+    if (form && !form._nlBound) {
+      form._nlBound = true;
+      form.addEventListener('submit', function(e) {
+        // Let Brevo handle the actual submission
+        // Watch for success/error message panels appearing
+        setTimeout(function() {
+          var success = document.getElementById('success-message');
+          var error   = document.getElementById('error-message');
+          var nlSuccess = document.getElementById('nl-success');
+          var nlError   = document.getElementById('nl-error');
+
+          // Brevo uses its own panels — also show our inline versions
+          if (success && success.style.display !== 'none') {
+            if (nlSuccess) nlSuccess.style.display = 'block';
+            setTimeout(function() { window.dismissNewsletter(); }, 2500);
+          } else if (error && error.style.display !== 'none') {
+            if (nlError) nlError.style.display = 'block';
+          }
+        }, 1500);
+      });
+    }
+  };
+
+  window.dismissNewsletter = function() {
+    var el = document.getElementById('newsletter-backdrop');
+    if (el) el.style.display = 'none';
+    // Mark as shown in localStorage directly (S may not be in scope here)
+    try {
+      var raw = localStorage.getItem('saml_v2');
+      if (raw) {
+        var data = JSON.parse(raw);
+        if (!data.firm) data.firm = {};
+        data.firm.newsletterShown = true;
+        localStorage.setItem('saml_v2', JSON.stringify(data));
+      }
+    } catch(e) {}
+  };
+</script>
+
 </body>
 </html>
