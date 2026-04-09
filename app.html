@@ -1,15 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z6L06TX2HB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="SimpleAML — AML/CTF compliance tool for Australian accountants. Manage your firm's AML/CTF obligations under the Anti-Money Laundering and Counter-Terrorism Financing Act 2006.">
+  <title>SimpleAML — Accountant AML/CTF Compliance</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 font-sans text-slate-800">
+<div id="app"></div>
+<div id="toast" style="display:none" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-sm px-5 py-3 rounded-xl shadow-xl z-50"></div>
+
 <script type="module">
 // ─── IMPORTS ──────────────────────────────────────────────────────────────────
 import { S, save, load } from './state/index.js';
 import { Sidebar, TopNav, RightCol } from './components/index.js';
 
 import * as ScreenDashboard          from './screens/dashboard.js';
-import * as ScreenRisk              from './screens/risk.js';
-import * as ScreenServiceRisk       from './screens/serviceRisk.js';
-import * as ScreenCustomerRisk      from './screens/customerRisk.js';
-import * as ScreenGeoRisk           from './screens/geoRisk.js';
-import * as ScreenOverallRisk       from './screens/overallRisk.js';
-
+import * as ScreenRisk               from './screens/risk.js';
+import * as ScreenServiceRisk        from './screens/serviceRisk.js';
+import * as ScreenCustomerRisk       from './screens/customerRisk.js';
+import * as ScreenGeoRisk            from './screens/geoRisk.js';
+import * as ScreenOverallRisk        from './screens/overallRisk.js';
 import * as ScreenProgram            from './screens/program.js';
 import * as ScreenStaff              from './screens/staff.js';
 import * as ScreenTraining           from './screens/training.js';
@@ -34,7 +58,7 @@ import * as ScreenReportsOverview    from './screens/reports-overview.js';
 const Screens = {
   dashboard:            ScreenDashboard.screen,
 
-  // NEW RISK FLOW
+  // RISK FLOW
   risk:                 ScreenRisk.screen,
   servicerisk:          ScreenServiceRisk.screen,
   customerrisk:         ScreenCustomerRisk.screen,
@@ -43,6 +67,9 @@ const Screens = {
 
   // REST OF APP
   firm:                 ScreenFirmDetails.screen,
+  'firm-details':       ScreenFirmDetails.screen,
+  'firm-overview':      ScreenFirmOverview.screen,
+  'firm-appointments':  ScreenFirmAppointments.screen,
   program:              ScreenProgram.screen,
   staff:                ScreenStaff.screen,
   training:             ScreenTraining.screen,
@@ -58,9 +85,6 @@ const Screens = {
   'clients-overview':   ScreenClientsOverview.screen,
   'personnel-overview': ScreenPersonnelOverview.screen,
   'compliance-overview':ScreenComplianceOverview.screen,
-  'firm-overview':      ScreenFirmOverview.screen,
-  'firm-details':       ScreenFirmDetails.screen,
-  'firm-appointments':  ScreenFirmAppointments.screen,
   'reports-overview':   ScreenReportsOverview.screen,
 };
 
@@ -92,3 +116,5 @@ document.head.appendChild(style);
 load();
 render();
 </script>
+</body>
+</html>
