@@ -11,6 +11,10 @@ export const SCREEN_GROUP = {
   'firm-details':       'firm',
   'firm-appointments':  'firm',
   risk:                 'compliance',
+  servicerisk:          'compliance',
+  customerrisk:         'compliance',
+  georisk:              'compliance',
+  overallrisk:          'compliance',
   program:              'compliance',
   enrolment:            'compliance',
   'personnel-overview': 'personnel',
@@ -76,10 +80,16 @@ export function Sidebar() {
       <button onclick="go('firm-details')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm-details')}">Firm Details</button>
       <button onclick="go('firm-appointments')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm-appointments')}">Appointments</button>`,
     compliance: `
-      <button onclick="go('compliance-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('compliance-overview')}">Overview</button>
-      <button onclick="go('risk')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('risk')}">Risk Assessment</button>
-      <button onclick="go('program')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('program')}">AML/CTF Program</button>
-      <button onclick="go('enrolment')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('enrolment')}">AUSTRAC Enrolment</button>`,
+      <div class="px-3 pt-2 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Risk Assessment</div>
+      <button onclick="go('risk')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('risk')}">Designated Services</button>
+      <button onclick="go('servicerisk')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('servicerisk')}">Service Risk</button>
+      <button onclick="go('customerrisk')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('customerrisk')}">Customer Risk</button>
+      <button onclick="go('georisk')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('georisk')}">Geography / Delivery</button>
+      <button onclick="go('overallrisk')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('overallrisk')}">Overall Inherent Risk</button>
+      <div class="px-3 pt-3 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Program</div>
+      <button onclick="go('program')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('program')}">AML/CTF Program</button>
+      <div class="px-3 pt-3 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Enrolment</div>
+      <button onclick="go('enrolment')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('enrolment')}">AUSTRAC Enrolment</button>`,
     personnel: `
       <button onclick="go('personnel-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('personnel-overview')}">Overview</button>
       <button onclick="go('staff')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('staff')}">Key Personnel Vetting</button>
