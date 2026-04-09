@@ -1,5 +1,5 @@
 import { S, DS_LIST, PF_TEXT, save } from '../state/index.js';
-import { classify, resolveGreyZone } from '../logic/classifier.js';
+import { classify, countTable6Items, resolveGreyZone } from '../logic/classifier.js';
 import { complianceScore, autoServiceRiskFromChecks, autoClientRisk, autoGeoRisk, autoResidualRisk, autoOverallRisk } from '../logic/index.js';
 import { ratingBadge, infoBtn, infoPop, ratingRow, toast} from '../components/index.js';
 
@@ -39,18 +39,30 @@ export function screen() {
         <p>Your designated services are the foundation of your entire compliance program. AUSTRAC uses them to determine your inherent risk profile, what your program must contain, and the level of CDD required for each client.</p>
         <p class="mt-2">Describe what your firm does in plain English. SimpleAML will map it to AUSTRAC Table 6 automatically.</p>`)}
 
-      <div class="space-y-3">
-        <label class="text-xs text-slate-500">What services does your firm provide?</label>
-        <textarea id="classifier-input" class="inp text-sm" rows="4"
-          placeholder="e.g. We set up companies and trusts, act as company secretary for some clients, process payroll and pay supplier bills..."
-          >${sc.classifierInput||''}</textarea>
-        <div class="text-xs text-slate-400 space-y-1">
-          <div class="font-medium text-slate-500">Examples:</div>
-          <div>· "We set up trusts and companies"</div>
-          <div>· "We do bookkeeping and pay bills for clients"</div>
-          <div>· "We help clients buy and sell businesses"</div>
-          <div>· "We prepare valuations and act as company secretary"</div>
+      <div class="space-y-4">
+
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2 text-xs text-slate-600 leading-relaxed">
+          <div class="font-semibold text-slate-700">How to get an accurate result</div>
+          <p>Describe what your firm actually does for clients — not your job title. Include:</p>
+          <div class="space-y-1 pl-1">
+            <div>· The types of entities you set up (companies, trusts, SMSFs)</div>
+            <div>· Financial tasks you perform on behalf of clients (paying bills, payroll, bank accounts)</div>
+            <div>· Transactions you help clients with (buying or selling businesses, property, raising capital)</div>
+            <div>· Any governance roles you hold (company secretary, trustee, nominee director)</div>
+          </div>
+          <p class="text-slate-400">The more specific you are, the more accurate your result will be.</p>
         </div>
+
+        <div class="space-y-2">
+          <label class="text-xs font-medium text-slate-600">Describe your firm's services</label>
+          <textarea id="classifier-input" class="inp text-sm" rows="5"
+            placeholder='e.g. "We set up companies and trusts for clients, act as company secretary, process payroll and pay supplier invoices on their behalf. We also help clients buy and sell businesses and sometimes assist with property settlements."'
+            >${sc.classifierInput||''}</textarea>
+          <div id="classifier-nudge" class="hidden text-xs text-amber-600 font-medium">
+            Your description seems brief — the more detail you provide, the more accurate your result.
+          </div>
+        </div>
+
         <button onclick="runClassifier()" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">
           Analyse My Services →
         </button>
@@ -111,7 +123,14 @@ export function screen() {
             <span class="text-green-500 flex-shrink-0 mt-0.5">✓</span>${r.task}
           </div>`).join('')}
         </div>` : ''}
-        <p class="text-xs text-slate-400">Not quite right? Edit your description above and re-analyse.</p>
+        <div class="border-t border-slate-100 pt-4">
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" id="classifier-confirmed" ${sc.classifierConfirmed?'checked':''} onchange="confirmClassifier(this.checked)" class="mt-0.5 flex-shrink-0">
+            <span class="text-sm text-slate-700 leading-relaxed">I confirm this list accurately reflects the designated services my firm provides.</span>
+          </label>
+          ${sc.classifierConfirmed ? '<div class="text-xs text-green-600 font-medium mt-2">✓ Confirmed — your designated services are recorded.</div>' : ''}
+        </div>
+        <p class="text-xs text-slate-400">Not quite right? Edit your description above and re-analyse — your confirmation will reset.</p>
       </div>
 
       <!-- RESULTS: STATE 2 — Found in matrix but all OUT -->
@@ -454,31 +473,36 @@ window.runClassifier = function() {
   const input = document.getElementById('classifier-input')?.value?.trim();
   if (!input) { toast('Describe your services first', 'err'); return; }
 
+  // Show nudge if input is brief (fewer than 10 words)
+  const wordCount = input.split(/\s+/).filter(Boolean).length;
+  const nudge = document.getElementById('classifier-nudge');
+  if (nudge) nudge.classList.toggle('hidden', wordCount >= 10);
+
   const { matched, notDesignated, greyZone } = classify(input);
 
   S.scope.classifierInput = input;
   S.scope.classifierRan = true;
+  S.scope.classifierConfirmed = false; // reset confirmation on re-analyse
   S.scope.greyZonePending = greyZone.length > 0;
   S.scope.greyZoneAnswer = null;
-
-  // Store results — grey zone rows not yet added to matched
   S.scope.classifierMatched = matched;
   S.scope.classifierNotDesignated = notDesignated;
   S.scope.classifierGreyZone = greyZone;
 
   // Feed into serviceChecks for downstream risk calculation
-  // Map matched IN rows to high-risk service IDs where applicable
   S.scope.serviceChecks = matched
     .filter(r => r.table6)
     .map(r => r.table6)
-    .filter((v, i, a) => a.indexOf(v) === i); // dedupe
+    .filter((v, i, a) => a.indexOf(v) === i);
 
-  // Mark as in-scope if any designated services found
-  if (matched.length > 0) {
-    S.scope.noneConfirmed = false;
-  }
+  if (matched.length > 0) S.scope.noneConfirmed = false;
 
   save(); go('risk');
+};
+
+window.confirmClassifier = function(checked) {
+  S.scope.classifierConfirmed = checked;
+  save();
 };
 
 window.resolveGrey = function(answer) {
