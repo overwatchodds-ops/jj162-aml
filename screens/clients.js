@@ -119,8 +119,7 @@ export function screen() {
       <td class="px-4 py-3 text-xs text-slate-500">${indCount} · ${verified}/${indCount} verified · ${screened}/${indCount} screened</td>
       <td class="px-4 py-3 text-xs text-slate-500">${lastUpdated}</td>
       <td class="px-4 py-3 text-right whitespace-nowrap">
-        <button onclick="editClient(${i})" class="text-xs text-indigo-600 font-semibold hover:text-indigo-800 mr-2">Edit</button>
-        <button onclick="startAddService(${i})" class="text-xs text-green-600 font-semibold hover:text-green-800 mr-2">+ Service</button>
+        <button onclick="editClient(${i})" class="text-xs text-indigo-600 font-semibold hover:text-indigo-800 mr-3">Edit</button>
         <button onclick="toggleExpandClient(${i})" class="text-xs text-slate-400 hover:text-slate-600">${expanded?'▲':'▼'} More</button>
       </td>
     </tr>

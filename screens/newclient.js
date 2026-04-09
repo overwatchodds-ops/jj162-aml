@@ -363,15 +363,7 @@ export function screen() {
           </div>
         </button>`;
       }).join('')}
-    </div>` : `
-    <div class="flex items-center justify-between mb-4">
-      <div class="flex items-center gap-2">
-        <span class="text-lg">${cfg.icon}</span>
-        <span class="text-sm font-semibold text-slate-700">${d.entityType}</span>
-      </div>
-      <button onclick="changeEntityType()" class="text-xs text-indigo-500 hover:text-indigo-700 underline">Change entity type</button>
-    </div>
-    ${partAFields(d)}`;
+    </div>` : partAFields(d);
 
   // ── PANEL B CONTENT ───────────────────────────────────────────────────────
   const panelBContent = `
@@ -457,23 +449,45 @@ export function screen() {
 
   const op = d._openPanels;
 
+  const isEditing = S._clientEditIdx !== undefined;
+  const editedClient = isEditing ? S.clients[S._clientEditIdx] : null;
+  const pageTitle = isEditing ? `Edit Client` : 'New Client (CDD)';
+  const pageSubtitle = isEditing
+    ? `Editing record for ${editedClient?.name || ''}. Previous version will be preserved on save.`
+    : 'Complete all four sections before providing a designated service to this client.';
+
   return `<div class="py-8 space-y-4">
 
     <!-- HEADER -->
     <div class="flex items-start gap-4">
       <button onclick="go('clients')" class="text-slate-400 hover:text-slate-600 text-sm mt-1 flex-shrink-0">← Client Register</button>
       <div class="flex-1">
-        <div class="flex items-center gap-3">
-          <h1 class="text-2xl font-bold text-slate-900">${S._clientEditIdx !== undefined ? 'Edit Client — '+(S.clients[S._clientEditIdx]?.name||'') : 'New Client'}</h1>
-          ${S._clientEditIdx !== undefined ? `<span class="text-xs text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">Editing — previous version preserved on save</span>` : ''}
+        <div class="flex items-center gap-3 flex-wrap">
+          <h1 class="text-2xl font-bold text-slate-900">${pageTitle}</h1>
+          ${isEditing ? `<span class="text-xs text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">⚠ Editing — ${editedClient?.name || ''}</span>` : ''}
         </div>
-        <p class="text-sm text-slate-400 mt-1">Complete all four sections before providing a designated service to this client.</p>
+        <p class="text-sm text-slate-400 mt-1">${pageSubtitle}</p>
       </div>
     </div>
 
+    <!-- PERSISTENT ENTITY TYPE STRIP — always visible regardless of accordion state -->
+    ${d.entityType ? `
+    <div class="flex items-center justify-between bg-white border border-slate-200 rounded-xl px-4 py-3">
+      <div class="flex items-center gap-2.5">
+        <span class="text-xl">${cfg.icon}</span>
+        <div>
+          <div class="text-xs text-slate-400 font-medium uppercase tracking-wide">Entity type</div>
+          <div class="text-sm font-bold text-slate-800">${d.entityType}</div>
+        </div>
+      </div>
+      <button onclick="changeEntityType()" class="text-xs text-amber-600 border border-amber-200 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-lg font-semibold transition">
+        Change ↓
+      </button>
+    </div>` : ''}
+
     <!-- PANEL A: ENTITY & IDENTITY -->
     ${panel('a',
-      d.entityType ? `${cfg.icon} ${d.entityType}` : 'Entity &amp; Identity',
+      d.entityType ? 'Entity &amp; Identity' : 'Entity &amp; Identity',
       op.a ? null : summaryA(d),
       op.a, completeA(d), panelAContent)}
 
