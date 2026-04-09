@@ -73,8 +73,8 @@ export function screen() {
         </div>
       </div>` : ''}
 
-      <!-- RESULTS TABLE -->
-      ${sc.classifierMatched && sc.classifierMatched.length > 0 ? `
+      <!-- RESULTS: STATE 1 — IN services found -->
+      ${sc.classifierRan && sc.classifierMatched && sc.classifierMatched.length > 0 ? `
       <div class="space-y-4">
         <h3 class="text-sm font-bold text-slate-700">How AUSTRAC sees your firm</h3>
         <div class="border border-slate-200 rounded-xl overflow-hidden">
@@ -83,7 +83,7 @@ export function screen() {
               <tr class="bg-slate-50 border-b border-slate-200">
                 <th class="text-left text-xs font-semibold text-slate-500 px-4 py-3">Task / Service</th>
                 <th class="text-left text-xs font-semibold text-slate-500 px-4 py-3 w-32">Table 6</th>
-                <th class="text-left text-xs font-semibold text-slate-500 px-4 py-3 w-40">AUSTRAC Status</th>
+                <th class="text-left text-xs font-semibold text-slate-500 px-4 py-3 w-44">AUSTRAC Status</th>
               </tr>
             </thead>
             <tbody>
@@ -91,38 +91,89 @@ export function screen() {
               <tr class="border-b border-slate-50 last:border-0">
                 <td class="px-4 py-3 text-slate-700">${r.task}</td>
                 <td class="px-4 py-3 text-xs text-slate-500">${r.table6||'—'}</td>
-                <td class="px-4 py-3"><span class="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700">✓ Designated Service</span></td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700">✓ Designated Service</span>
+                </td>
               </tr>`).join('')}
             </tbody>
           </table>
         </div>
-
         <p class="text-sm text-slate-600">
           Based on what you described, your firm provides
           <strong>${sc.classifierMatched.length} designated service${sc.classifierMatched.length !== 1 ? 's' : ''}</strong>
-          under AUSTRAC Table 6.
+          under AUSTRAC Table 6. Your firm must comply with AML/CTF obligations from 1 July 2026.
         </p>
-
         ${sc.classifierNotDesignated && sc.classifierNotDesignated.length > 0 ? `
         <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2">
-          <div class="text-xs font-semibold text-slate-500">Services you mentioned that are <em>not</em> designated services</div>
+          <div class="text-xs font-semibold text-slate-500 mb-1">Also mentioned — not designated services</div>
           ${sc.classifierNotDesignated.map(r => `
           <div class="flex items-start gap-2 text-xs text-slate-500">
             <span class="text-green-500 flex-shrink-0 mt-0.5">✓</span>${r.task}
           </div>`).join('')}
         </div>` : ''}
-
         <p class="text-xs text-slate-400">Not quite right? Edit your description above and re-analyse.</p>
-      </div>` : sc.classifierRan ? `
-      <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-500">
-        No designated services identified from your description. If your firm provides services not listed, try describing them differently and re-analyse.
-        <div class="mt-3">
-          <label class="flex items-center gap-2 cursor-pointer text-slate-600">
+      </div>
+
+      <!-- RESULTS: STATE 2 — Found in matrix but all OUT -->
+      ` : sc.classifierRan && sc.classifierNotDesignated && sc.classifierNotDesignated.length > 0 ? `
+      <div class="space-y-4">
+        <div class="bg-green-50 border border-green-200 rounded-xl p-5 space-y-3">
+          <div class="text-sm font-bold text-green-800">✓ Your services are outside AUSTRAC's designated service list</div>
+          <p class="text-sm text-green-700 leading-relaxed">
+            Based on what you described, SimpleAML identified the following services —
+            none of which are designated services under AUSTRAC Table 6.
+            Your firm does not appear to have AML/CTF obligations for these activities.
+          </p>
+          <div class="space-y-1.5 pt-1">
+            ${sc.classifierNotDesignated.map(r => `
+            <div class="flex items-start gap-2 text-sm text-green-700">
+              <span class="flex-shrink-0 mt-0.5">✓</span>${r.task}
+            </div>`).join('')}
+          </div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-500 leading-relaxed">
+          We recommend confirming this with your professional body (CPA Australia, CA ANZ or IPA) before concluding you are out of scope.
+        </div>
+        <div class="pt-1">
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-slate-600">
             <input type="checkbox" id="ds-none" ${dsNone?'checked':''} onchange="toggleDsNone(this)">
             <span>Confirm: my firm does not provide any designated services</span>
           </label>
+          ${dsNone ? `<div class="mt-2 text-xs text-green-700 font-semibold">✓ Confirmed and recorded in your compliance register.</div>` : ''}
         </div>
-        ${dsNone ? `<div class="mt-3 text-green-700 font-semibold">✓ Confirmed — your firm does not need to enrol with AUSTRAC.</div>` : ''}
+        <p class="text-xs text-slate-400">Not what you expected? Edit your description above and re-analyse.</p>
+      </div>
+
+      <!-- RESULTS: STATE 3 — Nothing found in matrix at all -->
+      ` : sc.classifierRan ? `
+      <div class="space-y-4">
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 space-y-3">
+          <div class="text-sm font-bold text-amber-800">⚠ We could not match your description</div>
+          <p class="text-sm text-amber-700 leading-relaxed">
+            SimpleAML could not find your services in the AUSTRAC Table 6 matrix.
+            This does not mean you are out of scope — it may mean your description
+            needs more detail or different wording.
+          </p>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-2 text-xs text-slate-500">
+          <div class="font-semibold text-slate-600 mb-2">Try describing your services like this:</div>
+          <div class="space-y-1.5">
+            <div>· "We set up companies and trusts for clients"</div>
+            <div>· "We act as company secretary and process payroll payments"</div>
+            <div>· "We help clients buy and sell businesses"</div>
+            <div>· "We hold client funds and pay their suppliers"</div>
+            <div>· "We prepare tax returns and financial statements"</div>
+          </div>
+        </div>
+        <p class="text-xs text-slate-400">
+          If you believe your firm is genuinely out of scope, confirm below — but we recommend
+          speaking with CPA Australia, CA ANZ or IPA first.
+        </p>
+        <label class="flex items-center gap-2 cursor-pointer text-sm text-slate-600">
+          <input type="checkbox" id="ds-none" ${dsNone?'checked':''} onchange="toggleDsNone(this)">
+          <span>Confirm: my firm does not provide any designated services</span>
+        </label>
+        ${dsNone ? `<div class="mt-1 text-xs text-green-700 font-semibold">✓ Confirmed and recorded in your compliance register.</div>` : ''}
       </div>` : ''}
     </div>
 
