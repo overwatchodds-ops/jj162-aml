@@ -1,5 +1,5 @@
 import { S, DS_LIST, PF_TEXT, save } from '../state/index.js';
-import { classify, countTable6Items, resolveGreyZone } from '../logic/classifier.js';
+import { classify, countTable6Items, extractRisks, resolveGreyZone } from '../logic/classifier.js';
 import { complianceScore, autoServiceRiskFromChecks, autoClientRisk, autoGeoRisk, autoResidualRisk, autoOverallRisk } from '../logic/index.js';
 import { ratingBadge, infoBtn, infoPop, ratingRow, toast} from '../components/index.js';
 
@@ -132,6 +132,29 @@ export function screen() {
         </div>
         <p class="text-xs text-slate-400">Not quite right? Edit your description above and re-analyse — your confirmation will reset.</p>
       </div>
+
+      <!-- ML/TF RISK PATTERNS -->
+      ${sc.classifierConfirmed && sc.classifierRisks && sc.classifierRisks.length > 0 ? `
+      <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-5">
+        <div>
+          <h2 class="text-sm font-bold text-slate-700">Identified ML/TF Risks Based on Your Services</h2>
+          <p class="text-xs text-slate-400 mt-1">Based on the services you described, the following money laundering and terrorism financing risks may apply to your firm.</p>
+        </div>
+        <div class="space-y-4">
+          ${(sc.classifierRisks||[]).map(r => `
+          <div class="border border-slate-200 rounded-xl p-4 space-y-1.5">
+            <div class="text-xs font-semibold text-indigo-600">${r.label}</div>
+            <p class="text-sm text-slate-600 leading-relaxed">${r.risk}</p>
+          </div>`).join('')}
+        </div>
+        <div class="border-t border-slate-100 pt-4">
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" id="mltf-confirmed" ${sc.mltfConfirmed?'checked':''} onchange="confirmMltf(this.checked)" class="mt-0.5 flex-shrink-0">
+            <span class="text-sm text-slate-700 leading-relaxed">I confirm I have considered these ML/TF risk patterns in the context of my firm's services.</span>
+          </label>
+          ${sc.mltfConfirmed ? '<div class="text-xs text-green-600 font-medium mt-2">✓ Confirmed — ML/TF risk assessment recorded.</div>' : ''}
+        </div>
+      </div>` : ''}
 
       <!-- RESULTS: STATE 2 — Found in matrix but all OUT -->
       ` : sc.classifierRan && sc.classifierNotDesignated && sc.classifierNotDesignated.length > 0 ? `
@@ -497,11 +520,23 @@ window.runClassifier = function() {
 
   if (matched.length > 0) S.scope.noneConfirmed = false;
 
+  // Extract ML/TF risk patterns from matched rows
+  S.scope.classifierRisks = extractRisks(matched);
+  S.scope.mltfConfirmed = false; // reset on re-analyse
+
   save(); go('risk');
 };
 
 window.confirmClassifier = function(checked) {
   S.scope.classifierConfirmed = checked;
+  if (!checked) {
+    S.scope.mltfConfirmed = false; // reset ML/TF if service confirmation removed
+  }
+  save(); go('risk');
+};
+
+window.confirmMltf = function(checked) {
+  S.scope.mltfConfirmed = checked;
   save();
 };
 
