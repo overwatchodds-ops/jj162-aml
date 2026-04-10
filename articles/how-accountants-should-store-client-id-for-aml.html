@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z6L06TX2HB');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Should Accountants Store Client ID for AML? | SimpleAML</title>
+<meta name="description" content="Where should accountants store client identity documents for AML/CTF compliance? This guide covers best practice, the risks of cloud document vaults, and why SimpleAML keeps your CDD records local.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #0a1628;
+  --navy-2: #112240;
+  --gold:   #c9a84c;
+  --gold-2: #e8c66d;
+  --gold-dim: rgba(201,168,76,.12);
+  --white:  #ffffff;
+  --text:   #e8e4da;
+  --muted:  #8a9bb0;
+  --line:   rgba(201,168,76,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:rgba(10,22,40,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+.nav-logo{display:flex;align-items:center;gap:12px;font-family:'DM Serif Display',serif;font-size:20px;color:var(--white);text-decoration:none;}
+.nav-logo-mark{width:32px;height:32px;background:var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--navy);font-family:'DM Mono',monospace;}
+.nav-back{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold);}
+.nav-cta{background:var(--gold);color:var(--navy);padding:8px 20px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--gold-2);}
+.article-hero{padding:9rem 2rem 4rem;max-width:780px;margin:0 auto;}
+.article-category{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;}
+.article-category::before{content:'';display:inline-block;width:24px;height:1px;background:var(--gold);}
+.article-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:400;line-height:1.1;color:var(--white);margin-bottom:1.5rem;letter-spacing:-.02em;}
+.article-title em{font-style:italic;color:var(--gold);}
+.article-meta{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;padding:1.2rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:3rem;}
+.meta-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold-dim);border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);}
+.meta-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.meta-info{font-size:12px;color:var(--muted);}
+.article-body{max-width:780px;margin:0 auto;padding:0 2rem 6rem;}
+.article-body p{font-size:1.05rem;line-height:1.85;color:rgba(232,228,218,.85);margin-bottom:1.6rem;}
+.article-body h2{font-family:'DM Serif Display',serif;font-size:1.9rem;font-weight:400;color:var(--white);margin:3rem 0 1rem;letter-spacing:-.02em;padding-bottom:0.8rem;border-bottom:1px solid var(--line);}
+.article-body h3{font-size:0.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:2rem 0 0.6rem;}
+.article-body strong{color:var(--white);font-weight:500;}
+.article-body a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3);transition:border-color .2s;}
+.article-body a.btn-primary{color:var(--navy) !important;border-bottom:none !important;}
+.article-body a.btn-secondary{border-bottom:1px solid var(--line) !important;}
+.article-body a:hover{border-color:var(--gold);}
+.answer-box{background:rgba(201,168,76,.08);border:1px solid var(--line);border-radius:10px;padding:1.8rem 2rem;margin:2rem 0;}
+.answer-box-label{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
+.answer-box p{font-size:0.95rem !important;margin-bottom:0 !important;color:var(--text) !important;}
+.pull-quote{margin:2.5rem 0;padding:1.8rem 2rem;background:var(--gold-dim);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;}
+.pull-quote p{font-family:'DM Serif Display',serif;font-size:1.25rem !important;font-style:italic;color:var(--white) !important;line-height:1.5 !important;margin:0 !important;}
+.checklist{list-style:none;margin:1rem 0 1.6rem;padding:0;}
+.checklist li{display:flex;align-items:flex-start;gap:12px;font-size:1rem;line-height:1.7;color:rgba(232,228,218,.85);margin-bottom:0.5rem;padding:0.5rem 0;border-bottom:1px solid rgba(201,168,76,.08);}
+.checklist li:last-child{border-bottom:none;}
+.checklist li::before{content:'✓';color:var(--gold);font-weight:600;flex-shrink:0;margin-top:2px;}
+.warning-box{background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);border-radius:10px;padding:1.5rem 2rem;margin:2rem 0;display:flex;gap:1rem;align-items:flex-start;}
+.warning-icon{color:#f87171;font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.warning-box p{font-size:0.95rem !important;color:rgba(232,228,218,.85) !important;margin:0 !important;}
+.warning-box strong{color:#f87171 !important;}
+.tip-box{background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.2);border-radius:10px;padding:1.5rem 2rem;margin:2rem 0;display:flex;gap:1rem;align-items:flex-start;}
+.tip-icon{color:#34d399;font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.tip-box p{font-size:0.95rem !important;color:rgba(232,228,218,.85) !important;margin:0 !important;}
+.tip-box strong{color:#34d399 !important;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;}
+@media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+.col-card{background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:1.4rem;}
+.col-card-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:0.8rem;}
+.col-card-bad .col-card-label{color:#f87171;}
+.col-card-good .col-card-label{color:#34d399;}
+.col-card ul{list-style:none;padding:0;}
+.col-card ul li{font-size:13px;color:var(--muted);padding:4px 0;line-height:1.6;display:flex;gap:8px;}
+.col-card-bad ul li::before{content:'✗';color:#f87171;flex-shrink:0;}
+.col-card-good ul li::before{content:'✓';color:#34d399;flex-shrink:0;}
+.article-cta{margin:3rem 0;padding:2rem;background:var(--navy-2);border:1px solid var(--line);border-radius:12px;}
+.article-cta h4{font-family:'DM Serif Display',serif;font-size:1.4rem;font-weight:400;color:var(--white);margin-bottom:0.5rem;}
+.article-cta p{font-size:0.9rem !important;color:var(--muted) !important;margin-bottom:1.2rem !important;}
+.btn-primary{display:inline-block;background:var(--gold);color:var(--navy) !important;padding:12px 28px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none !important;border-bottom:none !important;transition:background .2s;}
+.btn-primary:hover{background:var(--gold-2);}
+.btn-secondary{display:inline-block;background:transparent;color:var(--gold) !important;padding:12px 24px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none !important;border:1px solid var(--line) !important;transition:all .2s;margin-left:10px;}
+.btn-secondary:hover{border-color:var(--gold) !important;}
+footer{display:flex;align-items:center;justify-content:space-between;padding:2rem 48px;border-top:1px solid var(--line);}
+.footer-brand{font-family:'DM Serif Display',serif;font-size:16px;color:var(--muted);}
+.footer-link{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.footer-link:hover{color:var(--gold);}
+@media(max-width:768px){
+  nav{padding:16px 20px;}
+  .article-hero{padding:7rem 1.2rem 3rem;}
+  .article-body{padding:0 1.2rem 4rem;}
+  .article-cta{padding:1.5rem;}
+  .btn-secondary{margin-left:0;margin-top:10px;display:block;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">
+    <div class="nav-logo-mark">SA</div>
+    SimpleAML
+  </a>
+  <a class="nav-back" href="/articles.html">← All Articles</a>
+  <a href="/app.html" class="nav-cta">Open App →</a>
+</nav>
+
+<div class="article-hero">
+  <div class="article-category">Data Security · CDD Best Practice</div>
+  <h1 class="article-title">How Should Accountants Store Client ID for AML? <em>The Overlooked Risk No One Is Talking About</em></h1>
+  <div class="article-meta">
+    <div class="meta-badge"><span class="meta-badge-dot"></span> Tranche 2 · 1 July 2026</div>
+    <div class="meta-info">Updated April 2026 &nbsp;·&nbsp; SimpleAML Editorial &nbsp;·&nbsp; 7 min read</div>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>With Tranche 2 approaching, most conversations are focused on enrolment deadlines, AML programs, and customer due diligence procedures. But very few accountants are asking the question that actually keeps them up at night:</p>
+
+  <div class="pull-quote">
+    <p>"Where am I supposed to store all these passports, licences, trust deeds, and company documents?"</p>
+  </div>
+
+  <p>AML compliance doesn't just mean paperwork. It means your firm is now responsible for handling the most sensitive identity documents your clients own. And that creates a data custodianship responsibility that most accounting practices have never had to think about before.</p>
+
+  <div class="answer-box">
+    <div class="answer-box-label">The short answer</div>
+    <p>AML/CTF law requires you to <strong>record</strong> what you verified and retain those records for at least seven years. It does not require you to centralise client identity documents on a third-party cloud platform. Best practice is to store documents within your firm's existing secure systems — and use SimpleAML to maintain the compliance register of what was checked, when, and by whom.</p>
+  </div>
+
+  <h2>You Are Now a Custodian of Identity Data</h2>
+
+  <p>Under the Anti-Money Laundering and Counter-Terrorism Financing Act 2006, you must collect identification information and retain records of your verification process for at least seven years. That means maintaining records relating to:</p>
+
+  <ul class="checklist">
+    <li>Passports and driver licences — type, number, country of issue, verification outcome</li>
+    <li>Trust deeds and company constitutions — sighted, reviewed, and confirmed</li>
+    <li>Beneficial ownership structures — who controls the entity and how</li>
+    <li>Proof of address and source of funds</li>
+    <li>Sanctions and PEP screening results — provider, date, outcome, reference ID</li>
+  </ul>
+
+  <p>This is not ordinary client data. This is identity-grade data. If it is mishandled, lost, or breached, the consequences extend well beyond a compliance issue — into Privacy Act liability and serious reputational harm to your practice.</p>
+
+  <div class="warning-box">
+    <div class="warning-icon">⚠</div>
+    <p><strong>The law requires records of verification — not copies of documents.</strong> AUSTRAC requires you to record that you sighted a passport, verified the details, and screened the individual. It does not require you to retain a scanned copy of the passport itself. Understanding this distinction matters when choosing how to structure your CDD process.</p>
+  </div>
+
+  <h2>The Mistake Many Firms Are About to Make</h2>
+
+  <p>Many AML software platforms are built as cloud document vaults. They encourage firms to upload CDD documents directly into their servers — passports, licences, deeds, company extracts — all centralised in one place for convenience.</p>
+
+  <p>This sounds practical. Until you think about what it actually means.</p>
+
+  <div class="two-col">
+    <div class="col-card col-card-bad">
+      <div class="col-card-label">Cloud document vault approach</div>
+      <ul>
+        <li>Client identity documents on third-party servers</li>
+        <li>Outside your firm's direct control</li>
+        <li>Centralised target attractive to attackers</li>
+        <li>Dependent on vendor's security practices</li>
+        <li>Privacy Act implications for offshore storage</li>
+        <li>Data loss risk if vendor changes or closes</li>
+      </ul>
+    </div>
+    <div class="col-card col-card-good">
+      <div class="col-card-label">Firm-controlled approach</div>
+      <ul>
+        <li>Documents stay within your firm's environment</li>
+        <li>You control access and retention</li>
+        <li>Fits within your existing security policies</li>
+        <li>No new third-party data exposure</li>
+        <li>Compliance register separate from document storage</li>
+        <li>7-year retention under your own governance</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>The question every firm should ask before adopting any AML platform is simple: <strong>"Where will my clients' passports and licences actually live?"</strong> If the answer is a server you don't control, that is a risk worth examining carefully.</p>
+
+  <h2>Best Practice for AML Identity Record-Keeping</h2>
+
+  <p>Good AML practice is not about uploading everything into a new system. It is about having a clear, documented process that separates two distinct functions:</p>
+
+  <p><strong>The register</strong> — a record of what was verified, when, by whom, and with what outcome. This is what AUSTRAC will ask to see in an audit. It proves your firm conducted CDD properly.</p>
+
+  <p><strong>The cabinet</strong> — your firm's secure document storage, where underlying evidence is held if required. This stays in your environment — SharePoint, a practice server, a document management system — accessible only to authorised staff.</p>
+
+  <ul class="checklist">
+    <li>Verify identity documents in person or via an approved electronic method</li>
+    <li>Record the verification outcome — ID type, number, date verified, staff member, result</li>
+    <li>Screen individuals against sanctions and PEP databases — record provider, date, result, reference ID</li>
+    <li>Store any underlying document copies in your firm's own secure systems</li>
+    <li>Restrict access to CDD records to authorised AML staff only</li>
+    <li>Maintain records for a minimum of seven years from the end of the client relationship</li>
+  </ul>
+
+  <h2>Why SimpleAML Is Designed Differently</h2>
+
+  <p>SimpleAML was built specifically for accounting firms who were uncomfortable with the idea of uploading client identity documents into external platforms. The design decision was deliberate: <strong>SimpleAML stores compliance records locally in your browser</strong>, meaning nothing is transmitted to SimpleAML servers.</p>
+
+  <p>That means:</p>
+
+  <ul class="checklist">
+    <li>No client data is held on SimpleAML's servers — ever</li>
+    <li>Your compliance register stays on the device where you use it</li>
+    <li>You decide where your firm's document copies are stored</li>
+    <li>SimpleAML records the CDD process — not the documents themselves</li>
+  </ul>
+
+  <div class="tip-box">
+    <div class="tip-icon">💡</div>
+    <p><strong>What SimpleAML records:</strong> the ID type and number sighted, verification date and outcome, screening provider and result, the staff member who conducted the check, and the next review date. What SimpleAML does not store: scanned copies of passports, licences, or any identity document. Those stay where they belong — in your firm's systems.</p>
+  </div>
+
+  <h2>One Important Thing to Understand About Local Storage</h2>
+
+  <p>Local browser storage is not a document vault, and it is worth being clear about what that means in practice.</p>
+
+  <p>Because SimpleAML stores data locally in your browser, the security of your compliance records is directly tied to the security of the device and browser you use. This means:</p>
+
+  <ul class="checklist">
+    <li>If you clear your browser data, your SimpleAML records will be lost — use the built-in backup function regularly</li>
+    <li>If another person has access to your device and browser, they may be able to access your SimpleAML data</li>
+    <li>Records are device-specific — they will not automatically appear on another computer</li>
+    <li>SimpleAML cannot recover your data if it is lost — you are responsible for maintaining backups</li>
+  </ul>
+
+  <div class="warning-box">
+    <div class="warning-icon">⚠</div>
+    <p><strong>Use the Account Backup feature.</strong> SimpleAML includes a built-in export function that saves your entire compliance register as a JSON file. Download a backup regularly and store it in your firm's document management system alongside your other AML records. Treat it the same way you treat any seven-year retention obligation.</p>
+  </div>
+
+  <p>Local storage means SimpleAML never sees your data. But it also means your firm is responsible for protecting it. Use it on a secured, access-controlled device, keep regular backups, and restrict browser access to authorised staff — the same discipline you would apply to any sensitive client file.</p>
+
+  <h2>You Keep the Documents. SimpleAML Keeps the Evidence.</h2>
+
+  <p>This is the core design principle behind SimpleAML, and it reflects how AUSTRAC actually thinks about CDD record-keeping.</p>
+
+  <p>AUSTRAC wants to see that your firm has a documented, repeatable process for identifying clients and screening them for risk. It wants a clear audit trail — who was checked, when, by whom, with what result. It does not require that all underlying identity documents live in a centralised external system.</p>
+
+  <p>SimpleAML gives you that audit trail. Your existing document systems give you the cabinet. Together, they give you a complete, defensible CDD record without creating new data security risks in the process.</p>
+
+  <h2>Before You Choose Any AML Platform</h2>
+
+  <p>As Tranche 2 rolls out, many firms will adopt AML tools without asking the right questions about where their client data will actually end up. The convenience of cloud document storage is real — but so is the risk of centralising your clients' most sensitive identity information outside your control.</p>
+
+  <p>Before choosing any system, ask:</p>
+
+  <ul class="checklist">
+    <li>Where will my clients' identity documents be stored — on whose servers?</li>
+    <li>What happens to my data if this vendor closes or is acquired?</li>
+    <li>Does this platform comply with the Australian Privacy Act for offshore data storage?</li>
+    <li>Am I required to upload document copies, or just record the verification outcome?</li>
+    <li>Can I export my compliance records in a format I control?</li>
+  </ul>
+
+  <p>AML compliance should strengthen your firm's data governance — not create new exposure. The right tool fits within your existing security posture, not around it.</p>
+
+  <div class="article-cta">
+    <h4>SimpleAML — the register, not the cabinet</h4>
+    <p>SimpleAML records your CDD process locally in your browser. Nothing is uploaded to our servers. Your documents stay in your firm's systems. Your compliance register stays under your control. Free, no account required.</p>
+    <a href="/app.html" class="btn-primary">Open SimpleAML Free →</a>
+    <a href="/articles/are-accountants-in-scope-aml-tranche-2.html" class="btn-secondary">Check your scope first →</a>
+  </div>
+
+</div>
+
+<footer>
+  <span class="footer-brand">SimpleAML</span>
+  <a href="/articles.html" class="footer-link">← All Articles</a>
+</footer>
+
+</body>
+</html>
