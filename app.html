@@ -18,6 +18,7 @@
   <meta name="description" content="SimpleAML — AML/CTF compliance tool for Australian accountants. Manage your firm's AML/CTF obligations under the Anti-Money Laundering and Counter-Terrorism Financing Act 2006.">
   <title>SimpleAML — Accountant AML/CTF Compliance</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Note: CDN is intentional for this browser-based app. No build pipeline required. -->
   <!-- Brevo newsletter form styles -->
   <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
 </head>
@@ -134,9 +135,7 @@ window.scopeField = function(key, val) {
 
 // startOverride / clearOverride — used by ratingRow override button
 window.startOverride = function(overrideKey, justKey) {
-  const val = prompt('Override risk rating (Low / Medium / High).
-
-A justification is required for audit purposes.');
+  const val = prompt('Override risk rating (Low / Medium / High). A justification is required for audit purposes.');
   if (!val) return;
   const clean = val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
   if (!['Low','Medium','High'].includes(clean)) { alert('Please enter Low, Medium or High'); return; }
