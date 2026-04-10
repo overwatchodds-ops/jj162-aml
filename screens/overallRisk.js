@@ -176,7 +176,8 @@ window.saveOverallRisk = function() {
   const cr = sc.customerRating || sc.clientRatingOverride || null;
   const gr = sc.geoRating || sc.geoRatingOverride || null;
   const autoOR = autoOverallRisk(sr, cr, gr, sc.pfRating);
-  if (!autoOR) { toast('Complete all three risk lenses and set a PF rating first', 'err'); return; }
+  if (!sc.pfRating) { toast('Select a Proliferation Financing (PF) risk rating before saving', 'err'); return; }
+  if (!autoOR) { toast('Complete all three risk lenses first', 'err'); return; }
   sc.overallRating = sc.overallRatingOverride || autoOR;
   sc.riskAssessmentDate = new Date().toISOString().split('T')[0];
   // Auto-set next review to +12 months if not already set

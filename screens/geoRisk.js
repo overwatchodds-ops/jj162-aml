@@ -110,6 +110,9 @@ export function screen() {
 
 /* ─── ACTIONS ─────────────────────────────────────────────────────────────────*/
 window.saveGeoRisk = function() {
+  if (!S.scope.geoChecks || S.scope.geoChecks.length === 0) {
+    toast('Select at least one delivery channel or client location before saving', 'err'); return;
+  }
   S.scope.geoRating = S.scope.geoRatingOverride || autoGeoRisk(S.scope.geoChecks);
   save();
   toast('Geography risk saved');

@@ -229,7 +229,7 @@ function individualCard(ind, i, roles, isOnlyPerson) {
           <div><label class="text-xs text-slate-500">Verified by</label>
             <select class="inp mt-1" onchange="updateIndividual(${ind.id},'idBy',this.value)">
               <option value="">— Select staff member —</option>
-              ${S.staff.filter(st=>!st.status||st.status==='Active'||st.status==='On Leave').map(st=>`<option value="${st.name}" ${ind.idBy===st.name?'selected':''}>${st.name}${st.role?' — '+st.role:''}</option>`).join('')}
+              ${S.staff.filter(st=>(!st.status||st.status==='Active'||st.status==='On Leave')&&(st.classification==='Key Personnel'||st.classification==='Standard AML/CTF Staff')).map(st=>`<option value="${st.name}" ${ind.idBy===st.name?'selected':''}>${st.name}${st.role?' — '+st.role:''}</option>`).join('')}
             </select>
           </div>
           <div class="col-span-2"><label class="text-xs text-slate-500">Verification outcome</label>
@@ -652,10 +652,37 @@ window.autoSetNextReview = function(cddDate) {
 window.saveClient = function() {
   snapshotDraft();
   const d = S._clientDraft || {};
-  if (!d.name) { toast('Entity name is required', 'err'); return; }
   if (!d.entityType) { toast('Entity type is required', 'err'); return; }
+  if (!d.name) { toast('Entity name is required', 'err'); return; }
+
+  // Panel A — entity-specific required fields
+  if (d.entityType === 'Individual / Sole Trader') {
+    if (!d.dob)         { toast('Date of birth is required', 'err'); return; }
+    if (!d.regAddress)  { toast('Residential address is required', 'err'); return; }
+    if (!d.industry)    { toast('Occupation / industry is required', 'err'); return; }
+    if (!d.sourceFunds) { toast('Source of funds is required', 'err'); return; }
+  }
+
+  // Panel B — purpose required for all entity types
+  if (!d.purpose) { toast('Purpose of relationship is required', 'err'); return; }
 
   const inds = d.individuals || [];
+
+  // Panel C — at least one individual required
+  if (inds.length === 0) { toast('At least one person must be recorded in the Beneficial Owners section', 'err'); return; }
+
+  // Panel C — each individual must have a name
+  for (const ind of inds) {
+    if (!ind.name) { toast('All persons must have a full legal name', 'err'); return; }
+    if (d.entityType !== 'Individual / Sole Trader' && !ind.role) {
+      toast(`Role / connection is required for ${ind.name || 'a recorded person'}`, 'err'); return;
+    }
+  }
+
+  // Panel D — declaration required
+  if (!d.tippingAck) { toast('CDD declaration must be confirmed before saving', 'err'); return; }
+  if (!d.cddBy)      { toast('CDD completed by (staff member) is required', 'err'); return; }
+  if (!d.cddDate)    { toast('CDD completed date is required', 'err'); return; }
 
   // For Individual, auto-sync name from individual card if not set separately
   let entityName = d.name;

@@ -147,7 +147,13 @@ window.editTraining = function(i) {
 // toggleExpandTraining removed — rows now click-through to edit
 window.saveTraining = function() {
   const name = document.getElementById('tr-name')?.value?.trim();
-  if (!name) { toast('Name is required', 'err'); return; }
+  if (!name) { toast('Select a staff member', 'err'); return; }
+  const date = document.getElementById('tr-date')?.value?.trim();
+  if (!date) { toast('Training date is required', 'err'); return; }
+  const provider = document.getElementById('tr-provider')?.value?.trim();
+  if (!provider) { toast('Provider / course is required', 'err'); return; }
+  const next = document.getElementById('tr-next')?.value?.trim();
+  if (!next) { toast('Next due date is required', 'err'); return; }
   const newRecord = {
     name,
     date:     document.getElementById('tr-date')?.value||'',

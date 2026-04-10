@@ -354,10 +354,14 @@ window.saveStaff = function() {
   const d = S._staffDraft || {};
   const name = document.getElementById('st-name')?.value?.trim();
   if (!name) { toast('Name is required', 'err'); return; }
+  const role = document.getElementById('st-role')?.value?.trim();
+  if (!role) { toast('Job title / position is required', 'err'); return; }
   const keyFns = ['director','amlco','senior']; const stdFns = ['cdd','screen','monitor','smr'];
   const fns = d.functions || [];
   const hasKey = fns.some(f => keyFns.includes(f)); const hasStd = fns.some(f => stdFns.includes(f));
+  if (!hasKey && !hasStd && !d.noneSelected) { toast('Select at least one AML/CTF function, or tick \"None of the above\"', 'err'); return; }
   const classification = hasKey ? 'Key Personnel' : hasStd ? 'Standard AML/CTF Staff' : 'No AML/CTF functions';
+
   const newRecord = {
     name, role: document.getElementById('st-role')?.value||'',
     status: document.getElementById('st-status')?.value||'Active',
@@ -378,16 +382,23 @@ window.saveStaff = function() {
     notes: document.getElementById('st-notes')?.value||''
   };
   const editIdx = S._staffEditIdx;
+  // Determine if vetting is incomplete for the toast message
+  let vetIncomplete = false;
+  if (newRecord.classification === 'Key Personnel') {
+    vetIncomplete = !newRecord.policeResult || !newRecord.bankruptResult || !newRecord.nsResult || !newRecord.declSigned;
+  } else if (newRecord.classification === 'Standard AML/CTF Staff') {
+    vetIncomplete = !newRecord.nsResult || !newRecord.declSigned;
+  }
   if (editIdx !== undefined && S.staff[editIdx]) {
     const old = Object.assign({}, S.staff[editIdx]);
     const history = old.history || []; delete old.history;
     newRecord.history = [old, ...history];
     S.staff[editIdx] = newRecord;
-    toast('Staff record updated — previous version preserved');
+    toast(vetIncomplete ? 'Record saved — vetting incomplete. Return to complete all checks.' : 'Staff record updated — previous version preserved');
   } else {
     newRecord.history = [];
     S.staff.unshift(newRecord);
-    toast('Staff record saved');
+    toast(vetIncomplete ? 'Record saved — vetting incomplete. Return to complete all checks.' : 'Staff record saved');
   }
   delete S._staffDraft; delete S._staffEditIdx;
   save(); go('staff');

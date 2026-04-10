@@ -141,8 +141,12 @@ window.saveIncident = function() {
   const dateIdentified = document.getElementById('inc-date')?.value;
   const suspicion = document.getElementById('inc-suspicion')?.value?.trim();
   if (!clientName) { toast('Client is required', 'err'); return; }
-  if (!dateIdentified) { toast('Date identified is required', 'err'); return; }
+  if (!dateIdentified) { toast('Date incident identified is required', 'err'); return; }
   if (!suspicion) { toast('Nature of suspicion is required', 'err'); return; }
+  const amlcoDate = document.getElementById('inc-amlco-date')?.value;
+  if (!amlcoDate) { toast('AMLCO review date is required', 'err'); return; }
+  const amlcoNotes = document.getElementById('inc-amlco-notes')?.value?.trim();
+  if (!amlcoNotes) { toast('AMLCO outcome / notes are required', 'err'); return; }
   const client = S.clients.find(c => c.name === clientName);
   const individualsArr = S._incidentDraft.individualsArr || [];
   const individualsText = individualsArr.length > 0 ? individualsArr.join(', ') : (document.getElementById('inc-individuals')?.value || '');
@@ -152,8 +156,8 @@ window.saveIncident = function() {
     entityType: client?.entityType || document.getElementById('inc-entity-type')?.value || '',
     dateIdentified, suspicion,
     individualsInvolved: individualsText, individualsArr,
-    amlcoDate:  document.getElementById('inc-amlco-date')?.value || '',
-    amlcoNotes: document.getElementById('inc-amlco-notes')?.value || '',
+    amlcoDate,
+    amlcoNotes,
     austrDate:  document.getElementById('inc-austr-date')?.value || '',
     reference:  document.getElementById('inc-reference')?.value || '',
     status:     document.getElementById('inc-status')?.value || 'Open',

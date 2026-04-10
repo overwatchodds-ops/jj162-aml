@@ -111,6 +111,9 @@ export function screen() {
 
 /* ─── ACTIONS ─────────────────────────────────────────────────────────────────*/
 window.saveCustomerRisk = function() {
+  if (!S.scope.clientChecks || S.scope.clientChecks.length === 0) {
+    toast('Select at least one client type before saving', 'err'); return;
+  }
   S.scope.customerRating = S.scope.clientRatingOverride || autoClientRisk(S.scope.clientChecks);
   save();
   toast('Customer risk saved');
