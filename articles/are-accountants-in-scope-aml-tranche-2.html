@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z6L06TX2HB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z6L06TX2HB');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Are Accountants In Scope for AML Tranche 2? The Plain-English Guide | SimpleAML</title>
+<meta name="description" content="Not sure if your accounting firm is in scope for AUSTRAC Tranche 2? This plain-English guide explains which services trigger AML/CTF obligations under Table 6, and what to do if you're in the grey area.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #0a1628;
+  --navy-2: #112240;
+  --gold:   #c9a84c;
+  --gold-2: #e8c66d;
+  --gold-dim: rgba(201,168,76,.12);
+  --white:  #ffffff;
+  --text:   #e8e4da;
+  --muted:  #8a9bb0;
+  --line:   rgba(201,168,76,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:rgba(10,22,40,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+.nav-logo{display:flex;align-items:center;gap:12px;font-family:'DM Serif Display',serif;font-size:20px;color:var(--white);text-decoration:none;}
+.nav-logo-mark{width:32px;height:32px;background:var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--navy);font-family:'DM Mono',monospace;}
+.nav-back{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold);}
+.nav-cta{background:var(--gold);color:var(--navy);padding:8px 20px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--gold-2);}
+.article-hero{padding:9rem 2rem 4rem;max-width:780px;margin:0 auto;}
+.article-category{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;}
+.article-category::before{content:'';display:inline-block;width:24px;height:1px;background:var(--gold);}
+.article-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:400;line-height:1.1;color:var(--white);margin-bottom:1.5rem;letter-spacing:-.02em;}
+.article-title em{font-style:italic;color:var(--gold);}
+.article-meta{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;padding:1.2rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:3rem;}
+.meta-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold-dim);border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);}
+.meta-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+.meta-badge-live{background:rgba(220,38,38,.15);border-color:rgba(220,38,38,.3);color:#f87171;}
+.meta-badge-live .meta-badge-dot{background:#f87171;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.meta-info{font-size:12px;color:var(--muted);}
+.article-body{max-width:780px;margin:0 auto;padding:0 2rem 6rem;}
+.article-body p{font-size:1.05rem;line-height:1.85;color:rgba(232,228,218,.85);margin-bottom:1.6rem;}
+.article-body h2{font-family:'DM Serif Display',serif;font-size:1.9rem;font-weight:400;color:var(--white);margin:3rem 0 1rem;letter-spacing:-.02em;padding-bottom:0.8rem;border-bottom:1px solid var(--line);}
+.article-body h3{font-size:0.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:2rem 0 0.6rem;}
+.article-body strong{color:var(--white);font-weight:500;}
+.article-body a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3);transition:border-color .2s;}
+.article-body a.btn-primary{color:var(--navy) !important;border-bottom:none !important;}
+.article-body a.btn-secondary{border-bottom:1px solid var(--line) !important;}
+.article-body a:hover{border-color:var(--gold);}
+.answer-box{background:rgba(201,168,76,.08);border:1px solid var(--line);border-radius:10px;padding:1.8rem 2rem;margin:2rem 0;}
+.answer-box-label{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
+.answer-box p{font-size:0.95rem !important;margin-bottom:0 !important;color:var(--text) !important;}
+.pull-quote{margin:2.5rem 0;padding:1.8rem 2rem;background:var(--gold-dim);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;}
+.pull-quote p{font-family:'DM Serif Display',serif;font-size:1.25rem !important;font-style:italic;color:var(--white) !important;line-height:1.5 !important;margin:0 !important;}
+.checklist{list-style:none;margin:1rem 0 1.6rem;padding:0;}
+.checklist li{display:flex;align-items:flex-start;gap:12px;font-size:1rem;line-height:1.7;color:rgba(232,228,218,.85);margin-bottom:0.5rem;padding:0.5rem 0;border-bottom:1px solid rgba(201,168,76,.08);}
+.checklist li:last-child{border-bottom:none;}
+.checklist li::before{content:'✓';color:var(--gold);font-weight:600;flex-shrink:0;margin-top:2px;}
+.warning-box{background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);border-radius:10px;padding:1.5rem 2rem;margin:2rem 0;display:flex;gap:1rem;align-items:flex-start;}
+.warning-icon{color:#f87171;font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.warning-box p{font-size:0.95rem !important;color:rgba(232,228,218,.85) !important;margin:0 !important;}
+.warning-box strong{color:#f87171 !important;}
+.tip-box{background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.2);border-radius:10px;padding:1.5rem 2rem;margin:2rem 0;display:flex;gap:1rem;align-items:flex-start;}
+.tip-icon{color:#34d399;font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.tip-box p{font-size:0.95rem !important;color:rgba(232,228,218,.85) !important;margin:0 !important;}
+.tip-box strong{color:#34d399 !important;}
+.scope-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:1.5rem 0;}
+@media(max-width:700px){.scope-grid{grid-template-columns:1fr;}}
+.scope-card{background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:1.4rem;}
+.scope-card-in{border-color:rgba(201,168,76,.4);}
+.scope-card-out{border-color:rgba(5,150,105,.3);}
+.scope-card-grey{border-color:rgba(220,38,38,.25);}
+.scope-card-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:0.8rem;}
+.scope-card-in .scope-card-label{color:var(--gold);}
+.scope-card-out .scope-card-label{color:#34d399;}
+.scope-card-grey .scope-card-label{color:#f87171;}
+.scope-card ul{list-style:none;padding:0;}
+.scope-card ul li{font-size:13px;color:var(--muted);padding:3px 0;line-height:1.6;display:flex;gap:8px;}
+.scope-card-in ul li::before{content:'→';color:var(--gold);flex-shrink:0;}
+.scope-card-out ul li::before{content:'→';color:#34d399;flex-shrink:0;}
+.scope-card-grey ul li::before{content:'→';color:#f87171;flex-shrink:0;}
+.service-row{background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:1.4rem 1.6rem;margin:0.6rem 0;}
+.service-row-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:0.5rem;}
+.service-row-title{font-size:15px;font-weight:500;color:var(--white);}
+.service-tag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;flex-shrink:0;}
+.tag-high{background:rgba(220,38,38,.15);color:#f87171;border:1px solid rgba(220,38,38,.3);}
+.tag-medium{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid var(--line);}
+.service-row p{font-size:13px;color:var(--muted);line-height:1.6;margin:0;}
+.article-cta{margin:3rem 0;padding:2rem;background:var(--navy-2);border:1px solid var(--line);border-radius:12px;}
+.article-cta h4{font-family:'DM Serif Display',serif;font-size:1.4rem;font-weight:400;color:var(--white);margin-bottom:0.5rem;}
+.article-cta p{font-size:0.9rem !important;color:var(--muted) !important;margin-bottom:1.2rem !important;}
+.btn-primary{display:inline-block;background:var(--gold);color:var(--navy) !important;padding:12px 28px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none !important;border-bottom:none !important;transition:background .2s;}
+.btn-primary:hover{background:var(--gold-2);}
+.btn-secondary{display:inline-block;background:transparent;color:var(--gold) !important;padding:12px 24px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none !important;border:1px solid var(--line) !important;transition:all .2s;margin-left:10px;}
+.btn-secondary:hover{border-color:var(--gold) !important;}
+footer{display:flex;align-items:center;justify-content:space-between;padding:2rem 48px;border-top:1px solid var(--line);}
+.footer-brand{font-family:'DM Serif Display',serif;font-size:16px;color:var(--muted);}
+.footer-link{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.footer-link:hover{color:var(--gold);}
+@media(max-width:768px){
+  nav{padding:16px 20px;}
+  .article-hero{padding:7rem 1.2rem 3rem;}
+  .article-body{padding:0 1.2rem 4rem;}
+  .article-cta{padding:1.5rem;}
+  .btn-secondary{margin-left:0;margin-top:10px;display:block;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">
+    <div class="nav-logo-mark">SA</div>
+    SimpleAML
+  </a>
+  <a class="nav-back" href="/articles.html">← All Articles</a>
+  <a href="/app.html" class="nav-cta">Open App →</a>
+</nav>
+
+<div class="article-hero">
+  <div class="article-category">Tranche 2 · Scope &amp; Obligations</div>
+  <h1 class="article-title">Are Accountants Actually In Scope <em>Under AUSTRAC Tranche 2?</em></h1>
+  <div class="article-meta">
+    <div class="meta-badge meta-badge-live"><span class="meta-badge-dot"></span> 1 July 2026 deadline</div>
+    <div class="meta-info">Updated April 2026 &nbsp;·&nbsp; SimpleAML Editorial &nbsp;·&nbsp; 8 min read</div>
+  </div>
+</div>
+
+<div class="article-body">
+
+  <p>If you're an accountant, bookkeeper, or tax agent, you've probably heard the phrase "Tranche 2" and felt the creeping anxiety that comes with not knowing whether it applies to you.</p>
+
+  <p>Before you worry about enrolment dates, compliance programs, or customer due diligence — there is a more important question to answer first:</p>
+
+  <div class="pull-quote">
+    <p>Do you actually provide a designated service? Because if you don't, none of it applies to you.</p>
+  </div>
+
+  <p>This is where most accounting firms are stuck. Not because the obligations are complicated once you're in scope — but because working out <strong>whether you're in scope at all</strong> requires translating legislative language into the reality of what your firm does every day.</p>
+
+  <p>This article does that translation for you.</p>
+
+  <div class="answer-box">
+    <div class="answer-box-label">The short answer</div>
+    <p>Most accounting firms that do more than tax returns and BAS are likely in scope. If your firm sets up companies or trusts, holds or manages client money, assists with business or property transactions, acts in any governance capacity, or provides your office address to clients — you are probably providing at least one designated service under Table 6 of the AML/CTF Act.</p>
+  </div>
+
+  <h2>Why This Is So Confusing</h2>
+
+  <p>The designated services for accountants sit in <strong>Table 6</strong> of the Anti-Money Laundering and Counter-Terrorism Financing Act 2006, administered by AUSTRAC. The problem is that Table 6 is written in legislative language, and your services are performed in accounting language.</p>
+
+  <p>For example, the Act describes a designated service as:</p>
+
+  <div class="answer-box">
+    <div class="answer-box-label">Directly from Table 6</div>
+    <p>"Providing a registered office address for a company or legal arrangement."</p>
+  </div>
+
+  <p>An accountant reads that and thinks: <em>"We just let clients use our office address for ASIC mail."</em></p>
+
+  <p>That accountant often doesn't realise: <strong>that is a designated service.</strong></p>
+
+  <p>This mismatch is happening across the profession. Firms are either assuming they're out of scope when they're not, or paralysed by uncertainty because they can't map their services to the legislative categories.</p>
+
+  <div class="warning-box">
+    <div class="warning-icon">⚠</div>
+    <p><strong>Getting scope wrong has real consequences.</strong> If you're in scope and don't enrol, you're operating as an unregistered reporting entity — which carries significant civil and criminal penalties. If you're out of scope and build a full AML program anyway, you've wasted months of effort. Scope clarity is the first obligation, not an afterthought.</p>
+  </div>
+
+  <h2>The Nine Designated Services for Accountants</h2>
+
+  <p>Table 6 contains nine categories of designated services relevant to accounting firms. Here they are in plain English, with the risk level AUSTRAC assigns to each:</p>
+
+  <div class="service-row">
+    <div class="service-row-header">
+      <div class="service-row-title">Holding or managing client money or assets</div>
+      <div class="service-tag tag-high">High risk</div>
+    </div>
+    <p>If your firm holds funds in a trust account, manages a client's bank account, or controls assets on a client's behalf — you are providing this service. This includes paying bills, managing payroll, or holding settlement funds.</p>
+  </div>
+
+  <div class="service-row">
+    <div class="service-row-header">
+      <div class="service-row-title">Managing bank or investment accounts for clients</div>
+      <div class="service-tag tag-high">High risk</div>
+    </div>
+    <p>Operating a bank account, securities account, or similar financial account in the name of or on behalf of a client. This is distinct from simply having signatory access — it means active management of the account.</p>
+  </div>
+
+  <div class="service-row">
+    <div class="service-row-header">
+      <div class="service-row-title">Setting up companies, trusts, or other legal arrangements</div>
+      <div class="service-tag tag-high">High risk</div>
+    </div>
+    <p>Incorporating a company, establishing a trust, forming a partnership, or setting up any legal arrangement for a client. This is one of the most commonly misunderstood services — many accountants do this routinely without realising it's designated.</p>
+  </div>
+
+  <div class="service-row">
+    <div class="service-row-header">
+      <div class="service-row-title">Assisting with the purchase or sale of a business</div>
+      <div class="service-tag tag-high">High risk</div>
+    </div>
+    <p>Providing professional services in connection with a client buying or selling a business. This includes due diligence, preparing information memoranda, structuring the transaction, or negotiating on a client's behalf.</p>
+  </div>
+
+  <div class="service-row">
+    <div class="service-row-header">
+      <div class="service-row-title">Conveyancing or assistance with property transactions</div>
+      <div class="service-tag tag-high">High risk</div>
+    </div>
+    <p>Providing services in connection with the purchase or sale of real property. For accountants, this typically includes advising on property transaction structures, GST implications, or acting in a professional capacity at settlement.</p>
+  </div>
+
+  <div class="service-row">
+    <div class="service-row-header">
+      <div class="service-row-title">Managing or administering a trust or legal arrangement</div>
+      <div class="service-tag tag-medium">Medium risk</div>
+    </div>
+    <p>Ongoing management of a trust — including preparing trust accounts, advising on distributions, or making decisions about trust assets. Setting up the trust is one service; administering it over time is a separate designated service.</p>
+  </div>
+
+  <div class="service-row">
+    <div class="service-row-header">
+      <div class="service-row-title">Acting as (or arranging) a director, trustee, partner, or nominee</div>
+      <div class="service-tag tag-medium">Medium risk</div>
+    </div>
+    <p>Holding any formal governance role within a client's corporate structure — including acting as a director, trustee, company secretary, or nominee shareholder. If your name appears on ASIC or trust records in any official capacity, this applies to you.</p>
+  </div>
+
+  <div class="service-row">
+    <div class="service-row-header">
+      <div class="service-row-title">Providing a registered office or correspondence address</div>
+      <div class="service-tag tag-medium">Medium risk</div>
+    </div>
+    <p>Allowing clients to use your firm's address as their registered office, principal place of business, or correspondence address for ASIC, the ATO, or any other authority. Even if it's just for mail — this is a designated service.</p>
+  </div>
+
+  <div class="service-row">
+    <div class="service-row-header">
+      <div class="service-row-title">Arranging corporate or nominee appointments</div>
+      <div class="service-tag tag-medium">Medium risk</div>
+    </div>
+    <p>Arranging for another person to act as a nominee director, trustee, shareholder, or similar role within a client's structure. This includes referring clients to nominees or facilitating those appointments, even if you don't hold the role yourself.</p>
+  </div>
+
+  <h2>The Three Possible Outcomes</h2>
+
+  <p>When you properly analyse your firm's services against Table 6, you will fall into one of three categories. Most firms find themselves in the grey area — which is exactly where the risk of getting it wrong is highest.</p>
+
+  <div class="scope-grid">
+    <div class="scope-card scope-card-out">
+      <div class="scope-card-label">✓ Clearly Out of Scope</div>
+      <ul>
+        <li>Tax returns and BAS only</li>
+        <li>Bookkeeping and data entry</li>
+        <li>Financial statements and reports</li>
+        <li>Advisory — no structural involvement</li>
+        <li>No client fund management</li>
+        <li>No company or trust formation</li>
+      </ul>
+    </div>
+    <div class="scope-card scope-card-in">
+      <div class="scope-card-label">→ Clearly In Scope</div>
+      <ul>
+        <li>Client trust accounts</li>
+        <li>Company or trust formation</li>
+        <li>Business sales and acquisitions</li>
+        <li>Director or trustee roles</li>
+        <li>Registered office services</li>
+        <li>Property transaction assistance</li>
+      </ul>
+    </div>
+    <div class="scope-card scope-card-grey">
+      <div class="scope-card-label">⚠ Grey Area</div>
+      <ul>
+        <li>Set up trusts, but don't manage them</li>
+        <li>Form companies, but not as director</li>
+        <li>Office address "just for mail"</li>
+        <li>Business sale advice, no funds handling</li>
+        <li>Trust admin for some clients only</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>The grey area is where most firms sit. And the frustrating reality is that <strong>context matters</strong>. Two firms doing nominally the same thing can reach different scope conclusions depending on exactly how they perform the service, their level of control, and their ongoing involvement.</p>
+
+  <div class="pull-quote">
+    <p>The grey area isn't a safe place to stay. It's where unresolved scope questions become compliance risk.</p>
+  </div>
+
+  <h2>Common Services That Firms Get Wrong</h2>
+
+  <p>These are the services that most commonly catch accounting firms by surprise — either because the legislative description doesn't match their mental model of what they do, or because they perform the service only occasionally and assume that means they're out of scope.</p>
+
+  <h3>Registered office services</h3>
+
+  <p>If you allow clients to use your firm's address as their ASIC registered office — even informally, even for just a few clients, even if you've done it for years without thinking about it — you are providing a designated service. There is no minimum volume threshold. One client is enough.</p>
+
+  <h3>Company and trust formation</h3>
+
+  <p>Setting up a company or trust for a client is explicitly listed in Table 6. Many accountants do this as a routine part of tax structuring advice. The act of incorporating the entity — not just advising on the structure — is the designated service. If you complete the ASIC application, you're in scope for that service.</p>
+
+  <h3>Ongoing trust administration</h3>
+
+  <p>Firms that prepare trust accounts, advise trustees on distribution decisions, or have ongoing involvement in trust management are likely providing a separate designated service beyond the initial setup. Setup and administration are treated as distinct services under Table 6.</p>
+
+  <h3>Business sale assistance</h3>
+
+  <p>You don't need to handle funds to be in scope here. Preparing a business for sale, conducting financial due diligence, advising on deal structure, or acting as an intermediary in negotiations are all capable of triggering this designated service. The threshold is providing professional services <em>in connection with</em> the transaction.</p>
+
+  <div class="warning-box">
+    <div class="warning-icon">⚠</div>
+    <p><strong>Occasional or historical services still count.</strong> Some firms provided designated services in the past but stopped. Some provide them only rarely. AUSTRAC's position is that if you provide a designated service at all — even infrequently — you are a reporting entity and must have a compliant program in place.</p>
+  </div>
+
+  <h2>What Clearly Out-of-Scope Looks Like</h2>
+
+  <p>A firm is clearly out of scope if it provides only the following services and nothing else:</p>
+
+  <ul class="checklist">
+    <li>Preparation of income tax returns and BAS</li>
+    <li>Bookkeeping and transaction coding</li>
+    <li>Preparation of financial statements</li>
+    <li>Tax planning and strategic advice (without implementing structures)</li>
+    <li>SMSF compliance reporting (without trustee functions)</li>
+    <li>Payroll processing (where the firm does not control client funds)</li>
+  </ul>
+
+  <p>If your firm's services are limited to the above list and you have never formed a company or trust for a client, never held client money, never acted in a governance role, and never provided your address as a registered office — you are likely out of scope.</p>
+
+  <p>Even then, <strong>we recommend confirming your scope assessment with CPA Australia, CA ANZ, or IPA</strong> before concluding you have no AML/CTF obligations. The professional bodies have published scope guidance and can assist members with borderline cases.</p>
+
+  <h2>What To Do Once You Know Your Scope</h2>
+
+  <p>Once you've worked through your services against Table 6, you have three possible next steps depending on your outcome.</p>
+
+  <div class="tip-box">
+    <div class="tip-icon">✓</div>
+    <p><strong>If you're clearly out of scope:</strong> document your assessment, note the services you reviewed and why each falls outside Table 6, and keep that record for at least seven years. AUSTRAC may ask you to demonstrate that you considered your scope obligations — having a written record protects you.</p>
+  </div>
+
+  <div class="tip-box">
+    <div class="tip-icon">→</div>
+    <p><strong>If you're clearly in scope:</strong> your next step is to complete your AML/CTF program and enrol with AUSTRAC before 1 July 2026. SimpleAML guides you through the full process — risk assessment, staff vetting, training, program approval, and AUSTRAC enrolment — in order, for free.</p>
+  </div>
+
+  <div class="warning-box">
+    <div class="warning-icon">⚠</div>
+    <p><strong>If you're in the grey area:</strong> don't sit on it. Run a proper scope assessment, document your reasoning, and if the answer is still uncertain — get professional advice. Acting as if you're out of scope when you're not is the riskiest position of all. The cost of building an AML program you didn't strictly need is far lower than the cost of an AUSTRAC enforcement action.</p>
+  </div>
+
+  <h2>Use the SimpleAML Scope Assessor</h2>
+
+  <p>SimpleAML includes a plain-English scope assessor built specifically for this problem. Instead of asking you to interpret Table 6 yourself, it asks a simple question:</p>
+
+  <p><em>What services does your firm actually perform?</em></p>
+
+  <p>You describe your services in plain English — the way you'd explain them to a client. The assessor maps your description directly to Table 6 and tells you which services are designated, which are not, and flags any grey-zone services that need further examination.</p>
+
+  <ul class="checklist">
+    <li>No legislative jargon — describe your work in plain English</li>
+    <li>Instant mapping to Table 6 categories</li>
+    <li>Grey-zone services are flagged with the specific questions to resolve them</li>
+    <li>Your result is saved as part of your compliance record</li>
+    <li>Free — no account required</li>
+  </ul>
+
+  <div class="article-cta">
+    <h4>Resolve your scope question in minutes</h4>
+    <p>Run your services through the SimpleAML Scope Assessor and know — with confidence — whether your firm is in, out, or in the grey area. Once you know, SimpleAML guides you through everything that comes next.</p>
+    <a href="/app.html" class="btn-primary">Check Your Scope Free →</a>
+    <a href="/articles/how-to-enrol-with-austrac.html" class="btn-secondary">Enrolment guide →</a>
+  </div>
+
+</div>
+
+<footer>
+  <span class="footer-brand">SimpleAML</span>
+  <a href="/articles.html" class="footer-link">← All Articles</a>
+</footer>
+
+</body>
+</html>
