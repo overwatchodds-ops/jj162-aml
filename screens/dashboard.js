@@ -11,10 +11,23 @@ function fmtDate(d) {
 }
 
 function cddStatus(c) {
+  // Must have purpose
+  if (!c.purpose) return 'Incomplete';
+  // Must have at least one individual
   const inds = c.individuals || [];
   if (!inds.length) return 'Incomplete';
-  if (inds.every(i => i.idOutcome === 'Verified') && inds.every(i => i.screenResult)) return 'Complete';
-  return 'Incomplete';
+  // Each individual must have name and role (role not required for Individual / Sole Trader)
+  for (const ind of inds) {
+    if (!ind.name) return 'Incomplete';
+    if (c.entityType !== 'Individual / Sole Trader' && !ind.role) return 'Incomplete';
+  }
+  // All individuals must be verified and screened
+  if (!inds.every(i => i.idOutcome === 'Verified') || !inds.every(i => i.screenResult)) return 'Incomplete';
+  // Declaration must be complete
+  if (!c.tippingAck || !c.cddBy || !c.cddDate) return 'Incomplete';
+  // Next review date must be set
+  if (!c.nextReviewDate) return 'Incomplete';
+  return 'Complete';
 }
 
 function vettingStatus(st) {
@@ -78,12 +91,19 @@ export function screen() {
 
   // ── COMPLIANCE EXCEPTIONS ─────────────────────────────────────────────────
 
-  // Appointments
-  const apptComplete = !!(appt.amlco?.name && appt.senior?.name);
-  if (!apptComplete) {
+  // Appointments — all four roles require name + date
+  const requiredRoles = [
+    ['amlco',     'AML/CTF Compliance Officer'],
+    ['reporting', 'Reporting Officer'],
+    ['senior',    'Senior Manager'],
+    ['principal2','Principal / Managing Partner'],
+  ];
+  const missingAppt = requiredRoles.filter(([k]) => !appt[k]?.name || !appt[k]?.date);
+  if (missingAppt.length > 0) {
+    const missing = missingAppt.map(([,label]) => label).join(', ');
     complianceItems.push(item(
       'Appointments incomplete',
-      'AMLCO and Senior Manager must be named before other compliance obligations can be met.',
+      `Missing name or date for: ${missing}.`,
       'firm-appointments', 'Complete →'
     ));
   } else if (isOverdue(appt.nextReview)) {
@@ -160,7 +180,13 @@ export function screen() {
   });
 
   S.training.forEach(t => {
-    if (t.next && new Date(t.next) < now) {
+    if (!t.date || !t.provider) {
+      personnelItems.push(item(
+        `${t.name} — training record incomplete`,
+        `Training date or provider / course is missing.`,
+        'training', 'Complete →'
+      ));
+    } else if (t.next && new Date(t.next) < now) {
       personnelItems.push(item(
         `${t.name} — training overdue`,
         `AML/CTF training was due ${fmtDate(t.next)}.`,
@@ -172,9 +198,21 @@ export function screen() {
   // ── CLIENT EXCEPTIONS ─────────────────────────────────────────────────────
   S.clients.forEach((c, i) => {
     if (cddStatus(c) !== 'Complete') {
+      // Build a specific reason for the exception
+      const inds = c.individuals || [];
+      const reason = !c.purpose ? 'Purpose of relationship not recorded.'
+        : !inds.length ? 'No persons recorded.'
+        : !inds.every(i => i.name) ? 'A recorded person is missing a name.'
+        : (c.entityType !== 'Individual / Sole Trader' && !inds.every(i => i.role)) ? 'A recorded person is missing a role.'
+        : !inds.every(i => i.idOutcome === 'Verified') ? 'Identity verification incomplete.'
+        : !inds.every(i => i.screenResult) ? 'Sanctions / PEP screening not completed.'
+        : !c.tippingAck ? 'CDD declaration not confirmed.'
+        : !c.cddBy ? 'CDD completed by not recorded.'
+        : !c.nextReviewDate ? 'Next review date not set.'
+        : 'CDD incomplete.';
       clientItems.push(item(
         `${c.name} — CDD incomplete`,
-        `${c.entityType || '—'} · Identity verification or screening not finished.`,
+        `${c.entityType || '—'} · ${reason}`,
         'clients', 'Complete →'
       ));
     } else if (reviewOverdue(c)) {
@@ -186,14 +224,23 @@ export function screen() {
     }
   });
 
-  // Open SMRs
-  const openSmrs = S.incidents.filter(i => !i.status || i.status === 'Open');
-  openSmrs.forEach(inc => {
-    clientItems.push(item(
-      `${inc.clientName || 'Unknown client'} — open SMR`,
-      `Identified ${fmtDate(inc.dateIdentified)} · AMLCO review ${inc.amlcoDate ? 'done' : 'pending'}.`,
-      'incidents', 'Review →'
-    ));
+  // SMR exceptions — incomplete records and open SMRs
+  S.incidents.forEach(inc => {
+    const incompleteSmr = !inc.amlcoDate || !inc.amlcoNotes;
+    const isOpen = !inc.status || inc.status === 'Open';
+    if (incompleteSmr) {
+      clientItems.push(item(
+        `${inc.clientName || 'Unknown client'} — incident record incomplete`,
+        `Identified ${fmtDate(inc.dateIdentified)} · AMLCO review date or notes missing.`,
+        'incidents', 'Complete →'
+      ));
+    } else if (isOpen) {
+      clientItems.push(item(
+        `${inc.clientName || 'Unknown client'} — open SMR`,
+        `Identified ${fmtDate(inc.dateIdentified)} · AMLCO reviewed ${fmtDate(inc.amlcoDate)}.`,
+        'incidents', 'Review →'
+      ));
+    }
   });
 
   // ── RENDER ────────────────────────────────────────────────────────────────
