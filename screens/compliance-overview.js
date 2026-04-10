@@ -13,6 +13,13 @@ export function screen() {
   const sc = S.scope;
   const p  = S.program;
 
+  // ── APPOINTMENTS STATUS ──────────────────────────────────────────────────
+  const appt = S.firm?.appt || {};
+  const apptComplete = !!(appt.amlco?.name && appt.senior?.name);
+  const apptOverdue  = apptComplete && isOverdue(appt.nextReview);
+  const apptDate     = appt.savedDate || null;
+  const apptNextDate = appt.nextReview || null;
+
   // ── RISK ASSESSMENT STATUS ────────────────────────────────────────────────
   const riskComplete = !!(
     sc.classifierConfirmed &&
@@ -36,7 +43,7 @@ export function screen() {
   // ── AUSTRAC ENROLMENT STATUS ──────────────────────────────────────────────
   const enrolled = !!(S.enrolment.enrolled || S.austracConfirmed);
 
-  const allOk = riskComplete && !riskOverdue && programComplete && !programOverdue && enrolled;
+  const allOk = apptComplete && !apptOverdue && riskComplete && !riskOverdue && programComplete && !programOverdue && enrolled;
 
   // ── STATUS ROW ────────────────────────────────────────────────────────────
   const row = (label, complete, overdue, completedDate, nextDate, screen, incompleteAction) => {
@@ -97,6 +104,13 @@ export function screen() {
           </tr>
         </thead>
         <tbody>
+          ${row(
+            'Appointments',
+            apptComplete, apptOverdue,
+            apptDate, apptNextDate,
+            'firm-appointments',
+            'Name your AMLCO, Reporting Officer and Senior Manager'
+          )}
           ${row(
             'Risk Assessment',
             riskComplete, riskOverdue,

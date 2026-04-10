@@ -13,7 +13,7 @@ export function screen() {
 
       <div class="flex items-start justify-between">
         <div>
-          <h1 class="text-2xl font-bold text-slate-900">Firm Details</h1>
+          <h1 class="text-2xl font-bold text-slate-900">Firm Profile</h1>
           <p class="text-sm text-slate-400 mt-1">Practice identity and contact details for AUSTRAC and compliance reporting.</p>
         </div>
         ${badge}

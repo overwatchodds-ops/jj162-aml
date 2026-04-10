@@ -17,7 +17,7 @@ export function screen() {
       <div class="flex items-start justify-between">
         <div>
           <h1 class="text-2xl font-bold text-slate-900">Appointments</h1>
-          <p class="text-sm text-slate-400 mt-1">Responsible persons required by AUSTRAC for AML/CTF governance.</p>
+          <p class="text-sm text-slate-400 mt-1">AUSTRAC requires your firm to appoint named individuals responsible for AML/CTF governance before other compliance obligations can be met.</p>
         </div>
         ${badge}
       </div>
@@ -67,6 +67,15 @@ export function screen() {
         </div>
       </div>
 
+      <div class="bg-white border border-slate-200 rounded-xl p-5 space-y-3">
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-bold text-slate-700">Next review date</label>
+          <span class="text-xs text-slate-400">AUSTRAC expects annual review of responsible persons</span>
+        </div>
+        <input id="appt-next-review" type="date" class="inp" value="${f.appt?.nextReview||''}">
+        <p class="text-xs text-slate-400">Auto-set to +12 months when saved. Override if an earlier review is required.</p>
+      </div>
+
       <button onclick="saveAppointments()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">Save Appointments</button>
 
     </div>`;
@@ -91,5 +100,15 @@ window.saveAppointments = function() {
       date: document.getElementById(`appt-${k}-date`)?.value||''
     };
   });
+  // Save review date — auto-set to +12 months if not already set
+  const reviewEl = document.getElementById('appt-next-review');
+  if (reviewEl?.value) {
+    S.firm.appt.nextReview = reviewEl.value;
+  } else {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() + 1);
+    S.firm.appt.nextReview = d.toISOString().split('T')[0];
+  }
+  S.firm.appt.savedDate = new Date().toISOString().split('T')[0];
   save(); toast('Appointments saved');
 };
