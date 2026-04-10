@@ -71,67 +71,48 @@ export function screen() {
         <thead>
           <tr class="border-b border-slate-100">
             <th class="${thCls}">Staff Member</th>
-            <th class="${thCls}">Status</th>
             <th class="${thCls}">Training Date</th>
             <th class="${thCls}">Provider</th>
-            <th class="${thCls}">Score / Outcome</th>
+            <th class="${thCls}">Outcome</th>
+            <th class="${thCls}">Status</th>
             <th class="${thCls}">Next Due</th>
-            <th class="${thCls}">Actions</th>
+            <th class="${thCls}"></th>
           </tr>
         </thead>
         <tbody>
           ${S.training.map((t, i) => {
-            const lastUpdated = t.updatedAt ? new Date(t.updatedAt).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : (t.date||'—');
-            const history = t.history || [];
-            const expanded = S._expandedTraining === i;
             const isOverdue = t.next && new Date(t.next) < new Date();
-            const statusTxt = isOverdue ? 'Overdue' : t.next ? 'Current' : 'No review date';
-            const statusCls = isOverdue ? 'text-red-600 font-semibold' : t.next ? 'text-green-700 font-semibold' : 'text-slate-400';
-            const nextCls = isOverdue ? 'text-red-600 font-semibold' : 'text-slate-600';
             const staffRecord = S.staff.find(st => st.name === t.name);
             const classification = staffRecord ? staffRecord.classification : null;
+            const fmtDate = d => d ? new Date(d).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '—';
+
+            // Status badge — mirrors client register pattern
+            const statusBadge = !t.date || !t.score
+              ? '<span class="text-xs font-semibold text-red-600">⚠ Incomplete</span>'
+              : '<span class="text-xs font-semibold text-green-700">✓ Complete</span>';
+
+            // Next due badge
+            const nextBadge = !t.next
+              ? '<span class="text-xs text-slate-400 italic">Not set</span>'
+              : isOverdue
+                ? `<span class="text-xs font-semibold text-amber-600">⚠ Due ${fmtDate(t.next)}</span>`
+                : `<span class="text-xs font-semibold text-green-700">✓ Due ${fmtDate(t.next)}</span>`;
+
             return `
-            <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition ${expanded?'bg-slate-50':''}">
+            <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition cursor-pointer" onclick="editTraining(${i})">
               <td class="px-4 py-3">
                 <div class="font-semibold text-slate-800">${t.name}</div>
                 ${classification ? `<div class="text-xs text-slate-400 mt-0.5">${classification}</div>` : ''}
               </td>
-              <td class="px-4 py-3 text-xs ${statusCls}">${statusTxt}</td>
-              <td class="px-4 py-3 text-xs text-slate-600">${t.date||'—'}</td>
+              <td class="px-4 py-3 text-xs text-slate-600">${fmtDate(t.date)}</td>
               <td class="px-4 py-3 text-xs text-slate-500">${t.provider||'—'}</td>
               <td class="px-4 py-3 text-xs text-slate-600">${t.score||'—'}</td>
-              <td class="px-4 py-3 text-xs ${nextCls}">${t.next ? new Date(t.next).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '—'}${isOverdue?' ⚠':''}</td>
-              <td class="px-4 py-3 text-right whitespace-nowrap">
-                <button onclick="editTraining(${i})" class="text-xs text-indigo-600 font-semibold hover:text-indigo-800 mr-3">Edit</button>
-                <button onclick="toggleExpandTraining(${i})" class="text-xs text-slate-400 hover:text-slate-600">${expanded?'▲':'▼'} More</button>
+              <td class="px-4 py-3">${statusBadge}</td>
+              <td class="px-4 py-3">${nextBadge}</td>
+              <td class="px-4 py-3 text-right whitespace-nowrap" onclick="event.stopPropagation()">
+                <button onclick="editTraining(${i})" class="text-xs text-indigo-600 font-semibold hover:text-indigo-800">Edit</button>
               </td>
-            </tr>
-            ${expanded ? `
-            <tr>
-              <td colspan="7" class="border-b border-slate-100">
-                <div class="bg-slate-50 px-6 py-4 space-y-3">
-                  <div class="grid grid-cols-3 gap-x-8 gap-y-2 text-xs">
-                    <div><span class="text-slate-400">Last updated: </span><span class="text-slate-600">${lastUpdated}</span></div>
-                    ${t.notes ? `<div class="col-span-3"><span class="text-slate-400">Notes: </span><span class="text-slate-600">${t.notes}</span></div>` : ''}
-                  </div>
-                  ${history.length > 0 ? `
-                  <div>
-                    <div class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Change history</div>
-                    <div class="space-y-1">
-                      ${history.map((v,vi) => `
-                      <div class="flex items-center gap-4 text-xs text-slate-500 py-1 border-b border-slate-100 last:border-0">
-                        <span class="font-semibold text-slate-600">Version ${history.length-vi}</span>
-                        <span>${new Date(v.updatedAt||0).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'})}</span>
-                        <span>Date: ${v.date||'—'}</span>
-                        <span>Provider: ${v.provider||'—'}</span>
-                        <span>Score: ${v.score||'—'}</span>
-                        <span>Next due: ${v.next||'—'}</span>
-                      </div>`).join('')}
-                    </div>
-                  </div>` : `<div class="text-xs text-slate-400 italic">No previous versions.</div>`}
-                </div>
-              </td>
-            </tr>` : ''}`;
+            </tr>`;
           }).join('')}
         </tbody>
       </table>
@@ -163,9 +144,7 @@ window.editTraining = function(i) {
   const t = S.training[i]; if (!t) return;
   S._trainingDraft = Object.assign({}, t); S._trainingEditIdx = i; go('training');
 };
-window.toggleExpandTraining = function(i) {
-  S._expandedTraining = S._expandedTraining === i ? null : i; go('training');
-};
+// toggleExpandTraining removed — rows now click-through to edit
 window.saveTraining = function() {
   const name = document.getElementById('tr-name')?.value?.trim();
   if (!name) { toast('Name is required', 'err'); return; }

@@ -1,6 +1,32 @@
 import { S, save } from '../state/index.js';
 import { toast, infoBtn, infoPop } from '../components/index.js';
 
+// ─── VETTING STATUS HELPERS ───────────────────────────────────────────────────
+function vettingStatus(st) {
+  const cls = st.classification;
+  if (!cls || cls === 'No AML/CTF functions') return 'assessed'; // assessed, no checks needed
+  if (cls === 'Key Personnel') {
+    // Requires: police check, bankruptcy check, screening, declaration signed
+    if (st.policeResult && st.bankruptResult && st.nsResult && st.declSigned) return 'complete';
+    return 'incomplete';
+  }
+  if (cls === 'Standard AML/CTF Staff') {
+    // Requires: screening + declaration signed
+    if (st.nsResult && st.declSigned) return 'complete';
+    return 'incomplete';
+  }
+  return 'incomplete';
+}
+
+function declOverdue(st) {
+  if (!st.declNext) return false;
+  return new Date(st.declNext) < new Date();
+}
+
+function fmtDate(d) {
+  return d ? new Date(d).toLocaleDateString('en-AU', { day:'numeric', month:'short', year:'numeric' }) : '—';
+}
+
 export function screen() {
   const FN_KEY = [
     { id:'director', label:'Director / owner / beneficial owner', desc:'Has ownership or governance responsibility over the firm', type:'key' },
@@ -217,59 +243,57 @@ export function screen() {
 
       const makeRow = (st) => {
         const idx = S.staff.indexOf(st);
-        const expanded = S._expandedStaff === idx;
-        const history = st.history || [];
-        const lastUpdated = st.updatedAt ? new Date(st.updatedAt).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : (st.date||'—');
         const nameCls = st.status==='Resigned'||st.status==='Terminated' ? 'text-slate-400 line-through' : 'text-slate-800';
-        const statusTxt = (!st.status||st.status==='Active') ? 'Active' : st.status + (st.departureDate ? ' '+new Date(st.departureDate).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '');
         const isKey = st.classification === 'Key Personnel';
         const isStd = st.classification === 'Standard AML/CTF Staff';
-        const assessmentOutcome = isKey || isStd ? 'Performs AML/CTF functions' : 'Does not perform AML/CTF functions';
-        const outcomeShort = isKey ? 'Key Personnel' : isStd ? 'Standard AML/CTF Staff' : 'Not Key Personnel';
+        const isNone = !isKey && !isStd;
+        const clsBadge = isKey
+          ? 'bg-amber-100 text-amber-700'
+          : isStd ? 'bg-blue-100 text-blue-700'
+          : 'bg-slate-100 text-slate-500';
+        const clsLabel = isKey ? 'Key Personnel' : isStd ? 'Standard Staff' : 'No AML functions';
 
-        const detailRow = expanded ? `
-        <tr>
-          <td colspan="6" class="border-b border-slate-100">
-            <div class="bg-slate-50 px-6 py-4 space-y-3">
-              <div class="grid grid-cols-3 gap-x-8 gap-y-2 text-xs">
-                ${isKey || isStd ? `
-                <div><span class="text-slate-400">Police check: </span><span class="font-semibold ${st.policeResult==='Pass'?'text-green-700':st.policeResult==='Fail'?'text-red-600':'text-slate-400'}">${st.policeResult||'—'}</span>${st.policeRef?'<span class="text-slate-400 font-mono ml-1">'+st.policeRef+'</span>':''}</div>
-                <div><span class="text-slate-400">Screening: </span><span class="font-semibold ${st.nsResult==='Clear'?'text-green-700':st.nsResult==='Hit'?'text-red-600':'text-slate-400'}">${st.nsResult||'—'}</span>${st.nsRef?'<span class="text-slate-400 font-mono ml-1">'+st.nsRef+'</span>':''}</div>
-                <div><span class="text-slate-400">Bankruptcy: </span><span class="font-semibold ${st.bankruptResult==='Clear'?'text-green-700':'text-slate-400'}">${st.bankruptResult||'—'}</span></div>
-                <div><span class="text-slate-400">Declaration: </span><span class="font-semibold ${st.declSigned?'text-green-700':'text-slate-400'}">${st.declSigned?'Signed':'Pending'}</span>${st.declDate?' on '+st.declDate:''}</div>
-                <div><span class="text-slate-400">Next due: </span><span class="font-semibold ${st.declNext&&new Date(st.declNext)<new Date()?'text-red-600':'text-slate-600'}">${st.declNext||'—'}${st.declNext&&new Date(st.declNext)<new Date()?' ⚠ Overdue':''}</span></div>
-                <div><span class="text-slate-400">Vetting date: </span><span class="text-slate-600">${st.date||'—'}</span></div>` : `
-                <div class="col-span-3 text-slate-500 italic">Assessed as not performing AML/CTF functions — fit and proper checks not required.</div>`}
-                ${st.notes ? `<div class="col-span-3"><span class="text-slate-400">Notes: </span><span class="text-slate-600">${st.notes}</span></div>` : ''}
-                <div><span class="text-slate-400">Last updated: </span><span class="text-slate-600">${lastUpdated}</span></div>
-                ${history.length > 0 ? `<div><span class="text-slate-400">Versions: </span><span class="text-slate-600">${history.length} previous</span></div>` : ''}
-              </div>
-            </div>
-          </td>
-        </tr>` : '';
+        // Vetting status badge
+        const vs = vettingStatus(st);
+        const vsBadge = vs === 'complete'
+          ? '<span class="text-xs font-semibold text-green-700">✓ Complete</span>'
+          : vs === 'assessed'
+            ? '<span class="text-xs font-semibold text-slate-400">✓ Assessed</span>'
+            : '<span class="text-xs font-semibold text-red-600">⚠ Incomplete</span>';
+
+        // Declaration / next review badge
+        const overdue = declOverdue(st);
+        const reviewBadge = isNone
+          ? '<span class="text-xs text-slate-300">—</span>'
+          : !st.declNext
+            ? '<span class="text-xs text-slate-400 italic">Not set</span>'
+            : overdue
+              ? `<span class="text-xs font-semibold text-amber-600">⚠ Due ${fmtDate(st.declNext)}</span>`
+              : `<span class="text-xs font-semibold text-green-700">✓ Due ${fmtDate(st.declNext)}</span>`;
 
         return `
-        <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition ${expanded?'bg-slate-50':''}">
-          <td class="px-4 py-3 font-semibold ${nameCls}">${st.name}</td>
-          <td class="px-4 py-3 text-xs text-slate-500">${st.role||'—'}</td>
-          <td class="px-4 py-3 text-xs text-slate-500">${assessmentOutcome}</td>
-          <td class="px-4 py-3 text-xs font-semibold ${isKey?'text-amber-700':isStd?'text-blue-700':'text-slate-400'}">${outcomeShort}</td>
-          <td class="px-4 py-3 text-xs text-slate-400">${statusTxt}</td>
-          <td class="px-4 py-3 text-right whitespace-nowrap">
-            <button onclick="editStaff(${idx})" class="text-xs text-indigo-600 font-semibold hover:text-indigo-800 mr-3">Edit</button>
-            <button onclick="toggleExpandStaff(${idx})" class="text-xs text-slate-400 hover:text-slate-600">${expanded?'▲':'▼'} More</button>
+        <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition cursor-pointer" onclick="editStaff(${idx})">
+          <td class="px-4 py-3">
+            <div class="font-semibold ${nameCls}">${st.name}</div>
+            <div class="text-xs text-slate-400 mt-0.5">${st.role||'—'}</div>
           </td>
-        </tr>
-        ${detailRow}`;
+          <td class="px-4 py-3">
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full ${clsBadge}">${clsLabel}</span>
+          </td>
+          <td class="px-4 py-3">${vsBadge}</td>
+          <td class="px-4 py-3">${reviewBadge}</td>
+          <td class="px-4 py-3 text-right whitespace-nowrap" onclick="event.stopPropagation()">
+            <button onclick="editStaff(${idx})" class="text-xs text-indigo-600 font-semibold hover:text-indigo-800">Edit</button>
+          </td>
+        </tr>`;
       };
 
       const tableHead = `<thead><tr class="border-b border-slate-100">
         <th class="${thCls}">Name</th>
-        <th class="${thCls}">Position</th>
-        <th class="${thCls}">AML/CTF Function Assessment</th>
-        <th class="${thCls}">Determination</th>
-        <th class="${thCls}">Status</th>
-        <th class="${thCls}">Actions</th>
+        <th class="${thCls}">Classification</th>
+        <th class="${thCls}">Vetting Status</th>
+        <th class="${thCls}">Next Declaration</th>
+        <th class="${thCls}"></th>
       </tr></thead>`;
 
       const section = (label, staff) => staff.length === 0 ? '' : `
@@ -304,9 +328,7 @@ window.editStaff = function(i) {
   const st = S.staff[i]; if (!st) return;
   S._staffDraft = Object.assign({}, st); S._staffEditIdx = i; go('staff');
 };
-window.toggleExpandStaff = function(i) {
-  S._expandedStaff = S._expandedStaff === i ? null : i; go('staff');
-};
+// toggleExpandStaff removed — rows now click-through to edit
 function syncStaffDraft() {
   if (!S._staffDraft) return;
   ['st-name','st-role','st-date','st-status','st-departure'].forEach(id => {
