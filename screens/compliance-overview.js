@@ -1,77 +1,165 @@
 import { S } from '../state/index.js';
 
+function fmtDate(d) {
+  return d ? new Date(d).toLocaleDateString('en-AU', { day:'numeric', month:'short', year:'numeric' }) : '—';
+}
+
+function isOverdue(dateStr) {
+  if (!dateStr) return false;
+  return new Date(dateStr) < new Date();
+}
+
 export function screen() {
-  const now = new Date();
-  const days = (d) => d ? Math.ceil((new Date(d) - now) / (1000 * 60 * 60 * 24)) : null;
+  const sc = S.scope;
+  const p  = S.program;
 
-  const riskDone    = !!(S.scope.overallRating || S.scope.noneConfirmed);
-  const programDone = !!(S.program.approvedBy);
-  const enrolDone   = !!(S.enrolment.enrolled || S.austracConfirmed);
+  // ── RISK ASSESSMENT STATUS ────────────────────────────────────────────────
+  const riskComplete = !!(
+    sc.classifierConfirmed &&
+    sc.mltfConfirmed &&
+    sc.serviceRating &&
+    sc.customerRating &&
+    sc.geoRating &&
+    sc.overallRating &&
+    sc.pfRating
+  );
+  const riskOverdue   = riskComplete && isOverdue(sc.riskNextReview);
+  const riskDate      = sc.riskAssessmentDate || null;
+  const riskNextDate  = sc.riskNextReview || null;
 
-  const riskReview  = days(S.scope.nextReview);
-  const progReview  = days(S.program.nextReview);
-  const riskOverdue = riskReview !== null && riskReview < 0;
-  const progOverdue = progReview !== null && progReview < 0;
+  // ── AML/CTF PROGRAM STATUS ────────────────────────────────────────────────
+  const programComplete = !!(p.approvedBy && p.approvedDate);
+  const programOverdue  = programComplete && isOverdue(p.nextReview);
+  const programDate     = p.approvedDate || null;
+  const programNextDate = p.nextReview || null;
 
-  const total = 3;
-  const done  = [riskDone, programDone, enrolDone].filter(Boolean).length;
+  // ── AUSTRAC ENROLMENT STATUS ──────────────────────────────────────────────
+  const enrolled = !!(S.enrolment.enrolled || S.austracConfirmed);
 
-  const statusBadge = (ok, warn, label) => {
-    const cls = ok ? 'bg-green-100 text-green-700' : warn ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700';
-    const icon = ok ? '✓' : warn ? '⚠' : '✗';
-    return `<span class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full ${cls}">${icon} ${label}</span>`;
+  const allOk = riskComplete && !riskOverdue && programComplete && !programOverdue && enrolled;
+
+  // ── STATUS ROW ────────────────────────────────────────────────────────────
+  const row = (label, complete, overdue, completedDate, nextDate, screen, incompleteAction) => {
+    const statusBadge = !complete
+      ? '<span class="text-xs font-semibold text-red-600">⚠ Incomplete</span>'
+      : overdue
+        ? '<span class="text-xs font-semibold text-amber-600">⚠ Overdue</span>'
+        : '<span class="text-xs font-semibold text-green-700">✓ Complete</span>';
+
+    const reviewCell = !complete
+      ? `<span class="text-xs text-slate-400">${incompleteAction}</span>`
+      : !nextDate
+        ? '<span class="text-xs text-slate-400 italic">No review date set</span>'
+        : overdue
+          ? `<span class="text-xs font-semibold text-amber-600">⚠ Was due ${fmtDate(nextDate)}</span>`
+          : `<span class="text-xs text-green-700 font-semibold">✓ Due ${fmtDate(nextDate)}</span>`;
+
+    const completedCell = completedDate
+      ? `<span class="text-xs text-slate-500">${fmtDate(completedDate)}</span>`
+      : '<span class="text-xs text-slate-300">—</span>';
+
+    return `
+    <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition cursor-pointer" onclick="go('${screen}')">
+      <td class="px-5 py-4 font-semibold text-slate-700 text-sm">${label}</td>
+      <td class="px-5 py-4">${statusBadge}</td>
+      <td class="px-5 py-4">${completedCell}</td>
+      <td class="px-5 py-4">${reviewCell}</td>
+      <td class="px-5 py-4 text-right">
+        <button onclick="event.stopPropagation();go('${screen}')" class="text-xs text-indigo-600 font-semibold hover:text-indigo-800">
+          ${complete ? 'Review →' : 'Complete →'}
+        </button>
+      </td>
+    </tr>`;
   };
 
-  const row = (label, isDone, isWarn, detail, screen) => `
-    <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 cursor-pointer transition" onclick="go('${screen}')">
-      <td class="px-4 py-3 text-sm text-slate-700">${label}</td>
-      <td class="px-4 py-3">${statusBadge(isDone && !isWarn, isWarn, detail)}</td>
-      <td class="px-4 py-3 text-right text-xs text-slate-300">→</td>
-    </tr>`;
+  return `<div class="py-8 space-y-6">
 
-  return `
-    <div class="p-8 max-w-3xl mx-auto space-y-6">
-      <div class="flex items-start justify-between">
-        <div>
-          <h1 class="text-2xl font-bold">Compliance</h1>
-          <p class="text-slate-400 text-sm mt-1">Your AML/CTF risk assessment and program approval.</p>
-        </div>
-        <div class="text-right">
-          <div class="text-3xl font-black ${done === total ? 'text-green-600' : done > 0 ? 'text-amber-500' : 'text-red-500'}">${done}/${total}</div>
-          <div class="text-xs text-slate-400">sections complete</div>
-        </div>
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900">Compliance</h1>
+      <p class="text-sm text-slate-400 mt-1">Your AML/CTF compliance obligations — risk assessment, program approval, and AUSTRAC enrolment.</p>
+    </div>
+
+    ${allOk ? `
+    <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-800 font-medium">
+      ✓ All three compliance obligations are complete and current.
+    </div>` : ''}
+
+    <!-- STATUS TABLE -->
+    <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="border-b border-slate-100 bg-slate-50">
+            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-5 py-3 w-48">Obligation</th>
+            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-5 py-3 w-32">Status</th>
+            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-5 py-3 w-36">Completed</th>
+            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-5 py-3">Next Review</th>
+            <th class="px-5 py-3 w-24"></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${row(
+            'Risk Assessment',
+            riskComplete, riskOverdue,
+            riskDate, riskNextDate,
+            'risk',
+            'Complete all five risk screens'
+          )}
+          ${row(
+            'AML/CTF Program',
+            programComplete, programOverdue,
+            programDate, programNextDate,
+            'program',
+            'Approve and document your AML/CTF program'
+          )}
+          <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition cursor-pointer" onclick="go('enrolment')">
+            <td class="px-5 py-4 font-semibold text-slate-700 text-sm">AUSTRAC Enrolment</td>
+            <td class="px-5 py-4">
+              ${enrolled
+                ? '<span class="text-xs font-semibold text-green-700">✓ Confirmed</span>'
+                : '<span class="text-xs font-semibold text-red-600">⚠ Not confirmed</span>'}
+            </td>
+            <td class="px-5 py-4"><span class="text-xs text-slate-400 italic">One-time</span></td>
+            <td class="px-5 py-4"><span class="text-xs text-slate-400 italic">No annual review required</span></td>
+            <td class="px-5 py-4 text-right">
+              <button onclick="event.stopPropagation();go('enrolment')" class="text-xs text-indigo-600 font-semibold hover:text-indigo-800">
+                ${enrolled ? 'View →' : 'Confirm →'}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- RISK ASSESSMENT DETAIL (if complete) -->
+    ${riskComplete ? `
+    <div class="bg-white border border-slate-200 rounded-xl p-5 space-y-3 cursor-pointer hover:border-indigo-200 transition" onclick="go('overallrisk')">
+      <h2 class="text-sm font-bold text-slate-700">Risk Assessment Summary</h2>
+      <div class="grid grid-cols-4 gap-4 text-xs">
+        ${[
+          ['Service Risk',   sc.serviceRating   || sc.serviceRatingOverride],
+          ['Customer Risk',  sc.customerRating  || sc.clientRatingOverride],
+          ['Geography Risk', sc.geoRating       || sc.geoRatingOverride],
+          ['Overall',        sc.overallRating   || sc.overallRatingOverride],
+        ].map(([label, rating]) => {
+          const cls = rating === 'High' ? 'bg-red-100 text-red-700' : rating === 'Medium' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700';
+          return `<div class="text-center">
+            <div class="text-slate-400 mb-1">${label}</div>
+            <span class="inline-block text-xs font-bold px-3 py-1 rounded-full ${cls}">${rating || '—'}</span>
+          </div>`;
+        }).join('')}
       </div>
+      ${sc.pfRating ? `<div class="text-xs text-slate-400">PF Risk: <strong class="text-slate-600">${sc.pfRating}</strong></div>` : ''}
+    </div>` : ''}
 
-      <!-- PROGRESS BAR -->
-      <div class="bg-white border rounded-xl p-4">
-        <div class="flex justify-between text-xs text-slate-500 mb-2"><span>Overall completion</span><span>${Math.round((done/total)*100)}%</span></div>
-        <div class="w-full bg-slate-100 h-2 rounded-full">
-          <div class="h-2 rounded-full transition-all ${done === total ? 'bg-green-500' : 'bg-indigo-500'}" style="width:${Math.round((done/total)*100)}%"></div>
-        </div>
+    <!-- PROGRAM DETAIL (if complete) -->
+    ${programComplete ? `
+    <div class="bg-white border border-slate-200 rounded-xl p-5 space-y-1 cursor-pointer hover:border-indigo-200 transition" onclick="go('program')">
+      <h2 class="text-sm font-bold text-slate-700">AML/CTF Program Approval</h2>
+      <div class="text-xs text-slate-500">
+        Approved by <strong class="text-slate-700">${p.approvedBy}</strong>${p.approvedTitle ? ` (${p.approvedTitle})` : ''}
+        on ${fmtDate(p.approvedDate)}${p.version ? ` · ${p.version}` : ''}
       </div>
+    </div>` : ''}
 
-      <!-- SECTION STATUS TABLE -->
-      <div class="bg-white border rounded-xl overflow-hidden">
-        <div class="px-4 py-2.5 bg-slate-50 border-b text-xs font-semibold text-slate-500 uppercase tracking-wide">Section Status</div>
-        <table class="w-full text-sm border-collapse">
-          <tbody>
-            ${row('AML/CTF Risk Assessment', riskDone && !riskOverdue, riskOverdue, 
-              !riskDone ? 'Not completed' : riskOverdue ? `Review overdue ${Math.abs(riskReview)}d` : riskReview !== null && riskReview <= 30 ? `Review due in ${riskReview}d` : 'Complete', 'risk')}
-            ${row('AML/CTF Program', programDone && !progOverdue, progOverdue,
-              !programDone ? 'Not approved' : progOverdue ? `Review overdue ${Math.abs(progReview)}d` : progReview !== null && progReview <= 30 ? `Review due in ${progReview}d` : 'Complete', 'program')}
-            ${row('AUSTRAC Enrolment', enrolDone, false, enrolDone ? 'Confirmed' : 'Not yet confirmed', 'enrolment')}}
-          </tbody>
-        </table>
-      </div>
-
-      ${S.program.approvedBy ? `
-      <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-xs text-green-700">
-        <strong>Program approved</strong> by ${S.program.approvedBy}${S.program.approvedDate ? ' on ' + S.program.approvedDate : ''}${S.program.version ? ' · ' + S.program.version : ''}
-        ${S.program.nextReview ? `· Next review: <strong>${S.program.nextReview}</strong>` : ''}
-      </div>` : `
-      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800">
-        <strong>Action required:</strong> Your AML/CTF program must be approved by a senior manager before 1 July 2026.
-        <button onclick="go('program')" class="ml-2 underline font-semibold">Go to Program →</button>
-      </div>`}
-    </div>`;
+  </div>`;
 }

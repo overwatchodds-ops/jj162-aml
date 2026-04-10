@@ -142,6 +142,18 @@ export function screen() {
           : 'Your firm has low inherent ML/TF risk. Standard AML/CTF program controls apply. Even at Low, a documented program and regular review are mandatory.'}
       </div>` : ''}
 
+      ${allComplete && autoOR ? `
+      <div class="border-t border-slate-100 pt-4 space-y-3">
+        <div class="flex items-center justify-between mb-1">
+          <label class="text-xs font-semibold text-slate-500" for="ra-next-review">Next review date</label>
+          <span class="text-xs text-slate-400">AUSTRAC expects annual review — auto-set to +12 months</span>
+        </div>
+        <input id="ra-next-review" type="date" class="inp"
+          value="${sc.riskNextReview || ''}"
+          onchange="scopeField('riskNextReview', this.value)">
+        <p class="text-xs text-slate-400">The risk assessment must be reviewed at least annually, or when there is a material change to your firm's services, clients, or operating environment.</p>
+      </div>` : ''}
+
       <button onclick="saveOverallRisk()"
         class="w-full py-3 rounded-xl font-semibold transition ${allComplete && autoOR
           ? 'bg-indigo-600 text-white hover:bg-indigo-700 cursor-pointer'
@@ -166,6 +178,13 @@ window.saveOverallRisk = function() {
   const autoOR = autoOverallRisk(sr, cr, gr, sc.pfRating);
   if (!autoOR) { toast('Complete all three risk lenses and set a PF rating first', 'err'); return; }
   sc.overallRating = sc.overallRatingOverride || autoOR;
+  sc.riskAssessmentDate = new Date().toISOString().split('T')[0];
+  // Auto-set next review to +12 months if not already set
+  if (!sc.riskNextReview) {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() + 1);
+    sc.riskNextReview = d.toISOString().split('T')[0];
+  }
   save();
   toast('Risk assessment saved');
   go('program');
