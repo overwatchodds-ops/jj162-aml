@@ -1,152 +1,230 @@
 import { S } from '../state/index.js';
-import { dashboardState } from '../logic/index.js';
 
-export function screen() {
-  const firmName = S.firm.name;
-
-  if (!firmName) return `
-    <div class="p-10 max-w-2xl">
-      <h1 class="text-2xl font-bold mb-2">Welcome to SimpleAML</h1>
-      <p class="text-slate-500 mb-6">AML/CTF compliance for Australian accounting firms.</p>
-      <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl mb-6 text-sm text-amber-800">
-        <strong>Deadline: 1 July 2026</strong> — Your AML/CTF program must be in place before you provide designated services under the Anti-Money Laundering and Counter-Terrorism Financing Act 2006.
-      </div>
-      <button onclick="go('firm')" class="bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">Set up my firm →</button>
-    </div>`;
-
-  const {
-    firmDone, riskDone, riskReview, riskOverdue, riskDueSoon,
-    programDone, progReview, progOverdue, progDueSoon, enrolDone,
-    activeStaff, staffDone, trainingOverdue, trainingDueSoon, trainingDone, declOverdue,
-    activeClients, cddComplete, dormantClients, newClients, ongoingClients,
-    allInds, screenedInds, clientsCddDone,
-    openInc, closedInc,
-    attention, hasUrgent, hasWarning,
-    statusLabel, statusBg, statusText, statusDot,
-  } = dashboardState();
-
-  const statusRow = (label, done, warn, detail, screen) => {
-    const cls   = done ? 'text-green-600' : warn ? 'text-amber-600' : 'text-red-600';
-    const icon  = done ? '✓' : warn ? '⚠' : '✗';
-    const badge = done ? 'bg-green-100 text-green-700' : warn ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700';
-    return `
-    <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 cursor-pointer transition" onclick="go('${screen}')">
-      <td class="px-4 py-2.5 text-sm text-slate-700">${label}</td>
-      <td class="px-4 py-2.5">
-        <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2 py-0.5 rounded-full ${badge}">
-          <span>${icon}</span>${detail || (done ? 'Complete' : warn ? 'Review due' : 'Incomplete')}
-        </span>
-      </td>
-      <td class="px-4 py-2.5 text-right text-xs text-slate-300">→</td>
-    </tr>`;
-  };
-
-  return `
-    <div class="p-8 max-w-3xl mx-auto space-y-6">
-      <div class="flex items-start justify-between">
-        <div>
-          <h1 class="text-2xl font-bold">${firmName}</h1>
-          <p class="text-slate-400 text-sm mt-0.5">${S.firm.type||''} · ABN ${S.firm.abn||'—'}</p>
-        </div>
-        <div class="flex items-center gap-2 border rounded-xl px-4 py-2.5 ${statusBg}">
-          <div class="w-2.5 h-2.5 rounded-full ${statusDot}"></div>
-          <div>
-            <div class="text-xs text-slate-500 uppercase tracking-wide font-semibold">AML/CTF Status</div>
-            <div class="text-base font-bold ${statusText}">${statusLabel}</div>
-          </div>
-        </div>
-      </div>
-
-      ${!S.program.approvedBy ? `
-      <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4 flex items-start justify-between gap-4">
-        <div>
-          <div class="text-sm font-semibold text-indigo-800 mb-0.5">New to AML/CTF?</div>
-          <div class="text-xs text-indigo-700">Complete the first 3 items in the sidebar — Firm Details, Risk Assessment, and AML/CTF Program — to be ready for 1 July 2026.</div>
-        </div>
-        <button onclick="go('firm')" class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg font-semibold hover:bg-indigo-700 transition whitespace-nowrap flex-shrink-0">Start here →</button>
-      </div>` : ''}
-
-      <div class="bg-white border rounded-xl overflow-hidden">
-        <div class="px-4 py-2.5 bg-slate-50 border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wide">Compliance Status</div>
-        <table class="w-full text-sm border-collapse">
-          <thead>
-            <tr class="border-b border-slate-100">
-              <th class="text-left text-xs font-semibold text-slate-400 px-4 py-2 uppercase tracking-wide">Area</th>
-              <th class="text-left text-xs font-semibold text-slate-400 px-4 py-2 uppercase tracking-wide">Status</th>
-              <th class="px-4 py-2 w-8"></th>
-            </tr>
-          </thead>
-          <tbody>
-            ${statusRow('Firm Details', firmDone, false, null, 'firm')}
-            ${statusRow('AML/CTF Risk Assessment', riskDone && !riskOverdue, riskDueSoon, riskOverdue ? `Overdue ${Math.abs(riskReview)}d` : riskDueSoon ? `Due in ${riskReview}d` : null, 'risk')}
-            ${statusRow('AML/CTF Program', programDone && !progOverdue, progDueSoon, progOverdue ? `Review overdue` : progDueSoon ? `Review in ${progReview}d` : null, 'program')}
-            ${statusRow('AUSTRAC Enrolment', enrolDone, false, null, 'enrolment')}
-            ${statusRow('Key Personnel Vetting', staffDone && declOverdue.length === 0, declOverdue.length > 0, declOverdue.length > 0 ? `${declOverdue.length} declaration${declOverdue.length>1?'s':''} overdue` : null, 'staff')}
-            ${statusRow('AML/CTF Training', trainingDone, trainingDueSoon.length > 0, trainingOverdue.length > 0 ? `${trainingOverdue.length} overdue` : trainingDueSoon.length > 0 ? `${trainingDueSoon.length} due soon` : null, 'training')}
-            ${statusRow('Client CDD', clientsCddDone, false, activeClients.length > 0 ? cddComplete+' / '+activeClients.length+' complete' : 'No clients', 'clients')}
-            ${statusRow('SMR Register', true, openInc > 0, openInc > 0 ? openInc+' open' : S.incidents.length > 0 ? S.incidents.length+' recorded' : 'No incidents', 'incidents')}
-          </tbody>
-        </table>
-      </div>
-
-      <div class="grid grid-cols-3 gap-4">
-        <div class="bg-white border rounded-xl p-4 cursor-pointer hover:border-indigo-200 transition" onclick="go('clients')">
-          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">Clients</div>
-          <div class="space-y-1.5 text-xs">
-            <div class="flex justify-between"><span class="text-slate-500">Total (≤7 yrs)</span><span class="font-semibold text-slate-700">${activeClients.length}</span></div>
-            <div class="flex justify-between"><span class="text-slate-500">New (12 months)</span><span class="font-semibold text-slate-700">${newClients.length}</span></div>
-            <div class="flex justify-between"><span class="text-slate-500">Ongoing</span><span class="font-semibold text-slate-700">${ongoingClients.length}</span></div>
-            <div class="flex justify-between"><span class="text-slate-500">Dormant</span><span class="font-semibold ${dormantClients.length > 0 ? 'text-amber-600' : 'text-slate-700'}">${dormantClients.length}</span></div>
-            <div class="flex justify-between border-t border-slate-50 pt-1.5 mt-1.5"><span class="text-slate-500">Individuals screened</span><span class="font-semibold text-slate-700">${screenedInds} / ${allInds.length}</span></div>
-          </div>
-        </div>
-        <div class="bg-white border rounded-xl p-4 cursor-pointer hover:border-indigo-200 transition" onclick="go('staff')">
-          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">Staff</div>
-          <div class="space-y-1.5 text-xs">
-            <div class="flex justify-between"><span class="text-slate-500">Key personnel</span><span class="font-semibold text-slate-700">${activeStaff.filter(st=>st.classification==='Key Personnel').length}</span></div>
-            <div class="flex justify-between"><span class="text-slate-500">AML functions</span><span class="font-semibold text-slate-700">${activeStaff.filter(st=>st.classification==='Key Personnel'||st.classification==='Standard AML/CTF Staff').length}</span></div>
-            <div class="flex justify-between"><span class="text-slate-500">Total assessed</span><span class="font-semibold text-slate-700">${activeStaff.length}</span></div>
-            <div class="flex justify-between border-t border-slate-50 pt-1.5 mt-1.5"><span class="text-slate-500">Training current</span><span class="font-semibold ${trainingOverdue.length > 0 ? 'text-red-600' : 'text-slate-700'}">${S.training.length - trainingOverdue.length} / ${S.training.length}</span></div>
-          </div>
-        </div>
-        <div class="bg-white border rounded-xl p-4 cursor-pointer hover:border-indigo-200 transition" onclick="go('incidents')">
-          <div class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">Incidents</div>
-          <div class="space-y-1.5 text-xs">
-            <div class="flex justify-between"><span class="text-slate-500">Total recorded</span><span class="font-semibold text-slate-700">${S.incidents.length}</span></div>
-            <div class="flex justify-between"><span class="text-slate-500">Open</span><span class="font-semibold ${openInc > 0 ? 'text-amber-600' : 'text-slate-700'}">${openInc}</span></div>
-            <div class="flex justify-between"><span class="text-slate-500">Closed</span><span class="font-semibold text-slate-700">${closedInc}</span></div>
-          </div>
-        </div>
-      </div>
-
-      ${attention.length > 0 ? `
-      <div class="bg-white border rounded-xl overflow-hidden">
-        <div class="px-4 py-2.5 ${hasUrgent ? 'bg-red-50 border-b border-red-100' : 'bg-amber-50 border-b border-amber-100'} text-xs font-semibold ${hasUrgent ? 'text-red-600' : 'text-amber-600'} uppercase tracking-wide">
-          Attention Required — ${attention.length} item${attention.length>1?'s':''}
-        </div>
-        <div class="divide-y divide-slate-50">
-          ${attention.map(a => `
-          <div class="flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 cursor-pointer transition" onclick="go('${a.screen}')">
-            <div class="flex items-center gap-2 text-sm">
-              <span class="${a.urgent ? 'text-red-500' : 'text-amber-500'} font-bold text-base leading-none">${a.urgent ? '✗' : '⚠'}</span>
-              <span class="text-slate-700">${a.text}</span>
-            </div>
-            <span class="text-xs text-slate-300 flex-shrink-0">→</span>
-          </div>`).join('')}
-        </div>
-      </div>` : `
-      <div class="bg-green-50 border border-green-200 rounded-xl px-4 py-3 text-sm text-green-700 font-semibold flex items-center gap-2">
-        <span>✓</span> No attention items — your AML/CTF position is current.
-      </div>`}
-
-      <div class="flex items-center justify-between px-4 py-3 bg-white border rounded-xl">
-        <div>
-          <div class="text-sm font-semibold text-slate-700">AML/CTF Compliance Report</div>
-          <div class="text-xs text-slate-400 mt-0.5">Generate a summary of your compliance position to assist with AUSTRAC reporting.</div>
-        </div>
-        <button onclick="go('report')" class="text-xs text-indigo-600 font-semibold hover:text-indigo-800 whitespace-nowrap ml-4">Generate →</button>
-      </div>
-    </div>`;
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+function isOverdue(dateStr) {
+  if (!dateStr) return false;
+  return new Date(dateStr) < new Date();
 }
 
-// No action functions — dashboard is read-only
+function fmtDate(d) {
+  return d ? new Date(d).toLocaleDateString('en-AU', { day:'numeric', month:'short', year:'numeric' }) : '—';
+}
+
+function cddStatus(c) {
+  const inds = c.individuals || [];
+  if (!inds.length) return 'Incomplete';
+  if (inds.every(i => i.idOutcome === 'Verified') && inds.every(i => i.screenResult)) return 'Complete';
+  return 'Incomplete';
+}
+
+function vettingStatus(st) {
+  const cls = st.classification;
+  if (!cls || cls === 'No AML/CTF functions') return 'assessed';
+  if (cls === 'Key Personnel') {
+    if (st.policeResult && st.bankruptResult && st.nsResult && st.declSigned) return 'complete';
+    return 'incomplete';
+  }
+  if (cls === 'Standard AML/CTF Staff') {
+    if (st.nsResult && st.declSigned) return 'complete';
+    return 'incomplete';
+  }
+  return 'incomplete';
+}
+
+function reviewOverdue(c) {
+  if (cddStatus(c) !== 'Complete') return false;
+  if (!c.nextReviewDate) return false;
+  return new Date(c.nextReviewDate) < new Date();
+}
+
+// ─── ITEM BUILDER ─────────────────────────────────────────────────────────────
+function item(label, detail, screen, actionLabel) {
+  return `
+  <div class="flex items-center justify-between py-3 border-b border-slate-50 last:border-0">
+    <div>
+      <div class="text-sm font-semibold text-slate-700">${label}</div>
+      ${detail ? `<div class="text-xs text-slate-400 mt-0.5">${detail}</div>` : ''}
+    </div>
+    <button onclick="go('${screen}')"
+      class="text-xs text-indigo-600 font-semibold hover:text-indigo-800 whitespace-nowrap ml-6">
+      ${actionLabel || 'Fix →'}
+    </button>
+  </div>`;
+}
+
+function section(title, items) {
+  if (!items.length) return '';
+  return `
+  <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
+    <div class="px-5 py-3 bg-slate-50 border-b border-slate-200">
+      <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-widest">${title}</h2>
+    </div>
+    <div class="px-5">
+      ${items.join('')}
+    </div>
+  </div>`;
+}
+
+// ─── SCREEN ───────────────────────────────────────────────────────────────────
+export function screen() {
+  const sc   = S.scope;
+  const p    = S.program;
+  const appt = S.firm?.appt || {};
+  const now  = new Date();
+
+  const complianceItems = [];
+  const personnelItems  = [];
+  const clientItems     = [];
+
+  // ── COMPLIANCE EXCEPTIONS ─────────────────────────────────────────────────
+
+  // Appointments
+  const apptComplete = !!(appt.amlco?.name && appt.senior?.name);
+  if (!apptComplete) {
+    complianceItems.push(item(
+      'Appointments incomplete',
+      'AMLCO and Senior Manager must be named before other compliance obligations can be met.',
+      'firm-appointments', 'Complete →'
+    ));
+  } else if (isOverdue(appt.nextReview)) {
+    complianceItems.push(item(
+      'Appointments overdue for review',
+      `Next review was due ${fmtDate(appt.nextReview)} — confirm responsible persons are still current.`,
+      'firm-appointments', 'Review →'
+    ));
+  }
+
+  // Risk Assessment
+  const riskComplete = !!(sc.classifierConfirmed && sc.mltfConfirmed &&
+    sc.serviceRating && sc.customerRating && sc.geoRating && sc.overallRating && sc.pfRating);
+  if (!riskComplete) {
+    complianceItems.push(item(
+      'Risk Assessment incomplete',
+      'All five risk screens must be completed before your AML/CTF program can be approved.',
+      'risk', 'Complete →'
+    ));
+  } else if (isOverdue(sc.riskNextReview)) {
+    complianceItems.push(item(
+      'Risk Assessment overdue for review',
+      `Next review was due ${fmtDate(sc.riskNextReview)} — risk assessments must be reviewed at least annually.`,
+      'overallrisk', 'Review →'
+    ));
+  }
+
+  // AML/CTF Program
+  const programComplete = !!(p.approvedBy && p.approvedDate);
+  if (!programComplete) {
+    complianceItems.push(item(
+      'AML/CTF Program not approved',
+      'The program must be approved by a senior manager before 1 July 2026.',
+      'program', 'Approve →'
+    ));
+  } else if (isOverdue(p.nextReview)) {
+    complianceItems.push(item(
+      'AML/CTF Program overdue for review',
+      `Next review was due ${fmtDate(p.nextReview)} — programs must be reviewed at least annually.`,
+      'program', 'Review →'
+    ));
+  }
+
+  // AUSTRAC Enrolment
+  const enrolled = !!(S.enrolment?.enrolled || S.austracConfirmed);
+  if (!enrolled) {
+    complianceItems.push(item(
+      'AUSTRAC Enrolment not confirmed',
+      'Your firm must be enrolled with AUSTRAC before 1 July 2026.',
+      'enrolment', 'Confirm →'
+    ));
+  }
+
+  // ── PERSONNEL EXCEPTIONS ──────────────────────────────────────────────────
+  const active = S.staff.filter(st => !st.status || st.status === 'Active' || st.status === 'On Leave');
+  const amlStaff = active.filter(st =>
+    st.classification === 'Key Personnel' || st.classification === 'Standard AML/CTF Staff'
+  );
+
+  amlStaff.forEach(st => {
+    if (vettingStatus(st) === 'incomplete') {
+      personnelItems.push(item(
+        `${st.name} — vetting incomplete`,
+        `${st.classification} · Required checks are missing.`,
+        'staff', 'Complete →'
+      ));
+    } else if (st.declNext && new Date(st.declNext) < now) {
+      personnelItems.push(item(
+        `${st.name} — declaration overdue`,
+        `Annual declaration was due ${fmtDate(st.declNext)}.`,
+        'staff', 'Update →'
+      ));
+    }
+  });
+
+  S.training.forEach(t => {
+    if (t.next && new Date(t.next) < now) {
+      personnelItems.push(item(
+        `${t.name} — training overdue`,
+        `AML/CTF training was due ${fmtDate(t.next)}.`,
+        'training', 'Update →'
+      ));
+    }
+  });
+
+  // ── CLIENT EXCEPTIONS ─────────────────────────────────────────────────────
+  S.clients.forEach((c, i) => {
+    if (cddStatus(c) !== 'Complete') {
+      clientItems.push(item(
+        `${c.name} — CDD incomplete`,
+        `${c.entityType || '—'} · Identity verification or screening not finished.`,
+        'clients', 'Complete →'
+      ));
+    } else if (reviewOverdue(c)) {
+      clientItems.push(item(
+        `${c.name} — screening overdue`,
+        `Review was due ${fmtDate(c.nextReviewDate)} · ${c.risk || 'Low'} risk client.`,
+        'clients', 'Review →'
+      ));
+    }
+  });
+
+  // Open SMRs
+  const openSmrs = S.incidents.filter(i => !i.status || i.status === 'Open');
+  openSmrs.forEach(inc => {
+    clientItems.push(item(
+      `${inc.clientName || 'Unknown client'} — open SMR`,
+      `Identified ${fmtDate(inc.dateIdentified)} · AMLCO review ${inc.amlcoDate ? 'done' : 'pending'}.`,
+      'incidents', 'Review →'
+    ));
+  });
+
+  // ── RENDER ────────────────────────────────────────────────────────────────
+  const totalIssues = complianceItems.length + personnelItems.length + clientItems.length;
+  const allClear = totalIssues === 0;
+
+  return `<div class="py-8 space-y-6">
+
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900">Action Required</h1>
+      <p class="text-sm text-slate-400 mt-1">Only items that need your attention appear here. If this screen is empty, your firm is on track.</p>
+    </div>
+
+    ${allClear ? `
+    <div class="bg-green-50 border border-green-200 rounded-xl p-8 text-center space-y-2">
+      <div class="text-3xl">✓</div>
+      <div class="text-base font-bold text-green-800">No outstanding items</div>
+      <div class="text-sm text-green-700">Your firm's AML/CTF obligations are complete and current.</div>
+    </div>` : `
+
+    <div class="bg-amber-50 border border-amber-200 rounded-xl px-5 py-3 flex items-center justify-between">
+      <span class="text-sm font-semibold text-amber-800">
+        ${totalIssues} item${totalIssues !== 1 ? 's' : ''} require${totalIssues === 1 ? 's' : ''} attention
+      </span>
+      <span class="text-xs text-amber-600">Click any item to go directly to the relevant screen</span>
+    </div>
+
+    ${section('Compliance', complianceItems)}
+    ${section('Personnel', personnelItems)}
+    ${section('Clients', clientItems)}
+    `}
+
+  </div>`;
+}
