@@ -9,23 +9,15 @@ function cddStatus(c) {
   return 'Incomplete';
 }
 
-function lastScreenedDate(c) {
-  const dates = (c.individuals || [])
-    .map(i => i.screenDate ? new Date(i.screenDate) : null)
-    .filter(Boolean);
-  if (!dates.length) return null;
-  return new Date(Math.max(...dates.map(d => d.getTime())));
+function reviewStatus(c) {
+  // Returns: 'not-set' | 'current' | 'overdue'
+  if (cddStatus(c) !== 'Complete') return 'not-set'; // incomplete CDD — separate flag
+  if (!c.nextReviewDate) return 'not-set';
+  return new Date(c.nextReviewDate) < new Date() ? 'overdue' : 'current';
 }
 
 function isOverdue(c) {
-  if (cddStatus(c) !== 'Complete') return false; // incomplete is its own flag
-  const lastScreened = lastScreenedDate(c);
-  if (!lastScreened) return true; // complete but no screen date — treat as overdue
-  const now = new Date();
-  const monthsAgo = (now - lastScreened) / (1000 * 60 * 60 * 24 * 30);
-  if (c.risk === 'High')   return monthsAgo > 12;
-  if (c.risk === 'Medium') return monthsAgo > 24;
-  return monthsAgo > 36;
+  return reviewStatus(c) === 'overdue';
 }
 
 function openSmrs(c) {
@@ -53,11 +45,15 @@ export function screen() {
       : '<span class="inline-flex items-center text-xs font-semibold text-red-600">⚠ Incomplete</span>';
 
     // Overdue badge
+    const rev = reviewStatus(c);
+    const fmtDate = d => d ? new Date(d).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '';
     const overdueBadge = status !== 'Complete'
       ? '<span class="text-xs text-slate-300">—</span>'
-      : overdue
-        ? '<span class="inline-flex items-center text-xs font-semibold text-amber-600">⚠ Overdue</span>'
-        : '<span class="inline-flex items-center text-xs font-semibold text-green-700">✓ Current</span>';
+      : rev === 'overdue'
+        ? `<span class="inline-flex items-center text-xs font-semibold text-amber-600">⚠ Due ${fmtDate(c.nextReviewDate)}</span>`
+        : rev === 'current'
+          ? `<span class="inline-flex items-center text-xs font-semibold text-green-700">✓ Due ${fmtDate(c.nextReviewDate)}</span>`
+          : '<span class="text-xs text-slate-400 italic">Not set</span>';
 
     // SMR action button
     const smrBtn = hasOpenSmr
@@ -108,7 +104,7 @@ export function screen() {
       </table>
     </div>
 
-    <p class="text-xs text-slate-400 px-1">Click any row to open the client record. Screening is overdue based on client risk — High: 12 months, Medium: 24 months, Low: 36 months.</p>` : `
+    <p class="text-xs text-slate-400 px-1">Click any row to open the client record. Review date is set in the CDD Declaration section — auto-suggested based on risk rating (High: 12 months, Medium: 24 months, Low: 36 months).</p>` : `
 
     <div class="bg-white border border-slate-200 rounded-xl p-10 text-center">
       <div class="text-slate-400 text-sm">No clients yet.</div>

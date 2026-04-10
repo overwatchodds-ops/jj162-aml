@@ -437,13 +437,29 @@ export function screen() {
         <span class="text-sm text-green-800 leading-relaxed">I confirm that customer due diligence, identity verification, and sanctions/PEP screening have been completed before providing a designated service to this customer.</span>
       </label>
     </div>
-    <div class="grid grid-cols-2 gap-3">
-      <div><label class="text-xs text-slate-500">CDD completed date</label><input id="cl-cdd-date" type="date" class="inp mt-1" value="${d.cddDate||new Date().toISOString().split('T')[0]}" onchange="cdDraft('cddDate',this.value)"></div>
-      <div><label class="text-xs text-slate-500">Completed by *</label>
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="text-xs text-slate-500">CDD completed date</label>
+        <input id="cl-cdd-date" type="date" class="inp mt-1" value="${d.cddDate||new Date().toISOString().split('T')[0]}" onchange="cdDraft('cddDate',this.value);autoSetNextReview(this.value)">
+      </div>
+      <div>
+        <label class="text-xs text-slate-500">Completed by *</label>
         <select id="cl-cdd-by" class="inp mt-1" onchange="cdDraft('cddBy',this.value)">
           <option value="">— Select staff member —</option>
           ${S.staff.filter(st=>!st.status||st.status==='Active'||st.status==='On Leave').map(st=>`<option value="${st.name}" ${d.cddBy===st.name?'selected':''}>${st.name}${st.role?' — '+st.role:''}</option>`).join('')}
         </select>
+      </div>
+      <div class="col-span-2 border-t border-slate-100 pt-4">
+        <div class="flex items-center justify-between mb-1">
+          <label class="text-xs text-slate-500">Next review date</label>
+          <span class="text-xs text-slate-400">Auto-set based on risk rating — override if needed</span>
+        </div>
+        <input id="cl-next-review" type="date" class="inp" value="${d.nextReviewDate||''}" onchange="cdDraft('nextReviewDate',this.value)">
+        <p class="text-xs text-slate-400 mt-1">
+          ${effectiveRisk === 'High' ? '⚡ High risk — annual review recommended (12 months)' :
+            effectiveRisk === 'Medium' ? '🔶 Medium risk — review every 24 months recommended' :
+            '🟢 Low risk — review every 36 months recommended'}
+        </p>
       </div>
     </div>`;
 
@@ -568,7 +584,7 @@ function snapshotDraft() {
    ['cl-structure-notes','structureNotes'],['cl-doc-location','docLocation'],
    ['cl-trust-type','trustType'],['cl-trust-purpose','trustPurpose'],
    ['cl-trustee-type','trusteeType'],['cl-purpose','purpose'],
-   ['cl-cdd-date','cddDate'],['cl-cdd-by','cddBy']
+   ['cl-cdd-date','cddDate'],['cl-cdd-by','cddBy'],['cl-next-review','nextReviewDate']
   ].forEach(([id,k]) => { const v = grab(id); if (v !== undefined) S._clientDraft[k] = v; });
   [['cl-abn-checked','abnChecked'],['cl-registry-checked','registryChecked'],
    ['cl-deed-sighted','deedSighted'],['cl-fund-active','fundActive'],['cl-tipping','tippingAck']
@@ -615,6 +631,21 @@ window.startRiskOverride = function() {
 window.clearRiskOverride = function() {
   if (S._clientDraft) { delete S._clientDraft.riskOverride; delete S._clientDraft.riskJust; }
   go('newclient');
+};
+
+// ─── AUTO-SET NEXT REVIEW ────────────────────────────────────────────────────
+window.autoSetNextReview = function(cddDate) {
+  if (!cddDate || !S._clientDraft) return;
+  // Only auto-set if not already set by user
+  const existing = document.getElementById('cl-next-review');
+  if (existing && existing.value) return; // user has already set it
+  const risk = S._clientDraft.riskOverride || (S._clientDraft.risk) || 'Low';
+  const months = risk === 'High' ? 12 : risk === 'Medium' ? 24 : 36;
+  const d = new Date(cddDate);
+  d.setMonth(d.getMonth() + months);
+  const next = d.toISOString().split('T')[0];
+  if (existing) existing.value = next;
+  S._clientDraft.nextReviewDate = next;
 };
 
 // ─── SAVE ─────────────────────────────────────────────────────────────────────
@@ -670,6 +701,7 @@ window.saveClient = function() {
     tippingAck:           d.tippingAck || false,
     cddDate:              d.cddDate || new Date().toISOString().split('T')[0],
     cddBy:                d.cddBy || '',
+    nextReviewDate:       d.nextReviewDate || '',
     updatedAt:            Date.now(),
     individuals:          inds.map(i => ({ ...i, _expanded: undefined })), // strip UI state
     services:             d.services || [],

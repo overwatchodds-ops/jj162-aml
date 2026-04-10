@@ -8,23 +8,10 @@ function cddStatus(c) {
   return 'Incomplete';
 }
 
-function lastScreenedDate(c) {
-  const dates = (c.individuals || [])
-    .map(i => i.screenDate ? new Date(i.screenDate) : null)
-    .filter(Boolean);
-  if (!dates.length) return null;
-  return new Date(Math.max(...dates.map(d => d.getTime())));
-}
-
 function isOverdue(c) {
   if (cddStatus(c) !== 'Complete') return false;
-  const lastScreened = lastScreenedDate(c);
-  if (!lastScreened) return true;
-  const now = new Date();
-  const monthsAgo = (now - lastScreened) / (1000 * 60 * 60 * 24 * 30);
-  if (c.risk === 'High')   return monthsAgo > 12;
-  if (c.risk === 'Medium') return monthsAgo > 24;
-  return monthsAgo > 36;
+  if (!c.nextReviewDate) return false; // not set — not counted as overdue
+  return new Date(c.nextReviewDate) < new Date();
 }
 
 export function screen() {
