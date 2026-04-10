@@ -114,6 +114,43 @@ const style = document.createElement('style');
 style.textContent = `.inp{display:block;width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;background:#f8fafc;outline:none;transition:border-color .15s}.inp:focus{border-color:#6366f1;background:#fff}textarea.inp{resize:vertical}`;
 document.head.appendChild(style);
 
+// ─── GLOBAL HELPERS ───────────────────────────────────────────────────────────
+// toggleCheck — used by geoRisk, customerRisk checkboxes
+window.toggleCheck = function(arrayKey, id, cb) {
+  if (!S.scope[arrayKey]) S.scope[arrayKey] = [];
+  if (cb.checked) {
+    if (!S.scope[arrayKey].includes(id)) S.scope[arrayKey].push(id);
+  } else {
+    S.scope[arrayKey] = S.scope[arrayKey].filter(v => v !== id);
+  }
+  save(); go(S.currentScreen);
+};
+
+// scopeField — used by ratingRow justification textarea
+window.scopeField = function(key, val) {
+  S.scope[key] = val;
+  save();
+};
+
+// startOverride / clearOverride — used by ratingRow override button
+window.startOverride = function(overrideKey, justKey) {
+  const val = prompt('Override risk rating (Low / Medium / High).
+
+A justification is required for audit purposes.');
+  if (!val) return;
+  const clean = val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
+  if (!['Low','Medium','High'].includes(clean)) { alert('Please enter Low, Medium or High'); return; }
+  S.scope[overrideKey] = clean;
+  S.scope[justKey] = '';
+  save(); go(S.currentScreen);
+};
+
+window.clearOverride = function(overrideKey, justKey) {
+  delete S.scope[overrideKey];
+  delete S.scope[justKey];
+  save(); go(S.currentScreen);
+};
+
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 load();
 render();
