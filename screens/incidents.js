@@ -109,7 +109,24 @@ window.incidentClientChange = function(name) {
   S._incidentDraft.clientName = name;
   S._incidentDraft.individualsArr = [];
   const client = S.clients.find(c => c.name === name);
-  if (client) S._incidentDraft.entityType = client.entityType || '';
+  if (client) {
+    S._incidentDraft.entityType = client.entityType || '';
+    S._incidentDraft.clientId = client.id || null;
+  }
+  go('newincident');
+};
+
+// Start an SMR pre-filled with a specific client — called from Client Register
+window.startSmrForClient = function(clientId) {
+  const client = S.clients.find(c => c.id === clientId);
+  if (!client) return;
+  S._incidentDraft = {
+    clientId: client.id,
+    clientName: client.name,
+    entityType: client.entityType || '',
+    individualsArr: [],
+  };
+  S._incidentEditIdx = undefined;
   go('newincident');
 };
 window.toggleIncidentIndividual = function(name, checked) {
@@ -131,6 +148,7 @@ window.saveIncident = function() {
   const individualsText = individualsArr.length > 0 ? individualsArr.join(', ') : (document.getElementById('inc-individuals')?.value || '');
   const newRecord = {
     clientName,
+    clientId: S._incidentDraft?.clientId || client?.id || null,
     entityType: client?.entityType || document.getElementById('inc-entity-type')?.value || '',
     dateIdentified, suspicion,
     individualsInvolved: individualsText, individualsArr,

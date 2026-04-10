@@ -635,6 +635,9 @@ window.saveClient = function() {
   const effectiveRisk = d.riskOverride || deriveRisk(d);
 
   const newRecord = {
+    id:                   (S._clientEditIdx !== undefined && S.clients[S._clientEditIdx]?.id)
+                            ? S.clients[S._clientEditIdx].id
+                            : Date.now(),
     name:                 entityName,
     entityType:           d.entityType,
     purpose:              d.purpose || '',

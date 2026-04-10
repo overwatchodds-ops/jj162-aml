@@ -1,100 +1,133 @@
 import { S } from '../state/index.js';
 
-export function screen() {
-  const yr = 365 * 24 * 60 * 60 * 1000;
+// ─── HELPERS (duplicated from clients.js — kept local to avoid import chain) ──
+function cddStatus(c) {
+  const inds = c.individuals || [];
+  if (!inds.length) return 'Incomplete';
+  if (inds.every(i => i.idOutcome === 'Verified') && inds.every(i => i.screenResult)) return 'Complete';
+  return 'Incomplete';
+}
+
+function lastScreenedDate(c) {
+  const dates = (c.individuals || [])
+    .map(i => i.screenDate ? new Date(i.screenDate) : null)
+    .filter(Boolean);
+  if (!dates.length) return null;
+  return new Date(Math.max(...dates.map(d => d.getTime())));
+}
+
+function isOverdue(c) {
+  if (cddStatus(c) !== 'Complete') return false;
+  const lastScreened = lastScreenedDate(c);
+  if (!lastScreened) return true;
   const now = new Date();
-  const twelveMonthsAgo = new Date(now - yr);
+  const monthsAgo = (now - lastScreened) / (1000 * 60 * 60 * 24 * 30);
+  if (c.risk === 'High')   return monthsAgo > 12;
+  if (c.risk === 'Medium') return monthsAgo > 24;
+  return monthsAgo > 36;
+}
 
-  const active = S.clients.filter(c => {
-    const lastSvc = (c.services || []).reduce((latest, sv) => {
-      const d = sv.dateProvided ? new Date(sv.dateProvided) : null;
-      return d && d > latest ? d : latest;
-    }, c.cddDate ? new Date(c.cddDate) : new Date(0));
-    return lastSvc > new Date(now - 7 * yr);
-  });
+export function screen() {
+  const clients = S.clients || [];
+  const incidents = S.incidents || [];
 
-  const cddComplete = active.filter(c => {
-    const inds = c.individuals || [];
-    return inds.length > 0 && inds.every(i => i.idOutcome === 'Verified') && inds.every(i => i.screenResult);
-  }).length;
+  const incomplete = clients.filter(c => cddStatus(c) !== 'Complete').length;
+  const overdue    = clients.filter(c => isOverdue(c)).length;
+  const openSmrs   = incidents.filter(i => !i.status || i.status === 'Open').length;
 
-  const dormant = active.filter(c => {
-    const lastSvc = (c.services || []).reduce((latest, sv) => {
-      const d = sv.dateProvided ? new Date(sv.dateProvided) : null;
-      return d && d > latest ? d : latest;
-    }, c.cddDate ? new Date(c.cddDate) : new Date(0));
-    return lastSvc < twelveMonthsAgo;
-  }).length;
+  const allOk = incomplete === 0 && overdue === 0 && openSmrs === 0;
 
-  const newC = active.filter(c => c.cddDate && new Date(c.cddDate) >= twelveMonthsAgo).length;
-  const allInds = active.flatMap(c => c.individuals || []);
-  const screened = allInds.filter(i => i.screenResult).length;
-  const openInc = S.incidents.filter(i => !i.status || i.status === 'Open').length;
-  const cddIncomplete = active.length - cddComplete;
-
-  const badge = (ok, warn, label) => {
-    const cls = ok ? 'bg-green-100 text-green-700' : warn ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-500';
-    const icon = ok ? '✓' : warn ? '⚠' : '✗';
-    return `<span class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full ${cls}">${icon} ${label}</span>`;
-  };
+  const card = (title, count, desc, screen, urgent) => `
+  <div class="bg-white border ${urgent && count > 0 ? 'border-amber-200' : 'border-slate-200'} rounded-xl p-5 space-y-3 cursor-pointer hover:border-indigo-200 transition" onclick="go('${screen}')">
+    <h2 class="text-sm font-bold text-slate-700">${title}</h2>
+    <div class="flex items-end gap-2">
+      <span class="text-3xl font-black ${urgent && count > 0 ? 'text-amber-600' : count === 0 ? 'text-green-600' : 'text-slate-800'}">${count}</span>
+      <span class="text-xs text-slate-400 mb-1">${count === 1 ? desc.singular : desc.plural}</span>
+    </div>
+    <div class="text-xs ${urgent && count > 0 ? 'text-amber-600' : 'text-slate-400'}">${count > 0 ? desc.action : desc.clear}</div>
+  </div>`;
 
   return `<div class="py-8 space-y-6">
 
     <div>
       <h1 class="text-2xl font-bold text-slate-900">Clients</h1>
-      <p class="text-sm text-slate-400 mt-1">Customer due diligence, client register, and suspicious matter reporting.</p>
+      <p class="text-sm text-slate-400 mt-1">Customer due diligence, ongoing screening, and suspicious matter reporting.</p>
     </div>
+
+    ${allOk && clients.length > 0 ? `
+    <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-800 font-medium">
+      ✓ All ${clients.length} client${clients.length !== 1 ? 's' : ''} have complete and current CDD. No open SMRs.
+    </div>` : ''}
 
     <div class="grid grid-cols-3 gap-4">
-      <div class="bg-white border border-slate-200 rounded-xl p-5 space-y-4 cursor-pointer hover:border-indigo-200 transition" onclick="go('clients')">
-        <h2 class="text-sm font-bold text-slate-700">Client Register</h2>
-        <div class="space-y-1.5 text-xs">
-          <div class="flex justify-between"><span class="text-slate-400">Total active (≤7 yrs)</span><span class="font-semibold text-slate-700">${active.length}</span></div>
-          <div class="flex justify-between"><span class="text-slate-400">New (12 months)</span><span class="font-semibold text-slate-700">${newC}</span></div>
-          <div class="flex justify-between"><span class="text-slate-400">Dormant</span><span class="font-semibold ${dormant > 0 ? 'text-amber-600' : 'text-slate-700'}">${dormant}</span></div>
-        </div>
-        <div>${badge(active.length > 0 && cddIncomplete === 0, cddIncomplete > 0, cddIncomplete > 0 ? `${cddIncomplete} CDD incomplete` : active.length > 0 ? 'All CDD complete' : 'No clients')}</div>
-      </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 space-y-4 cursor-pointer hover:border-indigo-200 transition" onclick="go('clients')">
-        <h2 class="text-sm font-bold text-slate-700">CDD Status</h2>
-        <div class="space-y-1.5 text-xs">
-          <div class="flex justify-between"><span class="text-slate-400">CDD complete</span><span class="font-semibold text-slate-700">${cddComplete} / ${active.length}</span></div>
-          <div class="flex justify-between"><span class="text-slate-400">Individuals screened</span><span class="font-semibold text-slate-700">${screened} / ${allInds.length}</span></div>
-        </div>
-        <div>${badge(active.length > 0 && cddComplete === active.length, cddComplete > 0 && cddComplete < active.length, cddComplete === active.length && active.length > 0 ? 'All complete' : `${cddComplete}/${active.length} complete`)}</div>
-      </div>
+      ${card(
+        'Incomplete CDD',
+        incomplete,
+        { singular: 'client', plural: 'clients', action: 'CDD must be completed before providing a designated service.', clear: 'All clients have complete CDD.' },
+        'clients',
+        true
+      )}
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 space-y-4 cursor-pointer hover:border-indigo-200 transition" onclick="go('incidents')">
-        <h2 class="text-sm font-bold text-slate-700">SMR Register</h2>
-        <div class="space-y-1.5 text-xs">
-          <div class="flex justify-between"><span class="text-slate-400">Total recorded</span><span class="font-semibold text-slate-700">${S.incidents.length}</span></div>
-          <div class="flex justify-between"><span class="text-slate-400">Open</span><span class="font-semibold ${openInc > 0 ? 'text-amber-600' : 'text-slate-700'}">${openInc}</span></div>
-          <div class="flex justify-between"><span class="text-slate-400">Closed</span><span class="font-semibold text-slate-700">${S.incidents.filter(i => i.status === 'Closed').length}</span></div>
-        </div>
-        <div>${badge(openInc === 0, false, openInc > 0 ? `${openInc} open` : 'No open incidents')}</div>
-      </div>
+      ${card(
+        'Screening Overdue',
+        overdue,
+        { singular: 'client', plural: 'clients', action: 'Re-screening required based on client risk rating.', clear: 'All screening is current.' },
+        'clients',
+        true
+      )}
+
+      ${card(
+        'Open SMRs',
+        openSmrs,
+        { singular: 'open incident', plural: 'open incidents', action: 'Review open matters and update AMLCO outcome.', clear: 'No open incidents.' },
+        'incidents',
+        true
+      )}
+
     </div>
 
+    <!-- QUICK ACTIONS -->
     <div class="bg-white border border-slate-200 rounded-xl p-5 space-y-3">
       <h2 class="text-sm font-bold text-slate-700">Quick actions</h2>
       <div class="grid grid-cols-2 gap-3">
+        <button onclick="go('clients')" class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:border-indigo-200 hover:bg-indigo-50 transition text-left">
+          <span class="text-lg flex-shrink-0">👥</span>
+          <div>
+            <div class="text-sm font-semibold text-slate-700">Client Register</div>
+            <div class="text-xs text-slate-400">View all clients, CDD status and screening</div>
+          </div>
+        </button>
         <button onclick="go('newclient')" class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:border-indigo-200 hover:bg-indigo-50 transition text-left">
           <span class="text-lg flex-shrink-0">＋</span>
           <div>
             <div class="text-sm font-semibold text-slate-700">New Client (CDD)</div>
-            <div class="text-xs text-slate-400">Add a new client and record due diligence</div>
+            <div class="text-xs text-slate-400">Add a new client and complete due diligence</div>
+          </div>
+        </button>
+        <button onclick="go('incidents')" class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:border-indigo-200 hover:bg-indigo-50 transition text-left">
+          <span class="text-lg flex-shrink-0">📋</span>
+          <div>
+            <div class="text-sm font-semibold text-slate-700">SMR &amp; Incident Register</div>
+            <div class="text-xs text-slate-400">View and manage all suspicious matter records</div>
           </div>
         </button>
         <button onclick="startNewIncident()" class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:border-indigo-200 hover:bg-indigo-50 transition text-left">
           <span class="text-lg flex-shrink-0">⚠</span>
           <div>
             <div class="text-sm font-semibold text-slate-700">New Incident / SMR</div>
-            <div class="text-xs text-slate-400">Log a suspicious matter or incident</div>
+            <div class="text-xs text-slate-400">Log a suspicious matter or compliance event</div>
           </div>
         </button>
       </div>
     </div>
+
+    ${clients.length === 0 ? `
+    <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 text-center">
+      <div class="text-slate-400 text-sm">No clients yet.</div>
+      <div class="text-xs text-slate-400 mt-1">Add your first client to begin building your CDD register.</div>
+      <button onclick="go('newclient')" class="mt-4 bg-indigo-600 text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">+ New client</button>
+    </div>` : ''}
 
   </div>`;
 }
