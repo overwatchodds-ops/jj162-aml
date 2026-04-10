@@ -10,6 +10,7 @@ export const SCREEN_GROUP = {
   firm:                 'firm',
   'firm-details':       'firm',
   'firm-appointments':  'firm',
+  'compliance-overview':'compliance',
   risk:                 'compliance',
   servicerisk:          'compliance',
   customerrisk:         'compliance',
@@ -37,7 +38,7 @@ export function TopNav() {
   const tabs = [
     { id: 'dashboard',  label: 'Dashboard',   screen: 'dashboard' },
     { id: 'firm',       label: 'Firm',        screen: 'firm-overview' },
-    { id: 'compliance', label: 'Compliance',  screen: 'risk' },
+    { id: 'compliance', label: 'Compliance',  screen: 'compliance-overview' },
     { id: 'personnel',  label: 'Personnel',   screen: 'personnel-overview' },
     { id: 'clients',    label: 'Clients',     screen: 'clients-overview' },
     { id: 'reports',    label: 'Reports',     screen: 'reports-overview' },
@@ -80,7 +81,8 @@ export function Sidebar() {
       <button onclick="go('firm-details')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm-details')}">Firm Details</button>
       <button onclick="go('firm-appointments')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm-appointments')}">Appointments</button>`,
     compliance: `
-      <div class="px-3 pt-2 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Risk Assessment</div>
+      <button onclick="go('compliance-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('compliance-overview')}">Overview</button>
+      <div class="px-3 pt-3 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Risk Assessment</div>
       <button onclick="go('risk')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('risk')}">Designated Services</button>
       <button onclick="go('servicerisk')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('servicerisk')}">Service Risk</button>
       <button onclick="go('customerrisk')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('customerrisk')}">Customer Risk</button>
