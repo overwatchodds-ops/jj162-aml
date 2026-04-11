@@ -856,7 +856,7 @@
   <div class="hero">
     <div class="hero-label">
       <span class="hero-label-dot"></span>
-      🚨 Regulatory Update: New AUSTRAC Rules were released on 31 March 2026. SimpleAML is currently being updated to reflect the new Proliferation Financing (PF) and Financial Year reporting requirements.
+      🟢 Now updated for 2026 AUSTRAC rules — including Proliferation Financing (PF) risk assessment and Financial Year compliance reporting.
     </div>
     <h1>Stop stressing about<br><em>Tranche 2.</em></h1>
     <p class="hero-sub">Free AML/CTF compliance for Australian accountants. Audit-ready under AUSTRAC requirements — no account, no subscription, no complexity.</p>
@@ -930,7 +930,7 @@
     <div class="section-wrap" style="padding-top: 0; padding-bottom: 0;">
       <p class="section-label">What's included</p>
       <h2 class="section-heading">Everything AUSTRAC<br><em>actually requires.</em></h2>
-      <p class="section-sub">No bloated modules. No upsells. Just what you need to be compliant by 1 July 2026.</p>
+      <p class="section-sub">No bloated modules. No upsells. Just what you need to be fully compliant with AUSTRAC Tranche 2.</p>
 
       <div class="features-grid">
         <div class="feature-card">
@@ -1359,10 +1359,34 @@
       var deadline = new Date('2026-07-01T00:00:00+10:00');
       var now = new Date();
       var diff = deadline - now;
+
       if (diff <= 0) {
-        document.getElementById('days-left').textContent = '0 days';
+        // Post-July fallbacks
+        var bannerEl = document.getElementById('days-left');
+        if (bannerEl) bannerEl.textContent = 'now in effect';
+        var bannerStrong = bannerEl ? bannerEl.closest('.deadline-banner') : null;
+        if (bannerStrong) bannerStrong.innerHTML = '<strong>AML/CTF obligations are now in effect.</strong> If you are not yet enrolled with AUSTRAC, enrol now.';
+
+        var heroEl = document.getElementById('hero-days');
+        if (heroEl) { heroEl.textContent = 'Live'; heroEl.style.color = '#F2A10A'; }
+        var heroLabel = heroEl ? heroEl.nextElementSibling : null;
+        if (heroLabel) heroLabel.textContent = 'Obligations in effect';
+
+        var cdD = document.getElementById('cd-days');
+        var cdH = document.getElementById('cd-hours');
+        var cdM = document.getElementById('cd-mins');
+        if (cdD) { cdD.textContent = '00'; }
+        if (cdH) { cdH.textContent = '00'; }
+        if (cdM) { cdM.textContent = '00'; }
+
+        var deadlineHeading = document.querySelector('.deadline-section .section-heading');
+        if (deadlineHeading) deadlineHeading.innerHTML = 'AML/CTF obligations<br><em>are now in effect.</em>';
+        var deadlineDesc = document.querySelector('.deadline-desc');
+        if (deadlineDesc) deadlineDesc.textContent = 'If your firm provides designated services and has not yet enrolled with AUSTRAC, enrol now. Penalties apply from 1 July 2026.';
+
         return;
       }
+
       var days  = Math.floor(diff / (1000 * 60 * 60 * 24));
       var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -1487,7 +1511,7 @@ var saTree = {
     ]
   },
   register: {
-    msg: "If you provide a designated service as an accountant — such as managing client funds, preparing for business transactions, or providing tax or bookkeeping services — you will need to enrol with AUSTRAC before 1 July 2026.",
+    msg: "If your firm provides a designated service — such as managing client funds, setting up companies or trusts, assisting with business transactions, acting in a governance role, or providing your address as a registered office — you will need to enrol with AUSTRAC. Tax returns, BAS, and bookkeeping alone do not trigger obligations.",
     options: [
       { label: "Read the full guide →", link: "articles/do-i-need-to-register-with-austrac.html" },
       { label: "What do I need to set up?", next: "setup" },
@@ -1544,7 +1568,7 @@ var saTree = {
     ]
   },
   penalties: {
-    msg: "Penalties under the AML/CTF Act can reach up to $22 million for corporations and $4.4 million for individuals per breach. AUSTRAC can also require external audits at your cost. Each client without proper CDD is a separate potential breach.",
+    msg: "Penalties under the AML/CTF Act can reach up to $33 million for corporations and $6.6 million for individuals per serious breach. Non-enrolment also carries a daily penalty of $18,780 per day for firms. Each client without proper CDD is a separate potential breach.",
     options: [
       { label: "Read more about penalties →", link: "articles/aml-ctf-penalties-for-accountants.html" },
       { label: "Get compliant now →", link: "app.html" },
