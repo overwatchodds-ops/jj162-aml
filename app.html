@@ -154,7 +154,30 @@ if (!S.firm?.name) {
   S.currentScreen = 'firm-details';
 }
 render();
+// Show welcome modal for brand new users
+if (!S.firm?.name) {
+  setTimeout(function() {
+    var el = document.getElementById('welcome-backdrop');
+    if (el) el.style.display = 'flex';
+  }, 200);
+}
 </script>
+
+<!-- ─── WELCOME MODAL ───────────────────────────────────────────────────────── -->
+<div id="welcome-backdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;padding:36px;max-width:480px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+      <div style="width:40px;height:40px;background:#4f46e5;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">SA</div>
+      <div style="font-size:20px;font-weight:700;color:#0f172a;">Welcome to SimpleAML</div>
+    </div>
+    <p style="font-size:14px;color:#64748b;line-height:1.7;margin-bottom:12px;">SimpleAML guides your firm through every AUSTRAC Tranche 2 obligation — risk assessment, staff vetting, client CDD, and your compliance report.</p>
+    <p style="font-size:14px;color:#64748b;line-height:1.7;margin-bottom:24px;"><strong style="color:#0f172a;">First step:</strong> Set up your Firm Profile with your practice name and contact details. This takes about 2 minutes and unlocks the rest of the app.</p>
+    <button onclick="document.getElementById('welcome-backdrop').style.display='none'"
+      style="width:100%;padding:12px;background:#4f46e5;color:#fff;font-size:14px;font-weight:600;border:none;border-radius:10px;cursor:pointer;">
+      Set Up Firm Profile →
+    </button>
+  </div>
+</div>
 
 <!-- ─── NEWSLETTER MODAL ──────────────────────────────────────────────────── -->
 <div id="newsletter-backdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
