@@ -69,42 +69,122 @@ function mentionsValuation(inputText) {
     .some(w => inputText.includes(w));
 }
 
+// ─── NEGATION DETECTION ───────────────────────────────────────────────────────
+// Phrases that, when present in the input, indicate the user is describing
+// an OUT-of-scope activity even if keywords otherwise match IN rows.
+// Format: { phrase, suppressItems }
+// suppressItems: Table 6 item numbers to suppress matches for.
+// If suppressItems is empty, suppresses ALL IN matches for that phrase.
+const NEGATION_RULES = [
+  // Payroll without fund movement — explicitly out of scope
+  { phrase: 'without fund movement',    suppressItems: [4] },
+  { phrase: 'no fund movement',         suppressItems: [4] },
+  { phrase: 'no payment authority',     suppressItems: [4] },
+  { phrase: 'no payments',              suppressItems: [4] },
+  { phrase: 'calculations only',        suppressItems: [4] },
+  { phrase: 'reporting only',           suppressItems: [2, 3, 4, 5] },
+  { phrase: 'read only',                suppressItems: [3, 4] },
+  { phrase: 'read-only',                suppressItems: [3, 4] },
+  { phrase: 'report only',              suppressItems: [2, 3, 4, 5] },
+  { phrase: 'no execution',             suppressItems: [2, 5, 6, 7] },
+  { phrase: 'no implementation',        suppressItems: [2, 5, 6, 7] },
+  { phrase: 'advisory only',            suppressItems: [2, 5, 6, 7] },
+  { phrase: 'internal reporting',       suppressItems: [2, 3, 4, 5] },
+  { phrase: 'tax reporting only',       suppressItems: [2, 3, 4, 5] },
+  { phrase: 'payroll tax reporting',    suppressItems: [4] },
+  { phrase: 'fbt reporting',            suppressItems: [4] },
+  { phrase: 'non-court',                suppressItems: [3] },
+  { phrase: 'no fund control',          suppressItems: [3, 4] },
+];
+
+function getSuppressedItems(input) {
+  const suppressed = new Set();
+  for (const rule of NEGATION_RULES) {
+    if (input.includes(rule.phrase)) {
+      rule.suppressItems.forEach(n => suppressed.add(n));
+    }
+  }
+  return suppressed;
+}
+
 // ─── CLASSIFY ─────────────────────────────────────────────────────────────────
-// Returns { matched, notDesignated, greyZone }
-// matched        — IN rows found
-// notDesignated  — OUT rows found (reassurance list)
-// greyZone       — rows needing clarification
+// Two-pass architecture:
+// Pass 1 — explicit synonyms only (high confidence, threshold 6)
+// Pass 2 — fallback fuzzy matching (lower confidence, threshold 8)
+//          Only runs if Pass 1 finds no IN matches.
+//          Pass 2 results are flagged with { fuzzy: true } for UI warning.
+// Returns { matched, notDesignated, greyZone, fuzzyPass }
 export function classify(inputText) {
   const input = inputText.toLowerCase();
   const inputTokens = [...new Set(tokenise(inputText))];
+  const suppressedItems = getSuppressedItems(input);
 
   const matched = [];
   const notDesignated = [];
   const greyZone = [];
 
-  for (const row of MATRIX) {
-    // Grey zone handled by keyword detection only
-    if (row.status.includes('GREY')) {
-      if (mentionsValuation(input)) greyZone.push(row);
-      continue;
-    }
-
-    // Two-tier threshold: explicit synonyms = 6, fallback task words = 8
-    const THRESHOLD = row.explicit ? 6 : 8;
+  // ── PASS 1: explicit rows only ────────────────────────────────────────────
+  const explicitRows = MATRIX.filter(r => r.explicit && !r.status.includes('GREY'));
+  for (const row of explicitRows) {
     const score = scoreRow(row, input, inputTokens);
-    if (score < THRESHOLD) continue;
-
+    if (score < 6) continue;
     if (row.status === 'IN') {
+      const rowItems = row.table6_items || [];
+      if (rowItems.length > 0 && rowItems.every(n => suppressedItems.has(n))) {
+        notDesignated.push({ ...row, score });
+        continue;
+      }
       matched.push({ ...row, score });
     } else if (row.status === 'OUT') {
       notDesignated.push({ ...row, score });
     }
   }
 
-  matched.sort((a, b) => b.score - a.score);
-  notDesignated.sort((a, b) => b.score - a.score);
+  // Grey zone — always check
+  for (const row of MATRIX) {
+    if (row.status.includes('GREY') && mentionsValuation(input)) {
+      greyZone.push(row);
+    }
+  }
 
-  return { matched, notDesignated, greyZone };
+  // If Pass 1 found IN matches — return, no need for Pass 2
+  if (matched.length > 0) {
+    matched.sort((a, b) => b.score - a.score);
+    notDesignated.sort((a, b) => b.score - a.score);
+    return { matched, notDesignated, greyZone, fuzzyPass: false };
+  }
+
+  // ── PASS 2: fallback fuzzy (explicit:false rows only) ─────────────────────
+  const fuzzyRows = MATRIX.filter(r => !r.explicit && !r.status.includes('GREY'));
+  const fuzzyMatched = [];
+  const fuzzyNotDes = [];
+
+  for (const row of fuzzyRows) {
+    const score = scoreRow(row, input, inputTokens);
+    if (score < 8) continue;
+    if (row.status === 'IN') {
+      const rowItems = row.table6_items || [];
+      if (rowItems.length > 0 && rowItems.every(n => suppressedItems.has(n))) {
+        fuzzyNotDes.push({ ...row, score, fuzzy: true });
+        continue;
+      }
+      fuzzyMatched.push({ ...row, score, fuzzy: true });
+    } else if (row.status === 'OUT') {
+      fuzzyNotDes.push({ ...row, score, fuzzy: true });
+    }
+  }
+
+  // Merge Pass 1 OUT results with Pass 2 results
+  const allNotDes = [...notDesignated, ...fuzzyNotDes];
+  allNotDes.sort((a, b) => b.score - a.score);
+  fuzzyMatched.sort((a, b) => b.score - a.score);
+
+  return {
+    matched: fuzzyMatched,
+    notDesignated: allNotDes,
+    greyZone,
+    fuzzyPass: fuzzyMatched.length > 0
+  };
 }
 
 // ─── COUNT TABLE 6 ITEMS ──────────────────────────────────────────────────────
