@@ -7,7 +7,7 @@ const REGULATORY_UPDATES = [
   {
     date: 'March 2026',
     title: 'New AUSTRAC Rules — Tranche 2 Final Regulations',
-    body: 'AUSTRAC released the final AML/CTF Rules for Tranche 2 reporting entities on 31 March 2026. SimpleAML is being updated to reflect the new Proliferation Financing (PF) and Financial Year reporting requirements.',
+    body: 'AUSTRAC released the final AML/CTF Rules for Tranche 2 reporting entities on 31 March 2026. SimpleAML has been updated to reflect the new Proliferation Financing (PF) and Financial Year reporting requirements.',
     urgent: true,
   },
   {
@@ -32,7 +32,7 @@ export function RightCol() {
     <div class="w-64 flex-shrink-0 fixed top-0 right-0 bottom-0 flex flex-col z-40 bg-slate-50 border-l border-slate-200">
 
       <!-- FIRM HEADER — flush with top nav height -->
-      <button onclick="go('firm')" class="h-12 flex items-center gap-2 px-4 border-b border-slate-200 hover:bg-slate-100 transition text-left flex-shrink-0 bg-white w-full">
+      <button onclick="go('firm-details')" class="h-12 flex items-center gap-2 px-4 border-b border-slate-200 hover:bg-slate-100 transition text-left flex-shrink-0 bg-white w-full">
         <div class="overflow-hidden">
           <div class="text-sm font-semibold text-slate-800 truncate">${firmName}</div>
           <div class="text-[10px] text-indigo-500 font-medium">Firm Profile →</div>
