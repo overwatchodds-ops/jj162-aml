@@ -100,18 +100,6 @@ function renderResults(sc) {
           </table>
         </div>
 
-        ${notDes.length > 0 ? `
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-1.5">
-          <div class="text-xs font-semibold text-slate-500 mb-1">Also mentioned — not designated services</div>
-          ${notDes.map(r => `<div class="flex items-start gap-2 text-xs text-slate-500"><span class="text-green-500 flex-shrink-0">✓</span>${r.task}</div>`).join('')}
-        </div>` : ''}
-
-        ${notDes.length > 0 ? `
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-1.5">
-          <div class="text-xs font-semibold text-slate-500 mb-1">Also mentioned — not designated services</div>
-          ${notDes.map(r => `<div class="flex items-start gap-2 text-xs text-slate-500"><span class="text-green-500 flex-shrink-0">✓</span>${r.task}</div>`).join('')}
-        </div>` : ''}
-
         ${hasUnrecognised ? `
         <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-2">
           <div class="text-xs font-semibold text-amber-700">⚠ Some lines were not recognised</div>
