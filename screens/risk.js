@@ -67,8 +67,17 @@ export function screen() {
   </div>`;
 }
 
+const CLASSIFIER_VERSION = 3; // increment when classifier logic changes
+
 function renderResults(sc) {
   if (!sc.classifierRan) return '';
+  // If results are from an older classifier version, prompt re-analysis
+  if ((sc.classifierVersion || 0) < CLASSIFIER_VERSION) {
+    return `<div class="bg-amber-50 border border-amber-200 rounded-xl p-5 text-sm text-amber-800">
+      <strong>Results need refreshing.</strong> The classifier has been updated since your last analysis.
+      <button onclick="runClassifier()" class="ml-2 underline font-semibold">Re-analyse now →</button>
+    </div>`;
+  }
   const matched = sc.classifierMatched || [];
   const notDes = sc.classifierNotDesignated || [];
 
@@ -235,6 +244,7 @@ window.runClassifier = function() {
   S.scope.classifierUnrecognised = unrecognised;
   S.scope.classifierGreyZone = greyZone;
   S.scope.classifierRisks = extractRisks(matched);
+  S.scope.classifierVersion = CLASSIFIER_VERSION;
   if (matched.length > 0) S.scope.noneConfirmed = false;
   save(); go('risk');
 };
