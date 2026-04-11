@@ -13,6 +13,10 @@ export function screen() {
   const sc = S.scope;
   const p  = S.program;
 
+  // ── FIRM PROFILE STATUS ───────────────────────────────────────────────────
+  const f = S.firm || {};
+  const firmComplete = !!(f.name && f.contactName && f.contactEmail && f.contactEmail.includes('@'));
+
   // ── APPOINTMENTS STATUS ──────────────────────────────────────────────────
   const appt = S.firm?.appt || {};
   const apptComplete = !!(appt.amlco?.name && appt.senior?.name);
@@ -43,7 +47,7 @@ export function screen() {
   // ── AUSTRAC ENROLMENT STATUS ──────────────────────────────────────────────
   const enrolled = !!(S.enrolment.enrolled || S.austracConfirmed);
 
-  const allOk = apptComplete && !apptOverdue && riskComplete && !riskOverdue && programComplete && !programOverdue && enrolled;
+  const allOk = firmComplete && apptComplete && !apptOverdue && riskComplete && !riskOverdue && programComplete && !programOverdue && enrolled;
 
   // ── STATUS ROW ────────────────────────────────────────────────────────────
   const row = (label, complete, overdue, completedDate, nextDate, screen, incompleteAction) => {
@@ -83,7 +87,7 @@ export function screen() {
 
     <div>
       <h1 class="text-2xl font-bold text-slate-900">Compliance</h1>
-      <p class="text-sm text-slate-400 mt-1">Your AML/CTF compliance obligations — risk assessment, program approval, and AUSTRAC enrolment.</p>
+      <p class="text-sm text-slate-400 mt-1">Your AML/CTF compliance obligations — firm profile, appointments, risk assessment, program approval, and AUSTRAC enrolment.</p>
     </div>
 
     ${allOk ? `
@@ -104,6 +108,13 @@ export function screen() {
           </tr>
         </thead>
         <tbody>
+          ${row(
+            'Firm Profile',
+            firmComplete, false,
+            f.name ? 'Recorded' : null, null,
+            'firm-details',
+            'Enter your practice name, contact details and email'
+          )}
           ${row(
             'Appointments',
             apptComplete, apptOverdue,
