@@ -1,5 +1,6 @@
 import { S, save } from '../state/index.js';
 import { classify, extractRisks } from '../logic/classifier.js';
+import { MATRIX } from '../state/matrix.js';
 import { infoBtn, infoPop, toast } from '../components/index.js';
 
 export function screen() {
@@ -38,11 +39,24 @@ export function screen() {
         <div>· "We do bookkeeping, prepare tax returns and financial statements"</div>
       </div>
 
-      <textarea id="classifier-input" class="inp text-sm" rows="5"
-        placeholder="Describe what your firm does for clients in two or three sentences..."
-      >${sc.classifierInput || ''}</textarea>
+      <div class="relative">
+        <textarea id="classifier-input" class="inp text-sm" rows="5"
+          placeholder="Describe what your firm does for clients — one service per line works well..."
+          oninput="onClassifierInput(this)"
+        >${sc.classifierInput || ''}</textarea>
+        <div id="classifier-suggestions" style="display:none;"
+          class="absolute left-0 right-0 bg-white border border-slate-200 rounded-xl shadow-lg z-10 overflow-hidden mt-1">
+          <div class="px-3 py-2 bg-slate-50 border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+            Suggested services — click to use
+          </div>
+          <div id="classifier-suggestions-list" class="max-h-56 overflow-y-auto"></div>
+        </div>
+      </div>
       <div id="classifier-nudge" style="display:none" class="text-xs text-amber-600 font-medium">
         Your description seems brief — the more detail you provide, the more accurate your result.
+      </div>
+      <div class="text-xs text-slate-400 bg-slate-50 border border-slate-100 rounded-lg px-3 py-2">
+        💡 <strong class="text-slate-600">Tip:</strong> Type a service and select from suggestions, or describe in your own words. One service per line gives the most accurate results.
       </div>
       <button onclick="runClassifier()" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">
         Analyse My Services →
@@ -58,11 +72,17 @@ function renderResults(sc) {
   const matched = sc.classifierMatched || [];
   const notDes = sc.classifierNotDesignated || [];
 
+  const fuzzyPass = sc.classifierFuzzyPass || false;
+
   // STATE 1 — IN services found
   if (matched.length > 0) {
     return `
       <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-5">
         <h2 class="text-sm font-bold text-slate-700">How AUSTRAC sees your firm</h2>
+        ${fuzzyPass ? `
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-800">
+          <strong>Please verify:</strong> These results are based on partial keyword matching — your description didn't match our known service list exactly. Check the results carefully before confirming. For best accuracy, use the suggestions that appear as you type.
+        </div>` : ''}
         <div class="border border-slate-200 rounded-xl overflow-hidden">
           <table class="w-full text-sm border-collapse">
             <thead>
@@ -75,9 +95,9 @@ function renderResults(sc) {
             <tbody>
               ${matched.map(r => `
               <tr class="border-b border-slate-50 last:border-0">
-                <td class="px-4 py-3 text-slate-700">${r.task}</td>
+                <td class="px-4 py-3 text-slate-700">${r.task}${r.fuzzy ? ' <span class="text-xs text-amber-500 font-normal">(unverified match)</span>' : ''}</td>
                 <td class="px-4 py-3 text-xs text-slate-500">${r.table6 || '—'}</td>
-                <td class="px-4 py-3"><span class="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700">✓ IN</span></td>
+                <td class="px-4 py-3"><span class="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full ${r.fuzzy ? 'bg-amber-100 text-amber-700' : 'bg-indigo-100 text-indigo-700'}">✓ IN</span></td>
               </tr>`).join('')}
             </tbody>
           </table>
@@ -176,7 +196,7 @@ window.runClassifier = function() {
   const wordCount = input.split(/\s+/).filter(Boolean).length;
   const nudge = document.getElementById('classifier-nudge');
   if (nudge) nudge.style.display = wordCount < 10 ? 'block' : 'none';
-  const { matched, notDesignated, greyZone } = classify(input);
+  const { matched, notDesignated, greyZone, fuzzyPass } = classify(input);
   S.scope.classifierInput = input;
   S.scope.classifierRan = true;
   S.scope.classifierConfirmed = false;
@@ -185,6 +205,7 @@ window.runClassifier = function() {
   S.scope.classifierNotDesignated = notDesignated;
   S.scope.classifierGreyZone = greyZone;
   S.scope.classifierRisks = extractRisks(matched);
+  S.scope.classifierFuzzyPass = fuzzyPass || false;
   if (matched.length > 0) S.scope.noneConfirmed = false;
   save(); go('risk');
 };
@@ -205,3 +226,108 @@ window.toggleDsNone = function(cb) {
   if (cb.checked) { S.scope.classifierMatched = []; S.scope.classifierConfirmed = false; }
   save();
 };
+
+/* ─── SUGGESTIONS ─────────────────────────────────────────────────────────────*/
+// Build a flat searchable list from matrix — task name + explicit synonyms
+function buildSuggestionIndex() {
+  const index = [];
+  for (const row of MATRIX) {
+    if (row.status.includes('GREY')) continue;
+    const isIn = row.status === 'IN';
+    // Add the task name itself
+    index.push({ label: row.task, isIn, row });
+    // Add explicit synonyms as alternative labels
+    if (row.explicit) {
+      for (const syn of row.synonyms) {
+        if (syn.length > 5) {
+          index.push({ label: syn, isIn, row });
+        }
+      }
+    }
+  }
+  return index;
+}
+
+let _suggestionIndex = null;
+function getSuggestionIndex() {
+  if (!_suggestionIndex) _suggestionIndex = buildSuggestionIndex();
+  return _suggestionIndex;
+}
+
+let _suggestionTimer = null;
+window.onClassifierInput = function(el) {
+  clearTimeout(_suggestionTimer);
+  _suggestionTimer = setTimeout(function() {
+    showSuggestions(el);
+  }, 350);
+};
+
+function showSuggestions(el) {
+  const panel = document.getElementById('classifier-suggestions');
+  const list  = document.getElementById('classifier-suggestions-list');
+  if (!panel || !list) return;
+
+  // Get the current line being typed
+  const val = el.value;
+  const cursorPos = el.selectionStart;
+  const textUpToCursor = val.substring(0, cursorPos);
+  const lines = textUpToCursor.split('\n');
+  const currentLine = lines[lines.length - 1].trim().toLowerCase();
+
+  if (currentLine.length < 2) {
+    panel.style.display = 'none';
+    return;
+  }
+
+  const index = getSuggestionIndex();
+  const matches = index.filter(item =>
+    item.label.toLowerCase().includes(currentLine) ||
+    currentLine.split(' ').some(word => word.length > 2 && item.label.toLowerCase().includes(word))
+  ).slice(0, 8);
+
+  // Deduplicate by label
+  const seen = new Set();
+  const unique = matches.filter(m => {
+    if (seen.has(m.label)) return false;
+    seen.add(m.label); return true;
+  });
+
+  if (!unique.length) {
+    panel.style.display = 'none';
+    return;
+  }
+
+  list.innerHTML = unique.map(m => `
+    <div onclick="selectSuggestion('${m.row.task.replace(/'/g, "\\'")}', ${m.isIn})"
+      class="flex items-center justify-between px-3 py-2.5 hover:bg-slate-50 cursor-pointer border-b border-slate-50 last:border-0 transition">
+      <span class="text-sm text-slate-700">${m.row.task}</span>
+      <span class="text-xs font-semibold px-2 py-0.5 rounded-full flex-shrink-0 ml-3 ${m.isIn ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}">
+        ${m.isIn ? 'Designated' : 'Not designated'}
+      </span>
+    </div>`).join('');
+
+  panel.style.display = 'block';
+}
+
+window.selectSuggestion = function(taskName, isIn) {
+  const el = document.getElementById('classifier-input');
+  const panel = document.getElementById('classifier-suggestions');
+  if (!el || !panel) return;
+
+  // Replace the current (last) line with the selected suggestion
+  const lines = el.value.split('\n');
+  lines[lines.length - 1] = taskName;
+  el.value = lines.join('\n');
+
+  panel.style.display = 'none';
+  el.focus();
+};
+
+// Hide suggestions when clicking outside
+document.addEventListener('click', function(e) {
+  const panel = document.getElementById('classifier-suggestions');
+  const input = document.getElementById('classifier-input');
+  if (panel && input && !panel.contains(e.target) && e.target !== input) {
+    panel.style.display = 'none';
+  }
+});
