@@ -242,7 +242,10 @@ export const MATRIX = [
       "payroll aba",
       "upload aba",
       "pay wages",
-      "process payroll payments"
+      "process payroll payments",
+      "payroll payments",
+      "aba upload",
+      "pay staff"
     ],
     "explicit": true
   },
@@ -307,12 +310,11 @@ export const MATRIX = [
     ],
     "status": "IN",
     "synonyms": [
-      "credit",
-      "card",
-      "payments",
-      "behalf"
+      "credit card payments",
+      "pay with credit card",
+      "credit card on behalf"
     ],
-    "explicit": false
+    "explicit": true
   },
   {
     "id": 18,
@@ -340,10 +342,12 @@ export const MATRIX = [
     ],
     "status": "IN",
     "synonyms": [
-      "payment",
-      "runs"
+      "authorise payment runs",
+      "authorize payment runs",
+      "payment run authorisation",
+      "approve payment runs"
     ],
-    "explicit": false
+    "explicit": true
   },
   {
     "id": 20,
@@ -839,9 +843,12 @@ export const MATRIX = [
     ],
     "status": "IN",
     "synonyms": [
-      "authority"
+      "administer trust funds",
+      "execution authority trust",
+      "manage trust funds",
+      "disburse trust funds"
     ],
-    "explicit": false
+    "explicit": true
   },
   {
     "id": 54,
@@ -853,12 +860,13 @@ export const MATRIX = [
     ],
     "status": "IN",
     "synonyms": [
-      "contracts",
-      "authorizing",
-      "payments",
-      "behalf"
+      "sign contracts on behalf",
+      "signing contracts client",
+      "authorise payments behalf",
+      "authorize payments behalf",
+      "sign on behalf of client"
     ],
-    "explicit": false
+    "explicit": true
   },
   {
     "id": 55,
