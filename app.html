@@ -149,6 +149,10 @@ window.clearOverride = function(overrideKey, justKey) {
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 load();
+// New user detection — if no firm name set, redirect to Firm Profile first
+if (!S.firm?.name) {
+  S.currentScreen = 'firm-details';
+}
 render();
 </script>
 
@@ -189,7 +193,7 @@ render();
         <input type="text" name="email_address_check" value="" style="display:none;">
         <input type="hidden" name="locale" value="en">
 
-        <button type="submit" form="sib-form"
+        <button type="button" onclick="subscribeNewsletter()"
           style="width:100%;padding:10px;background:#4f46e5;color:#fff;font-size:14px;font-weight:600;border:none;border-radius:10px;cursor:pointer;">
           Subscribe →
         </button>
@@ -205,47 +209,42 @@ render();
   </div>
 </div>
 
-<!-- Brevo scripts -->
-<script>
-  window.REQUIRED_CODE_ERROR_MESSAGE = 'Please choose a country code';
-  window.LOCALE = 'en';
-  window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "Please enter a valid email address.";
-  window.REQUIRED_ERROR_MESSAGE = "This field cannot be left blank.";
-  window.GENERIC_INVALID_MESSAGE = "The information provided is invalid. Please try again.";
-  window.translation = { common: { selectedList: '{quantity} list selected', selectedLists: '{quantity} lists selected' } };
-  var AUTOHIDE = Boolean(0);
-</script>
-<script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+<!-- Brevo external scripts removed — form submits directly -->
 
 <script>
   // ─── NEWSLETTER MODAL CONTROLLER ─────────────────────────────────────────────
   window.showNewsletterModal = function() {
     var el = document.getElementById('newsletter-backdrop');
     if (el) el.style.display = 'flex';
+  };
 
-    // Handle Brevo form success/error via form submit
-    var form = document.getElementById('sib-form');
-    if (form && !form._nlBound) {
-      form._nlBound = true;
-      form.addEventListener('submit', function(e) {
-        // Let Brevo handle the actual submission
-        // Watch for success/error message panels appearing
-        setTimeout(function() {
-          var success = document.getElementById('success-message');
-          var error   = document.getElementById('error-message');
-          var nlSuccess = document.getElementById('nl-success');
-          var nlError   = document.getElementById('nl-error');
+  window.subscribeNewsletter = function() {
+    var firstname = document.getElementById('nl-firstname') ? document.getElementById('nl-firstname').value.trim() : '';
+    var email     = document.getElementById('nl-email') ? document.getElementById('nl-email').value.trim() : '';
+    var nlError   = document.getElementById('nl-error');
+    var nlSuccess = document.getElementById('nl-success');
 
-          // Brevo uses its own panels — also show our inline versions
-          if (success && success.style.display !== 'none') {
-            if (nlSuccess) nlSuccess.style.display = 'block';
-            setTimeout(function() { window.dismissNewsletter(); }, 2500);
-          } else if (error && error.style.display !== 'none') {
-            if (nlError) nlError.style.display = 'block';
-          }
-        }, 1500);
-      });
+    if (nlError)   nlError.style.display   = 'none';
+    if (nlSuccess) nlSuccess.style.display = 'none';
+
+    if (!firstname) {
+      if (nlError) { nlError.textContent = 'Please enter your first name.'; nlError.style.display = 'block'; }
+      return;
     }
+    if (!email || !email.includes('@')) {
+      if (nlError) { nlError.textContent = 'Please enter a valid email address.'; nlError.style.display = 'block'; }
+      return;
+    }
+
+    // Submit form to Brevo in a new tab — only reliable cross-origin method
+    var form = document.getElementById('sib-form');
+    if (!form) return;
+    form.setAttribute('target', '_blank');
+    form.submit();
+
+    // Show success and dismiss after short delay
+    if (nlSuccess) nlSuccess.style.display = 'block';
+    setTimeout(function() { window.dismissNewsletter(); }, 2500);
   };
 
   window.dismissNewsletter = function() {
