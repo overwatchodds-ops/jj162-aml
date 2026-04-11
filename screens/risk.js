@@ -151,7 +151,7 @@ function renderResults(sc) {
             ${notDes.map(r => `<div class="flex items-start gap-2 text-sm text-green-700"><span class="flex-shrink-0">✓</span>${r.task}</div>`).join('')}
           </div>
         </div>
-        <p class="text-xs text-slate-400">We recommend confirming this with CPA Australia, CA ANZ or IPA before concluding you are out of scope.</p>
+        <p class="text-xs text-slate-400">Disclaimer: This tool is provided for guidance only and is not legal advice</p>
 
         ${notDes.length > 0 ? `
         <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-1.5">
