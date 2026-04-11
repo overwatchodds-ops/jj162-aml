@@ -175,8 +175,8 @@ function renderResults(sc) {
           <input type="checkbox" ${sc.noneConfirmed ? 'checked' : ''} onchange="toggleDsNone(this)">
           <span>Confirm: my firm does not provide any designated services</span>
         </label>
-        ${sc.noneConfirmed ? '<div class="text-xs text-green-700 font-semibold mt-1">✓ Confirmed and recorded.</div>' : ''}` : ''}
-         <a href="https://simpleaml.com.au" target="_blank" rel="noopener" class="w-full text-center bg-white border border-slate-200 text-slate-400 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-50 transition block">Exit to website ↗</a>
+        ${sc.noneConfirmed ? '<div class="text-xs text-green-700 font-semibold mt-1">✓ Confirmed and recorded. You may now close the browser tab</div>' : ''}` : ''}
+         
       </div>`;
   }
 
