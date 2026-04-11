@@ -283,14 +283,14 @@ function showSuggestions(el) {
   const matches = index.filter(item =>
     item.label.toLowerCase().includes(currentLine) ||
     currentLine.split(' ').some(word => word.length > 2 && item.label.toLowerCase().includes(word))
-  ).slice(0, 8);
+  );
 
-  // Deduplicate by label
+  // Deduplicate by row.id — multiple synonyms point to same row, show task once only
   const seen = new Set();
   const unique = matches.filter(m => {
-    if (seen.has(m.label)) return false;
-    seen.add(m.label); return true;
-  });
+    if (seen.has(m.row.id)) return false;
+    seen.add(m.row.id); return true;
+  }).slice(0, 8);
 
   if (!unique.length) {
     panel.style.display = 'none';
