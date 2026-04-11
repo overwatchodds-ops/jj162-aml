@@ -136,75 +136,74 @@ function getSuppressedItems(input) {
 // Returns { matched, notDesignated, greyZone, fuzzyPass }
 export function classify(inputText) {
   const input = inputText.toLowerCase();
-  const inputTokens = [...new Set(tokenise(inputText))];
-  const suppressedItems = getSuppressedItems(input);
 
-  const matched = [];
-  const notDesignated = [];
-  const greyZone = [];
+  // Split input into lines — negation is applied per line to avoid cross-line suppression
+  const lines = input.split(/[\n,;]+/).map(l => l.trim()).filter(l => l.length > 1);
 
-  // ── PASS 1: explicit rows only ────────────────────────────────────────────
-  const explicitRows = MATRIX.filter(r => r.explicit && !r.status.includes('GREY'));
-  for (const row of explicitRows) {
-    const score = scoreRow(row, input, inputTokens);
-    if (score < 6) continue;
-    if (row.status === 'IN') {
-      const rowItems = row.table6_items || [];
-      if (rowItems.length > 0 && rowItems.every(n => suppressedItems.has(n))) {
-        notDesignated.push({ ...row, score });
-        continue;
-      }
-      matched.push({ ...row, score });
-    } else if (row.status === 'OUT') {
-      notDesignated.push({ ...row, score });
-    }
-  }
+  const matchedMap = new Map();   // row.id → result (dedup across lines)
+  const notDesMap  = new Map();
+  const greyZone   = [];
+  let anyFuzzy     = false;
 
-  // Grey zone — always check
+  // Grey zone — check full input
   for (const row of MATRIX) {
     if (row.status.includes('GREY') && mentionsValuation(input)) {
       greyZone.push(row);
     }
   }
 
-  // If Pass 1 found IN matches — return, no need for Pass 2
-  if (matched.length > 0) {
-    matched.sort((a, b) => b.score - a.score);
-    notDesignated.sort((a, b) => b.score - a.score);
-    return { matched, notDesignated, greyZone, fuzzyPass: false };
-  }
+  const explicitRows = MATRIX.filter(r => r.explicit  && !r.status.includes('GREY'));
+  const fuzzyRows    = MATRIX.filter(r => !r.explicit && !r.status.includes('GREY'));
 
-  // ── PASS 2: fallback fuzzy (explicit:false rows only) ─────────────────────
-  const fuzzyRows = MATRIX.filter(r => !r.explicit && !r.status.includes('GREY'));
-  const fuzzyMatched = [];
-  const fuzzyNotDes = [];
+  // Process each line independently
+  for (const line of lines) {
+    const lineTokens = [...new Set(tokenise(line))];
+    const lineSuppressed = getSuppressedItems(line);  // negation scoped to this line only
 
-  for (const row of fuzzyRows) {
-    const score = scoreRow(row, input, inputTokens);
-    if (score < 8) continue;
-    if (row.status === 'IN') {
-      const rowItems = row.table6_items || [];
-      if (rowItems.length > 0 && rowItems.every(n => suppressedItems.has(n))) {
-        fuzzyNotDes.push({ ...row, score, fuzzy: true });
-        continue;
+    // ── PASS 1: explicit rows ──────────────────────────────────────────────
+    let lineHasIn = false;
+    for (const row of explicitRows) {
+      const score = scoreRow(row, line, lineTokens);
+      if (score < 6) continue;
+      if (row.status === 'IN') {
+        const rowItems = row.table6_items || [];
+        if (rowItems.length > 0 && rowItems.every(n => lineSuppressed.has(n))) {
+          if (!notDesMap.has(row.id)) notDesMap.set(row.id, { ...row, score });
+          continue;
+        }
+        if (!matchedMap.has(row.id)) matchedMap.set(row.id, { ...row, score });
+        lineHasIn = true;
+      } else if (row.status === 'OUT') {
+        if (!notDesMap.has(row.id)) notDesMap.set(row.id, { ...row, score });
       }
-      fuzzyMatched.push({ ...row, score, fuzzy: true });
-    } else if (row.status === 'OUT') {
-      fuzzyNotDes.push({ ...row, score, fuzzy: true });
+    }
+
+    // ── PASS 2: fuzzy rows — only if Pass 1 found no IN for this line ─────
+    if (!lineHasIn) {
+      for (const row of fuzzyRows) {
+        const score = scoreRow(row, line, lineTokens);
+        if (score < 8) continue;
+        if (row.status === 'IN') {
+          const rowItems = row.table6_items || [];
+          if (rowItems.length > 0 && rowItems.every(n => lineSuppressed.has(n))) {
+            if (!notDesMap.has(row.id)) notDesMap.set(row.id, { ...row, score, fuzzy: true });
+            continue;
+          }
+          if (!matchedMap.has(row.id)) {
+            matchedMap.set(row.id, { ...row, score, fuzzy: true });
+            anyFuzzy = true;
+          }
+        } else if (row.status === 'OUT') {
+          if (!notDesMap.has(row.id)) notDesMap.set(row.id, { ...row, score, fuzzy: true });
+        }
+      }
     }
   }
 
-  // Merge Pass 1 OUT results with Pass 2 results
-  const allNotDes = [...notDesignated, ...fuzzyNotDes];
-  allNotDes.sort((a, b) => b.score - a.score);
-  fuzzyMatched.sort((a, b) => b.score - a.score);
+  const matched = [...matchedMap.values()].sort((a, b) => b.score - a.score);
+  const notDesignated = [...notDesMap.values()].sort((a, b) => b.score - a.score);
 
-  return {
-    matched: fuzzyMatched,
-    notDesignated: allNotDes,
-    greyZone,
-    fuzzyPass: fuzzyMatched.length > 0
-  };
+  return { matched, notDesignated, greyZone, fuzzyPass: anyFuzzy };
 }
 
 // ─── COUNT TABLE 6 ITEMS ──────────────────────────────────────────────────────
