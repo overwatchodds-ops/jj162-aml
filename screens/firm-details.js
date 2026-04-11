@@ -72,7 +72,17 @@ export function screen() {
         </div>
       </div>
 
-      <button onclick="saveFirmDetails()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">Save Firm Details</button>
+      <!-- POST-SAVE NAVIGATION — shown after first save -->
+      ${f.savedDate ? `
+      <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4 space-y-3">
+        <div class="text-sm font-semibold text-indigo-800">Firm Profile saved — what would you like to do next?</div>
+        <div class="flex flex-col gap-2">
+          <button onclick="go('firm-appointments')" class="w-full bg-indigo-600 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">Continue to Appointments →</button>
+          <button onclick="go('dashboard')" class="w-full bg-white border border-slate-200 text-slate-600 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-50 transition">Return to Action Required</button>
+          <a href="https://simpleaml.com.au" target="_blank" rel="noopener" class="w-full text-center bg-white border border-slate-200 text-slate-400 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-50 transition block">Exit to website ↗</a>
+        </div>
+      </div>` : `
+      <button onclick="saveFirmDetails()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">Save Firm Profile</button>`}
 
     </div>`;
 }
@@ -81,27 +91,32 @@ export function screen() {
 window.saveFirmDetails = function() {
   const name = document.getElementById('fp-name')?.value?.trim();
   if (!name) { toast('Firm name is required', 'err'); return; }
+  const email = document.getElementById('fp-email')?.value?.trim();
+  if (email && !email.includes('@')) { toast('Email address must contain @', 'err'); return; }
+  const isFirstSave = !S.firm.newsletterShown;
   // Preserve existing appointments when saving details
   const existingAppt = S.firm.appt || {};
   S.firm = {
     ...S.firm,
     name,
-    abn:      document.getElementById('fp-abn')?.value||'',
-    acn:      document.getElementById('fp-acn')?.value||'',
-    type:     document.getElementById('fp-type')?.value||'',
-    address:  document.getElementById('fp-address')?.value||'',
-    suburb:   document.getElementById('fp-suburb')?.value||'',
-    state:    document.getElementById('fp-state')?.value||'',
-    postcode: document.getElementById('fp-postcode')?.value||'',
-    principal:document.getElementById('fp-principal')?.value||'',
-    position: document.getElementById('fp-position')?.value||'',
-    email:    document.getElementById('fp-email')?.value||'',
-    phone:    document.getElementById('fp-phone')?.value||'',
-    appt:     existingAppt,
+    abn:       document.getElementById('fp-abn')?.value||'',
+    acn:       document.getElementById('fp-acn')?.value||'',
+    type:      document.getElementById('fp-type')?.value||'',
+    address:   document.getElementById('fp-address')?.value||'',
+    suburb:    document.getElementById('fp-suburb')?.value||'',
+    state:     document.getElementById('fp-state')?.value||'',
+    postcode:  document.getElementById('fp-postcode')?.value||'',
+    principal: document.getElementById('fp-principal')?.value||'',
+    position:  document.getElementById('fp-position')?.value||'',
+    email:     email||'',
+    phone:     document.getElementById('fp-phone')?.value||'',
+    appt:      existingAppt,
+    savedDate: new Date().toISOString().split('T')[0],
   };
-  const isFirstSave = !S.firm.newsletterShown;
-  save(); toast('Firm details saved');
+  save();
+  toast('Firm Profile saved');
   if (isFirstSave && typeof window.showNewsletterModal === 'function') {
-    window.showNewsletterModal();
+    setTimeout(function() { window.showNewsletterModal(); }, 400);
   }
+  go('firm-details');
 };

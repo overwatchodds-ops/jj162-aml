@@ -111,7 +111,7 @@ export function screen() {
           ${row(
             'Firm Profile',
             firmComplete, false,
-            f.name ? 'Recorded' : null, null,
+            f.savedDate || null, null,
             'firm-details',
             'Enter your practice name, contact details and email'
           )}
