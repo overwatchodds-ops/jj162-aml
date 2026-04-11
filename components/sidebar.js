@@ -60,6 +60,16 @@ export function TopNav() {
     </nav>`;
 }
 
+// ─── FOOTER TOGGLE ───────────────────────────────────────────────────────────
+window.toggleSidebarFooter = function() {
+  const panel = document.getElementById('sidebar-footer-panel');
+  const chevron = document.getElementById('sidebar-footer-chevron');
+  if (!panel) return;
+  const isOpen = panel.style.display !== 'none';
+  panel.style.display = isOpen ? 'none' : 'block';
+  if (chevron) chevron.textContent = isOpen ? '▾' : '▴';
+};
+
 // ─── SIDEBAR ──────────────────────────────────────────────────────────────────
 export function Sidebar() {
   const activeGroup = SCREEN_GROUP[S.currentScreen] || 'dashboard';
@@ -117,9 +127,9 @@ export function Sidebar() {
         <button onclick="toggleSidebarFooter()" id="sidebar-footer-btn"
           class="w-full flex items-center justify-between px-4 py-3 text-xs text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition">
           <span class="font-semibold uppercase tracking-widest">Settings &amp; Info</span>
-          <span id="sidebar-footer-chevron">▾</span>
+          <span id="sidebar-footer-chevron">${cur === 'about' || cur === 'account-backup' ? '▴' : '▾'}</span>
         </button>
-        <div id="sidebar-footer-panel" style="display:none;" class="p-2 space-y-0.5 text-sm pb-3">
+        <div id="sidebar-footer-panel" style="display:${cur === 'about' || cur === 'account-backup' ? 'block' : 'none'};" class="p-2 space-y-0.5 text-sm pb-3">
           <button onclick="go('about')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('about')}">About</button>
           <button onclick="go('account-backup')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('account-backup')}">Account Backup</button>
           <a href="https://simpleaml.com.au/faq.html" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block">FAQ ↗</a>
@@ -130,24 +140,5 @@ export function Sidebar() {
       </div>
     </div>
 
-    <script>
-    function toggleSidebarFooter() {
-      var panel = document.getElementById('sidebar-footer-panel');
-      var chevron = document.getElementById('sidebar-footer-chevron');
-      if (!panel) return;
-      var isOpen = panel.style.display !== 'none';
-      panel.style.display = isOpen ? 'none' : 'block';
-      if (chevron) chevron.textContent = isOpen ? '▾' : '▴';
-    }
-    // Auto-expand footer if current screen is about or account-backup
-    (function() {
-      var cur = '${cur}';
-      if (cur === 'about' || cur === 'account-backup') {
-        var panel = document.getElementById('sidebar-footer-panel');
-        var chevron = document.getElementById('sidebar-footer-chevron');
-        if (panel) panel.style.display = 'block';
-        if (chevron) chevron.textContent = '▴';
-      }
-    })();
-    </script>`;
+`;
 }
