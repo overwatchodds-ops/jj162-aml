@@ -37,6 +37,26 @@ function tokensMatch(a, b) {
 // ─── SCORE ROW ────────────────────────────────────────────────────────────────
 function scoreRow(row, inputText, inputTokens) {
   let score = 0;
+
+  // Match against the task name itself — covers suggestion-selected text
+  const taskLower = row.task.toLowerCase()
+    .replace(/\s*\(.*?\)\s*/g, ' ')  // strip parenthetical notes
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .trim();
+  if (taskLower.length > 5 && inputText.includes(taskLower)) {
+    score += 12; // High confidence — exact task name match
+  } else {
+    const taskTokens = tokenise(row.task);
+    if (taskTokens.length >= 2) {
+      const matched = taskTokens.filter(st =>
+        inputTokens.some(it => tokensMatch(st, it))
+      ).length;
+      if (matched / taskTokens.length >= 0.75) {
+        score += 8;
+      }
+    }
+  }
+
   for (const syn of row.synonyms) {
     // Full phrase match in input text
     if (syn.length > 5 && inputText.includes(syn)) {
