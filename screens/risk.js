@@ -72,17 +72,14 @@ function renderResults(sc) {
   const matched = sc.classifierMatched || [];
   const notDes = sc.classifierNotDesignated || [];
 
-  const fuzzyPass = sc.classifierFuzzyPass || false;
+  const unrecognised = sc.classifierUnrecognised || [];
+  const hasUnrecognised = unrecognised.length > 0;
 
   // STATE 1 — IN services found
   if (matched.length > 0) {
     return `
       <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-5">
         <h2 class="text-sm font-bold text-slate-700">How AUSTRAC sees your firm</h2>
-        ${fuzzyPass ? `
-        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-800">
-          <strong>Please verify:</strong> These results are based on partial keyword matching — your description didn't match our known service list exactly. Check the results carefully before confirming. For best accuracy, use the suggestions that appear as you type.
-        </div>` : ''}
         <div class="border border-slate-200 rounded-xl overflow-hidden">
           <table class="w-full text-sm border-collapse">
             <thead>
@@ -95,9 +92,9 @@ function renderResults(sc) {
             <tbody>
               ${matched.map(r => `
               <tr class="border-b border-slate-50 last:border-0">
-                <td class="px-4 py-3 text-slate-700">${r.task}${r.fuzzy ? ' <span class="text-xs text-amber-500 font-normal">(unverified match)</span>' : ''}</td>
+                <td class="px-4 py-3 text-slate-700">${r.task}</td>
                 <td class="px-4 py-3 text-xs text-slate-500">${r.table6 || '—'}</td>
-                <td class="px-4 py-3"><span class="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full ${r.fuzzy ? 'bg-amber-100 text-amber-700' : 'bg-indigo-100 text-indigo-700'}">✓ IN</span></td>
+                <td class="px-4 py-3"><span class="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700">✓ IN</span></td>
               </tr>`).join('')}
             </tbody>
           </table>
@@ -109,12 +106,31 @@ function renderResults(sc) {
           ${notDes.map(r => `<div class="flex items-start gap-2 text-xs text-slate-500"><span class="text-green-500 flex-shrink-0">✓</span>${r.task}</div>`).join('')}
         </div>` : ''}
 
+        ${notDes.length > 0 ? `
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-1.5">
+          <div class="text-xs font-semibold text-slate-500 mb-1">Also mentioned — not designated services</div>
+          ${notDes.map(r => `<div class="flex items-start gap-2 text-xs text-slate-500"><span class="text-green-500 flex-shrink-0">✓</span>${r.task}</div>`).join('')}
+        </div>` : ''}
+
+        ${hasUnrecognised ? `
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-2">
+          <div class="text-xs font-semibold text-amber-700">⚠ Some lines were not recognised</div>
+          ${unrecognised.map(line => `
+          <div class="flex items-start gap-2 text-xs text-amber-700">
+            <span class="flex-shrink-0 mt-0.5">·</span>
+            <span>"${line}" — we couldn't identify this service. Try selecting from the suggestions or remove it.</span>
+          </div>`).join('')}
+          <p class="text-xs text-amber-600">Edit your description above, use the suggestions as you type, and re-analyse.</p>
+        </div>` : ''}
+
         <div class="border-t border-slate-100 pt-4">
+          ${hasUnrecognised ? `
+          <div class="text-xs text-slate-400 italic">Resolve unrecognised lines above before confirming.</div>` : `
           <label class="flex items-start gap-3 cursor-pointer">
             <input type="checkbox" ${sc.classifierConfirmed ? 'checked' : ''} onchange="confirmClassifier(this.checked)" class="mt-0.5 flex-shrink-0">
             <span class="text-sm text-slate-700 leading-relaxed">I confirm this list accurately reflects the designated services my firm provides.</span>
           </label>
-          ${sc.classifierConfirmed ? '<div class="text-xs text-green-600 font-medium mt-2">✓ Confirmed — your designated services are recorded.</div>' : ''}
+          ${sc.classifierConfirmed ? '<div class="text-xs text-green-600 font-medium mt-2">✓ Confirmed — your designated services are recorded.</div>' : ''}`}
         </div>
         <p class="text-xs text-slate-400">Not quite right? Edit your description above and re-analyse — your confirmation will reset.</p>
       </div>
@@ -133,11 +149,24 @@ function renderResults(sc) {
           </div>
         </div>
         <p class="text-xs text-slate-400">We recommend confirming this with CPA Australia, CA ANZ or IPA before concluding you are out of scope.</p>
+
+        ${hasUnrecognised ? `
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-2">
+          <div class="text-xs font-semibold text-amber-700">⚠ Some lines were not recognised</div>
+          ${unrecognised.map(line => `
+          <div class="flex items-start gap-2 text-xs text-amber-700">
+            <span class="flex-shrink-0 mt-0.5">·</span>
+            <span>"${line}" — we couldn't identify this service. Try selecting from the suggestions or remove it.</span>
+          </div>`).join('')}
+          <p class="text-xs text-amber-600">Edit your description above, use the suggestions as you type, and re-analyse.</p>
+        </div>` : ''}
+
+        ${!hasUnrecognised ? `
         <label class="flex items-center gap-2 cursor-pointer text-sm text-slate-600">
           <input type="checkbox" ${sc.noneConfirmed ? 'checked' : ''} onchange="toggleDsNone(this)">
           <span>Confirm: my firm does not provide any designated services</span>
         </label>
-        ${sc.noneConfirmed ? '<div class="text-xs text-green-700 font-semibold mt-1">✓ Confirmed and recorded.</div>' : ''}
+        ${sc.noneConfirmed ? '<div class="text-xs text-green-700 font-semibold mt-1">✓ Confirmed and recorded.</div>' : ''}` : ''}
       </div>`;
   }
 
@@ -196,16 +225,16 @@ window.runClassifier = function() {
   const wordCount = input.split(/\s+/).filter(Boolean).length;
   const nudge = document.getElementById('classifier-nudge');
   if (nudge) nudge.style.display = wordCount < 10 ? 'block' : 'none';
-  const { matched, notDesignated, greyZone, fuzzyPass } = classify(input);
+  const { matched, notDesignated, unrecognised, greyZone } = classify(input);
   S.scope.classifierInput = input;
   S.scope.classifierRan = true;
   S.scope.classifierConfirmed = false;
   S.scope.mltfConfirmed = false;
   S.scope.classifierMatched = matched;
   S.scope.classifierNotDesignated = notDesignated;
+  S.scope.classifierUnrecognised = unrecognised;
   S.scope.classifierGreyZone = greyZone;
   S.scope.classifierRisks = extractRisks(matched);
-  S.scope.classifierFuzzyPass = fuzzyPass || false;
   if (matched.length > 0) S.scope.noneConfirmed = false;
   save(); go('risk');
 };
