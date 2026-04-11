@@ -6,7 +6,7 @@ export const SCREEN_GROUP = {
   dashboard:            'dashboard',
   about:                'dashboard',
   'account-backup':     'dashboard',
-  'firm-details':       'dashboard',
+  'firm-details':       'compliance',
   'firm-appointments':  'compliance',
   'compliance-overview':'compliance',
   risk:                 'compliance',
@@ -34,7 +34,7 @@ export const SCREEN_GROUP = {
 export function TopNav() {
   const activeGroup = SCREEN_GROUP[S.currentScreen] || 'dashboard';
   const tabs = [
-    { id: 'dashboard',  label: 'Dashboard',   screen: 'dashboard' },
+    { id: 'dashboard',  label: 'Action Required', screen: 'dashboard' },
 
     { id: 'compliance', label: 'Compliance',  screen: 'compliance-overview' },
     { id: 'personnel',  label: 'Personnel',   screen: 'personnel-overview' },
@@ -69,16 +69,12 @@ export function Sidebar() {
     : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700';
   const sidebarItems = {
     dashboard: `
-      <button onclick="go('dashboard')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('dashboard')}">Overview</button>
-      <button onclick="go('firm-details')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('firm-details')}">Firm Profile</button>
-      <button onclick="go('about')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('about')}">About</button>
-      <button onclick="go('account-backup')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('account-backup')}">Account Backup</button>
-      <a href="https://simpleaml.com.au/faq.html" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block text-sm">FAQ ↗</a>
-      <a href="https://simpleaml.com.au/contact.html" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block text-sm">Contact ↗</a>
-      <a href="https://simpleaml.com.au/disclaimer.html" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block text-sm">Disclaimer ↗</a>`,
+      <button onclick="go('dashboard')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('dashboard')}">Overview</button>`,
 
     compliance: `
       <button onclick="go('compliance-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('compliance-overview')}">Overview</button>
+      <div class="px-3 pt-3 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Firm</div>
+      <button onclick="go('firm-details')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('firm-details')}">Firm Profile</button>
       <div class="px-3 pt-3 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Accountability</div>
       <button onclick="go('firm-appointments')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('firm-appointments')}">Appointments</button>
       <div class="px-3 pt-3 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Risk Assessment</div>
@@ -115,5 +111,43 @@ export function Sidebar() {
       <nav class="p-2 flex-1 space-y-0.5 text-sm">
         ${sidebarItems[activeGroup] || sidebarItems.dashboard}
       </nav>
-    </div>`;
+
+      <!-- EXPANDABLE FOOTER -->
+      <div class="border-t border-slate-200 flex-shrink-0">
+        <button onclick="toggleSidebarFooter()" id="sidebar-footer-btn"
+          class="w-full flex items-center justify-between px-4 py-3 text-xs text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition">
+          <span class="font-semibold uppercase tracking-widest">Settings &amp; Info</span>
+          <span id="sidebar-footer-chevron">▾</span>
+        </button>
+        <div id="sidebar-footer-panel" style="display:none;" class="p-2 space-y-0.5 text-sm pb-3">
+          <button onclick="go('about')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('about')}">About</button>
+          <button onclick="go('account-backup')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('account-backup')}">Account Backup</button>
+          <a href="https://simpleaml.com.au/faq.html" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block">FAQ ↗</a>
+          <a href="https://simpleaml.com.au/contact.html" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block">Contact ↗</a>
+          <a href="https://simpleaml.com.au/disclaimer.html" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block">Disclaimer ↗</a>
+          <a href="https://simpleaml.com.au" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block">← Exit to website</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    function toggleSidebarFooter() {
+      var panel = document.getElementById('sidebar-footer-panel');
+      var chevron = document.getElementById('sidebar-footer-chevron');
+      if (!panel) return;
+      var isOpen = panel.style.display !== 'none';
+      panel.style.display = isOpen ? 'none' : 'block';
+      if (chevron) chevron.textContent = isOpen ? '▾' : '▴';
+    }
+    // Auto-expand footer if current screen is about or account-backup
+    (function() {
+      var cur = '${cur}';
+      if (cur === 'about' || cur === 'account-backup') {
+        var panel = document.getElementById('sidebar-footer-panel');
+        var chevron = document.getElementById('sidebar-footer-chevron');
+        if (panel) panel.style.display = 'block';
+        if (chevron) chevron.textContent = '▴';
+      }
+    })();
+    </script>`;
 }
