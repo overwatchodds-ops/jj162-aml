@@ -78,7 +78,11 @@ export function screen() {
         <p class="text-xs text-slate-400">Auto-set to +12 months when saved. Override if an earlier review is required.</p>
       </div>
 
-      <button onclick="saveAppointments()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">Save Appointments</button>
+      <button onclick="saveAppointments()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">Save & Continue to Designated Services</button>
+      <button onclick="go('dashboard')" class="w-full bg-white border border-slate-200 text-slate-600 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-50 transition">Return to Action Required</button>
+      <a href="https://simpleaml.com.au" target="_blank" rel="noopener" class="w-full text-center bg-white border border-slate-200 text-slate-400 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-50 transition block">Exit to website ↗</a>
+
+
 
     </div>`;
 }
