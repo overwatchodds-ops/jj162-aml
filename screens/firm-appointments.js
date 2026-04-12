@@ -132,5 +132,5 @@ window.saveAppointments = function() {
   }
   S.firm.appt.savedDate = new Date().toISOString().split('T')[0];
   save(); toast('Appointments saved');
-  go('overallrisk');  
+  go('risk');  
 };
