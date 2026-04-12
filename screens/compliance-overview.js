@@ -15,7 +15,7 @@ export function screen() {
 
   // ── FIRM PROFILE STATUS ───────────────────────────────────────────────────
   const f = S.firm || {};
-  const firmComplete = !!(f.name && f.contactName && f.contactEmail);
+  const firmComplete = !!(f.name && f.contactName && f.contactEmail && f.contactEmail.includes('@'));
 
   // ── APPOINTMENTS STATUS ──────────────────────────────────────────────────
   const appt = S.firm?.appt || {};
