@@ -29,19 +29,19 @@ export function screen() {
           <li>· Transactions you help clients with (buying or selling businesses, property settlements)</li>
           <li>· Any governance roles you hold (company secretary, trustee, nominee director)</li>
         </ul>
-        <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">SimpleAML matches your description against the AUSTRAC Table 6 matrix and returns only the services that apply to your firm. You then confirm the result before it is recorded.</p>
+        <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">SimpleAML matches your description against the AUSTRAC Table 6 matrix and analyses which services are IN/OUT of scope. You then confirm the result before it is recorded.</p>
       `)}
 
       <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-500 space-y-1">
         <div class="font-semibold text-slate-600 mb-1">Examples:</div>
-        <div>· "We set up companies and trusts, act as company secretary, process payroll and pay supplier invoices"</div>
-        <div>· "We help clients buy and sell businesses and assist with property settlements"</div>
-        <div>· "We do bookkeeping, prepare tax returns and financial statements"</div>
+        <div>· "set up companies"</div>
+        <div>· "financial statements preparation"</div>
+        <div>· "providing registered office address"</div>
       </div>
 
       <div class="relative">
         <textarea id="classifier-input" class="inp text-sm" rows="5"
-          placeholder="Describe what your firm does for clients — one service per line works well..."
+          placeholder="Describe what your firm does for clients — one service per line."
           oninput="onClassifierInput(this)"
         >${sc.classifierInput || ''}</textarea>
         <div id="classifier-suggestions" style="display:none;"
