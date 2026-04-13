@@ -55,7 +55,7 @@ export function screen() {
         </div>
         <div><label class="text-xs text-slate-500">Training date *</label><input id="tr-date" type="date" class="inp mt-1" value="${d.date||''}" onchange="autoSetTrainingNext(this.value)"></div>
         <div class="col-span-2"><label class="text-xs text-slate-500">Provider / course *</label><textarea id="tr-provider" class="inp mt-1" rows="3" placeholder="e.g. AUSTRAC online module — March 2026&#10;In-house refresher — September 2026">${d.provider||''}</textarea><p class="text-xs text-slate-400 mt-1">List all training completed — one per line if multiple.</p></div>
-        <div class="col-span-2"><label class="text-xs text-slate-500">Certificate / Storage location</label><input id="tr-score" type="text" class="inp mt-1" value="${d.score||''}" placeholder="e.g. SharePoint > Staff > Training > John Doe — AUSTRAC 2026.pdf"></div>
+        <div class="col-span-2"><label class="text-xs text-slate-500">Certificate / Storage location</label><input id="tr-score" type="text" class="inp mt-1" value="${d.score||''}" placeholder="e.g. SharePoint > Staff > Training > Chris Wong — AUSTRAC 2026.pdf"></div>
         <div>
           <label class="text-xs text-slate-500">Next due <span class="text-indigo-400 font-normal">(auto-set to +1 year — override allowed)</span></label>
           <input id="tr-next" type="date" class="inp mt-1" value="${d.next||''}">
@@ -66,10 +66,15 @@ export function screen() {
       <div><label class="text-xs text-slate-500">Notes</label><textarea id="tr-notes" class="inp mt-1" rows="2" placeholder="Training content, topics covered, or relevant observations">${d.notes||''}</textarea></div>
 
       ${S._trainingEditIdx !== undefined && (S.training[S._trainingEditIdx]?.history||[]).length > 0 ? `
-      <div class="border-t border-slate-100 pt-4 space-y-3">
-        <div class="text-xs font-semibold text-slate-500 uppercase tracking-widest">Previous training history</div>
-        <p class="text-xs text-slate-400">All previous versions are permanently recorded as your audit trail.</p>
-        <div class="space-y-2">
+      <div class="border-t border-slate-100 pt-4">
+        <button type="button" onclick="toggleTrainingHistory()" class="flex items-center justify-between w-full text-left">
+          <div>
+            <div class="text-xs font-semibold text-slate-500 uppercase tracking-widest">Previous training history</div>
+            <div class="text-xs text-slate-400 mt-0.5">${(S.training[S._trainingEditIdx]?.history||[]).length} previous version${(S.training[S._trainingEditIdx]?.history||[]).length !== 1 ? 's' : ''} — audit trail</div>
+          </div>
+          <span id="tr-history-chevron" class="text-slate-400 text-xs ml-4">▾ Show</span>
+        </button>
+        <div id="tr-history-panel" style="display:none;" class="mt-3 space-y-2">
           ${(S.training[S._trainingEditIdx]?.history||[]).map((h, i) => `
           <div class="bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs">
             <div class="flex items-center justify-between mb-1">
@@ -149,6 +154,15 @@ export function screen() {
 }
 
 // ─── ACTIONS ──────────────────────────────────────────────────────────────────
+window.toggleTrainingHistory = function() {
+  const panel = document.getElementById('tr-history-panel');
+  const chevron = document.getElementById('tr-history-chevron');
+  if (!panel) return;
+  const isOpen = panel.style.display !== 'none';
+  panel.style.display = isOpen ? 'none' : 'block';
+  if (chevron) chevron.textContent = isOpen ? '▾ Show' : '▴ Hide';
+};
+
 window.autoSetTrainingNext = function(val) {
   if (!val) return;
   const d = new Date(val); d.setFullYear(d.getFullYear() + 1);
