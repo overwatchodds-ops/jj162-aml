@@ -88,6 +88,10 @@ export function screen() {
         ${p.nextReview ? `· Next review: <strong>${p.nextReview}</strong>` : ''}
       </div>` : ''}
       <button onclick="saveProgram()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">${p.approvedBy ? 'Save New Approval (previous version will be preserved)' : 'Save AML/CTF Program'}</button>
+      
+      <button onclick="go('firm-appointments')" class="w-full bg-indigo-600 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">Continue to Personnel →</button>
+      <button onclick="go('dashboard')" class="w-full bg-white border border-slate-200 text-slate-600 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-50 transition">Return to Action Required</button>
+      <a href="https://simpleaml.com.au" target="_blank" rel="noopener" class="w-full text-center bg-white border border-slate-200 text-slate-400 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-50 transition block">Exit to website ↗</a>
 
       ${(p.approvalHistory||[]).length > 0 ? `
       <div class="bg-white border rounded-xl p-5 space-y-3">
