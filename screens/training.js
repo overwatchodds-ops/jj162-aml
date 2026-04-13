@@ -13,7 +13,13 @@ export function screen() {
         <h1 class="text-2xl font-bold text-slate-900">Training Register</h1>
         <p class="text-sm text-slate-400 mt-1">AUSTRAC requires all staff performing AML/CTF functions to receive appropriate training — and for that training to be recorded and kept current.</p>
       </div>
-      <button onclick="startAddTraining()" class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition flex-shrink-0 ml-6">+ Add record</button>
+      ${(() => {
+        const amlStaff = S.staff.filter(st=>st.classification==='Key Personnel'||st.classification==='Standard AML/CTF Staff');
+        const allHaveRecords = amlStaff.length > 0 && amlStaff.every(st=>S.training.find(t=>t.name===st.name));
+        return allHaveRecords
+          ? '<span class="text-xs text-green-600 font-semibold flex-shrink-0 ml-6">✓ All AML staff have training records</span>'
+          : '<button onclick="startAddTraining()" class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition flex-shrink-0 ml-6">+ Add record</button>';
+      })()}
     </div>
 
     ${adding ? `
@@ -41,15 +47,15 @@ export function screen() {
           <label class="text-xs text-slate-500">Staff member *</label>
           <select id="tr-name" class="inp mt-1" onchange="autoFillTrainingClassification(this.value)">
             <option value="">— Select staff member —</option>
-            ${S.staff.filter(st=>st.classification==='Key Personnel'||st.classification==='Standard AML/CTF Staff').map(st=>`<option value="${st.name}" ${d.name===st.name?'selected':''}>${st.name}${st.role?' — '+st.role:''} (${st.classification})</option>`).join('')}
+            ${S.staff.filter(st=>(st.classification==='Key Personnel'||st.classification==='Standard AML/CTF Staff') && (S._trainingEditIdx !== undefined || !S.training.find(t=>t.name===st.name))).map(st=>`<option value="${st.name}" ${d.name===st.name?'selected':''}>${st.name}${st.role?' — '+st.role:''} (${st.classification})</option>`).join('')}
             ${d.name && !S.staff.find(st=>st.name===d.name) ? `<option value="${d.name}" selected>${d.name} (not in vetting register)</option>` : ''}
           </select>
           <p class="text-xs text-slate-400 mt-1">Only Key Personnel and AML Staff shown. Add staff in Key Personnel Vetting first.</p>
           ${d.name && S.staff.find(st=>st.name===d.name) ? `<div class="text-xs text-indigo-500 mt-0.5">${S.staff.find(st=>st.name===d.name).classification||''}</div>` : ''}
         </div>
         <div><label class="text-xs text-slate-500">Training date *</label><input id="tr-date" type="date" class="inp mt-1" value="${d.date||''}" onchange="autoSetTrainingNext(this.value)"></div>
-        <div><label class="text-xs text-slate-500">Provider / course</label><input id="tr-provider" type="text" class="inp mt-1" value="${d.provider||''}" placeholder="e.g. AUSTRAC, in-house, external RTO"></div>
-        <div><label class="text-xs text-slate-500">Score / outcome</label><input id="tr-score" type="text" class="inp mt-1" value="${d.score||''}" placeholder="e.g. Pass — 92%"></div>
+        <div class="col-span-2"><label class="text-xs text-slate-500">Provider / course *</label><textarea id="tr-provider" class="inp mt-1" rows="3" placeholder="e.g. AUSTRAC online module — March 2026&#10;In-house refresher — September 2026">${d.provider||''}</textarea><p class="text-xs text-slate-400 mt-1">List all training completed — one per line if multiple.</p></div>
+        <div class="col-span-2"><label class="text-xs text-slate-500">Certificate / Storage location</label><input id="tr-score" type="text" class="inp mt-1" value="${d.score||''}" placeholder="e.g. SharePoint > Staff > Training > Chris Wong — AUSTRAC 2026.pdf"></div>
         <div>
           <label class="text-xs text-slate-500">Next due <span class="text-indigo-400 font-normal">(auto-set to +1 year — override allowed)</span></label>
           <input id="tr-next" type="date" class="inp mt-1" value="${d.next||''}">
@@ -58,6 +64,23 @@ export function screen() {
       </div>
 
       <div><label class="text-xs text-slate-500">Notes</label><textarea id="tr-notes" class="inp mt-1" rows="2" placeholder="Training content, topics covered, or relevant observations">${d.notes||''}</textarea></div>
+
+      ${S._trainingEditIdx !== undefined && (S.training[S._trainingEditIdx]?.history||[]).length > 0 ? `
+      <div class="border-t border-slate-100 pt-4 space-y-3">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-widest">Previous training history</div>
+        <p class="text-xs text-slate-400">All previous versions are permanently recorded as your audit trail.</p>
+        <div class="space-y-2">
+          ${(S.training[S._trainingEditIdx]?.history||[]).map((h, i) => `
+          <div class="bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-semibold text-slate-700">Version ${(S.training[S._trainingEditIdx]?.history||[]).length - i} — ${h.date ? new Date(h.date).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '—'}</span>
+              <span class="text-slate-400">Next due: ${h.next ? new Date(h.next).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '—'}</span>
+            </div>
+            <div class="text-slate-500 whitespace-pre-line">${h.provider||'—'}</div>
+            ${h.score ? `<div class="text-slate-400 mt-1">Certificate: ${h.score}</div>` : ''}
+          </div>`).join('')}
+        </div>
+      </div>` : ''}
 
       <div class="flex gap-3">
         <button onclick="cancelTraining()" class="flex-1 border border-slate-200 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-50 transition">Cancel</button>
@@ -73,7 +96,7 @@ export function screen() {
             <th class="${thCls}">Staff Member</th>
             <th class="${thCls}">Training Date</th>
             <th class="${thCls}">Provider</th>
-            <th class="${thCls}">Outcome</th>
+            <th class="${thCls}">Certificate / Storage</th>
             <th class="${thCls}">Status</th>
             <th class="${thCls}">Next Due</th>
             <th class="${thCls}"></th>
