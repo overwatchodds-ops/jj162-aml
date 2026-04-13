@@ -48,34 +48,33 @@ export function screen() {
   const hasNone = d.noneSelected;
   const classification = hasKey ? 'Key Personnel' : hasStd ? 'Standard AML/CTF Staff' : hasNone ? 'No AML/CTF functions' : null;
 
-  return `<div class="py-8 space-y-6">
-
-    <div class="flex items-start justify-between">
+  return `<div style="max-width:760px;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;">
       <div>
-        <h1 class="text-2xl font-bold text-slate-900">Key Personnel Vetting</h1>
-        <p class="text-sm text-slate-400 mt-1">Every person in your firm must be assessed to determine whether they meet the threshold for Key Personnel — only then can you show AUSTRAC you considered everyone.</p>
+        <h1 style="font-size:20px;font-weight:500;color:#0f172a;margin-bottom:3px;">Key Personnel Vetting</h1>
+        <p style="font-size:13px;color:#64748b;">Every person in your firm must be assessed to determine their AML/CTF role — only then can you show AUSTRAC you considered everyone.</p>
       </div>
       ${!adding
-        ? `<button onclick="startAddStaff()" class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition flex-shrink-0 ml-6">+ Add staff member</button>`
-        : `<button onclick="cancelStaff()" class="border border-slate-200 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-slate-50 transition flex-shrink-0 ml-6">Cancel</button>`}
+        ? `<button onclick="startAddStaff()" style="font-size:12px;font-weight:500;color:#fff;background:#4f46e5;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;margin-left:16px;flex-shrink:0;">+ Add staff member</button>`
+        : `<button onclick="cancelStaff()" style="font-size:12px;color:#64748b;background:#fff;border:0.5px solid #e2e8f0;padding:8px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;margin-left:16px;flex-shrink:0;">Cancel</button>`}
     </div>
 
     ${adding ? `
-    <div class="bg-white border-2 border-indigo-200 rounded-xl p-6 space-y-6">
+    <div style="background:#fff;border:1.5px solid #c7d2fe;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
 
-      <div class="flex items-center justify-between">
-        <h2 class="text-sm font-bold text-slate-700">${S._staffEditIdx !== undefined ? 'Edit staff record — ' + (S.staff[S._staffEditIdx]?.name||'') : 'New staff member'}</h2>
-        ${S._staffEditIdx !== undefined ? `<span class="text-xs text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">Editing — previous version will be preserved</span>` : ''}
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+        <div style="font-size:13px;font-weight:500;color:#0f172a;">${S._staffEditIdx !== undefined ? 'Edit staff record — ' + (S.staff[S._staffEditIdx]?.name||'') : 'New staff member'}</div>
+        ${S._staffEditIdx !== undefined ? `<span style="font-size:10px;font-weight:500;color:#92400e;background:#fffbeb;border:0.5px solid #fde68a;padding:2px 10px;border-radius:99px;">Editing — previous version preserved</span>` : ''}
       </div>
 
       <!-- IDENTITY -->
-      <div class="space-y-4">
-        <h2 class="text-sm font-bold text-slate-700">Identity &amp; employment</h2>
-        <div class="grid grid-cols-2 gap-4">
-          <div><label class="text-xs text-slate-500">Full name *</label><input id="st-name" type="text" class="inp mt-1" value="${d.name||''}" placeholder="Full legal name"></div>
-          <div><label class="text-xs text-slate-500">Job title / position</label><input id="st-role" type="text" class="inp mt-1" value="${d.role||''}" placeholder="e.g. Senior Accountant"></div>
-          <div><label class="text-xs text-slate-500">Employment status</label>
-            <select id="st-status" class="inp mt-1" onchange="syncStaffDraft();go('staff')">
+      <div style="margin-bottom:18px;">
+        <div style="font-size:12px;font-weight:500;color:#0f172a;margin-bottom:12px;">Identity &amp; employment</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Full name *</label><input id="st-name" type="text" class="inp" value="${d.name||''}" placeholder="Full legal name"></div>
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Job title / position</label><input id="st-role" type="text" class="inp" value="${d.role||''}" placeholder="e.g. Senior Accountant"></div>
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Employment status</label>
+            <select id="st-status" class="inp" onchange="syncStaffDraft();go('staff')">
               <option value="Active"     ${(d.status||'Active')==='Active'    ?'selected':''}>Active</option>
               <option value="Resigned"   ${d.status==='Resigned'  ?'selected':''}>Resigned</option>
               <option value="Terminated" ${d.status==='Terminated'?'selected':''}>Terminated</option>
@@ -83,14 +82,14 @@ export function screen() {
             </select>
           </div>
           ${d.status==='Resigned'||d.status==='Terminated' ? `
-          <div><label class="text-xs text-slate-500">Date of departure</label><input id="st-departure" type="date" class="inp mt-1" value="${d.departureDate||''}"></div>` : '<div></div>'}
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Date of departure</label><input id="st-departure" type="date" class="inp" value="${d.departureDate||''}"></div>` : '<div></div>'}
         </div>
       </div>
 
       <!-- AML/CTF FUNCTIONS -->
-      <div class="space-y-4 border-t pt-5">
-        <div class="flex items-center gap-2">
-          <h2 class="text-sm font-bold text-slate-700">AML/CTF functions</h2>
+      <div style="border-top:0.5px solid #f1f5f9;padding-top:18px;margin-bottom:18px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:12px;">
+          <span style="font-size:12px;font-weight:500;color:#0f172a;">AML/CTF functions</span>
           ${infoBtn('staff-fn-tip')}
         </div>
         ${infoPop('staff-fn-tip', `
@@ -103,53 +102,52 @@ export function screen() {
           </ul>
           <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">Recording everyone — including those with no AML functions — shows AUSTRAC you actively considered each person rather than only checking those you already suspected were Key Personnel.</p>
         `)}
-        <p class="text-xs text-slate-400">Tick every AML/CTF function this person will perform. Classification is set automatically.</p>
-
-        <div class="space-y-2">
-          <div class="text-xs font-semibold text-slate-500 px-1 pt-1">Governance roles — Key Personnel</div>
+        <p style="font-size:11px;color:#94a3b8;margin-bottom:10px;">Tick every AML/CTF function this person will perform. Classification is set automatically.</p>
+        <div>
+          <div style="font-size:10px;font-weight:500;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Governance roles — Key Personnel</div>
           ${FN_KEY.filter(f=>f.type==='key').map(f=>`
-          <label class="flex items-start gap-3 p-3 border rounded-xl cursor-pointer hover:bg-slate-50 transition ${selFns.includes(f.id)?'bg-amber-50 border-amber-200':'border-slate-200'}">
-            <input type="checkbox" ${selFns.includes(f.id)?'checked':''} onchange="toggleStaffFn('${f.id}',this)" class="mt-0.5 flex-shrink-0">
-            <div class="flex-1">
-              <div class="text-sm font-medium text-slate-700">${f.label}</div>
-              <div class="text-xs text-slate-400 mt-0.5">${f.desc}</div>
+          <label style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:0.5px solid ${selFns.includes(f.id)?'#fde68a':'#e2e8f0'};border-radius:8px;cursor:pointer;background:${selFns.includes(f.id)?'#fffbeb':'#fff'};margin-bottom:5px;">
+            <input type="checkbox" ${selFns.includes(f.id)?'checked':''} onchange="toggleStaffFn('${f.id}',this)" style="margin-top:2px;flex-shrink:0;">
+            <div style="flex:1;">
+              <div style="font-size:12px;font-weight:500;color:#0f172a;">${f.label}</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:2px;">${f.desc}</div>
             </div>
-            <span class="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-semibold whitespace-nowrap flex-shrink-0">Key Personnel</span>
+            <span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:#fef3c7;color:#92400e;white-space:nowrap;flex-shrink:0;">Key Personnel</span>
           </label>`).join('')}
 
-          <div class="text-xs font-semibold text-slate-500 px-1 pt-2">Operational roles — Standard staff</div>
+          <div style="font-size:10px;font-weight:500;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin:10px 0 6px;">Operational roles — Standard staff</div>
           ${FN_KEY.filter(f=>f.type==='std').map(f=>`
-          <label class="flex items-start gap-3 p-3 border rounded-xl cursor-pointer hover:bg-slate-50 transition ${selFns.includes(f.id)?'bg-blue-50 border-blue-200':'border-slate-200'}">
-            <input type="checkbox" ${selFns.includes(f.id)?'checked':''} onchange="toggleStaffFn('${f.id}',this)" class="mt-0.5 flex-shrink-0">
-            <div class="flex-1">
-              <div class="text-sm font-medium text-slate-700">${f.label}</div>
-              <div class="text-xs text-slate-400 mt-0.5">${f.desc}</div>
+          <label style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:0.5px solid ${selFns.includes(f.id)?'#bfdbfe':'#e2e8f0'};border-radius:8px;cursor:pointer;background:${selFns.includes(f.id)?'#eff6ff':'#fff'};margin-bottom:5px;">
+            <input type="checkbox" ${selFns.includes(f.id)?'checked':''} onchange="toggleStaffFn('${f.id}',this)" style="margin-top:2px;flex-shrink:0;">
+            <div style="flex:1;">
+              <div style="font-size:12px;font-weight:500;color:#0f172a;">${f.label}</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:2px;">${f.desc}</div>
             </div>
-            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-semibold whitespace-nowrap flex-shrink-0">Standard Staff</span>
+            <span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:#dbeafe;color:#1e40af;white-space:nowrap;flex-shrink:0;">Standard Staff</span>
           </label>`).join('')}
 
-          <div class="border-t border-slate-100 mt-2 pt-2">
-            <label class="flex items-start gap-3 p-3 border rounded-xl cursor-pointer hover:bg-slate-50 transition ${hasNone?'bg-slate-50 border-slate-300':'border-slate-200'}">
-              <input type="checkbox" id="st-none" ${hasNone?'checked':''} onchange="toggleStaffNone(this)" class="mt-0.5 flex-shrink-0">
+          <div style="border-top:0.5px solid #f1f5f9;margin-top:8px;padding-top:8px;">
+            <label style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:0.5px solid ${hasNone?'#d1d5db':'#e2e8f0'};border-radius:8px;cursor:pointer;background:${hasNone?'#f8fafc':'#fff'};">
+              <input type="checkbox" id="st-none" ${hasNone?'checked':''} onchange="toggleStaffNone(this)" style="margin-top:2px;flex-shrink:0;">
               <div>
-                <div class="text-sm font-medium text-slate-500">None of the above</div>
-                <div class="text-xs text-slate-400 mt-0.5">This person performs no AML/CTF functions — assessed and confirmed not required</div>
+                <div style="font-size:12px;color:#64748b;">None of the above</div>
+                <div style="font-size:11px;color:#94a3b8;margin-top:2px;">This person performs no AML/CTF functions — assessed and confirmed not required</div>
               </div>
             </label>
           </div>
         </div>
 
         ${classification ? `
-        <div class="p-3 rounded-xl text-sm font-semibold border ${classification==='Key Personnel'?'bg-amber-50 border-amber-200 text-amber-800':classification==='Standard AML/CTF Staff'?'bg-blue-50 border-blue-200 text-blue-800':'bg-slate-50 border-slate-200 text-slate-600'}">
+        <div style="margin-top:10px;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:500;background:${classification==='Key Personnel'?'#fffbeb':classification==='Standard AML/CTF Staff'?'#eff6ff':'#f8fafc'};color:${classification==='Key Personnel'?'#92400e':classification==='Standard AML/CTF Staff'?'#1e40af':'#64748b'};border:0.5px solid ${classification==='Key Personnel'?'#fde68a':classification==='Standard AML/CTF Staff'?'#bfdbfe':'#e2e8f0'};">
           Classification: ${classification}
         </div>` : ''}
       </div>
 
       <!-- VETTING CHECKS -->
       ${classification && classification !== 'No AML/CTF functions' ? `
-      <div class="space-y-4 border-t pt-5">
-        <div class="flex items-center gap-2">
-          <h2 class="text-sm font-bold text-slate-700">Vetting checks</h2>
+      <div style="border-top:0.5px solid #f1f5f9;padding-top:18px;margin-bottom:18px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;">
+          <span style="font-size:12px;font-weight:500;color:#0f172a;">Vetting checks</span>
           ${infoBtn('staff-vet-tip')}
         </div>
         ${infoPop('staff-vet-tip', `
@@ -164,29 +162,29 @@ export function screen() {
           <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">Keep evidence of each check on file. SimpleAML records the outcome and reference — the original documents must be stored separately.</p>
         `)}
 
-        <div><label class="text-xs text-slate-500">Vetting date *</label><input id="st-date" type="date" class="inp mt-1" value="${d.date||''}"></div>
+        <div style="margin-bottom:12px;"><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Vetting date *</label><input id="st-date" type="date" class="inp" value="${d.date||''}"></div>
 
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
-          <h2 class="text-sm font-bold text-slate-700">Criminal history check</h2>
-          <div class="grid grid-cols-2 gap-3">
-            <div><label class="text-xs text-slate-500">Result</label>
-              <select id="st-police-result" class="inp mt-1">
+        <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:500;color:#0f172a;margin-bottom:10px;">Criminal history check</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+            <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Result</label>
+              <select id="st-police-result" class="inp">
                 <option value="">— Select —</option>
                 <option ${d.policeResult==='Pass'?'selected':''} value="Pass">Pass — clear</option>
                 <option ${d.policeResult==='Fail'?'selected':''} value="Fail">Fail — findings</option>
               </select>
             </div>
-            <div><label class="text-xs text-slate-500">Reference number</label><input id="st-police-ref" type="text" class="inp mt-1" value="${d.policeRef||''}" placeholder="AFP-2026-XXXXX" style="font-family:monospace;font-size:12px"></div>
+            <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Reference number</label><input id="st-police-ref" type="text" class="inp" value="${d.policeRef||''}" placeholder="AFP-2026-XXXXX" style="font-family:monospace;font-size:12px"></div>
           </div>
-          <div><label class="text-xs text-slate-500">Verified by</label><input id="st-police-by" type="text" class="inp mt-1" value="${d.policeBy||''}" placeholder="Staff member who verified"></div>
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Verified by</label><input id="st-police-by" type="text" class="inp" value="${d.policeBy||''}" placeholder="Staff member who verified"></div>
         </div>
 
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
-          <h2 class="text-sm font-bold text-slate-700">Bankruptcy / insolvency check</h2>
-          <div class="grid grid-cols-2 gap-3">
-            <div><label class="text-xs text-slate-500">Check date</label><input id="st-bankrupt-date" type="date" class="inp mt-1" value="${d.bankruptDate||''}"></div>
-            <div><label class="text-xs text-slate-500">Result</label>
-              <select id="st-bankrupt-result" class="inp mt-1">
+        <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:500;color:#0f172a;margin-bottom:10px;">Bankruptcy / insolvency check</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+            <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Check date</label><input id="st-bankrupt-date" type="date" class="inp" value="${d.bankruptDate||''}"></div>
+            <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Result</label>
+              <select id="st-bankrupt-result" class="inp">
                 <option value="">— Select —</option>
                 <option ${d.bankruptResult==='Clear'?'selected':''}>Clear</option>
                 <option ${d.bankruptResult==='Finding'?'selected':''}>Finding — investigate</option>
@@ -195,127 +193,118 @@ export function screen() {
           </div>
         </div>
 
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
-          <h2 class="text-sm font-bold text-slate-700">Sanctions / PEP screening</h2>
-          <a href="https://namescan.io/?ref=SIMPLEAML" target="_blank" rel="noopener" class="flex items-stretch rounded-xl overflow-hidden text-sm no-underline">
-            <div class="flex-1 bg-slate-800 text-white px-4 py-2.5 flex items-center gap-2 text-xs font-semibold">Screen this staff member via NameScan</div>
-            <div class="bg-cyan-500 text-white px-4 py-2.5 text-xs font-semibold whitespace-nowrap">NameScan →</div>
+        <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:500;color:#0f172a;margin-bottom:10px;">Sanctions / PEP screening</div>
+          <a href="https://namescan.io/?ref=SIMPLEAML" target="_blank" rel="noopener" style="display:flex;border-radius:8px;overflow:hidden;text-decoration:none;margin-bottom:10px;">
+            <div style="flex:1;background:#1e293b;color:#fff;padding:9px 14px;font-size:11px;font-weight:500;">Screen this staff member via NameScan</div>
+            <div style="background:#06b6d4;color:#fff;padding:9px 14px;font-size:11px;font-weight:500;white-space:nowrap;">NameScan →</div>
           </a>
-          <div class="grid grid-cols-3 gap-3">
-            <div><label class="text-xs text-slate-500">Date screened</label><input id="st-ns-date" type="date" class="inp mt-1" value="${d.nsDate||''}"></div>
-            <div><label class="text-xs text-slate-500">Result</label>
-              <select id="st-ns-result" class="inp mt-1">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px;">
+            <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Date screened</label><input id="st-ns-date" type="date" class="inp" value="${d.nsDate||''}"></div>
+            <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Result</label>
+              <select id="st-ns-result" class="inp">
                 <option value="">— Select —</option>
                 <option ${d.nsResult==='Clear'?'selected':''}>Clear</option>
                 <option ${d.nsResult==='Hit'?'selected':''}>Hit — investigate</option>
               </select>
             </div>
-            <div><label class="text-xs text-slate-500">Scan ID</label><input id="st-ns-ref" type="text" class="inp mt-1" value="${d.nsRef||''}" placeholder="NSC-YYYY-XXXXX" style="font-family:monospace;font-size:12px"></div>
+            <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Scan ID</label><input id="st-ns-ref" type="text" class="inp" value="${d.nsRef||''}" placeholder="NSC-YYYY-XXXXX" style="font-family:monospace;font-size:12px"></div>
           </div>
         </div>
 
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
-          <h2 class="text-sm font-bold text-slate-700">Annual declaration</h2>
-          <div class="grid grid-cols-2 gap-3">
-            <div><label class="text-xs text-slate-500">Declaration date</label><input id="st-decl-date" type="date" class="inp mt-1" value="${d.declDate||''}" onchange="autoSetDeclNext(this.value)"></div>
-            <div><label class="text-xs text-slate-500">Next due <span class="text-indigo-400 font-normal">(auto-set to +1 year)</span></label><input id="st-decl-next" type="date" class="inp mt-1" value="${d.declNext||''}"></div>
+        <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:500;color:#0f172a;margin-bottom:10px;">Annual declaration</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+            <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Declaration date</label><input id="st-decl-date" type="date" class="inp" value="${d.declDate||''}" onchange="autoSetDeclNext(this.value)"></div>
+            <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Next due <span style="color:#818cf8;font-weight:400;">(auto-set to +1 year)</span></label><input id="st-decl-next" type="date" class="inp" value="${d.declNext||''}"></div>
           </div>
-          <label class="flex items-start gap-2 bg-white border border-slate-200 rounded-xl p-3 cursor-pointer text-xs text-slate-700">
-            <input type="checkbox" id="st-decl-signed" ${d.declSigned?'checked':''} class="mt-0.5 flex-shrink-0">
-            I declare that I have no criminal convictions, undischarged bankruptcies or other matters affecting my suitability to perform AML/CTF functions since my last declaration.
+          <label style="display:flex;align-items:flex-start;gap:10px;background:#fff;border:0.5px solid #e2e8f0;border-radius:8px;padding:10px 12px;cursor:pointer;">
+            <input type="checkbox" id="st-decl-signed" ${d.declSigned?'checked':''} style="margin-top:2px;flex-shrink:0;">
+            <span style="font-size:11px;color:#0f172a;line-height:1.6;">I declare that I have no criminal convictions, undischarged bankruptcies or other matters affecting my suitability to perform AML/CTF functions since my last declaration.</span>
           </label>
         </div>
       </div>` : ''}
 
-      <div><label class="text-xs text-slate-500">Notes</label><textarea id="st-notes" class="inp mt-1" rows="2" placeholder="Any relevant findings, observations or exceptions...">${d.notes||''}</textarea></div>
+      <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Notes</label><textarea id="st-notes" class="inp" rows="2" placeholder="Any relevant findings, observations or exceptions...">${d.notes||''}</textarea></div>
 
-      <div class="flex gap-3 pt-2">
-        <button onclick="cancelStaff()" class="flex-1 border border-slate-200 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-50 transition">Cancel</button>
-        <button onclick="saveStaff()" class="flex-1 bg-indigo-600 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">Save Record</button>
+      <div style="display:flex;gap:10px;margin-top:4px;">
+        <button onclick="cancelStaff()" style="flex:1;font-size:12px;font-weight:500;color:#64748b;background:#fff;border:0.5px solid #e2e8f0;padding:9px;border-radius:8px;cursor:pointer;">Cancel</button>
+        <button onclick="saveStaff()" style="flex:1;font-size:12px;font-weight:500;color:#fff;background:#4f46e5;border:none;padding:9px;border-radius:8px;cursor:pointer;">Save Record</button>
       </div>
     </div>` : ''}
 
     ${S.staff.length > 0 ? (() => {
-      const thCls = 'text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-4 py-3';
       const keyStaff  = S.staff.filter(st => st.classification === 'Key Personnel');
       const stdStaff  = S.staff.filter(st => st.classification === 'Standard AML/CTF Staff');
       const noneStaff = S.staff.filter(st => st.classification !== 'Key Personnel' && st.classification !== 'Standard AML/CTF Staff');
 
       const makeRow = (st) => {
         const idx = S.staff.indexOf(st);
-        const nameCls = st.status==='Resigned'||st.status==='Terminated' ? 'text-slate-400 line-through' : 'text-slate-800';
         const isKey = st.classification === 'Key Personnel';
         const isStd = st.classification === 'Standard AML/CTF Staff';
         const isNone = !isKey && !isStd;
-        const clsBadge = isKey
-          ? 'bg-amber-100 text-amber-700'
-          : isStd ? 'bg-blue-100 text-blue-700'
-          : 'bg-slate-100 text-slate-500';
+        const pillBg = isKey ? '#fef3c7' : isStd ? '#dbeafe' : '#f1f5f9';
+        const pillCol = isKey ? '#92400e' : isStd ? '#1e40af' : '#64748b';
         const clsLabel = isKey ? 'Key Personnel' : isStd ? 'Standard Staff' : 'No AML functions';
-
-        // Vetting status badge
         const vs = vettingStatus(st);
         const vsBadge = vs === 'complete'
-          ? '<span class="text-xs font-semibold text-green-700">✓ Complete</span>'
+          ? '<span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:#f0fdf4;color:#166534;">Complete</span>'
           : vs === 'assessed'
-            ? '<span class="text-xs font-semibold text-slate-400">✓ Assessed</span>'
-            : '<span class="text-xs font-semibold text-red-600">⚠ Incomplete</span>';
-
-        // Declaration / next review badge
+            ? '<span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:#f8fafc;color:#64748b;">Assessed</span>'
+            : '<span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:#fef2f2;color:#991b1b;">Incomplete</span>';
         const overdue = declOverdue(st);
         const reviewBadge = isNone
-          ? '<span class="text-xs text-slate-300">—</span>'
+          ? '<span style="font-size:11px;color:#cbd5e1;">—</span>'
           : !st.declNext
-            ? '<span class="text-xs text-slate-400 italic">Not set</span>'
+            ? '<span style="font-size:11px;color:#94a3b8;font-style:italic;">Not set</span>'
             : overdue
-              ? `<span class="text-xs font-semibold text-amber-600">⚠ Due ${fmtDate(st.declNext)}</span>`
-              : `<span class="text-xs font-semibold text-green-700">✓ Due ${fmtDate(st.declNext)}</span>`;
+              ? `<span style="font-size:11px;font-weight:500;color:#d97706;">⚠ ${fmtDate(st.declNext)}</span>`
+              : `<span style="font-size:11px;color:#64748b;">${fmtDate(st.declNext)}</span>`;
+        const nameStyle = st.status==='Resigned'||st.status==='Terminated' ? 'color:#94a3b8;text-decoration:line-through;' : 'color:#0f172a;';
 
         return `
-        <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition cursor-pointer" onclick="editStaff(${idx})">
-          <td class="px-4 py-3">
-            <div class="font-semibold ${nameCls}">${st.name}</div>
-            <div class="text-xs text-slate-400 mt-0.5">${st.role||'—'}</div>
+        <tr style="border-bottom:0.5px solid #f1f5f9;cursor:pointer;transition:background .1s;" onclick="editStaff(${idx})" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+          <td style="padding:10px 14px;">
+            <div style="font-size:12px;font-weight:500;${nameStyle}">${st.name}</div>
+            <div style="font-size:11px;color:#94a3b8;margin-top:2px;">${st.role||'—'}</div>
           </td>
-          <td class="px-4 py-3">
-            <span class="text-xs font-semibold px-2 py-0.5 rounded-full ${clsBadge}">${clsLabel}</span>
-          </td>
-          <td class="px-4 py-3">${vsBadge}</td>
-          <td class="px-4 py-3">${reviewBadge}</td>
-          <td class="px-4 py-3 text-right whitespace-nowrap" onclick="event.stopPropagation()">
-            <button onclick="editStaff(${idx})" class="text-xs text-indigo-600 font-semibold hover:text-indigo-800">Edit</button>
+          <td style="padding:10px 14px;"><span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:${pillBg};color:${pillCol};">${clsLabel}</span></td>
+          <td style="padding:10px 14px;">${vsBadge}</td>
+          <td style="padding:10px 14px;">${reviewBadge}</td>
+          <td style="padding:10px 14px;text-align:right;" onclick="event.stopPropagation()">
+            <button onclick="editStaff(${idx})" style="font-size:11px;color:#6366f1;background:none;border:none;cursor:pointer;font-weight:500;">Edit</button>
           </td>
         </tr>`;
       };
 
-      const tableHead = `<thead><tr class="border-b border-slate-100">
-        <th class="${thCls}">Name</th>
-        <th class="${thCls}">Classification</th>
-        <th class="${thCls}">Vetting Status</th>
-        <th class="${thCls}">Next Declaration</th>
-        <th class="${thCls}"></th>
+      const tableHead = `<thead><tr style="background:#f8fafc;border-bottom:0.5px solid #e2e8f0;">
+        <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Name</th>
+        <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Classification</th>
+        <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Vetting</th>
+        <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Next declaration</th>
+        <th style="width:60px;"></th>
       </tr></thead>`;
 
       const section = (label, staff) => staff.length === 0 ? '' : `
-      <div>
-        <div class="text-xs font-semibold text-slate-400 uppercase tracking-widest px-1 mb-2">${label}</div>
-        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
-          <table class="w-full text-sm border-collapse">
+      <div style="margin-bottom:16px;">
+        <div style="font-size:10px;font-weight:500;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">${label}</div>
+        <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;overflow:hidden;">
+          <table style="width:100%;border-collapse:collapse;">
             ${tableHead}
             <tbody>${staff.map(st => makeRow(st)).join('')}</tbody>
           </table>
         </div>
       </div>`;
 
-      return `<div class="space-y-5">
+      return `<div>
         ${section('Key Personnel — Fit &amp; Proper checks required', keyStaff)}
         ${section('Standard AML/CTF Staff — Screening required', stdStaff)}
         ${section('Assessed — No AML/CTF functions', noneStaff)}
       </div>`;
     })() : (!adding ? `
-    <div class="bg-white border border-slate-200 rounded-xl p-10 text-center">
-      <div class="text-slate-400 text-sm">No staff records yet.</div>
-      <div class="text-xs text-slate-400 mt-1">Click "Add staff member" to begin your vetting register.</div>
+    <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:12px;padding:32px;text-align:center;">
+      <div style="font-size:13px;color:#94a3b8;margin-bottom:4px;">No staff records yet.</div>
+      <div style="font-size:11px;color:#cbd5e1;">Click "Add staff member" to begin your vetting register.</div>
     </div>` : '')}
 
   </div>`;
