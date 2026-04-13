@@ -8,12 +8,13 @@ export function screen() {
     <div class="py-8 space-y-6">
       <div>
         <h1 class="text-2xl font-bold">AML/CTF Compliance Report</h1>
-        <p class="text-slate-400 text-sm mt-1">Generate a summary of your firm's AML/CTF compliance records to assist in completing AUSTRAC's Compliance Report when requested.</p>
+        <p class="text-slate-400 text-sm mt-1">A summary of your firm's AML/CTF compliance records — evidence you can draw on when responding to AUSTRAC's annual compliance questionnaire.</p>
       </div>
 
-      <div class="bg-blue-50 border border-blue-100 rounded-xl p-3 text-xs text-blue-700">
-        AUSTRAC requires reporting entities to submit a Compliance Report when requested (typically annually). This report helps you prepare the required information. <strong>It is not submitted to AUSTRAC directly.</strong>
-        Your live compliance status is always visible on the <button onclick="go('dashboard')" class="underline font-semibold text-indigo-600 bg-transparent border-0 cursor-pointer p-0">Dashboard</button>.
+      <div class="bg-blue-50 border border-blue-100 rounded-xl p-3 text-xs text-blue-700 space-y-1.5">
+        <div><strong>What is the AUSTRAC Annual Compliance Report?</strong></div>
+        <p>It is an <strong>online questionnaire</strong> you complete and submit directly in AUSTRAC Online — not a PDF or written report. Think of it as a structured form with yes/no and multiple choice questions covering whether you have an AML/CTF program, did a risk assessment, trained your staff, completed customer due diligence, and reported suspicious matters.</p>
+        <p>This SimpleAML report is your <strong>evidence record</strong> — a summary of your compliance activity that you can refer to when answering AUSTRAC's questions. It is not submitted to AUSTRAC.</p>
       </div>
 
       <div class="bg-white border rounded-xl p-5 space-y-3">
