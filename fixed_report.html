@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimpleAML Compliance Report</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 12px; color: #1e293b; background: #eef2f7; }
+    .shell { max-width: 980px; margin: 0 auto; padding: 24px; }
+    .toolbar {
+      position: sticky; top: 0; z-index: 50; margin-bottom: 16px;
+      background: #0f172a; color: white; border-radius: 12px; padding: 14px 18px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .toolbar h1 { font-size: 14px; font-weight: 700; }
+    .toolbar p { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+    .toolbar button {
+      border: none; background: #4f46e5; color: white; padding: 10px 16px;
+      border-radius: 10px; font-weight: 600; cursor: pointer;
+    }
+    .page {
+      background: white; border-radius: 14px; box-shadow: 0 8px 28px rgba(15,23,42,.12);
+      padding: 34px 38px; margin-bottom: 18px;
+    }
+    .header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px; border-bottom: 3px solid #1e293b; padding-bottom: 16px; margin-bottom: 22px;
+    }
+    .logo {
+      width: 34px; height: 34px; border-radius: 8px; background: #0f172a; color: white;
+      display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px;
+    }
+    .subtitle { color: #64748b; font-size: 13px; margin-top: 4px; }
+    .muted { color: #64748b; }
+    .small { font-size: 11px; }
+    .tiny { font-size: 10px; }
+    .section { margin-top: 26px; }
+    .section-title {
+      display: flex; align-items: baseline; gap: 10px;
+      border-bottom: 2px solid #1e293b; padding-bottom: 6px; margin-bottom: 12px;
+    }
+    .section-num { font-size: 11px; font-weight: 800; color: #6366f1; }
+    .section-title h2 { font-size: 15px; color: #0f172a; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .card {
+      border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px;
+      background: #f8fafc;
+    }
+    .metric { font-size: 22px; font-weight: 800; color: #0f172a; }
+    .label { font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; }
+    .field { display: flex; gap: 8px; margin-bottom: 4px; }
+    .field .k { min-width: 160px; color: #64748b; }
+    .field .v { font-weight: 500; }
+    .badge {
+      display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700;
+    }
+    .b-low { background: #ecfdf5; color: #16a34a; }
+    .b-med { background: #fffbeb; color: #d97706; }
+    .b-high { background: #fef2f2; color: #dc2626; }
+    .b-neutral { background: #f1f5f9; color: #64748b; }
+    .b-ok { background: #ecfdf5; color: #16a34a; }
+    .b-warn { background: #fff7ed; color: #c2410c; }
+    .narrative {
+      white-space: pre-wrap; line-height: 1.65; background: #f8fafc; border: 1px solid #e2e8f0;
+      border-left: 3px solid #1e293b; border-radius: 0 10px 10px 0; padding: 12px;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left; padding: 7px 8px; background: #f1f5f9; border-bottom: 1px solid #cbd5e1;
+      font-size: 10px; color: #475569; font-weight: 700;
+    }
+    td {
+      padding: 7px 8px; border-bottom: 1px solid #e2e8f0; vertical-align: top; font-size: 11px;
+    }
+    tr:last-child td { border-bottom: none; }
+    .list { padding-left: 18px; }
+    .list li { margin-bottom: 4px; }
+    .note {
+      padding: 12px 14px; border-radius: 10px; border: 1px solid #fde68a; background: #fffbeb;
+      color: #92400e; font-size: 11px; line-height: 1.6;
+    }
+    .empty { color: #94a3b8; font-style: italic; }
+    .footer {
+      margin-top: 28px; padding-top: 10px; border-top: 1px solid #e2e8f0;
+      display: flex; justify-content: space-between; color: #94a3b8; font-size: 10px;
+    }
+    .no-print { display: block; }
+    @media print {
+      body { background: white; }
+      .shell { max-width: none; padding: 0; }
+      .toolbar { display: none !important; }
+      .page { box-shadow: none; margin: 0; border-radius: 0; padding: 24px; }
+      .page-break { page-break-before: always; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="toolbar no-print">
+      <div>
+        <h1>SimpleAML Compliance Report</h1>
+        <p>This standalone report reads the current <code>saml_v2</code> app data and matches the live app schema.</p>
+      </div>
+      <button onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+    <div class="page" id="report-root"></div>
+  </div>
+
+<script>
+const STORAGE_KEY = 'saml_v2';
+const DS_LIST = [
+  { id:'ds1', name:'Assisting with real estate transactions' },
+  { id:'ds2', name:'Assisting with sale/transfer of a body corporate or legal arrangement' },
+  { id:'ds3', name:'Receiving, holding, controlling or managing client funds or property' },
+  { id:'ds4', name:'Assisting with equity or debt financing' },
+  { id:'ds5', name:'Selling or transferring a shelf company' },
+  { id:'ds6', name:'Assisting with creation or restructuring of a body corporate or legal arrangement' },
+  { id:'ds7', name:'Acting as or arranging an officer (director, secretary, partner or trustee)' },
+  { id:'ds8', name:'Acting as or arranging a nominee shareholder' },
+  { id:'ds9', name:'Providing a registered office or principal place of business address' },
+];
+
+function loadState() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  } catch (e) {
+    return {};
+  }
+}
+
+function esc(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function fmtDate(val) {
+  if (!val) return '—';
+  const d = new Date(val);
+  if (isNaN(d)) return esc(val);
+  return d.toLocaleDateString('en-AU', { day:'numeric', month:'short', year:'numeric' });
+}
+
+function badge(val) {
+  if (!val) return '<span class="badge b-neutral">Not recorded</span>';
+  const cls = val === 'High' ? 'b-high' : val === 'Medium' ? 'b-med' : val === 'Low' ? 'b-low' : 'b-neutral';
+  return `<span class="badge ${cls}">${esc(val)}</span>`;
+}
+
+function yn(val) {
+  return val ? '<span class="badge b-ok">Yes</span>' : '<span class="badge b-neutral">No</span>';
+}
+
+function field(label, value) {
+  return `<div class="field"><span class="k small">${esc(label)}</span><span class="v small">${value || '—'}</span></div>`;
+}
+
+function narrative(text) {
+  return `<div class="narrative small">${text ? esc(text) : 'Not yet documented.'}</div>`;
+}
+
+function autoServiceRiskFromChecks(checks) {
+  if (!checks || !checks.length) return null;
+  const high = ['sr-funds','sr-nominee','sr-shelf'];
+  const med = ['sr-property','sr-structures','sr-finance','sr-bodycorp'];
+  if (checks.some(c => high.includes(c))) return 'High';
+  if (checks.some(c => med.includes(c))) return 'Medium';
+  return 'Low';
+}
+
+function autoClientRisk(checks) {
+  if (!checks || !checks.length) return null;
+  if (checks.includes('cr-international') || checks.includes('cr-cash') || checks.includes('cr-pep')) return 'High';
+  if (checks.includes('cr-trusts')) return 'Medium';
+  return 'Low';
+}
+
+function autoGeoRisk(checks) {
+  if (!checks || !checks.length) return null;
+  if (checks.includes('gr-highrisk') || checks.includes('gr-overseas')) return 'High';
+  if (checks.includes('gr-remote') || checks.includes('gr-intermediary')) return 'Medium';
+  return 'Low';
+}
+
+function autoOverallRisk(sr, cr, gr, pf) {
+  const vals = [sr, cr, gr, pf].filter(Boolean);
+  if (!vals.length) return null;
+  if (vals.includes('High')) return 'High';
+  if (vals.includes('Medium')) return 'Medium';
+  return 'Low';
+}
+
+function isActiveStaff(st) {
+  return !st.status || st.status === 'Active' || st.status === 'On Leave';
+}
+
+function getClientLastActivity(c) {
+  const serviceDates = (c.services || []).map(s => s.dateProvided).filter(Boolean).map(d => new Date(d));
+  const cdd = c.cddDate ? new Date(c.cddDate) : null;
+  const dates = [...serviceDates, ...(cdd ? [cdd] : [])].filter(d => !isNaN(d));
+  if (!dates.length) return null;
+  return new Date(Math.max(...dates.map(d => d.getTime())));
+}
+
+function render() {
+  const S = loadState();
+  const f = S.firm || {};
+  const sc = S.scope || {};
+  const p = S.program || {};
+  const e = S.enrolment || {};
+  const staff = Array.isArray(S.staff) ? S.staff : [];
+  const training = Array.isArray(S.training) ? S.training : [];
+  const clients = Array.isArray(S.clients) ? S.clients : [];
+  const incidents = Array.isArray(S.incidents) ? S.incidents : [];
+  const report = S.report || {};
+
+  const autoSR = autoServiceRiskFromChecks(sc.serviceChecks || []);
+  const autoCR = autoClientRisk(sc.clientChecks || []);
+  const autoGR = autoGeoRisk(sc.geoChecks || []);
+
+  const serviceRisk = sc.serviceRating || sc.serviceRatingOverride || autoSR || null;
+  const clientRisk = sc.customerRating || sc.clientRatingOverride || autoCR || null;
+  const geoRisk = sc.geoRating || sc.geoRatingOverride || autoGR || null;
+  const overallRisk = sc.overallRating || sc.overallRatingOverride || autoOverallRisk(serviceRisk, clientRisk, geoRisk, sc.pfRating) || null;
+
+  const activeClients = clients.filter(c => {
+    const last = getClientLastActivity(c);
+    if (!last) return true;
+    const sevenYearsAgo = new Date();
+    sevenYearsAgo.setFullYear(sevenYearsAgo.getFullYear() - 7);
+    return last > sevenYearsAgo;
+  });
+
+  const now = new Date();
+  const twelveMonthsAgo = new Date();
+  twelveMonthsAgo.setFullYear(twelveMonthsAgo.getFullYear() - 1);
+  const newClients = activeClients.filter(c => c.cddDate && new Date(c.cddDate) >= twelveMonthsAgo);
+  const dormantClients = activeClients.filter(c => {
+    const last = getClientLastActivity(c);
+    return last && last < twelveMonthsAgo;
+  });
+  const ongoingClients = activeClients.filter(c => {
+    const last = getClientLastActivity(c);
+    return last && last >= twelveMonthsAgo;
+  });
+
+  const allIndividuals = activeClients.flatMap(c => c.individuals || []);
+  const screenedIndividuals = allIndividuals.filter(i => i.screenResult).length;
+  const verifiedIndividuals = allIndividuals.filter(i => i.idOutcome === 'Verified').length;
+
+  const activeStaff = staff.filter(isActiveStaff);
+  const keyStaff = activeStaff.filter(st => st.classification === 'Key Personnel');
+  const opsStaff = activeStaff.filter(st => st.classification === 'Standard AML/CTF Staff');
+  const nonAMLStaff = activeStaff.filter(st => st.classification !== 'Key Personnel' && st.classification !== 'Standard AML/CTF Staff');
+  const activeAMLNames = new Set([...keyStaff, ...opsStaff].map(st => st.name));
+  const activeTraining = training.filter(t => !t.name || activeAMLNames.size === 0 || activeAMLNames.has(t.name));
+  const overdueTraining = activeTraining.filter(t => t.next && new Date(t.next) < now);
+
+  const scoreChecks = [
+    !!f.name,
+    !!overallRisk || !!sc.noneConfirmed,
+    !!p.approvedBy,
+    !!e.enrolled,
+    activeStaff.length > 0,
+    training.length > 0,
+    (report.history || []).length > 0
+  ];
+  const readinessScore = Math.round(scoreChecks.filter(Boolean).length / scoreChecks.length * 100);
+
+  const dsTicked = (sc.services || []).map(id => DS_LIST.find(d => d.id === id)?.name).filter(Boolean);
+  const riskAppetite = sc.riskAppetite || '';
+  const pfNarrative = sc.pfText || '';
+  const geoNarrative = geoRisk === 'High'
+    ? 'Your firm services overseas clients or has connections to FATF high-risk jurisdictions. These introduce cross-border verification challenges and elevated sanctions exposure that require enhanced controls.'
+    : geoRisk === 'Medium'
+      ? 'Your firm onboards or services clients remotely or via intermediaries. Without face-to-face interaction, additional verification steps are required to mitigate identity risk.'
+      : geoRisk === 'Low'
+        ? 'Your clients are local and interactions are face-to-face or otherwise easily verifiable. Geography and delivery channels do not elevate your inherent risk.'
+        : '';
+
+  const serviceNarrative = serviceRisk === 'High'
+    ? 'One or more of your services involve direct control or movement of client funds, execution of business transactions, or property settlements — all considered high inherent ML/TF risk by AUSTRAC because they create direct opportunities for placement, layering, or integration of illicit funds.'
+    : serviceRisk === 'Medium'
+      ? 'Your services involve creating or managing legal structures, company secretarial functions, or registered office services. These do not directly control client funds but create entities and roles that can be misused to conceal beneficial ownership or facilitate illicit activity.'
+      : serviceRisk === 'Low'
+        ? 'Your designated services do not involve direct financial control or structural creation. Inherent service risk is low, though other risk lenses may still elevate your overall rating.'
+        : '';
+
+  const clientNarrative = clientRisk === 'High'
+    ? 'Your client base includes international clients, politically exposed persons, or cash-intensive industries. These client types carry elevated ML/TF exposure and require enhanced due diligence.'
+    : clientRisk === 'Medium'
+      ? 'Your client base includes trusts or entities with more complex ownership structures, requiring beneficial ownership assessment and more careful ongoing monitoring.'
+      : clientRisk === 'Low'
+        ? 'Your client base is primarily local individuals and standard SMEs. Standard CDD procedures generally apply from a customer-risk perspective.'
+        : '';
+
+  const controlsNarrative = [
+    p.approvedBy ? 'AML/CTF Program formally approved by senior manager.' : null,
+    f.appt?.amlco?.name ? 'AMLCO formally appointed.' : null,
+    training.length ? 'Training register maintained for AML/CTF staff.' : null,
+    clients.length ? 'Client register and CDD records maintained.' : null,
+    incidents.length ? 'Incident and SMR register maintained.' : null,
+    p.nextReview ? 'Annual program review date scheduled.' : null,
+  ].filter(Boolean).join(' ');
+
+  const appointmentRows = [
+    ['AML/CTF Compliance Officer', f.appt?.amlco?.name, f.appt?.amlco?.date],
+    ['Reporting Officer', f.appt?.reporting?.name, f.appt?.reporting?.date],
+    ['Senior Manager', f.appt?.senior?.name, f.appt?.senior?.date],
+    ['Principal / Managing Partner', f.appt?.principal2?.name, f.appt?.principal2?.date],
+    ['Delegate', f.appt?.delegate?.name, f.appt?.delegate?.date],
+  ];
+
+  const html = `
+    <div class="header">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div class="logo">SA</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#0f172a;">SimpleAML</div>
+            <div class="tiny muted">AML/CTF Compliance Report</div>
+          </div>
+        </div>
+        <div style="font-size:24px;font-weight:800;color:#0f172a;">AML/CTF Compliance Evidence Report</div>
+        <div class="subtitle">${esc(f.name || 'Unnamed Firm')}${f.abn ? ' · ABN ' + esc(f.abn) : ''}</div>
+      </div>
+      <div class="small muted" style="text-align:right;line-height:1.7;">
+        <div>Generated: ${fmtDate(new Date().toISOString())}</div>
+        <div>Storage key: <code>${STORAGE_KEY}</code></div>
+        <div>Applies from: 1 July 2026</div>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-bottom:18px;">
+      <div class="card"><div class="label">Program readiness</div><div class="metric">${readinessScore}%</div></div>
+      <div class="card"><div class="label">Overall risk</div><div style="margin-top:8px;">${badge(overallRisk)}</div></div>
+      <div class="card"><div class="label">Enrolment</div><div style="margin-top:8px;">${e.enrolled ? '<span class="badge b-ok">Confirmed</span>' : '<span class="badge b-warn">Not confirmed</span>'}</div></div>
+    </div>
+
+    <div class="note">This regenerated report matches the current <strong>saml_v2</strong> app schema. It is intended as an internal evidence summary for your AML/CTF compliance records and is not submitted directly to AUSTRAC.</div>
+
+    <div class="section">
+      <div class="section-title"><span class="section-num">01</span><h2>Firm Profile & Governance</h2></div>
+      <div class="grid-2">
+        <div>
+          ${field('Firm name', esc(f.name || 'Not recorded'))}
+          ${field('ABN', esc(f.abn || 'Not recorded'))}
+          ${field('ACN', esc(f.acn || 'Not recorded'))}
+          ${field('Practice type', esc(f.type || 'Not recorded'))}
+          ${field('Address', esc([f.address, f.suburb, f.state].filter(Boolean).join(', ') || 'Not recorded'))}
+          ${field('Principal contact', esc(f.principal || 'Not recorded'))}
+          ${field('Email', esc(f.email || 'Not recorded'))}
+          ${field('Phone', esc(f.phone || 'Not recorded'))}
+        </div>
+        <div>
+          <table>
+            <thead><tr><th>Role</th><th>Name</th><th>Date</th></tr></thead>
+            <tbody>
+              ${appointmentRows.map(r => `<tr><td>${esc(r[0])}</td><td>${r[1] ? '<strong>'+esc(r[1])+'</strong>' : '<span class="empty">Not assigned</span>'}</td><td>${fmtDate(r[2])}</td></tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="section-num">02</span><h2>Risk Assessment</h2></div>
+      <div class="grid-2" style="margin-bottom:10px;">
+        <div>
+          ${field('Service risk', badge(serviceRisk))}
+          ${field('Customer risk', badge(clientRisk))}
+          ${field('Geography / delivery risk', badge(geoRisk))}
+          ${field('PF risk', badge(sc.pfRating))}
+          ${field('Overall inherent risk', badge(overallRisk))}
+          ${field('Assessment date', fmtDate(sc.riskAssessmentDate || sc.assessDate))}
+          ${field('Next review date', fmtDate(sc.riskNextReview || sc.nextReview))}
+        </div>
+        <div>
+          ${sc.serviceRatingOverride ? field('Service override justification', esc(sc.serviceRatingJust || 'None provided')) : ''}
+          ${sc.clientRatingOverride ? field('Customer override justification', esc(sc.clientRatingJust || 'None provided')) : ''}
+          ${sc.geoRatingOverride ? field('Geography override justification', esc(sc.geoRatingJust || 'None provided')) : ''}
+          ${sc.overallRatingOverride ? field('Overall override justification', esc(sc.overallRatingJust || 'None provided')) : ''}
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="label" style="margin-bottom:6px;">Service risk narrative</div>
+          ${narrative(serviceNarrative)}
+          <div class="label" style="margin:12px 0 6px;">Customer risk narrative</div>
+          ${narrative(clientNarrative)}
+        </div>
+        <div>
+          <div class="label" style="margin-bottom:6px;">PF narrative</div>
+          ${narrative(pfNarrative)}
+          <div class="label" style="margin:12px 0 6px;">Geographic commentary</div>
+          ${narrative(geoNarrative)}
+        </div>
+      </div>
+      <div class="label" style="margin:12px 0 6px;">Risk appetite</div>
+      ${narrative(riskAppetite)}
+      <div class="label" style="margin:12px 0 6px;">Key controls & mitigants</div>
+      ${narrative(controlsNarrative)}
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="section-num">03</span><h2>Designated Services</h2></div>
+      ${sc.noneConfirmed ? '<div class="small" style="color:#16a34a;font-weight:600;">Firm has confirmed it does not provide designated services.</div>' : ''}
+      ${dsTicked.length ? `<ul class="list small">${dsTicked.map(n => `<li>${esc(n)}</li>`).join('')}</ul>` : '<div class="empty small">No designated services recorded.</div>'}
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="section-num">04</span><h2>AML/CTF Program</h2></div>
+      <div class="grid-2">
+        <div>
+          ${field('Approved by', esc(p.approvedBy || 'Not recorded'))}
+          ${field('Title', esc(p.approvedTitle || 'Not recorded'))}
+          ${field('Approval date', fmtDate(p.approvedDate))}
+          ${field('Version', esc(p.version || 'Not recorded'))}
+          ${field('Next review date', fmtDate(p.nextReview))}
+          ${field('Governing body notified', esc(p.notified || 'Not recorded'))}
+        </div>
+        <div>
+          <table>
+            <thead><tr><th>Document</th><th>Storage location</th></tr></thead>
+            <tbody>
+              ${[
+                ['AML/CTF Program — Part A', p.docNotes?.pola],
+                ['AML/CTF Program — Part B', p.docNotes?.polb],
+                ['Risk Assessment Document', p.docNotes?.polra],
+                ['CDD Policy & Process', p.docNotes?.polcdd],
+                ['Training Policy', p.docNotes?.poltr],
+              ].map(r => `<tr><td>${esc(r[0])}</td><td>${esc(r[1] || 'Location not recorded')}</td></tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      ${Array.isArray(p.approvalHistory) && p.approvalHistory.length ? `
+        <div class="label" style="margin:12px 0 6px;">Approval history</div>
+        <table>
+          <thead><tr><th>Date</th><th>Approved by</th><th>Version</th><th>Next review</th></tr></thead>
+          <tbody>
+            ${p.approvalHistory.map(v => `<tr><td>${fmtDate(v.approvedDate)}</td><td>${esc(v.approvedBy || '')}${v.approvedTitle ? ' ('+esc(v.approvedTitle)+')' : ''}</td><td>${esc(v.version || '—')}</td><td>${fmtDate(v.nextReview)}</td></tr>`).join('')}
+          </tbody>
+        </table>` : ''}
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="section-num">05</span><h2>AUSTRAC Enrolment</h2></div>
+      <div class="grid-2">
+        <div>
+          ${field('Enrolled with AUSTRAC', e.enrolled ? '<span class="badge b-ok">Confirmed</span>' : '<span class="badge b-warn">Not yet confirmed</span>')}
+          ${field('AUSTRAC reference', esc(e.refNumber || 'Not recorded'))}
+        </div>
+        <div>
+          ${field('Report storage location', esc(report.storageLocation || 'Not recorded'))}
+          ${field('Report history entries', esc(String((report.history || []).length)))}
+        </div>
+      </div>
+    </div>
+
+    <div class="section page-break">
+      <div class="section-title"><span class="section-num">06</span><h2>Staff Assessment & Vetting</h2></div>
+      <div class="grid-3" style="margin-bottom:10px;">
+        <div class="card"><div class="label">Active staff</div><div class="metric">${activeStaff.length}</div></div>
+        <div class="card"><div class="label">Key personnel</div><div class="metric">${keyStaff.length}</div></div>
+        <div class="card"><div class="label">Operational AML staff</div><div class="metric">${opsStaff.length}</div></div>
+      </div>
+      <table>
+        <thead><tr><th>Name</th><th>Position</th><th>Classification</th><th>Police</th><th>Bankruptcy</th><th>Screening</th><th>Declaration</th><th>Status</th></tr></thead>
+        <tbody>
+          ${activeStaff.length ? activeStaff.map(st => `<tr>
+            <td><strong>${esc(st.name || '—')}</strong></td>
+            <td>${esc(st.role || '—')}</td>
+            <td>${esc(st.classification || '—')}</td>
+            <td>${st.policeResult ? esc(st.policeResult) : '—'}</td>
+            <td>${st.bankruptResult ? esc(st.bankruptResult) : '—'}</td>
+            <td>${st.nsResult ? esc(st.nsResult) : '—'}</td>
+            <td>${st.declSigned ? '<span class="badge b-ok">Signed</span>' : '<span class="badge b-neutral">Pending</span>'}</td>
+            <td>${esc(st.status || 'Active')}</td>
+          </tr>`).join('') : '<tr><td colspan="8" class="empty">No staff records.</td></tr>'}
+        </tbody>
+      </table>
+      ${nonAMLStaff.length ? `<div class="small muted" style="margin-top:10px;">${nonAMLStaff.length} additional non-AML staff are recorded and assessed as not performing AML/CTF functions.</div>` : ''}
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="section-num">07</span><h2>Training Register</h2></div>
+      <div class="grid-3" style="margin-bottom:10px;">
+        <div class="card"><div class="label">Training records</div><div class="metric">${activeTraining.length}</div></div>
+        <div class="card"><div class="label">Overdue training</div><div class="metric">${overdueTraining.length}</div></div>
+        <div class="card"><div class="label">Staff requiring training</div><div class="metric">${Math.max(activeTraining.length, keyStaff.length + opsStaff.length)}</div></div>
+      </div>
+      <table>
+        <thead><tr><th>Staff member</th><th>Training date</th><th>Provider</th><th>Score / outcome</th><th>Next due</th></tr></thead>
+        <tbody>
+          ${activeTraining.length ? activeTraining.map(t => {
+            const isOverdue = t.next && new Date(t.next) < now;
+            const st = activeStaff.find(s => s.name === t.name);
+            return `<tr>
+              <td><strong>${esc(t.name || '—')}</strong>${st ? '<br><span class="tiny muted">'+esc(st.classification || '')+'</span>' : ''}</td>
+              <td>${fmtDate(t.date)}</td>
+              <td>${esc(t.provider || '—')}</td>
+              <td>${esc(t.score || '—')}</td>
+              <td>${isOverdue ? '<span style="color:#dc2626;font-weight:600;">'+fmtDate(t.next)+' (Overdue)</span>' : fmtDate(t.next)}</td>
+            </tr>`;
+          }).join('') : '<tr><td colspan="5" class="empty">No training records for active AML/CTF staff.</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section page-break">
+      <div class="section-title"><span class="section-num">08</span><h2>Client Register Summary</h2></div>
+      <div class="grid-3" style="margin-bottom:10px;">
+        <div class="card"><div class="label">Active clients</div><div class="metric">${activeClients.length}</div></div>
+        <div class="card"><div class="label">New clients (12 months)</div><div class="metric">${newClients.length}</div></div>
+        <div class="card"><div class="label">Dormant clients</div><div class="metric">${dormantClients.length}</div></div>
+      </div>
+      <div class="grid-3" style="margin-bottom:10px;">
+        <div class="card"><div class="label">Ongoing clients</div><div class="metric">${ongoingClients.length}</div></div>
+        <div class="card"><div class="label">Individuals screened</div><div class="metric">${screenedIndividuals}/${allIndividuals.length}</div></div>
+        <div class="card"><div class="label">Individuals verified</div><div class="metric">${verifiedIndividuals}/${allIndividuals.length}</div></div>
+      </div>
+      <table>
+        <thead><tr><th>Client</th><th>Type</th><th>Risk</th><th>CDD date</th><th>Last activity</th><th>Individuals</th><th>Screened</th></tr></thead>
+        <tbody>
+          ${activeClients.length ? activeClients.map(c => {
+            const inds = c.individuals || [];
+            const screened = inds.filter(i => i.screenResult).length;
+            return `<tr>
+              <td><strong>${esc(c.name || '—')}</strong></td>
+              <td>${esc(c.entityType || '—')}</td>
+              <td>${badge(c.risk)}</td>
+              <td>${fmtDate(c.cddDate)}</td>
+              <td>${fmtDate(getClientLastActivity(c)?.toISOString())}</td>
+              <td>${inds.length}</td>
+              <td>${screened}/${inds.length}</td>
+            </tr>`;
+          }).join('') : '<tr><td colspan="7" class="empty">No client records.</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="section-num">09</span><h2>SMR & Incident Register</h2></div>
+      <div class="grid-3" style="margin-bottom:10px;">
+        <div class="card"><div class="label">Total incidents</div><div class="metric">${incidents.length}</div></div>
+        <div class="card"><div class="label">Open incidents</div><div class="metric">${incidents.filter(i => !i.status || i.status === 'Open').length}</div></div>
+        <div class="card"><div class="label">Closed incidents</div><div class="metric">${incidents.filter(i => i.status === 'Closed').length}</div></div>
+      </div>
+      <table>
+        <thead><tr><th>Date identified</th><th>Client</th><th>Suspicion</th><th>AUSTRAC ref</th><th>Status</th></tr></thead>
+        <tbody>
+          ${incidents.length ? incidents.map(i => `<tr>
+            <td>${fmtDate(i.dateIdentified)}</td>
+            <td><strong>${esc(i.clientName || '—')}</strong></td>
+            <td>${esc(i.suspicion || '—')}</td>
+            <td>${esc(i.reference || '—')}</td>
+            <td>${esc(i.status || 'Open')}</td>
+          </tr>`).join('') : '<tr><td colspan="5" class="empty">No incidents recorded.</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <span>${esc(f.name || 'Unnamed Firm')} · AML/CTF Compliance Register</span>
+      <span>Generated using SimpleAML · simpleaml.com.au</span>
+    </div>
+  `;
+
+  document.getElementById('report-root').innerHTML = html;
+}
+
+render();
+setTimeout(() => window.print(), 600);
+</script>
+</body>
+</html>
