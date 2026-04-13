@@ -1,7 +1,6 @@
 import { S } from '../state/index.js';
 
 // ─── GROUP MAP ────────────────────────────────────────────────────────────────
-// Maps every screen to its group. Used to derive active group from active screen.
 export const SCREEN_GROUP = {
   dashboard:            'dashboard',
   home:                 'dashboard',
@@ -31,116 +30,146 @@ export const SCREEN_GROUP = {
   report:               'reports',
 };
 
+// ─── SHARED STYLE HELPERS ─────────────────────────────────────────────────────
+const NAV_ITEM   = 'display:flex;align-items:center;width:100%;text-align:left;padding:6px 10px;border-radius:6px;font-size:12px;border:none;cursor:pointer;transition:background .1s;background:none;';
+const NAV_ACTIVE = 'background:#eef2ff;color:#4338ca;font-weight:500;';
+const NAV_IDLE   = 'color:#64748b;';
+const NAV_HOVER  = 'onmouseover="if(!this.classList.contains(\'active\'))this.style.background=\'#f8fafc\'" onmouseout="if(!this.classList.contains(\'active\'))this.style.background=\'none\'"';
+
+const GROUP_LABEL = (text) =>
+  `<div style="padding:12px 10px 4px;font-size:10px;color:#94a3b8;font-weight:500;letter-spacing:.02em;">${text}</div>`;
 
 // ─── TOP NAV ──────────────────────────────────────────────────────────────────
 export function TopNav() {
   const activeGroup = SCREEN_GROUP[S.currentScreen] || 'dashboard';
   const tabs = [
-    { id: 'dashboard',  label: 'Home', screen: 'home' },
-
-    { id: 'compliance', label: 'Compliance',  screen: 'compliance-overview' },
-    { id: 'personnel',  label: 'Personnel',   screen: 'personnel-overview' },
-    { id: 'clients',    label: 'Clients',     screen: 'clients-overview' },
-    { id: 'reports',    label: 'Reports',     screen: 'reports-overview' },
+    { id: 'dashboard',  label: 'Home',       screen: 'home' },
+    { id: 'compliance', label: 'Compliance', screen: 'compliance-overview' },
+    { id: 'personnel',  label: 'Personnel',  screen: 'personnel-overview' },
+    { id: 'clients',    label: 'Clients',    screen: 'clients-overview' },
+    { id: 'reports',    label: 'Reports',    screen: 'reports-overview' },
   ];
   return `
-    <nav class="fixed z-50 bg-white border-b border-slate-200 h-12 flex items-center px-4" style="left:224px;right:0;">
-
-      <!-- CENTRE: Nav tabs -->
-      <div class="flex-1 flex items-center justify-center gap-1">
+    <nav style="position:fixed;left:200px;right:0;top:0;height:48px;background:#fff;border-bottom:0.5px solid #e2e8f0;display:flex;align-items:center;padding:0 24px;z-index:50;">
+      <div style="display:flex;align-items:center;gap:2px;flex:1;">
         ${tabs.map(t => {
           const active = activeGroup === t.id;
-          const cls = active
-            ? 'text-indigo-700 font-semibold border-b-2 border-indigo-600'
-            : 'text-slate-500 hover:text-slate-800 border-b-2 border-transparent';
-          return `<button onclick="go('${t.screen}')" class="flex items-center h-12 px-3 text-sm transition ${cls} whitespace-nowrap">${t.label}</button>`;
+          return `<button onclick="go('${t.screen}')"
+            style="height:48px;padding:0 14px;font-size:12px;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid ${active ? '#4f46e5' : 'transparent'};color:${active ? '#4f46e5' : '#64748b'};font-weight:${active ? '500' : '400'};transition:color .1s;"
+            onmouseover="if(!${active})this.style.color='#0f172a'" onmouseout="if(!${active})this.style.color='${active ? '#4f46e5' : '#64748b'}'">
+            ${t.label}
+          </button>`;
         }).join('')}
       </div>
-
-
-
+      <div style="display:flex;align-items:center;gap:8px;margin-left:auto;">
+        <button onclick="go('firm-details')" style="font-size:12px;color:#64748b;background:#fff;border:0.5px solid #e2e8f0;padding:5px 12px;border-radius:6px;cursor:pointer;text-align:left;line-height:1.3;">
+          <span style="display:block;color:#0f172a;">${S.firm?.name || 'Set up firm'}</span>
+          <span style="display:block;font-size:10px;color:#6366f1;">Firm Profile</span>
+        </button>
+      </div>
     </nav>`;
 }
 
-// ─── FOOTER TOGGLE ───────────────────────────────────────────────────────────
+// ─── FOOTER TOGGLE ────────────────────────────────────────────────────────────
 window.toggleSidebarFooter = function() {
-  const panel = document.getElementById('sidebar-footer-panel');
+  const panel   = document.getElementById('sidebar-footer-panel');
   const chevron = document.getElementById('sidebar-footer-chevron');
   if (!panel) return;
   const isOpen = panel.style.display !== 'none';
   panel.style.display = isOpen ? 'none' : 'block';
-  if (chevron) chevron.textContent = isOpen ? '▾' : '▴';
+  if (chevron) chevron.textContent = isOpen ? '›' : '‹';
 };
+
+// ─── NAV ITEM BUILDER ────────────────────────────────────────────────────────
+function navItem(label, screen, cur, indent) {
+  const active = cur === screen;
+  const pl = indent ? '20px' : '10px';
+  return `<button onclick="go('${screen}')"
+    style="${NAV_ITEM}padding-left:${pl};${active ? NAV_ACTIVE : NAV_IDLE}"
+    ${NAV_HOVER}>${label}</button>`;
+}
 
 // ─── SIDEBAR ──────────────────────────────────────────────────────────────────
 export function Sidebar() {
   const activeGroup = SCREEN_GROUP[S.currentScreen] || 'dashboard';
   const cur = S.currentScreen;
-  const a = (s) => cur === s
-    ? 'bg-indigo-50 text-indigo-700 font-medium'
-    : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700';
+
   const sidebarItems = {
     dashboard: `
-      <button onclick="go('home')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('home') || a('dashboard')}">Home</button>`,
+      ${navItem('Home', 'home', cur, false)}`,
 
     compliance: `
-      <button onclick="go('compliance-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('compliance-overview')}">Overview</button>
-      <div class="px-3 pt-3 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Firm</div>
-      <button onclick="go('firm-details')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('firm-details')}">Firm Profile</button>
-      <div class="px-3 pt-3 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Accountability</div>
-      <button onclick="go('firm-appointments')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('firm-appointments')}">Appointments</button>
-      <div class="px-3 pt-3 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Risk Assessment</div>
-      <button onclick="go('risk')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('risk')}">Designated Services</button>
-      <button onclick="go('servicerisk')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('servicerisk')}">Service Risk</button>
-      <button onclick="go('customerrisk')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('customerrisk')}">Customer Risk</button>
-      <button onclick="go('georisk')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('georisk')}">Geography / Delivery</button>
-      <button onclick="go('overallrisk')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('overallrisk')}">Overall Inherent Risk</button>
-      <div class="px-3 pt-3 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Program</div>
-      <button onclick="go('program')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('program')}">AML/CTF Program</button>
-      <div class="px-3 pt-3 pb-1 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Enrolment</div>
-      <button onclick="go('enrolment')" class="w-full text-left pl-5 pr-3 py-2 rounded-lg transition text-sm ${a('enrolment')}">AUSTRAC Enrolment</button>`,
+      ${navItem('Overview', 'compliance-overview', cur, false)}
+      ${GROUP_LABEL('Firm')}
+      ${navItem('Firm Profile',          'firm-details',       cur, true)}
+      ${GROUP_LABEL('Accountability')}
+      ${navItem('Appointments',          'firm-appointments',  cur, true)}
+      ${GROUP_LABEL('Risk Assessment')}
+      ${navItem('Designated Services',   'risk',               cur, true)}
+      ${navItem('Service Risk',          'servicerisk',        cur, true)}
+      ${navItem('Customer Risk',         'customerrisk',       cur, true)}
+      ${navItem('Geography / Delivery',  'georisk',            cur, true)}
+      ${navItem('Overall Risk',          'overallrisk',        cur, true)}
+      ${GROUP_LABEL('Program')}
+      ${navItem('AML/CTF Program',       'program',            cur, true)}
+      ${GROUP_LABEL('Enrolment')}
+      ${navItem('AUSTRAC Enrolment',     'enrolment',          cur, true)}`,
+
     personnel: `
-      <button onclick="go('personnel-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('personnel-overview')}">Overview</button>
-      <button onclick="go('staff')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('staff')}">Key Personnel Vetting</button>
-      <button onclick="go('training')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('training')}">Training Register</button>`,
+      ${navItem('Overview',              'personnel-overview', cur, false)}
+      ${navItem('Key Personnel Vetting', 'staff',              cur, false)}
+      ${navItem('Training Register',     'training',           cur, false)}`,
+
     clients: `
-      <button onclick="go('clients-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('clients-overview')}">Overview</button>
-      <button onclick="go('clients')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('clients')}">Client Register</button>
-      <button onclick="go('incidents')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('incidents')}">SMR &amp; Incident Register</button>`,
+      ${navItem('Overview',              'clients-overview',   cur, false)}
+      ${navItem('Client Register',       'clients',            cur, false)}
+      ${navItem('SMR & Incident Register','incidents',         cur, false)}`,
+
     reports: `
-      <button onclick="go('reports-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('reports-overview')}">Overview</button>
-      <button onclick="go('report')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('report')}">Compliance Report</button>`,
+      ${navItem('Overview',              'reports-overview',   cur, false)}
+      ${navItem('Compliance Report',     'report',             cur, false)}`,
   };
 
+  const footerOpen = cur === 'about' || cur === 'account-backup';
+
   return `
-    <div class="w-56 bg-white border-r border-slate-200 flex flex-col fixed top-0 bottom-0 overflow-y-auto z-40">
-      <div class="flex items-center gap-2 px-4 h-12 border-b border-slate-200 flex-shrink-0">
-        <img src="/favicon.png" alt="SimpleAML" class="w-6 h-6 rounded-md flex-shrink-0">
-        <span class="font-black text-slate-900 text-base tracking-tight">SimpleAML</span>
+    <div style="width:200px;background:#fff;border-right:0.5px solid #e2e8f0;display:flex;flex-direction:column;position:fixed;top:0;bottom:0;overflow-y:auto;z-index:40;">
+
+      <!-- LOGO -->
+      <div style="height:48px;display:flex;align-items:center;gap:10px;padding:0 14px;border-bottom:0.5px solid #e2e8f0;flex-shrink:0;">
+        <img src="/favicon.png" alt="SimpleAML" style="width:22px;height:22px;border-radius:4px;flex-shrink:0;">
+        <span style="font-size:13px;font-weight:500;color:#0f172a;letter-spacing:-.01em;">SimpleAML</span>
       </div>
 
-
-      <nav class="p-2 flex-1 space-y-0.5 text-sm">
+      <!-- NAV -->
+      <nav style="padding:8px;flex:1;display:flex;flex-direction:column;gap:1px;">
         ${sidebarItems[activeGroup] || sidebarItems.dashboard}
       </nav>
 
-      <!-- EXPANDABLE FOOTER -->
-      <div class="border-t border-slate-200 flex-shrink-0">
+      <!-- FOOTER -->
+      <div style="border-top:0.5px solid #e2e8f0;flex-shrink:0;">
         <button onclick="toggleSidebarFooter()" id="sidebar-footer-btn"
-          class="w-full flex items-center justify-between px-4 py-3 text-xs text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition">
-          <span class="font-semibold uppercase tracking-widest">Settings &amp; Info</span>
-          <span id="sidebar-footer-chevron">${cur === 'about' || cur === 'account-backup' ? '▴' : '▾'}</span>
+          style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;font-size:11px;color:#94a3b8;background:none;border:none;cursor:pointer;transition:color .1s;"
+          onmouseover="this.style.color='#64748b'" onmouseout="this.style.color='#94a3b8'">
+          <span>Settings &amp; info</span>
+          <span id="sidebar-footer-chevron" style="font-size:14px;">${footerOpen ? '‹' : '›'}</span>
         </button>
-        <div id="sidebar-footer-panel" style="display:${cur === 'about' || cur === 'account-backup' ? 'block' : 'none'};" class="p-2 space-y-0.5 text-sm pb-3">
-          <button onclick="go('about')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('about')}">About</button>
-          <button onclick="go('account-backup')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('account-backup')}">Account Backup</button>
-          <a href="https://simpleaml.com.au/faq.html" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block">FAQ ↗</a>
-          <a href="https://simpleaml.com.au/contact.html" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block">Contact ↗</a>
-          <a href="https://simpleaml.com.au/disclaimer.html" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block">Disclaimer ↗</a>
-          <a href="https://simpleaml.com.au" target="_blank" rel="noopener" class="w-full text-left px-3 py-2 rounded-lg transition text-slate-500 hover:bg-slate-50 hover:text-slate-700 block">← Exit to website</a>
+        <div id="sidebar-footer-panel" style="display:${footerOpen ? 'block' : 'none'};padding:4px 8px 8px;">
+          ${navItem('About',            'about',          cur, false)}
+          ${navItem('Account Backup',   'account-backup', cur, false)}
+          <a href="https://simpleaml.com.au/faq.html" target="_blank" rel="noopener"
+            style="display:block;padding:6px 10px;font-size:12px;color:#64748b;text-decoration:none;border-radius:6px;"
+            onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">FAQ ↗</a>
+          <a href="https://simpleaml.com.au/contact.html" target="_blank" rel="noopener"
+            style="display:block;padding:6px 10px;font-size:12px;color:#64748b;text-decoration:none;border-radius:6px;"
+            onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">Contact ↗</a>
+          <a href="https://simpleaml.com.au/disclaimer.html" target="_blank" rel="noopener"
+            style="display:block;padding:6px 10px;font-size:12px;color:#64748b;text-decoration:none;border-radius:6px;"
+            onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">Disclaimer ↗</a>
+          <a href="https://simpleaml.com.au" target="_blank" rel="noopener"
+            style="display:block;padding:6px 10px;font-size:12px;color:#94a3b8;text-decoration:none;border-radius:6px;"
+            onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">← Exit to website</a>
         </div>
       </div>
-    </div>
-
-`;
+    </div>`;
 }
