@@ -53,7 +53,7 @@ export function screen() {
     <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;">
         <span style="font-size:13px;font-weight:500;color:#0f172a;">Your client base</span>
-        ${infoBtn('cr-tip'}
+        ${infoBtn('cr-tip')}
       </div>
       ${infoPop('cr-tip', `
         <strong class="text-indigo-300 block mb-2">How to assess customer risk</strong>

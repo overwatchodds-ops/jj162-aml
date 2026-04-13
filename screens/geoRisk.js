@@ -47,7 +47,7 @@ export function screen() {
     <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;">
         <span style="font-size:13px;font-weight:500;color:#0f172a;">Delivery channels and client locations</span>
-        ${infoBtn('gr-tip'}
+        ${infoBtn('gr-tip')}
       </div>
       ${infoPop('gr-tip', `
         <strong class="text-indigo-300 block mb-2">How to assess geography and delivery risk</strong>
