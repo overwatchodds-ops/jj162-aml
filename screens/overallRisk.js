@@ -12,24 +12,26 @@ export function screen() {
   const autoOR = autoOverallRisk(sr, cr, gr, pf);
 
   const badge = (r) => {
-    if (!r) return '<span style="font-size:11px;color:#94a3b8;font-style:italic;">Not yet assessed</span>';
-    const bg = r === 'High' ? '#fef2f2' : r === 'Medium' ? '#fffbeb' : '#f0fdf4';
-    const col = r === 'High' ? '#991b1b' : r === 'Medium' ? '#92400e' : '#166534';
-    return `<span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:${bg};color:${col};">${r}</span>`;
+    if (!r) return '<span class="text-xs text-slate-400 italic">Not yet assessed</span>';
+    const cls = r === 'High' ? 'bg-red-100 text-red-700' : r === 'Medium' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700';
+    return `<span class="text-xs font-bold px-3 py-1 rounded-full ${cls}">${r}</span>`;
   };
 
   const allComplete = sr && cr && gr && pf;
 
-  return `<div style="max-width:680px;">
-    <div style="margin-bottom:24px;">
-      <h1 style="font-size:20px;font-weight:500;color:#0f172a;margin-bottom:3px;">Overall Inherent Risk</h1>
-      <p style="font-size:13px;color:#64748b;">Your overall inherent risk rating is the foundation of your AML/CTF program — it determines the level of controls your program must contain.</p>
+  return `<div class="py-8 space-y-6">
+
+    <div class="flex items-start justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-slate-900">Overall Inherent Risk</h1>
+        <p class="text-sm text-slate-400 mt-1">Your overall inherent risk rating is the foundation of your AML/CTF program — it determines the level of controls your program must contain.</p>
+      </div>
     </div>
 
     <!-- RISK LENS SUMMARY -->
-    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;">
-        <span style="font-size:13px;font-weight:500;color:#0f172a;">Risk lens summary</span>
+    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
+      <div class="flex items-center gap-2">
+        <h2 class="text-sm font-bold text-slate-700">Risk lens summary</h2>
         ${infoBtn('or-summary-tip')}
       </div>
       ${infoPop('or-summary-tip', `
@@ -49,23 +51,23 @@ export function screen() {
           ['Customer Risk', cr, 'customerrisk', 'Who increases the likelihood of ML/TF activity'],
           ['Geography / Delivery Risk', gr, 'georisk', 'Where and how services are delivered'],
         ].map(([label, rating, screen, desc]) => `
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid #f1f5f9;">
+        <div class="flex items-center justify-between py-2.5 border-b border-slate-50 last:border-0">
           <div>
-            <div style="font-size:12px;font-weight:500;color:#0f172a;">${label}</div>
-            <div style="font-size:11px;color:#94a3b8;margin-top:2px;">${desc}</div>
+            <div class="text-sm font-medium text-slate-700">${label}</div>
+            <div class="text-xs text-slate-400 mt-0.5">${desc}</div>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <div class="flex items-center gap-3 flex-shrink-0">
             ${badge(rating)}
-            ${!rating ? `<button onclick="go('${screen}')" style="font-size:11px;color:#4f46e5;background:none;border:none;cursor:pointer;font-weight:500;">Complete →</button>` : `<button onclick="go('${screen}')" style="font-size:11px;color:#94a3b8;background:none;border:none;cursor:pointer;">Edit</button>`}
+            ${!rating ? `<button onclick="go('${screen}')" class="text-xs text-indigo-500 font-medium hover:text-indigo-700">Complete →</button>` : `<button onclick="go('${screen}')" class="text-xs text-slate-400 hover:text-slate-600">Edit</button>`}
           </div>
         </div>`).join('')}
       </div>
     </div>
 
     <!-- PROLIFERATION FINANCING -->
-    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;">
-        <span style="font-size:13px;font-weight:500;color:#0f172a;">Proliferation Financing (PF) Risk</span>
+    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
+      <div class="flex items-center gap-2">
+        <h2 class="text-sm font-bold text-slate-700">Proliferation Financing (PF) Risk</h2>
         ${infoBtn('pf-tip')}
       </div>
       ${infoPop('pf-tip', `
@@ -81,24 +83,21 @@ export function screen() {
         <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">PF risk is assessed separately from ML/TF risk but feeds into your overall inherent risk rating.</p>
       `)}
 
-      <p style="font-size:11px;color:#94a3b8;margin-bottom:12px;">Select the PF risk level that applies to your firm's client base and service scope.</p>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
-        ${['Low', 'Medium', 'High'].map(v => {
-          const active = sc.pfRating === v;
-          const bg  = active ? (v === 'High' ? '#fef2f2' : v === 'Medium' ? '#fffbeb' : '#f0fdf4') : '#fff';
-          const col = active ? (v === 'High' ? '#991b1b' : v === 'Medium' ? '#92400e' : '#166534') : '#64748b';
-          const brd = active ? (v === 'High' ? '#fecaca' : v === 'Medium' ? '#fde68a' : '#bbf7d0') : '#e2e8f0';
-          return `
+      <p class="text-xs text-slate-400">Select the PF risk level that applies to your firm's client base and service scope.</p>
+
+      <div class="grid grid-cols-3 gap-3">
+        ${['Low', 'Medium', 'High'].map(v => `
         <button onclick="setPfRating('${v}')"
-          style="padding:10px;border-radius:8px;font-size:12px;font-weight:500;border:0.5px solid ${brd};background:${bg};color:${col};cursor:pointer;transition:background .1s;">
+          class="py-3 rounded-xl text-sm font-semibold border transition ${sc.pfRating === v
+            ? (v === 'High' ? 'bg-red-100 border-red-300 text-red-700' : v === 'Medium' ? 'bg-amber-100 border-amber-300 text-amber-700' : 'bg-green-100 border-green-300 text-green-700')
+            : 'border-slate-200 text-slate-500 hover:bg-slate-50'}">
           ${v}
-        </button>`;
-        }).join('')}
+        </button>`).join('')}
       </div>
 
       ${sc.pfRating ? `
-      <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:8px;padding:12px 14px;font-size:11px;color:#64748b;line-height:1.6;">
-        <span style="font-weight:500;color:#0f172a;">Why this rating: </span>
+      <div class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-500 leading-relaxed">
+        <strong class="text-slate-600">Why this rating: </strong>
         ${sc.pfRating === 'Low'
           ? 'Most accounting firms are Low PF risk. Your clients are not connected to sanctioned sectors, defence manufacturing, or dual-use technology industries.'
           : sc.pfRating === 'Medium'
@@ -108,9 +107,9 @@ export function screen() {
     </div>
 
     <!-- OVERALL RATING -->
-    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;">
-        <span style="font-size:13px;font-weight:500;color:#0f172a;">Overall Inherent Risk Rating</span>
+    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-5">
+      <div class="flex items-center gap-2">
+        <h2 class="text-sm font-bold text-slate-700">Overall Inherent Risk Rating</h2>
         ${infoBtn('or-tip')}
       </div>
       ${infoPop('or-tip', `
@@ -125,17 +124,17 @@ export function screen() {
       `)}
 
       ${!allComplete ? `
-      <div style="background:#fffbeb;border:0.5px solid #fde68a;border-radius:8px;padding:12px 14px;font-size:11px;color:#92400e;margin-bottom:12px;">
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800">
         Complete all three risk lenses and set a PF rating before your overall risk can be calculated.
       </div>` : ''}
 
-      <div style="margin-bottom:14px;">
+      <div class="pt-2">
         ${ratingRow('Overall Inherent Risk', autoOR, sc.overallRatingOverride, 'overallRatingOverride', 'overallRatingJust', sc.overallRatingJust)}
       </div>
 
       ${autoOR ? `
-      <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:8px;padding:12px 14px;font-size:11px;color:#64748b;line-height:1.6;margin-bottom:14px;">
-        <span style="font-weight:500;color:#0f172a;">What this means: </span>
+      <div class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-500 leading-relaxed">
+        <strong class="text-slate-600">What this means: </strong>
         ${autoOR === 'High'
           ? 'Your firm has high inherent ML/TF risk. Your AML/CTF program must include enhanced controls, documented risk mitigation strategies, and regular monitoring. The controls section will guide you through what is required.'
           : autoOR === 'Medium'
@@ -144,19 +143,21 @@ export function screen() {
       </div>` : ''}
 
       ${allComplete && autoOR ? `
-      <div style="border-top:0.5px solid #f1f5f9;padding-top:14px;margin-bottom:14px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-          <label style="font-size:11px;font-weight:500;color:#0f172a;" for="ra-next-review">Next review date</label>
-          <span style="font-size:11px;color:#94a3b8;">AUSTRAC expects annual review</span>
+      <div class="border-t border-slate-100 pt-4 space-y-3">
+        <div class="flex items-center justify-between mb-1">
+          <label class="text-xs font-semibold text-slate-500" for="ra-next-review">Next review date</label>
+          <span class="text-xs text-slate-400">AUSTRAC expects annual review — auto-set to +12 months</span>
         </div>
         <input id="ra-next-review" type="date" class="inp"
           value="${sc.riskNextReview || ''}"
           onchange="scopeField('riskNextReview', this.value)">
-        <p style="font-size:11px;color:#94a3b8;margin-top:6px;">The risk assessment must be reviewed at least annually, or when there is a material change to your firm's services, clients, or operating environment.</p>
+        <p class="text-xs text-slate-400">The risk assessment must be reviewed at least annually, or when there is a material change to your firm's services, clients, or operating environment.</p>
       </div>` : ''}
 
       <button onclick="saveOverallRisk()"
-        style="width:100%;font-size:13px;font-weight:500;border:none;padding:11px 16px;border-radius:8px;cursor:${allComplete && autoOR ? 'pointer' : 'not-allowed'};background:${allComplete && autoOR ? '#4f46e5' : '#f1f5f9'};color:${allComplete && autoOR ? '#fff' : '#94a3b8'};">
+        class="w-full py-3 rounded-xl font-semibold transition ${allComplete && autoOR
+          ? 'bg-indigo-600 text-white hover:bg-indigo-700 cursor-pointer'
+          : 'bg-slate-200 text-slate-400 cursor-not-allowed'}">
         Save Risk Assessment &amp; Continue to AML/CTF Program →
       </button>
     </div>
