@@ -37,7 +37,7 @@ export function screen() {
         <div>· "providing registered office address"</div>
       </div>
 
-      <div class="relative">
+      <div style="position:relative;">
         <textarea id="classifier-input" class="inp text-sm" rows="5"
           placeholder="Describe what your firm does for clients — one service per line."
           oninput="onClassifierInput(this)"
