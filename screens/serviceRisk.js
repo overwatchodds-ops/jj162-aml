@@ -19,11 +19,11 @@ export function screen() {
   const sc = S.scope;
 
   if (!sc.classifierConfirmed) {
-    return `<div class="py-8 space-y-6">
-      <h1 class="text-2xl font-bold text-slate-900">Service Risk</h1>
-      <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 text-sm text-amber-800">
+    return `<div style="max-width:680px;">
+      <div style="margin-bottom:24px;"><h1 style="font-size:20px;font-weight:500;color:#0f172a;">Service Risk</h1></div>
+      <div style="background:#fffbeb;border:0.5px solid #fde68a;border-radius:10px;padding:14px 16px;font-size:12px;color:#92400e;">
         Complete <strong>Designated Services</strong> first — your service risk rating is derived from your confirmed Table 6 services.
-        <button onclick="go('risk')" class="ml-2 underline font-semibold">Go there →</button>
+        <button onclick="go('risk')" style="margin-left:8px;font-size:12px;color:#92400e;font-weight:500;background:none;border:none;cursor:pointer;text-decoration:underline;">Go there →</button>
       </div>
     </div>`;
   }
@@ -31,18 +31,14 @@ export function screen() {
   const matched = sc.classifierMatched || [];
   const autoRating = deriveServiceRisk(matched);
 
-  return `<div class="py-8 space-y-6">
-
-    <div class="flex items-start justify-between">
-      <div>
-        <h1 class="text-2xl font-bold text-slate-900">Service Risk</h1>
-        <p class="text-sm text-slate-400 mt-1">The services you provide determine your firm's inherent exposure to ML/TF risk under AUSTRAC's framework.</p>
-      </div>
+  return `<div style="max-width:680px;">
+    <div style="margin-bottom:24px;">
+      <h1 style="font-size:20px;font-weight:500;color:#0f172a;margin-bottom:3px;">Service Risk</h1>
+      <p style="font-size:13px;color:#64748b;">The services you provide determine your firm's inherent exposure to ML/TF risk under AUSTRAC's framework.</p>
     </div>
-
-    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-5">
-      <div class="flex items-center gap-2">
-        <h2 class="text-sm font-bold text-slate-700">Your services and their risk classification</h2>
+    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;">
+        <span style="font-size:13px;font-weight:500;color:#0f172a;">Your services and their risk classification</span>
         ${infoBtn('sr-tip')}
       </div>
       ${infoPop('sr-tip', `
@@ -56,30 +52,30 @@ export function screen() {
         <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">This rating is calculated automatically from your confirmed designated services. You can override it only if your professional judgement differs — a written justification is required for audit purposes.</p>
       `)}
 
-      <div class="border border-slate-200 rounded-xl overflow-hidden">
-        <table class="w-full text-sm border-collapse">
+      <div style="border:0.5px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+        <table style="width:100%;border-collapse:collapse;">
           <thead>
-            <tr class="bg-slate-50 border-b border-slate-200">
-              <th class="text-left text-xs font-semibold text-slate-500 px-4 py-3">Task / Service</th>
-              <th class="text-left text-xs font-semibold text-slate-500 px-4 py-3 w-48">Table 6 Item</th>
+            <tr style="background:#f8fafc;border-bottom:0.5px solid #e2e8f0;">
+              <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Task / Service</th>
+              <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;width:180px;text-transform:uppercase;letter-spacing:.06em;">Table 6 Item</th>
             </tr>
           </thead>
           <tbody>
             ${matched.map(r => `
-            <tr class="border-b border-slate-50 last:border-0">
-              <td class="px-4 py-3 text-slate-700">${r.task}</td>
-              <td class="px-4 py-3 text-xs text-slate-500">${r.table6 || '—'}</td>
+            <tr style="border-bottom:0.5px solid #f1f5f9;">
+              <td style="padding:10px 14px;font-size:12px;color:#0f172a;">${r.task}</td>
+              <td style="padding:10px 14px;font-size:11px;color:#64748b;">${r.table6 || '—'}</td>
             </tr>`).join('')}
           </tbody>
         </table>
       </div>
 
-      <div class="pt-2">
+      <div style="margin-bottom:14px;">
         ${ratingRow('Service Risk Rating', autoRating, sc.serviceRatingOverride, 'serviceRatingOverride', 'serviceRatingJust', sc.serviceRatingJust)}
       </div>
 
-      <div class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-500 leading-relaxed">
-        <strong class="text-slate-600">Why this rating: </strong>
+      <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:8px;padding:12px 14px;font-size:11px;color:#64748b;line-height:1.6;margin-bottom:14px;">
+        <span style="font-weight:500;color:#0f172a;">Why this rating: </span>
         ${autoRating === 'High'
           ? 'One or more of your services involve direct control or movement of client funds, execution of business transactions, or property settlements — all considered high inherent ML/TF risk by AUSTRAC because they create direct opportunities for placement, layering, or integration of illicit funds.'
           : autoRating === 'Medium'
@@ -87,9 +83,7 @@ export function screen() {
           : 'Your designated services do not involve direct financial control or structural creation. Inherent service risk is low, though other risk lenses (customer and geography) may still elevate your overall rating.'}
       </div>
 
-      <button onclick="saveServiceRisk()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">
-        Save &amp; Continue to Customer Risk →
-      </button>
+      <button onclick="saveServiceRisk()" style="width:100%;font-size:13px;font-weight:500;color:#fff;background:#4f46e5;border:none;padding:11px 16px;border-radius:8px;cursor:pointer;">Save &amp; Continue to Customer Risk →</button>
     </div>
   </div>`;
 }
