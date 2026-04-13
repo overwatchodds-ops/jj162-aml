@@ -172,7 +172,9 @@ export function screen() {
           ${allGreen ? '✓ Fully compliant' : exceptions.length > 0 ? `${exceptions.length} item${exceptions.length > 1 ? 's' : ''} need${exceptions.length === 1 ? 's' : ''} attention` : 'Compliance in progress'}
         </div>
         <div style="font-size:13px;color:#475569;margin-bottom:10px;">
-          ${compPassed}/${compTotal} compliance obligations · ${personnelOk ? '✓' : '⚠'} personnel · ${clientsOk ? '✓' : clients.length === 0 ? '—' : '⚠'} clients
+          ${compPassed}/${compTotal} compliance obligations
+          · ${amlStaff.length === 0 ? '<span style="color:#94a3b8;">— personnel</span>' : personnelOk ? '<span style="color:#16a34a;">✓ personnel</span>' : '<span style="color:#d97706;">⚠ personnel</span>'}
+          · ${clients.length === 0 ? '<span style="color:#94a3b8;">— clients</span>' : clientsOk ? '<span style="color:#16a34a;">✓ clients</span>' : '<span style="color:#d97706;">⚠ clients</span>'}
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
           ${deadlinePassed
