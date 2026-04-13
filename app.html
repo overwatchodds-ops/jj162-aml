@@ -29,8 +29,11 @@
 <script type="module">
 // ─── IMPORTS ──────────────────────────────────────────────────────────────────
 import { S, save, load } from './state/index.js';
-import { Sidebar, TopNav, RightCol } from './components/index.js';
+import { computeSetup } from './setup-compute.js';
+import { Sidebar, TopNav } from './components/index.js';
 
+import * as ScreenHome               from './screens/home.js';
+import * as ScreenSetup              from './screens/setup.js';
 import * as ScreenDashboard          from './screens/dashboard.js';
 import * as ScreenRisk               from './screens/risk.js';
 import * as ScreenServiceRisk        from './screens/serviceRisk.js';
@@ -58,6 +61,8 @@ import * as ScreenReportsOverview    from './screens/reports-overview.js';
 
 // ─── SCREEN REGISTRY ──────────────────────────────────────────────────────────
 const Screens = {
+  home:                 ScreenHome.screen,
+  setup:                ScreenSetup.screen,
   dashboard:            ScreenDashboard.screen,
 
   // RISK FLOW
@@ -91,6 +96,7 @@ const Screens = {
 // ─── NAVIGATION ───────────────────────────────────────────────────────────────
 window.go = function(screen) {
   const sameScreen = S.currentScreen === screen;
+  computeSetup(S);
   S.currentScreen = screen; save(); render();
   if (!sameScreen) window.scrollTo(0, 0);
 };
@@ -101,8 +107,7 @@ function render() {
   document.getElementById('app').innerHTML = `
     ${Sidebar()}
     ${TopNav()}
-    ${RightCol()}
-    <main style="margin-left:224px;margin-right:256px;padding-top:48px;min-height:100vh;display:flex;justify-content:center;padding-right:24px;padding-left:24px;box-sizing:border-box;">
+    <main style="margin-left:224px;margin-right:0;padding-top:48px;min-height:100vh;display:flex;justify-content:center;padding-right:40px;padding-left:40px;box-sizing:border-box;">
       <div style="width:100%;max-width:860px;">${screenFn()}</div>
     </main>`;
 }
@@ -149,13 +154,20 @@ window.clearOverride = function(overrideKey, justKey) {
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 load();
-// New user detection — if no firm name set, redirect to Firm Profile first
-if (!S.firm?.name) {
-  S.currentScreen = 'firm-details';
+// Compute setup state on every load
+computeSetup(S);
+
+// Route new vs returning users
+const isNewUser = !S.firm?.name;
+if (isNewUser) {
+  S.currentScreen = 'setup';
+} else if (S.currentScreen === 'dashboard') {
+  S.currentScreen = 'home';
 }
 render();
+
 // Show welcome modal for brand new users
-if (!S.firm?.name) {
+if (isNewUser) {
   setTimeout(function() {
     var el = document.getElementById('welcome-backdrop');
     if (el) el.style.display = 'flex';
