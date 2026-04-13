@@ -5,19 +5,17 @@ import { infoBtn, infoPop, toast } from '../components/index.js';
 
 export function screen() {
   const sc = S.scope;
-  return `<div class="py-8 space-y-6">
+  return `<div style="max-width:760px;">
 
-    <div class="flex items-start justify-between">
-      <div>
-        <h1 class="text-2xl font-bold text-slate-900">Designated Services</h1>
-        <p class="text-sm text-slate-400 mt-1">AUSTRAC obligations only apply to firms providing designated services. This step determines whether your firm is in scope and what your program must cover.</p>
-      </div>
+    <div style="margin-bottom:24px;">
+      <h1 style="font-size:20px;font-weight:500;color:#0f172a;margin-bottom:3px;">Designated Services</h1>
+      <p style="font-size:13px;color:#64748b;">AUSTRAC obligations only apply to firms providing designated services. This step determines whether your firm is in scope.</p>
     </div>
 
     <!-- INPUT CARD -->
-    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-5">
-      <div class="flex items-center gap-2">
-        <h2 class="text-sm font-bold text-slate-700">Describe your firm's services</h2>
+    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;">
+        <span style="font-size:13px;font-weight:500;color:#0f172a;">Describe your firm's services</span>
         ${infoBtn('ds-tip')}
       </div>
       ${infoPop('ds-tip', `
@@ -32,8 +30,8 @@ export function screen() {
         <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">SimpleAML matches your description against the AUSTRAC Table 6 matrix and analyses which services are IN/OUT of scope. You then confirm the result before it is recorded.</p>
       `)}
 
-      <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-500 space-y-1">
-        <div class="font-semibold text-slate-600 mb-1">Examples:</div>
+      <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:8px;padding:12px 14px;font-size:11px;color:#94a3b8;margin-bottom:12px;">
+        <div style="font-weight:500;color:#64748b;margin-bottom:4px;">Examples:</div>
         <div>· "set up companies"</div>
         <div>· "financial statements preparation"</div>
         <div>· "providing registered office address"</div>
@@ -44,21 +42,20 @@ export function screen() {
           placeholder="Describe what your firm does for clients — one service per line."
           oninput="onClassifierInput(this)"
         >${sc.classifierInput || ''}</textarea>
-        <div id="classifier-suggestions" style="display:none;"
-          class="absolute left-0 right-0 bg-white border border-slate-200 rounded-xl shadow-lg z-10 overflow-hidden mt-1">
-          <div class="px-3 py-2 bg-slate-50 border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+        <div id="classifier-suggestions" style="display:none;position:absolute;left:0;right:0;background:#fff;border:0.5px solid #e2e8f0;border-radius:10px;z-index:10;overflow:hidden;margin-top:4px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+          <div style="padding:8px 12px;background:#f8fafc;border-bottom:0.5px solid #f1f5f9;font-size:10px;font-weight:500;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;">
             Suggested services — click to use
           </div>
-          <div id="classifier-suggestions-list" class="max-h-56 overflow-y-auto"></div>
+          <div id="classifier-suggestions-list" style="max-height:220px;overflow-y:auto;"></div>
         </div>
       </div>
-      <div id="classifier-nudge" style="display:none" class="text-xs text-amber-600 font-medium">
+      <div id="classifier-nudge" style="display:none;font-size:11px;color:#d97706;margin-top:6px;">
         Your description seems brief — the more detail you provide, the more accurate your result.
       </div>
-      <div class="text-xs text-slate-400 bg-slate-50 border border-slate-100 rounded-lg px-3 py-2">
-        💡 <strong class="text-slate-600">Tip:</strong> Type a service and select from suggestions, or describe in your own words. One service per line gives the most accurate results.
+      <div style="font-size:11px;color:#94a3b8;background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:6px;padding:8px 12px;margin-top:10px;">
+        Tip: type a service and select from suggestions, or describe in your own words. One service per line gives the most accurate results.
       </div>
-      <button onclick="runClassifier()" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">
+      <button onclick="runClassifier()" style="margin-top:12px;font-size:13px;font-weight:500;color:#fff;background:#4f46e5;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;">
         Analyse My Services →
       </button>
     </div>
@@ -73,9 +70,9 @@ function renderResults(sc) {
   if (!sc.classifierRan) return '';
   // If results are from an older classifier version, prompt re-analysis
   if ((sc.classifierVersion || 0) < CLASSIFIER_VERSION) {
-    return `<div class="bg-amber-50 border border-amber-200 rounded-xl p-5 text-sm text-amber-800">
-      <strong>Results need refreshing.</strong> The classifier has been updated since your last analysis.
-      <button onclick="runClassifier()" class="ml-2 underline font-semibold">Re-analyse now →</button>
+    return `<div style="background:#fffbeb;border:0.5px solid #fde68a;border-radius:10px;padding:14px 16px;font-size:12px;color:#92400e;">
+      Results need refreshing — the classifier has been updated since your last analysis.
+      <button onclick="runClassifier()" style="margin-left:8px;font-size:12px;color:#92400e;font-weight:500;background:none;border:none;cursor:pointer;text-decoration:underline;">Re-analyse now →</button>
     </div>`;
   }
   const matched = sc.classifierMatched || [];
@@ -87,55 +84,52 @@ function renderResults(sc) {
   // STATE 1 — IN services found
   if (matched.length > 0) {
     return `
-      <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-5">
-        <h2 class="text-sm font-bold text-slate-700">How AUSTRAC sees your firm</h2>
-        <div class="border border-slate-200 rounded-xl overflow-hidden">
-          <table class="w-full text-sm border-collapse">
+      <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+        <div style="font-size:13px;font-weight:500;color:#0f172a;margin-bottom:14px;">How AUSTRAC sees your firm</div>
+        <div style="border:0.5px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+          <table style="width:100%;border-collapse:collapse;">
             <thead>
-              <tr class="bg-slate-50 border-b border-slate-200">
-                <th class="text-left text-xs font-semibold text-slate-500 px-4 py-3">Task / Service</th>
-                <th class="text-left text-xs font-semibold text-slate-500 px-4 py-3 w-48">Table 6 Item</th>
-                <th class="text-left text-xs font-semibold text-slate-500 px-4 py-3 w-28">Status</th>
+              <tr style="background:#f8fafc;border-bottom:0.5px solid #e2e8f0;">
+                <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Task / Service</th>
+                <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;width:180px;text-transform:uppercase;letter-spacing:.06em;">Table 6 Item</th>
+                <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;width:90px;text-transform:uppercase;letter-spacing:.06em;">Status</th>
               </tr>
             </thead>
             <tbody>
               ${matched.map(r => `
-              <tr class="border-b border-slate-50 last:border-0">
-                <td class="px-4 py-3 text-slate-700">${r.task}</td>
-                <td class="px-4 py-3 text-xs text-slate-500">${r.table6 || '—'}</td>
-                <td class="px-4 py-3"><span class="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700">✓ IN</span></td>
+              <tr style="border-bottom:0.5px solid #f1f5f9;">
+                <td style="padding:10px 14px;font-size:12px;color:#0f172a;">${r.task}</td>
+                <td style="padding:10px 14px;font-size:11px;color:#64748b;">${r.table6 || '—'}</td>
+                <td style="padding:10px 14px;"><span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:#eef2ff;color:#4338ca;">In scope</span></td>
               </tr>`).join('')}
             </tbody>
           </table>
         </div>
 
         ${notDes.length > 0 ? `
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-1.5">
-          <div class="text-xs font-semibold text-slate-500 mb-1">Also mentioned — not designated services</div>
-          ${notDes.map(r => `<div class="flex items-start gap-2 text-xs text-slate-500"><span class="text-green-500 flex-shrink-0">✓</span>${r.task}</div>`).join('')}
+        <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:8px;padding:12px 14px;margin-bottom:12px;">
+          <div style="font-size:10px;font-weight:500;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Also mentioned — not designated</div>
+          ${notDes.map(r => `<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#64748b;margin-bottom:4px;"><span style="color:#16a34a;font-size:10px;">✓</span>${r.task}</div>`).join('')}
         </div>` : ''}
 
         ${hasUnrecognised ? `
-        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-2">
-          <div class="text-xs font-semibold text-amber-700">⚠ Some lines were not recognised</div>
+        <div style="background:#fffbeb;border:0.5px solid #fde68a;border-radius:8px;padding:12px 14px;margin-bottom:12px;">
+          <div style="font-size:11px;font-weight:500;color:#92400e;margin-bottom:8px;">Some lines were not recognised</div>
           ${unrecognised.map(line => `
-          <div class="flex items-start gap-2 text-xs text-amber-700">
-            <span class="flex-shrink-0 mt-0.5">·</span>
-            <span>"${line}" — we couldn't identify this service. Try selecting from the suggestions or remove it.</span>
-          </div>`).join('')}
-          <p class="text-xs text-amber-600">Edit your description above, use the suggestions as you type, and re-analyse.</p>
+          <div style="font-size:11px;color:#92400e;margin-bottom:4px;">"${line}" — we couldn't identify this service. Try selecting from the suggestions or remove it.</div>`).join('')}
+          <div style="font-size:11px;color:#b45309;margin-top:6px;">Edit above, use the suggestions as you type, and re-analyse.</div>
         </div>` : ''}
 
-        <div class="border-t border-slate-100 pt-4">
+        <div style="border-top:0.5px solid #f1f5f9;padding-top:14px;">
           ${hasUnrecognised ? `
-          <div class="text-xs text-slate-400 italic">Resolve unrecognised lines above before confirming.</div>` : `
-          <label class="flex items-start gap-3 cursor-pointer">
-            <input type="checkbox" ${sc.classifierConfirmed ? 'checked' : ''} onchange="confirmClassifier(this.checked)" class="mt-0.5 flex-shrink-0">
-            <span class="text-sm text-slate-700 leading-relaxed">I confirm this list accurately reflects the designated services my firm provides.</span>
+          <div style="font-size:11px;color:#94a3b8;font-style:italic;">Resolve unrecognised lines above before confirming.</div>` : `
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+            <input type="checkbox" ${sc.classifierConfirmed ? 'checked' : ''} onchange="confirmClassifier(this.checked)" style="margin-top:2px;flex-shrink:0;">
+            <span style="font-size:12px;color:#0f172a;line-height:1.6;">I confirm this list accurately reflects the designated services my firm provides.</span>
           </label>
-          ${sc.classifierConfirmed ? '<div class="text-xs text-green-600 font-medium mt-2">✓ Confirmed — your designated services are recorded.</div>' : ''}`}
+          ${sc.classifierConfirmed ? '<div style="font-size:11px;color:#166534;margin-top:8px;">Confirmed — your designated services are recorded.</div>' : ''}`}
         </div>
-        <p class="text-xs text-slate-400">Not quite right? Edit your description above and re-analyse — your confirmation will reset.</p>
+        <p style="font-size:11px;color:#94a3b8;margin-top:10px;">Not quite right? Edit your description above and re-analyse — your confirmation will reset.</p>
       </div>
       ${renderMLTF(sc)}`;
   }
@@ -143,56 +137,47 @@ function renderResults(sc) {
   // STATE 2 — OUT only
   if (notDes.length > 0) {
     return `
-      <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
-        <div class="bg-green-50 border border-green-200 rounded-xl p-5 space-y-3">
-          <div class="text-sm font-bold text-green-800">✓ Your services are outside AUSTRAC's designated service list</div>
-          <p class="text-sm text-green-700 leading-relaxed">The following services were identified — none are designated services under AUSTRAC Table 6. Your firm does not appear to have AML/CTF obligations for these activities.</p>
-          <div class="space-y-1.5">
-            ${notDes.map(r => `<div class="flex items-start gap-2 text-sm text-green-700"><span class="flex-shrink-0">✓</span>${r.task}</div>`).join('')}
+      <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+        <div style="background:#f0fdf4;border:0.5px solid #bbf7d0;border-radius:8px;padding:14px 16px;margin-bottom:14px;">
+          <div style="font-size:13px;font-weight:500;color:#166534;margin-bottom:6px;">Your services are outside AUSTRAC's designated service list</div>
+          <p style="font-size:12px;color:#15803d;line-height:1.6;">The following services were identified — none are designated services under AUSTRAC Table 6. Your firm does not appear to have AML/CTF obligations for these activities.</p>
+          <div style="margin-top:10px;">
+            ${notDes.map(r => `<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#15803d;margin-bottom:4px;"><span style="font-size:10px;">✓</span>${r.task}</div>`).join('')}
           </div>
         </div>
-        <p class="text-xs text-slate-400">Disclaimer: This tool is provided for guidance only and is not legal advice</p>
-
-        ${notDes.length > 0 ? `
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-1.5">
-          <div class="text-xs font-semibold text-slate-500 mb-1">Also mentioned — not designated services</div>
-          ${notDes.map(r => `<div class="flex items-start gap-2 text-xs text-slate-500"><span class="text-green-500 flex-shrink-0">✓</span>${r.task}</div>`).join('')}
-        </div>` : ''}
+        <p style="font-size:11px;color:#94a3b8;margin-bottom:14px;">This tool is provided for guidance only and is not legal advice.</p>
 
         ${hasUnrecognised ? `
-        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-2">
-          <div class="text-xs font-semibold text-amber-700">⚠ Some lines were not recognised</div>
+        <div style="background:#fffbeb;border:0.5px solid #fde68a;border-radius:8px;padding:12px 14px;margin-bottom:12px;">
+          <div style="font-size:11px;font-weight:500;color:#92400e;margin-bottom:8px;">Some lines were not recognised</div>
           ${unrecognised.map(line => `
-          <div class="flex items-start gap-2 text-xs text-amber-700">
-            <span class="flex-shrink-0 mt-0.5">·</span>
-            <span>"${line}" — we couldn't identify this service. Try selecting from the suggestions or remove it.</span>
-          </div>`).join('')}
-          <p class="text-xs text-amber-600">Edit your description above, use the suggestions as you type, and re-analyse.</p>
+          <div style="font-size:11px;color:#92400e;margin-bottom:4px;">"${line}" — we couldn't identify this service. Try selecting from the suggestions or remove it.</div>`).join('')}
+          <div style="font-size:11px;color:#b45309;margin-top:6px;">Edit above, use the suggestions as you type, and re-analyse.</div>
         </div>` : ''}
 
         ${!hasUnrecognised ? `
-        <label class="flex items-center gap-2 cursor-pointer text-sm text-slate-600">
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:10px;">
           <input type="checkbox" ${sc.noneConfirmed ? 'checked' : ''} onchange="toggleDsNone(this)">
-          <span>Confirm: my firm does not provide any designated services</span>
+          <span style="font-size:12px;color:#0f172a;">Confirm: my firm does not provide any designated services</span>
         </label>
-        ${sc.noneConfirmed ? '<div class="text-xs text-green-700 font-semibold mt-1">✓ Confirmed. Close the browser tab or Exit to Website</div>' : ''}` : ''}
-         <a href="https://simpleaml.com.au" target="_blank" rel="noopener" class="w-full text-center bg-white border border-slate-200 text-slate-400 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-50 transition block">Exit to website ↗</a>
+        ${sc.noneConfirmed ? '<div style="font-size:11px;color:#166534;margin-bottom:10px;">Confirmed — recorded.</div>' : ''}` : ''}
+        <a href="https://simpleaml.com.au" target="_blank" rel="noopener" style="display:block;text-align:center;font-size:12px;color:#94a3b8;padding:9px;border:0.5px solid #e2e8f0;border-radius:8px;text-decoration:none;">Exit to website ↗</a>
       </div>`;
   }
 
   // STATE 3 — nothing found
   return `
-    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
-      <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 space-y-3">
-        <div class="text-sm font-bold text-amber-800">⚠ We could not match your description</div>
-        <p class="text-sm text-amber-700 leading-relaxed">SimpleAML could not find your services in the AUSTRAC Table 6 matrix. This does not mean you are out of scope — try describing your services in more detail.</p>
+    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+      <div style="background:#fffbeb;border:0.5px solid #fde68a;border-radius:8px;padding:14px 16px;margin-bottom:14px;">
+        <div style="font-size:13px;font-weight:500;color:#92400e;margin-bottom:4px;">We could not match your description</div>
+        <p style="font-size:12px;color:#b45309;line-height:1.6;">SimpleAML could not find your services in the AUSTRAC Table 6 matrix. This does not mean you are out of scope — try describing your services in more detail.</p>
       </div>
-      <div class="bg-white border border-slate-200 rounded-xl p-4 text-xs text-slate-500 space-y-1.5">
-        <div class="font-semibold text-slate-600 mb-1">Try describing your services like this:</div>
-        <div>· "We set up companies and trusts for clients"</div>
-        <div>· "We act as company secretary and process payroll payments"</div>
-        <div>· "We help clients buy and sell businesses"</div>
-        <div>· "We hold client funds and pay their suppliers"</div>
+      <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:8px;padding:12px 14px;font-size:11px;color:#94a3b8;">
+        <div style="font-weight:500;color:#64748b;margin-bottom:6px;">Try describing like this:</div>
+        <div style="margin-bottom:2px;">· "set up companies and trusts"</div>
+        <div style="margin-bottom:2px;">· "company secretary, process payroll"</div>
+        <div style="margin-bottom:2px;">· "buy and sell businesses"</div>
+        <div>· "hold client funds and pay suppliers"</div>
       </div>
     </div>`;
 }
@@ -202,26 +187,24 @@ function renderMLTF(sc) {
   const risks = sc.classifierRisks || [];
   if (risks.length === 0) return '';
   return `
-    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-5">
-      <div>
-        <h2 class="text-sm font-bold text-slate-700">Identified ML/TF Risk Patterns arising from your services</h2>
-        <p class="text-xs text-slate-400 mt-1">Based on the services you described, the following money laundering and terrorism financing risks may apply to your firm.</p>
-      </div>
-      <div class="space-y-3">
+    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:500;color:#0f172a;margin-bottom:4px;">ML/TF risk patterns identified</div>
+      <p style="font-size:12px;color:#64748b;margin-bottom:14px;">Based on the services you described, the following money laundering and terrorism financing risks may apply to your firm.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
         ${risks.map(r => `
-        <div class="border border-slate-200 rounded-xl p-4 space-y-1.5">
-          <div class="text-xs font-semibold text-indigo-600">${r.label}</div>
-          <p class="text-sm text-slate-600 leading-relaxed">${r.risk}</p>
+        <div style="border:0.5px solid #e2e8f0;border-radius:8px;padding:12px 14px;">
+          <div style="font-size:11px;font-weight:500;color:#4f46e5;margin-bottom:4px;">${r.label}</div>
+          <p style="font-size:12px;color:#64748b;line-height:1.6;">${r.risk}</p>
         </div>`).join('')}
       </div>
-      <div class="border-t border-slate-100 pt-5 space-y-4">
-        <label class="flex items-start gap-3 cursor-pointer">
-          <input type="checkbox" ${sc.mltfConfirmed ? 'checked' : ''} onchange="confirmMltf(this.checked)" class="mt-0.5 flex-shrink-0">
-          <span class="text-sm text-slate-700 leading-relaxed">I confirm I have considered these ML/TF risk patterns in the context of my firm's services.</span>
+      <div style="border-top:0.5px solid #f1f5f9;padding-top:14px;">
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin-bottom:10px;">
+          <input type="checkbox" ${sc.mltfConfirmed ? 'checked' : ''} onchange="confirmMltf(this.checked)" style="margin-top:2px;flex-shrink:0;">
+          <span style="font-size:12px;color:#0f172a;line-height:1.6;">I confirm I have considered these ML/TF risk patterns in the context of my firm's services.</span>
         </label>
         ${sc.mltfConfirmed ? `
-        <div class="text-xs text-green-600 font-medium">✓ Confirmed — ML/TF risk assessment recorded.</div>
-        <button onclick="go('servicerisk')" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">
+        <div style="font-size:11px;color:#166534;margin-bottom:12px;">Confirmed — ML/TF risk assessment recorded.</div>
+        <button onclick="go('servicerisk')" style="width:100%;font-size:13px;font-weight:500;color:#fff;background:#4f46e5;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;">
           Continue to Service Risk →
         </button>` : ''}
       </div>
@@ -339,9 +322,10 @@ function showSuggestions(el) {
 
   list.innerHTML = unique.map(m => `
     <div onclick="selectSuggestion('${m.row.task.replace(/'/g, "\\'")}', ${m.isIn})"
-      class="flex items-center justify-between px-3 py-2.5 hover:bg-slate-50 cursor-pointer border-b border-slate-50 last:border-0 transition">
-      <span class="text-sm text-slate-700">${m.row.task}</span>
-      <span class="text-xs font-semibold px-2 py-0.5 rounded-full flex-shrink-0 ml-3 ${m.isIn ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}">
+      style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;cursor:pointer;border-bottom:0.5px solid #f1f5f9;transition:background .1s;"
+      onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+      <span style="font-size:12px;color:#0f172a;">${m.row.task}</span>
+      <span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;flex-shrink:0;margin-left:10px;background:${m.isIn ? '#fef2f2' : '#f0fdf4'};color:${m.isIn ? '#991b1b' : '#166534'};">
         ${m.isIn ? 'Designated' : 'Not designated'}
       </span>
     </div>`).join('');
