@@ -4,6 +4,8 @@ import { S } from '../state/index.js';
 // Maps every screen to its group. Used to derive active group from active screen.
 export const SCREEN_GROUP = {
   dashboard:            'dashboard',
+  home:                 'dashboard',
+  setup:                'dashboard',
   about:                'dashboard',
   'account-backup':     'dashboard',
   'firm-details':       'compliance',
@@ -34,7 +36,7 @@ export const SCREEN_GROUP = {
 export function TopNav() {
   const activeGroup = SCREEN_GROUP[S.currentScreen] || 'dashboard';
   const tabs = [
-    { id: 'dashboard',  label: 'Action Required', screen: 'dashboard' },
+    { id: 'dashboard',  label: 'Home', screen: 'home' },
 
     { id: 'compliance', label: 'Compliance',  screen: 'compliance-overview' },
     { id: 'personnel',  label: 'Personnel',   screen: 'personnel-overview' },
@@ -42,7 +44,7 @@ export function TopNav() {
     { id: 'reports',    label: 'Reports',     screen: 'reports-overview' },
   ];
   return `
-    <nav class="fixed z-50 bg-white border-b border-slate-200 h-12 flex items-center px-4" style="left:224px;right:256px;">
+    <nav class="fixed z-50 bg-white border-b border-slate-200 h-12 flex items-center px-4" style="left:224px;right:0;">
 
       <!-- CENTRE: Nav tabs -->
       <div class="flex-1 flex items-center justify-center gap-1">
@@ -79,7 +81,7 @@ export function Sidebar() {
     : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700';
   const sidebarItems = {
     dashboard: `
-      <button onclick="go('dashboard')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('dashboard')}">Overview</button>`,
+      <button onclick="go('home')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('home') || a('dashboard')}">Home</button>`,
 
     compliance: `
       <button onclick="go('compliance-overview')" class="w-full text-left px-3 py-2 rounded-lg transition ${a('compliance-overview')}">Overview</button>
