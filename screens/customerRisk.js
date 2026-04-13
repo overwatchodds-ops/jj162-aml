@@ -45,15 +45,19 @@ export function screen() {
     },
   ];
 
-  return `<div style="max-width:680px;">
-    <div style="margin-bottom:24px;">
-      <h1 style="font-size:20px;font-weight:500;color:#0f172a;margin-bottom:3px;">Customer Risk</h1>
-      <p style="font-size:13px;color:#64748b;">Who you act for directly affects the likelihood that your services could be misused. Some client types require enhanced due diligence regardless of the service provided.</p>
+  return `<div class="py-8 space-y-6">
+
+    <div class="flex items-start justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-slate-900">Customer Risk</h1>
+        <p class="text-sm text-slate-400 mt-1">Who you act for directly affects the likelihood that your services could be misused. Some client types require enhanced due diligence regardless of the service provided.</p>
+      </div>
     </div>
-    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;">
-        <span style="font-size:13px;font-weight:500;color:#0f172a;">Your client base</span>
-        ${infoBtn('cr-tip'}
+
+    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-5">
+      <div class="flex items-center gap-2">
+        <h2 class="text-sm font-bold text-slate-700">Your client base</h2>
+        ${infoBtn('cr-tip')}
       </div>
       ${infoPop('cr-tip', `
         <strong class="text-indigo-300 block mb-2">How to assess customer risk</strong>
@@ -62,35 +66,35 @@ export function screen() {
         <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">Your customer risk rating is one of three inputs to your overall inherent risk rating. It does not stand alone — a High customer rating combined with Low service and geography ratings will produce a Medium overall rating.</p>
       `)}
 
-      <p style="font-size:11px;color:#94a3b8;margin-bottom:12px;">Tick every client type your firm commonly services.</p>
+      <p class="text-xs text-slate-400">Tick every client type your firm commonly services. Each item shows why that client type carries the risk level assigned.</p>
 
-      <div>
+      <div class="space-y-2">
         ${clients.map(({ id, name, why, level }) => {
           const checked = (sc.clientChecks || []).includes(id);
-          const borderCol = checked ? (level === 'High' ? '#fecaca' : level === 'Medium' ? '#fde68a' : '#bbf7d0') : '#e2e8f0';
-          const bgCol = checked ? (level === 'High' ? '#fef2f2' : level === 'Medium' ? '#fffbeb' : '#f0fdf4') : '#fff';
-          const pillBg = level === 'High' ? '#fef2f2' : level === 'Medium' ? '#fffbeb' : '#f0fdf4';
-          const pillCol = level === 'High' ? '#991b1b' : level === 'Medium' ? '#92400e' : '#166534';
+          const bg = checked
+            ? (level === 'High' ? 'bg-red-50 border-red-200' : level === 'Medium' ? 'bg-amber-50 border-amber-200' : 'bg-green-50 border-green-200')
+            : 'border-slate-200';
+          const badge = level === 'High' ? 'bg-red-100 text-red-700' : level === 'Medium' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700';
           return `
-          <label style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:0.5px solid ${borderCol};border-radius:10px;cursor:pointer;background:${bgCol};margin-bottom:6px;transition:background .1s;">
-            <input type="checkbox" style="margin-top:2px;flex-shrink:0;" ${checked ? 'checked' : ''} onchange="toggleCheck('clientChecks','${id}',this)">
+          <label class="flex items-start gap-3 p-4 border rounded-xl cursor-pointer hover:bg-slate-50 transition ${bg}">
+            <input type="checkbox" class="mt-0.5 flex-shrink-0" ${checked ? 'checked' : ''} onchange="toggleCheck('clientChecks','${id}',this)">
             <div class="flex-1">
-              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px;">
-                <div style="font-size:12px;font-weight:500;color:#0f172a;">${name}</div>
-                <span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;flex-shrink:0;background:${pillBg};color:${pillCol};">${level}</span>
+              <div class="flex items-center justify-between gap-2">
+                <div class="text-sm font-medium text-slate-700">${name}</div>
+                <span class="text-xs px-2 py-0.5 rounded-full font-semibold flex-shrink-0 ${badge}">${level}</span>
               </div>
-              <div style="font-size:11px;color:#94a3b8;line-height:1.5;">${why}</div>
+              <div class="text-xs text-slate-400 mt-1 leading-relaxed">${why}</div>
             </div>
           </label>`;
         }).join('')}
       </div>
 
-      <div style="margin-bottom:14px;">
+      <div class="pt-2">
         ${ratingRow('Customer Risk Rating', autoCR, sc.clientRatingOverride, 'clientRatingOverride', 'clientRatingJust', sc.clientRatingJust)}
       </div>
 
-      <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:8px;padding:12px 14px;font-size:11px;color:#64748b;line-height:1.6;margin-bottom:14px;">
-        <span style="font-weight:500;color:#0f172a;">Why this rating: </span>
+      <div class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-500 leading-relaxed">
+        <strong class="text-slate-600">Why this rating: </strong>
         ${autoCR === 'High'
           ? 'Your client base includes international clients, PEPs, or cash-intensive industries — all of which AUSTRAC considers to carry elevated ML/TF exposure requiring enhanced due diligence.'
           : autoCR === 'Medium'
@@ -98,7 +102,9 @@ export function screen() {
           : 'Your clients are primarily local individuals and standard SMEs. Standard CDD procedures apply with no elevated monitoring requirements from a customer risk perspective.'}
       </div>
 
-      <button onclick="saveCustomerRisk()" style="width:100%;font-size:13px;font-weight:500;color:#fff;background:#4f46e5;border:none;padding:11px 16px;border-radius:8px;cursor:pointer;">Save &amp; Continue to Geography Risk →</button>
+      <button onclick="saveCustomerRisk()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">
+        Save &amp; Continue to Geography Risk →
+      </button>
     </div>
   </div>`;
 }
