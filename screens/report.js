@@ -20,7 +20,7 @@ export function screen() {
       <div class="bg-white border rounded-xl p-5 space-y-3">
         <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest">What this report contains</h2>
         <div class="space-y-1 text-xs text-slate-500">
-          ${['1. Firm profile — practice details and compliance appointments','2. AML/CTF risk assessment — designated services, inherent risk ratings, risk appetite','3. AML/CTF Program — documents, approval history','4. AUSTRAC enrolment — controls declaration, residual risk, enrolment details','5. Staff assessment & vetting — Key Personnel, fit & proper checks','6. AML/CTF training register — training records for AML/CTF staff','7. Client register — CDD status, entity types, new/ongoing/dormant summary','8. SMR & incident register — suspicious matter reports and threshold transactions'].map(item=>`<div class="flex items-start gap-2"><span class="text-indigo-400 flex-shrink-0">→</span>${item}</div>`).join('')}
+          ${['1. Firm profile — practice details and compliance appointments','2. AML/CTF risk assessment — designated services, inherent risk ratings, risk appetite','3. AML/CTF Program — documents, approval history','4. AUSTRAC enrolment — enrolment confirmation','5. Staff assessment & vetting — Key Personnel, fit & proper checks','6. AML/CTF training register — training records for AML/CTF staff','7. Client register — CDD status, entity types, new/ongoing/dormant summary','8. SMR & incident register — suspicious matter reports and threshold transactions'].map(item=>`<div class="flex items-start gap-2"><span class="text-indigo-400 flex-shrink-0">→</span>${item}</div>`).join('')}
         </div>
       </div>
 
@@ -335,38 +335,6 @@ window.generatePDF = window.generateReport = function() {
       ${trainRows.join('')}
     </table>` : `<p style="font-size:11px;color:#94a3b8;">No training records for active AML/CTF staff.</p>`);
 
-  // ── SECTION 6: ENROLMENT & CONTROLS ─────────────────────────────────────
-  const declaredControls = e.controls||[];
-  const autoCtrls = {
-    'ctrl-program':   !!(p.approvedBy&&p.approvedDate),
-    'ctrl-amlco':     !!(f.appt&&f.appt.amlco&&f.appt.amlco.name),
-    'ctrl-training':  S.training.length > 0,
-    'ctrl-dvs':       !!(p.approvedBy),
-    'ctrl-screening': !!(p.approvedBy),
-    'ctrl-review':    !!(p.nextReview),
-    'ctrl-ongoing':   false,
-  };
-  const CTRL_LABELS = {
-    'ctrl-program':'AML/CTF Program approved by senior manager',
-    'ctrl-amlco':'AMLCO appointed and oversight operational',
-    'ctrl-training':'AML/CTF staff training policy in place',
-    'ctrl-dvs':'Customer identification procedure in place',
-    'ctrl-screening':'Sanctions / PEP screening procedure in place',
-    'ctrl-review':'Annual program review scheduled',
-    'ctrl-ongoing':'Ongoing client monitoring process in place',
-  };
-  const ctrlRows = Object.entries(CTRL_LABELS).map(([id,label],i) => {
-    const evidenced = autoCtrls[id];
-    const declared = declaredControls.includes(id) || evidenced;
-    return tr([
-      label,
-      declared ? '<span style="color:#16a34a;font-weight:600;">✓ Declared</span>' : '<span style="color:#94a3b8;">Not declared</span>',
-      evidenced ? '<span style="color:#16a34a;">Evidenced in SimpleAML</span>' : '<span style="color:#94a3b8;">Manual declaration</span>'
-    ], i%2);
-  });
-  const declaredCount = Object.keys(CTRL_LABELS).filter(id => declaredControls.includes(id) || autoCtrls[id]).length;
-  const residualRisk = declaredCount >= 6 ? 'Low' : declaredCount >= 4 ? 'Medium' : inherentRisk;
-
   // ── SECTION 6: SMR / INCIDENT REGISTER ─────────────────────────────────
   const totalInc    = (S.incidents||[]).length;
   const openInc     = (S.incidents||[]).filter(i => !i.status || i.status === 'Open').length;
@@ -383,31 +351,11 @@ window.generatePDF = window.generateReport = function() {
     </table>
     ${totalInc === 0 ? '<p style="font-size:11px;color:#94a3b8;font-style:italic;">No incidents recorded at the time of this report.</p>' : ''}`;
 
-    const sec7 = section('4','AUSTRAC Enrolment & Controls Declaration') + `
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;">
-      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:10px;text-align:center;">
-        <div style="font-size:18px;font-weight:800;color:#1e293b;">${badge(inherentRisk)}</div>
-        <div style="font-size:10px;color:#94a3b8;margin-top:4px;">Inherent risk</div>
-      </div>
-      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:10px;text-align:center;">
-        <div style="font-size:18px;font-weight:800;color:#1e293b;">${declaredCount}</div>
-        <div style="font-size:10px;color:#94a3b8;margin-top:4px;">Controls declared</div>
-      </div>
-      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:10px;text-align:center;">
-        <div style="font-size:18px;font-weight:800;">${badge(residualRisk)}</div>
-        <div style="font-size:10px;color:#94a3b8;margin-top:4px;">Residual risk</div>
-      </div>
-    </div>
-    <table style="width:100%;border-collapse:collapse;margin-bottom:14px;">
-      ${th(['Control','Status','Evidence'])}
-      ${ctrlRows.join('')}
-    </table>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;">
-      ${field('Enrolled with AUSTRAC', e.enrolled?'Yes':'No')}
-      ${field('Date enrolled', e.enrolledDate)}
-      ${field('AUSTRAC reference', e.refNumber)}
-      ${field('Enrolled by', e.enrolledBy)}
-      ${field('AMLCO notified date', e.amlcoDate)}
+    const sec7 = section('4','AUSTRAC Enrolment') + `
+    <p style="font-size:11px;color:#64748b;margin-bottom:12px;line-height:1.7;">Enrolment with AUSTRAC is required before providing designated services from 1 July 2026. Enrolment is completed directly in AUSTRAC Online and cannot be verified by SimpleAML — this section records your confirmation.</p>
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;">
+      ${field('Enrolled with AUSTRAC', e.enrolled ? '<span style="color:#16a34a;font-weight:600;">✓ Confirmed</span>' : '<span style="color:#dc2626;font-weight:600;">⚠ Not yet confirmed</span>')}
+      ${field('AUSTRAC reference', e.refNumber || 'Not recorded')}
     </div>`;
 
   // ── SECTION 7: CLIENT REGISTER ──────────────────────────────────────────
@@ -622,7 +570,7 @@ window.generatePDF = window.generateReport = function() {
           '1. Firm Profile — practice details and compliance appointments',
           '2. AML/CTF Risk Assessment — designated services, inherent risk ratings, risk appetite',
           '3. AML/CTF Program — documents, approval history',
-          '4. AUSTRAC Enrolment — controls declaration, residual risk, enrolment details',
+          '4. AUSTRAC Enrolment — enrolment confirmation',
           '5. Staff Assessment &amp; Vetting — Key Personnel, fit &amp; proper checks',
           '6. AML/CTF Training Register — training records for AML/CTF staff',
           '7. Client Register — CDD status, entity types, new/ongoing/dormant summary',
