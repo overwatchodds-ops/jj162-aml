@@ -55,7 +55,7 @@ export function screen() {
         </div>
         <div><label class="text-xs text-slate-500">Training date *</label><input id="tr-date" type="date" class="inp mt-1" value="${d.date||''}" onchange="autoSetTrainingNext(this.value)"></div>
         <div class="col-span-2"><label class="text-xs text-slate-500">Provider / course *</label><textarea id="tr-provider" class="inp mt-1" rows="3" placeholder="e.g. AUSTRAC online module — March 2026&#10;In-house refresher — September 2026">${d.provider||''}</textarea><p class="text-xs text-slate-400 mt-1">List all training completed — one per line if multiple.</p></div>
-        <div class="col-span-2"><label class="text-xs text-slate-500">Certificate / Storage location</label><input id="tr-score" type="text" class="inp mt-1" value="${d.score||''}" placeholder="e.g. SharePoint > Staff > Training > Chris Wong — AUSTRAC 2026.pdf"></div>
+        <div class="col-span-2"><label class="text-xs text-slate-500">Certificate / Storage location</label><input id="tr-score" type="text" class="inp mt-1" value="${d.score||''}" placeholder="e.g. SharePoint > Staff > Training > John Doe — AUSTRAC 2026.pdf"></div>
         <div>
           <label class="text-xs text-slate-500">Next due <span class="text-indigo-400 font-normal">(auto-set to +1 year — override allowed)</span></label>
           <input id="tr-next" type="date" class="inp mt-1" value="${d.next||''}">
