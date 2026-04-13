@@ -273,7 +273,13 @@ function render() {
   ];
   const readinessScore = Math.round(scoreChecks.filter(Boolean).length / scoreChecks.length * 100);
 
-  const dsTicked = (sc.services || []).map(id => DS_LIST.find(d => d.id === id)?.name).filter(Boolean);
+  // Read designated services from new classifier (classifierMatched) with fallback to old checkbox system
+  const dsTicked = sc.classifierMatched && sc.classifierMatched.length
+    ? sc.classifierMatched.map(r => r.task).filter(Boolean)
+    : (sc.services || []).map(id => DS_LIST ? DS_LIST.find(d => d.id === id)?.name : null).filter(Boolean);
+  const dsNotDesignated = sc.classifierNotDesignated && sc.classifierNotDesignated.length
+    ? sc.classifierNotDesignated.map(r => r.task).filter(Boolean)
+    : [];
   const riskAppetite = sc.riskAppetite || '';
   const pfNarrative = sc.pfText || '';
   const geoNarrative = geoRisk === 'High'
@@ -371,7 +377,16 @@ function render() {
 
     <div class="section">
       <div class="section-title"><span class="section-num">02</span><h2>Risk Assessment</h2></div>
-      <div class="grid-2" style="margin-bottom:10px;">
+
+      <div class="label" style="margin-bottom:6px;">Designated Services</div>
+      ${sc.noneConfirmed
+        ? '<div class="small" style="color:#16a34a;font-weight:600;margin-bottom:10px;">Firm has confirmed it does not provide designated services — not in scope.</div>'
+        : dsTicked.length
+          ? `<ul class="list small" style="margin-bottom:6px;">${dsTicked.map(n => `<li>${esc(n)}</li>`).join('')}</ul>`
+          : '<div class="empty small" style="margin-bottom:10px;">No designated services recorded.</div>'}
+      ${dsNotDesignated.length ? `<div class="small muted" style="margin-bottom:10px;">Also mentioned (not designated): ${dsNotDesignated.map(n => esc(n)).join(', ')}</div>` : ''}
+
+      <div class="grid-2" style="margin-bottom:10px;margin-top:14px;">
         <div>
           ${field('Service risk', badge(serviceRisk))}
           ${field('Customer risk', badge(clientRisk))}
@@ -404,18 +419,12 @@ function render() {
       </div>
       <div class="label" style="margin:12px 0 6px;">Risk appetite</div>
       ${narrative(riskAppetite)}
-      <div class="label" style="margin:12px 0 6px;">Key controls & mitigants</div>
+      <div class="label" style="margin:12px 0 6px;">Key controls &amp; mitigants</div>
       ${narrative(controlsNarrative)}
     </div>
 
     <div class="section">
-      <div class="section-title"><span class="section-num">03</span><h2>Designated Services</h2></div>
-      ${sc.noneConfirmed ? '<div class="small" style="color:#16a34a;font-weight:600;">Firm has confirmed it does not provide designated services.</div>' : ''}
-      ${dsTicked.length ? `<ul class="list small">${dsTicked.map(n => `<li>${esc(n)}</li>`).join('')}</ul>` : '<div class="empty small">No designated services recorded.</div>'}
-    </div>
-
-    <div class="section">
-      <div class="section-title"><span class="section-num">04</span><h2>AML/CTF Program</h2></div>
+      <div class="section-title"><span class="section-num">03</span><h2>AML/CTF Program</h2></div>
       <div class="grid-2">
         <div>
           ${field('Approved by', esc(p.approvedBy || 'Not recorded'))}
@@ -451,7 +460,7 @@ function render() {
     </div>
 
     <div class="section">
-      <div class="section-title"><span class="section-num">05</span><h2>AUSTRAC Enrolment</h2></div>
+      <div class="section-title"><span class="section-num">04</span><h2>AUSTRAC Enrolment</h2></div>
       <div class="grid-2">
         <div>
           ${field('Enrolled with AUSTRAC', e.enrolled ? '<span class="badge b-ok">Confirmed</span>' : '<span class="badge b-warn">Not yet confirmed</span>')}
@@ -465,7 +474,7 @@ function render() {
     </div>
 
     <div class="section page-break">
-      <div class="section-title"><span class="section-num">06</span><h2>Staff Assessment & Vetting</h2></div>
+      <div class="section-title"><span class="section-num">05</span><h2>Staff Assessment &amp; Vetting</h2></div>
       <div class="grid-3" style="margin-bottom:10px;">
         <div class="card"><div class="label">Active staff</div><div class="metric">${activeStaff.length}</div></div>
         <div class="card"><div class="label">Key personnel</div><div class="metric">${keyStaff.length}</div></div>
@@ -490,7 +499,7 @@ function render() {
     </div>
 
     <div class="section">
-      <div class="section-title"><span class="section-num">07</span><h2>Training Register</h2></div>
+      <div class="section-title"><span class="section-num">06</span><h2>Training Register</h2></div>
       <div class="grid-3" style="margin-bottom:10px;">
         <div class="card"><div class="label">Training records</div><div class="metric">${activeTraining.length}</div></div>
         <div class="card"><div class="label">Overdue training</div><div class="metric">${overdueTraining.length}</div></div>
@@ -515,7 +524,7 @@ function render() {
     </div>
 
     <div class="section page-break">
-      <div class="section-title"><span class="section-num">08</span><h2>Client Register Summary</h2></div>
+      <div class="section-title"><span class="section-num">07</span><h2>Client Register Summary</h2></div>
       <div class="grid-3" style="margin-bottom:10px;">
         <div class="card"><div class="label">Active clients</div><div class="metric">${activeClients.length}</div></div>
         <div class="card"><div class="label">New clients (12 months)</div><div class="metric">${newClients.length}</div></div>
@@ -547,7 +556,7 @@ function render() {
     </div>
 
     <div class="section">
-      <div class="section-title"><span class="section-num">09</span><h2>SMR & Incident Register</h2></div>
+      <div class="section-title"><span class="section-num">08</span><h2>SMR &amp; Incident Register</h2></div>
       <div class="grid-3" style="margin-bottom:10px;">
         <div class="card"><div class="label">Total incidents</div><div class="metric">${incidents.length}</div></div>
         <div class="card"><div class="label">Open incidents</div><div class="metric">${incidents.filter(i => !i.status || i.status === 'Open').length}</div></div>
