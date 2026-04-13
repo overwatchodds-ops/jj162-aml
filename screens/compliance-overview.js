@@ -15,7 +15,7 @@ export function screen() {
 
   // ── FIRM PROFILE STATUS ───────────────────────────────────────────────────
   const f = S.firm || {};
-  const firmComplete = !!(f.name && f.contactName && f.contactEmail && f.contactEmail.includes('@'));
+  const firmComplete = !!(f.name && f.savedDate);
 
   // ── APPOINTMENTS STATUS ──────────────────────────────────────────────────
   const appt = S.firm?.appt || {};
@@ -92,7 +92,7 @@ export function screen() {
 
     ${allOk ? `
     <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-800 font-medium">
-      ✓ All three compliance obligations are complete and current.
+      ✓ All compliance obligations are complete and current.
     </div>` : ''}
 
     <!-- STATUS TABLE -->
@@ -108,13 +108,25 @@ export function screen() {
           </tr>
         </thead>
         <tbody>
-          ${row(
-            'Firm Profile',
-            firmComplete, false,
-            f.savedDate || null, null,
-            'firm-details',
-            'Enter your practice name, contact details and email'
-          )}
+          <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition cursor-pointer" onclick="go('firm-details')">
+            <td class="px-5 py-4 font-semibold text-slate-700 text-sm">Firm Profile</td>
+            <td class="px-5 py-4">
+              ${firmComplete
+                ? '<span class="text-xs font-semibold text-green-700">✓ Complete</span>'
+                : '<span class="text-xs font-semibold text-red-600">⚠ Incomplete</span>'}
+            </td>
+            <td class="px-5 py-4">
+              ${f.savedDate
+                ? `<span class="text-xs text-slate-500">${fmtDate(f.savedDate)}</span>`
+                : '<span class="text-xs text-slate-300">—</span>'}
+            </td>
+            <td class="px-5 py-4"><span class="text-xs text-slate-400 italic">No review required</span></td>
+            <td class="px-5 py-4 text-right">
+              <button onclick="event.stopPropagation();go('firm-details')" class="text-xs text-indigo-600 font-semibold hover:text-indigo-800">
+                ${firmComplete ? 'Review →' : 'Complete →'}
+              </button>
+            </td>
+          </tr>
           ${row(
             'Appointments',
             apptComplete, apptOverdue,
