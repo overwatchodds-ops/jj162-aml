@@ -75,11 +75,11 @@ function partAFields(d) {
   const t = d.entityType;
   const cfg = ENTITY_CONFIG[t] || ENTITY_CONFIG['Other'];
   const f = (label, id, val, placeholder, type) =>
-    `<div><label class="text-xs text-slate-500">${label}</label><input id="${id}" type="${type||'text'}" class="inp mt-1" value="${val||''}" placeholder="${placeholder||''}"></div>`;
+    `<div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">${label}</label><input id="${id}" type="${type||'text'}" class="inp" value="${val||''}" placeholder="${placeholder||''}"></div>`;
 
   if (cfg.partAFields === 'individual') return `
-    <div class="grid grid-cols-2 gap-4">
-      <div class="col-span-2"><label class="text-xs text-slate-500">Full legal name *</label><input id="cl-name" type="text" class="inp mt-1" value="${d.name||''}" placeholder="e.g. Jane Elizabeth Smith"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="grid-column:1/-1;"><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Full legal name *</label><input id="cl-name" type="text" class="inp" value="${d.name||''}" placeholder="e.g. Jane Elizabeth Smith"></div>
       ${f('Date of birth','cl-dob',d.dob,'','date')}
       ${f('Residential address','cl-reg-address',d.regAddress,'12 Main St, Sydney NSW 2000')}
       ${f('ABN (if sole trader)','cl-abn',d.abn,'12 345 678 901')}
@@ -88,8 +88,8 @@ function partAFields(d) {
     </div>`;
 
   if (cfg.partAFields === 'company') return `
-    <div class="grid grid-cols-2 gap-4">
-      <div class="col-span-2"><label class="text-xs text-slate-500">Entity / trading name *</label><input id="cl-name" type="text" class="inp mt-1" value="${d.name||''}" placeholder="e.g. Acme Holdings Pty Ltd"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="grid-column:1/-1;"><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Entity / trading name *</label><input id="cl-name" type="text" class="inp" value="${d.name||''}" placeholder="e.g. Acme Holdings Pty Ltd"></div>
       ${f('ABN *','cl-abn',d.abn,'12 345 678 901')}
       ${f('ACN','cl-acn',d.acn,'123 456 789')}
       ${f('Registered address','cl-reg-address',d.regAddress,'123 Collins St, Melbourne VIC 3000')}
@@ -99,21 +99,21 @@ function partAFields(d) {
       ${f('Industry / sector','cl-industry',d.industry,'e.g. Construction, Finance, Retail')}
       ${f('Source of funds / wealth','cl-source-funds',d.sourceFunds,'e.g. Operating revenue, investment income')}
     </div>
-    <div class="mt-4 bg-slate-50 border border-slate-200 rounded-xl p-4">
-      <div class="text-xs font-semibold text-slate-600 mb-2">Verification attestation</div>
-      <div class="space-y-2">
-        <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-abn-checked" ${d.abnChecked?'checked':''} onchange="cdDraftCheck('abnChecked',this.checked)"> ABN / ASIC registration confirmed via lookup</label>
-        <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-registry-checked" ${d.registryChecked?'checked':''} onchange="cdDraftCheck('registryChecked',this.checked)"> Share registry / company constitution sighted</label>
-        <div><label class="text-xs text-slate-500">Document storage location</label><input id="cl-doc-location" type="text" class="inp mt-1 text-xs" value="${d.docLocation||''}" placeholder="e.g. SharePoint > Clients > Acme Holdings > CDD"></div>
+    <div style="margin-top:14px;background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:10px;padding:14px 16px;">
+      <div style="font-size:11px;font-weight:500;color:#0f172a;margin-bottom:8px;">Verification attestation</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <label style="display:flex;align-items:center;gap:8px;font-size:11px;cursor:pointer;"><input type="checkbox" id="cl-abn-checked" ${d.abnChecked?'checked':''} onchange="cdDraftCheck('abnChecked',this.checked)"> ABN / ASIC registration confirmed via lookup</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:11px;cursor:pointer;"><input type="checkbox" id="cl-registry-checked" ${d.registryChecked?'checked':''} onchange="cdDraftCheck('registryChecked',this.checked)"> Share registry / company constitution sighted</label>
+        <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Document storage location</label><input id="cl-doc-location" type="text" class="inp" value="${d.docLocation||''}" placeholder="e.g. SharePoint > Clients > Acme Holdings > CDD"></div>
       </div>
     </div>`;
 
   if (cfg.partAFields === 'trust') return `
-    <div class="grid grid-cols-2 gap-4">
-      <div class="col-span-2"><label class="text-xs text-slate-500">Trust name *</label><input id="cl-name" type="text" class="inp mt-1" value="${d.name||''}" placeholder="e.g. Smith Family Trust"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="grid-column:1/-1;"><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Trust name *</label><input id="cl-name" type="text" class="inp" value="${d.name||''}" placeholder="e.g. Smith Family Trust"></div>
       ${f('ABN / TFN','cl-abn',d.abn,'12 345 678 901')}
-      <div><label class="text-xs text-slate-500">Trust type *</label>
-        <select id="cl-trust-type" class="inp mt-1">
+      <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Trust type *</label>
+        <select id="cl-trust-type" class="inp">
           ${['Discretionary / Family','Unit Trust','Hybrid','Charitable','Testamentary','Other'].map(o=>`<option ${d.trustType===o?'selected':''}>${o}</option>`).join('')}
         </select>
       </div>
@@ -121,39 +121,39 @@ function partAFields(d) {
       ${f('Source of funds / wealth','cl-source-funds',d.sourceFunds,'e.g. Investment income, property')}
       ${f('Purpose of trust','cl-trust-purpose',d.trustPurpose,'e.g. Property holding, investment management')}
     </div>
-    <div class="mt-4 bg-slate-50 border border-slate-200 rounded-xl p-4">
-      <div class="text-xs font-semibold text-slate-600 mb-2">Verification attestation</div>
-      <div class="space-y-2">
-        <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-deed-sighted" ${d.deedSighted?'checked':''} onchange="cdDraftCheck('deedSighted',this.checked)"> Trust deed sighted and reviewed</label>
-        <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-abn-checked" ${d.abnChecked?'checked':''} onchange="cdDraftCheck('abnChecked',this.checked)"> ABN / TFN confirmed</label>
-        <div><label class="text-xs text-slate-500">Document storage location</label><input id="cl-doc-location" type="text" class="inp mt-1 text-xs" value="${d.docLocation||''}" placeholder="e.g. SharePoint > Clients > Smith Family Trust > CDD"></div>
+    <div style="margin-top:14px;background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:10px;padding:14px 16px;">
+      <div style="font-size:11px;font-weight:500;color:#0f172a;margin-bottom:8px;">Verification attestation</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <label style="display:flex;align-items:center;gap:8px;font-size:11px;cursor:pointer;"><input type="checkbox" id="cl-deed-sighted" ${d.deedSighted?'checked':''} onchange="cdDraftCheck('deedSighted',this.checked)"> Trust deed sighted and reviewed</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:11px;cursor:pointer;"><input type="checkbox" id="cl-abn-checked" ${d.abnChecked?'checked':''} onchange="cdDraftCheck('abnChecked',this.checked)"> ABN / TFN confirmed</label>
+        <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Document storage location</label><input id="cl-doc-location" type="text" class="inp" value="${d.docLocation||''}" placeholder="e.g. SharePoint > Clients > Smith Family Trust > CDD"></div>
       </div>
     </div>`;
 
   if (cfg.partAFields === 'smsf') return `
-    <div class="grid grid-cols-2 gap-4">
-      <div class="col-span-2"><label class="text-xs text-slate-500">Fund name *</label><input id="cl-name" type="text" class="inp mt-1" value="${d.name||''}" placeholder="e.g. Smith Superannuation Fund"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="grid-column:1/-1;"><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Fund name *</label><input id="cl-name" type="text" class="inp" value="${d.name||''}" placeholder="e.g. Smith Superannuation Fund"></div>
       ${f('ABN *','cl-abn',d.abn,'12 345 678 901')}
-      <div><label class="text-xs text-slate-500">Trustee type *</label>
-        <select id="cl-trustee-type" class="inp mt-1">
+      <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Trustee type *</label>
+        <select id="cl-trustee-type" class="inp">
           ${['Individual Trustees','Corporate Trustee'].map(o=>`<option ${d.trusteeType===o?'selected':''}>${o}</option>`).join('')}
         </select>
       </div>
       ${f('Source of contributions','cl-source-funds',d.sourceFunds,'e.g. Salary sacrifice, rollover')}
     </div>
-    <div class="mt-4 bg-slate-50 border border-slate-200 rounded-xl p-4">
-      <div class="text-xs font-semibold text-slate-600 mb-2">Verification attestation</div>
-      <div class="space-y-2">
-        <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-abn-checked" ${d.abnChecked?'checked':''} onchange="cdDraftCheck('abnChecked',this.checked)"> ATO registration confirmed (ABN lookup)</label>
-        <label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" id="cl-fund-active" ${d.fundActive?'checked':''} onchange="cdDraftCheck('fundActive',this.checked)"> Fund confirmed as active and compliant</label>
-        <div><label class="text-xs text-slate-500">Document storage location</label><input id="cl-doc-location" type="text" class="inp mt-1 text-xs" value="${d.docLocation||''}" placeholder="e.g. SharePoint > Clients > Smith SMSF > CDD"></div>
+    <div style="margin-top:14px;background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:10px;padding:14px 16px;">
+      <div style="font-size:11px;font-weight:500;color:#0f172a;margin-bottom:8px;">Verification attestation</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <label style="display:flex;align-items:center;gap:8px;font-size:11px;cursor:pointer;"><input type="checkbox" id="cl-abn-checked" ${d.abnChecked?'checked':''} onchange="cdDraftCheck('abnChecked',this.checked)"> ATO registration confirmed (ABN lookup)</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:11px;cursor:pointer;"><input type="checkbox" id="cl-fund-active" ${d.fundActive?'checked':''} onchange="cdDraftCheck('fundActive',this.checked)"> Fund confirmed as active and compliant</label>
+        <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Document storage location</label><input id="cl-doc-location" type="text" class="inp" value="${d.docLocation||''}" placeholder="e.g. SharePoint > Clients > Smith SMSF > CDD"></div>
       </div>
     </div>`;
 
   // Other
   return `
-    <div class="grid grid-cols-2 gap-4">
-      <div class="col-span-2"><label class="text-xs text-slate-500">Entity name *</label><input id="cl-name" type="text" class="inp mt-1" value="${d.name||''}" placeholder="Entity name"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="grid-column:1/-1;"><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Entity name *</label><input id="cl-name" type="text" class="inp" value="${d.name||''}" placeholder="Entity name"></div>
       ${f('ABN / registration number','cl-abn',d.abn,'')}
       ${f('Registered address','cl-reg-address',d.regAddress,'')}
       ${f('Jurisdiction','cl-jurisdiction',d.jurisdiction,'e.g. Australia')}
@@ -168,72 +168,72 @@ function individualCard(ind, i, roles, isOnlyPerson) {
   const screened = !!ind.screenResult;
   const hasHit = ind.screenResult === 'PEP' || ind.screenResult === 'Sanctions';
   const summaryStatus = verified && screened
-    ? `<span class="text-xs text-green-600 font-semibold">✓ Verified &amp; screened</span>`
-    : `<span class="text-xs text-amber-600 font-semibold">⚠ Incomplete</span>`;
+    ? `<span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:#f0fdf4;color:#166534;">Verified &amp; screened</span>`
+    : `<span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:#fffbeb;color:#92400e;">Incomplete</span>`;
 
   return `
-  <div class="border ${hasHit ? 'border-red-300 bg-red-50' : 'border-slate-200 bg-white'} rounded-xl overflow-hidden mb-3" id="ind-card-${ind.id}">
+  <div style="border:0.5px solid ${hasHit ? '#fecaca' : '#e2e8f0'};background:${hasHit ? '#fef2f2' : '#fff'};border-radius:10px;overflow:hidden;margin-bottom:8px;" id="ind-card-${ind.id}">
     <!-- CARD HEADER -->
-    <div class="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-slate-50 transition" onclick="toggleIndividualCard(${ind.id})">
-      <div class="flex items-center gap-3">
-        <div class="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center flex-shrink-0">${i+1}</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;" onclick="toggleIndividualCard(${ind.id})" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:24px;height:24px;border-radius:50%;background:#eef2ff;color:#4338ca;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${i+1}</div>
         <div>
-          <div class="text-sm font-semibold text-slate-700">${ind.name || `Person ${i+1}`}</div>
-          ${ind.role ? `<div class="text-xs text-slate-400">${ind.role}${ind.ownership ? ' · ' + ind.ownership : ''}</div>` : '<div class="text-xs text-slate-400">Role not set</div>'}
+          <div style="font-size:12px;font-weight:500;color:#0f172a;">${ind.name || `Person ${i+1}`}</div>
+          ${ind.role ? `<div style="font-size:11px;color:#94a3b8;">${ind.role}${ind.ownership ? ' · ' + ind.ownership : ''}</div>` : '<div style="font-size:11px;color:#94a3b8;">Role not set</div>'}
         </div>
       </div>
-      <div class="flex items-center gap-3">
+      <div style="display:flex;align-items:center;gap:8px;">
         ${summaryStatus}
-        ${!isOnlyPerson ? `<button onclick="event.stopPropagation();removeIndividual(${ind.id})" class="text-xs text-red-400 hover:text-red-600 ml-2">Remove</button>` : ''}
-        <span class="text-slate-300 text-xs ml-1">${expanded ? '▲' : '▼'}</span>
+        ${!isOnlyPerson ? `<button onclick="event.stopPropagation();removeIndividual(${ind.id})" style="font-size:11px;color:#dc2626;background:none;border:none;cursor:pointer;">Remove</button>` : ''}
+        <span style="font-size:11px;color:#94a3b8;">${expanded ? '▲' : '▼'}</span>
       </div>
     </div>
 
     ${expanded ? `
-    <div class="border-t border-slate-100 p-4 space-y-5">
+    <div style="border-top:0.5px solid #f1f5f9;padding:14px 16px;">
 
       <!-- BASIC INFO -->
-      <div class="grid grid-cols-2 gap-3">
-        <div><label class="text-xs text-slate-500">Full legal name *</label><input type="text" class="inp mt-1" value="${ind.name||''}" placeholder="Full legal name" oninput="updateIndividual(${ind.id},'name',this.value)"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+        <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Full legal name *</label><input type="text" class="inp" value="${ind.name||''}" placeholder="Full legal name" oninput="updateIndividual(${ind.id},'name',this.value)"></div>
         ${roles.length > 0 ? `
-        <div><label class="text-xs text-slate-500">Role / connection *</label>
-          <select class="inp mt-1" onchange="updateIndividual(${ind.id},'role',this.value)">
+        <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Role / connection *</label>
+          <select class="inp" onchange="updateIndividual(${ind.id},'role',this.value)">
             <option value="">— Select role —</option>
             ${roles.map(o=>`<option ${ind.role===o?'selected':''}>${o}</option>`).join('')}
           </select>
         </div>` : '<div></div>'}
-        ${roles.length > 0 ? `<div><label class="text-xs text-slate-500">Ownership / control %</label><input type="text" class="inp mt-1" value="${ind.ownership||''}" placeholder="e.g. 50%" oninput="updateIndividual(${ind.id},'ownership',this.value)"></div>` : ''}
-        <div><label class="text-xs text-slate-500">Country of residence</label><input type="text" class="inp mt-1" value="${ind.country||'Australia'}" oninput="updateIndividual(${ind.id},'country',this.value)"></div>
+        ${roles.length > 0 ? `<div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Ownership / control %</label><input type="text" class="inp" value="${ind.ownership||''}" placeholder="e.g. 50%" oninput="updateIndividual(${ind.id},'ownership',this.value)"></div>` : ''}
+        <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Country of residence</label><input type="text" class="inp" value="${ind.country||'Australia'}" oninput="updateIndividual(${ind.id},'country',this.value)"></div>
       </div>
 
       <!-- IDENTITY VERIFICATION -->
-      <div class="space-y-3">
-        <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Identity verification</h3>
-        <div class="grid grid-cols-2 gap-3">
-          <div><label class="text-xs text-slate-500">Date of birth</label><input type="date" class="inp mt-1" value="${ind.dob||''}" onchange="updateIndividual(${ind.id},'dob',this.value)"></div>
-          <div><label class="text-xs text-slate-500">Residential address</label><input type="text" class="inp mt-1" value="${ind.address||''}" placeholder="12 Main St, Sydney NSW" oninput="updateIndividual(${ind.id},'address',this.value)"></div>
-          <div><label class="text-xs text-slate-500">ID type</label>
-            <select class="inp mt-1" onchange="updateIndividual(${ind.id},'idType',this.value)">
+      <div style="margin-bottom:14px;">
+        <div style="font-size:10px;font-weight:500;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Identity verification</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Date of birth</label><input type="date" class="inp" value="${ind.dob||''}" onchange="updateIndividual(${ind.id},'dob',this.value)"></div>
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Residential address</label><input type="text" class="inp" value="${ind.address||''}" placeholder="12 Main St, Sydney NSW" oninput="updateIndividual(${ind.id},'address',this.value)"></div>
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">ID type</label>
+            <select class="inp" onchange="updateIndividual(${ind.id},'idType',this.value)">
               <option value="">— Select —</option>
               ${['Passport','Driver\'s Licence','Medicare Card','Birth Certificate','Other'].map(o=>`<option ${ind.idType===o?'selected':''}>${o}</option>`).join('')}
             </select>
           </div>
-          <div><label class="text-xs text-slate-500">ID number</label><input type="text" class="inp mt-1" value="${ind.idNumber||''}" placeholder="PA1234567" oninput="updateIndividual(${ind.id},'idNumber',this.value)" style="font-family:monospace;font-size:12px"></div>
-          <div><label class="text-xs text-slate-500">Country of issue</label><input type="text" class="inp mt-1" value="${ind.idCountry||'Australia'}" oninput="updateIndividual(${ind.id},'idCountry',this.value)"></div>
-          <div><label class="text-xs text-slate-500">Verification method</label>
-            <select class="inp mt-1" onchange="updateIndividual(${ind.id},'idMethod',this.value)">
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">ID number</label><input type="text" class="inp" value="${ind.idNumber||''}" placeholder="PA1234567" oninput="updateIndividual(${ind.id},'idNumber',this.value)" style="font-family:monospace;font-size:12px"></div>
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Country of issue</label><input type="text" class="inp" value="${ind.idCountry||'Australia'}" oninput="updateIndividual(${ind.id},'idCountry',this.value)"></div>
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Verification method</label>
+            <select class="inp" onchange="updateIndividual(${ind.id},'idMethod',this.value)">
               ${['Original sighted','Certified copy','Electronic verification'].map(o=>`<option ${ind.idMethod===o?'selected':''}>${o}</option>`).join('')}
             </select>
           </div>
-          <div><label class="text-xs text-slate-500">Date verified</label><input type="date" class="inp mt-1" value="${ind.idDate||''}" onchange="updateIndividual(${ind.id},'idDate',this.value)"></div>
-          <div><label class="text-xs text-slate-500">Verified by</label>
-            <select class="inp mt-1" onchange="updateIndividual(${ind.id},'idBy',this.value)">
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Date verified</label><input type="date" class="inp" value="${ind.idDate||''}" onchange="updateIndividual(${ind.id},'idDate',this.value)"></div>
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Verified by</label>
+            <select class="inp" onchange="updateIndividual(${ind.id},'idBy',this.value)">
               <option value="">— Select staff member —</option>
               ${S.staff.filter(st=>(!st.status||st.status==='Active'||st.status==='On Leave')&&(st.classification==='Key Personnel'||st.classification==='Standard AML/CTF Staff')).map(st=>`<option value="${st.name}" ${ind.idBy===st.name?'selected':''}>${st.name}${st.role?' — '+st.role:''}</option>`).join('')}
             </select>
           </div>
-          <div class="col-span-2"><label class="text-xs text-slate-500">Verification outcome</label>
-            <select class="inp mt-1" onchange="updateIndividual(${ind.id},'idOutcome',this.value)">
+          <div style="grid-column:1/-1;"><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Verification outcome</label>
+            <select class="inp" onchange="updateIndividual(${ind.id},'idOutcome',this.value)">
               <option value="">— Select —</option>
               <option ${ind.idOutcome==='Verified'?'selected':''} value="Verified">Verified — identity confirmed</option>
               <option ${ind.idOutcome==='Unable to verify'?'selected':''} value="Unable to verify">Unable to verify — escalate to AMLCO</option>
@@ -243,17 +243,17 @@ function individualCard(ind, i, roles, isOnlyPerson) {
       </div>
 
       <!-- SCREENING -->
-      <div class="space-y-3 border-t border-slate-100 pt-4">
-        <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Sanctions / PEP screening</h3>
-        <a href="https://namescan.io/?ref=SIMPLEAML" target="_blank" rel="noopener" class="flex items-stretch rounded-xl overflow-hidden no-underline">
-          <div class="flex-1 bg-slate-800 text-white px-4 py-2.5 flex items-center text-xs font-semibold">Screen ${ind.name||'this person'} via NameScan</div>
-          <div class="bg-cyan-500 text-white px-4 py-2.5 text-xs font-semibold whitespace-nowrap">NameScan →</div>
+      <div style="border-top:0.5px solid #f1f5f9;padding-top:14px;">
+        <div style="font-size:10px;font-weight:500;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Sanctions / PEP screening</div>
+        <a href="https://namescan.io/?ref=SIMPLEAML" target="_blank" rel="noopener" style="display:flex;border-radius:8px;overflow:hidden;text-decoration:none;margin-bottom:10px;">
+          <div style="flex:1;background:#1e293b;color:#fff;padding:9px 14px;font-size:11px;font-weight:500;">Screen ${ind.name||'this person'} via NameScan</div>
+          <div style="background:#06b6d4;color:#fff;padding:9px 14px;font-size:11px;font-weight:500;white-space:nowrap;">NameScan →</div>
         </a>
-        <div class="grid grid-cols-2 gap-3">
-          <div><label class="text-xs text-slate-500">Provider</label><input type="text" class="inp mt-1" value="${ind.screenProvider||'NameScan'}" oninput="updateIndividual(${ind.id},'screenProvider',this.value)"></div>
-          <div><label class="text-xs text-slate-500">Date screened</label><input type="date" class="inp mt-1" value="${ind.screenDate||''}" onchange="updateIndividual(${ind.id},'screenDate',this.value)"></div>
-          <div><label class="text-xs text-slate-500">Result</label>
-            <select class="inp mt-1" onchange="updateIndividual(${ind.id},'screenResult',this.value);cdRerenderRisk()">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Provider</label><input type="text" class="inp" value="${ind.screenProvider||'NameScan'}" oninput="updateIndividual(${ind.id},'screenProvider',this.value)"></div>
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Date screened</label><input type="date" class="inp" value="${ind.screenDate||''}" onchange="updateIndividual(${ind.id},'screenDate',this.value)"></div>
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Result</label>
+            <select class="inp" onchange="updateIndividual(${ind.id},'screenResult',this.value);cdRerenderRisk()">
               <option value="">— Select —</option>
               <option ${ind.screenResult==='Clear'?'selected':''} value="Clear">Clear — no matches</option>
               <option ${ind.screenResult==='PEP'?'selected':''} value="PEP">PEP match — escalate to AMLCO</option>
@@ -261,10 +261,10 @@ function individualCard(ind, i, roles, isOnlyPerson) {
               <option ${ind.screenResult==='Adverse'?'selected':''} value="Adverse">Adverse media — review required</option>
             </select>
           </div>
-          <div><label class="text-xs text-slate-500">Scan / reference ID</label><input type="text" class="inp mt-1" value="${ind.screenRef||''}" placeholder="NSC-2026-XXXXX" oninput="updateIndividual(${ind.id},'screenRef',this.value)" style="font-family:monospace;font-size:12px"></div>
+          <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Scan / reference ID</label><input type="text" class="inp" value="${ind.screenRef||''}" placeholder="NSC-2026-XXXXX" oninput="updateIndividual(${ind.id},'screenRef',this.value)" style="font-family:monospace;font-size:12px"></div>
         </div>
         ${hasHit ? `
-        <div class="bg-red-50 border border-red-200 rounded-xl p-3 text-xs text-red-700 font-semibold">
+        <div style="background:#fef2f2;border:0.5px solid #fecaca;border-radius:8px;padding:10px 12px;font-size:11px;color:#991b1b;font-weight:500;margin-top:8px;">
           ${ind.screenResult==='Sanctions' ? '⛔ Sanctions match — do not proceed. Contact AMLCO immediately.' : '⚠ PEP match — enhanced CDD required. Escalate to AMLCO before proceeding.'}
         </div>` : ''}
       </div>
@@ -274,21 +274,24 @@ function individualCard(ind, i, roles, isOnlyPerson) {
 
 // ─── ACCORDION PANEL ─────────────────────────────────────────────────────────
 function panel(id, title, subtitle, isOpen, isComplete, content) {
-  const headerBg = isComplete ? 'bg-green-50 border-green-200' : isOpen ? 'bg-white border-indigo-200' : 'bg-white border-slate-200';
-  const statusIcon = isComplete ? '<span class="text-green-600 font-bold text-sm">✓</span>' : isOpen ? '' : '<span class="text-slate-300 text-sm">○</span>';
+  const borderCol  = isComplete ? '#bbf7d0' : isOpen ? '#c7d2fe' : '#e2e8f0';
+  const headerBg   = isComplete ? '#f0fdf4' : '#fff';
+  const statusIcon = isComplete
+    ? '<span style="color:#16a34a;font-weight:500;font-size:13px;">✓</span>'
+    : isOpen ? '' : '<span style="color:#cbd5e1;font-size:13px;">○</span>';
   return `
-  <div class="border ${isOpen ? 'border-indigo-200' : isComplete ? 'border-green-200' : 'border-slate-200'} rounded-xl overflow-hidden">
-    <div class="flex items-center justify-between px-5 py-4 cursor-pointer ${headerBg} transition" onclick="togglePanel('${id}')">
-      <div class="flex items-center gap-3">
+  <div style="border:0.5px solid ${borderCol};border-radius:12px;overflow:hidden;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;background:${headerBg};" onclick="togglePanel('${id}')" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='${headerBg}'">
+      <div style="display:flex;align-items:center;gap:10px;">
         ${statusIcon}
         <div>
-          <div class="text-sm font-bold text-slate-700">${title}</div>
-          ${subtitle ? `<div class="text-xs text-slate-400 mt-0.5">${subtitle}</div>` : ''}
+          <div style="font-size:13px;font-weight:500;color:#0f172a;">${title}</div>
+          ${subtitle ? `<div style="font-size:11px;color:#94a3b8;margin-top:2px;">${subtitle}</div>` : ''}
         </div>
       </div>
-      <span class="text-slate-400 text-xs">${isOpen ? '▲' : '▼'}</span>
+      <span style="font-size:11px;color:#94a3b8;">${isOpen ? '▲' : '▼'}</span>
     </div>
-    ${isOpen ? `<div class="border-t border-slate-100 p-5 space-y-4">${content}</div>` : ''}
+    ${isOpen ? `<div style="border-top:0.5px solid #f1f5f9;padding:18px 20px;">${content}</div>` : ''}
   </div>`;
 }
 
@@ -343,22 +346,23 @@ export function screen() {
   const cfg = ENTITY_CONFIG[d.entityType] || null;
   const autoRisk = deriveRisk(d);
   const effectiveRisk = d.riskOverride || autoRisk;
-  const riskCls = effectiveRisk === 'High' ? 'bg-red-100 text-red-700' : effectiveRisk === 'Medium' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700';
+  const riskBg  = effectiveRisk === 'High' ? '#fef2f2' : effectiveRisk === 'Medium' ? '#fffbeb' : '#f0fdf4';
+  const riskCol = effectiveRisk === 'High' ? '#991b1b' : effectiveRisk === 'Medium' ? '#92400e' : '#166534';
 
   const inds = d.individuals || [];
 
   // ── PANEL A CONTENT ───────────────────────────────────────────────────────
   const panelAContent = !d.entityType ? `
-    <p class="text-xs text-slate-400 mb-4">Select the entity type to begin. This determines what information is required and who must be identified.</p>
-    <div class="grid grid-cols-2 gap-3">
+    <p style="font-size:11px;color:#94a3b8;margin-bottom:12px;">Select the entity type to begin. This determines what information is required and who must be identified.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
       ${ENTITY_TYPES.map(t => {
         const c = ENTITY_CONFIG[t];
         return `
         <button onclick="selectEntityType('${t}')"
           class="flex items-start gap-3 p-4 border border-slate-200 rounded-xl hover:border-indigo-300 hover:bg-indigo-50 transition text-left">
-          <span class="text-2xl flex-shrink-0">${c.icon}</span>
+          <span style="font-size:18px;flex-shrink:0;">${c.icon}</span>
           <div>
-            <div class="text-sm font-semibold text-slate-700">${t}</div>
+            <div style="font-size:12px;font-weight:500;color:#0f172a;">${t}</div>
             <div class="text-xs text-slate-400 mt-0.5">${c.desc}</div>
           </div>
         </button>`;
@@ -367,48 +371,48 @@ export function screen() {
 
   // ── PANEL B CONTENT ───────────────────────────────────────────────────────
   const panelBContent = `
-    <div><label class="text-xs text-slate-500">Purpose of relationship *</label>
-      <textarea id="cl-purpose" class="inp mt-1 text-sm" rows="3" placeholder="e.g. Tax compliance and advisory services for the family trust, including preparation of annual financial statements and income tax returns.">${d.purpose||''}</textarea>
-      <p class="text-xs text-slate-400 mt-1">Describe in plain English what services your firm is providing and why this client engaged you.</p>
+    <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Purpose of relationship *</label>
+      <textarea id="cl-purpose" class="inp" rows="3" placeholder="e.g. Tax compliance and advisory services for the family trust, including preparation of annual financial statements and income tax returns.">${d.purpose||''}</textarea>
+      <p style="font-size:11px;color:#94a3b8;margin-top:5px;">Describe in plain English what services your firm is providing and why this client engaged you.</p>
     </div>
 
-    <div class="space-y-2">
-      <div class="text-xs font-semibold text-slate-500">Risk flags</div>
-      <label class="flex items-start gap-2 text-xs cursor-pointer p-2 rounded-lg hover:bg-slate-50">
-        <input type="checkbox" class="mt-0.5 flex-shrink-0" ${d.offshoreJurisdiction?'checked':''} onchange="cdDraftCheck('offshoreJurisdiction',this.checked)">
-        <div><div class="font-medium text-slate-700">Offshore jurisdiction or foreign ownership involved</div><div class="text-slate-400">Client has connections to overseas entities, foreign-controlled structures, or non-resident controllers</div></div>
+    <div style="margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:500;color:#0f172a;margin-bottom:8px;">Risk flags</div>
+      <label style="display:flex;align-items:flex-start;gap:8px;font-size:11px;cursor:pointer;padding:8px;border-radius:6px;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+        <input type="checkbox" style="margin-top:2px;flex-shrink:0;" ${d.offshoreJurisdiction?'checked':''} onchange="cdDraftCheck('offshoreJurisdiction',this.checked)">
+        <div><div style="font-weight:500;color:#0f172a;">Offshore jurisdiction or foreign ownership involved</div><div style="color:#94a3b8;margin-top:2px;">Client has connections to overseas entities, foreign-controlled structures, or non-resident controllers</div></div>
       </label>
-      <label class="flex items-start gap-2 text-xs cursor-pointer p-2 rounded-lg hover:bg-slate-50">
-        <input type="checkbox" class="mt-0.5 flex-shrink-0" ${d.complexStructure?'checked':''} onchange="cdDraftCheck('complexStructure',this.checked)">
-        <div><div class="font-medium text-slate-700">Complex or multi-tiered ownership structure</div><div class="text-slate-400">Multiple layers of companies, trusts, or other entities between the client and the ultimate beneficial owner</div></div>
+      <label style="display:flex;align-items:flex-start;gap:8px;font-size:11px;cursor:pointer;padding:8px;border-radius:6px;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+        <input type="checkbox" style="margin-top:2px;flex-shrink:0;" ${d.complexStructure?'checked':''} onchange="cdDraftCheck('complexStructure',this.checked)">
+        <div><div style="font-weight:500;color:#0f172a;">Complex or multi-tiered ownership structure</div><div style="color:#94a3b8;margin-top:2px;">Multiple layers of companies, trusts, or other entities between the client and the ultimate beneficial owner</div></div>
       </label>
-      <label class="flex items-start gap-2 text-xs cursor-pointer p-2 rounded-lg hover:bg-slate-50">
-        <input type="checkbox" class="mt-0.5 flex-shrink-0" ${d.cashIntensiveIndustry?'checked':''} onchange="cdDraftCheck('cashIntensiveIndustry',this.checked)">
-        <div><div class="font-medium text-slate-700">Cash-intensive industry</div><div class="text-slate-400">Hospitality, retail, construction, trades — industries where large volumes of cash create ML/TF exposure</div></div>
+      <label style="display:flex;align-items:flex-start;gap:8px;font-size:11px;cursor:pointer;padding:8px;border-radius:6px;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+        <input type="checkbox" style="margin-top:2px;flex-shrink:0;" ${d.cashIntensiveIndustry?'checked':''} onchange="cdDraftCheck('cashIntensiveIndustry',this.checked)">
+        <div><div style="font-weight:500;color:#0f172a;">Cash-intensive industry</div><div style="color:#94a3b8;margin-top:2px;">Hospitality, retail, construction, trades — industries where large volumes of cash create ML/TF exposure</div></div>
       </label>
-      <label class="flex items-start gap-2 text-xs cursor-pointer p-2 rounded-lg hover:bg-slate-50">
-        <input type="checkbox" class="mt-0.5 flex-shrink-0" ${d.pepAmongControllers?'checked':''} onchange="cdDraftCheck('pepAmongControllers',this.checked)">
-        <div><div class="font-medium text-slate-700">PEP identified among owners, directors or trustees</div><div class="text-slate-400">A politically exposed person holds or controls a significant position in this entity</div></div>
+      <label style="display:flex;align-items:flex-start;gap:8px;font-size:11px;cursor:pointer;padding:8px;border-radius:6px;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+        <input type="checkbox" style="margin-top:2px;flex-shrink:0;" ${d.pepAmongControllers?'checked':''} onchange="cdDraftCheck('pepAmongControllers',this.checked)">
+        <div><div style="font-weight:500;color:#0f172a;">PEP identified among owners, directors or trustees</div><div style="color:#94a3b8;margin-top:2px;">A politically exposed person holds or controls a significant position in this entity</div></div>
       </label>
     </div>
 
-    <div class="border border-slate-200 rounded-xl p-4">
-      <div class="flex items-center justify-between">
-        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Derived risk rating</span>
-        <div class="flex items-center gap-2">
-          <span class="text-xs font-bold px-3 py-1 rounded-full ${riskCls}" id="risk-badge">${effectiveRisk}</span>
-          ${!d.riskOverride ? `<button type="button" onclick="startRiskOverride()" class="text-xs text-indigo-500 hover:text-indigo-700 underline">Override</button>` : ''}
+    <div style="border:0.5px solid #e2e8f0;border-radius:10px;padding:14px 16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-size:10px;font-weight:500;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;">Derived risk rating</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:11px;font-weight:500;padding:2px 10px;border-radius:99px;background:${riskBg};color:${riskCol};" id="risk-badge">${effectiveRisk}</span>
+          ${!d.riskOverride ? `<button type="button" onclick="startRiskOverride()" style="font-size:11px;color:#4f46e5;background:none;border:none;cursor:pointer;text-decoration:underline;">Override</button>` : ''}
         </div>
       </div>
       ${d.riskOverride ? `
-      <div class="mt-3 bg-amber-50 border border-amber-200 rounded-xl p-3 space-y-2">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-amber-700">Override applied: ${d.riskOverride}</span>
-          <button type="button" onclick="clearRiskOverride()" class="text-xs text-slate-400 hover:text-red-500">Remove</button>
+      <div style="margin-top:10px;background:#fffbeb;border:0.5px solid #fde68a;border-radius:8px;padding:10px 12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <span style="font-size:11px;font-weight:500;color:#92400e;">Override applied: ${d.riskOverride}</span>
+          <button type="button" onclick="clearRiskOverride()" style="font-size:11px;color:#94a3b8;background:none;border:none;cursor:pointer;">Remove</button>
         </div>
-        <textarea class="inp text-xs" rows="2" placeholder="Justification required for audit trail..." onchange="cdDraft('riskJust',this.value)">${d.riskJust||''}</textarea>
+        <textarea class="inp" rows="2" placeholder="Justification required for audit trail..." onchange="cdDraft('riskJust',this.value)">${d.riskJust||''}</textarea>
       </div>` : `
-      <p class="text-xs text-slate-400 mt-2 italic">Auto-calculated from entity type and risk flags above. Screening hits in the persons section will escalate to High automatically.</p>`}
+      <p style="font-size:11px;color:#94a3b8;margin-top:8px;font-style:italic;">Auto-calculated from entity type and risk flags above. Screening hits in the persons section will escalate to High automatically.</p>`}
     </div>`;
 
   // ── PANEL C CONTENT ───────────────────────────────────────────────────────
@@ -418,47 +422,47 @@ export function screen() {
     : (cfg?.whoNote ? null : summaryC(d));
 
   const panelCContent = `
-    ${cfg?.whoNote && !isIndividual ? `<div class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-600 mb-2">${cfg.whoNote}</div>` : ''}
-    ${isIndividual ? '<p class="text-xs text-slate-400">Verify the identity of this person and screen them for sanctions and PEP status.</p>' : ''}
+    ${cfg?.whoNote && !isIndividual ? `<div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:8px;padding:10px 12px;font-size:11px;color:#64748b;margin-bottom:10px;">${cfg.whoNote}</div>` : ''}
+    ${isIndividual ? '<p style="font-size:11px;color:#94a3b8;margin-bottom:10px;">Verify the identity of this person and screen them for sanctions and PEP status.</p>' : ''}
     <div id="individuals-list">
       ${inds.map((ind, i) => individualCard(ind, i, cfg?.roles || [], isIndividual && inds.length === 1)).join('')}
     </div>
     ${!isIndividual ? `
-    <button onclick="addIndividual()" class="w-full border border-dashed border-indigo-300 text-indigo-600 text-sm font-semibold py-3 rounded-xl hover:bg-indigo-50 transition">
+    <button onclick="addIndividual()" style="width:100%;border:1px dashed #c7d2fe;color:#4f46e5;font-size:12px;font-weight:500;padding:10px;border-radius:8px;cursor:pointer;background:#fff;" onmouseover="this.style.background='#eef2ff'" onmouseout="this.style.background='#fff'">
       + Add person
     </button>` : ''}`;
 
   // ── PANEL D CONTENT ───────────────────────────────────────────────────────
   const panelDContent = `
-    <p class="text-xs text-slate-400">This declaration confirms all required CDD steps have been completed before the designated service is provided.</p>
-    <div class="bg-green-50 border border-green-200 rounded-xl p-4">
-      <label class="flex items-start gap-3 cursor-pointer">
-        <input type="checkbox" id="cl-tipping" ${d.tippingAck?'checked':''} class="mt-0.5 flex-shrink-0" onchange="cdDraftCheck('tippingAck',this.checked)">
-        <span class="text-sm text-green-800 leading-relaxed">I confirm that customer due diligence, identity verification, and sanctions/PEP screening have been completed before providing a designated service to this customer.</span>
+    <p style="font-size:11px;color:#94a3b8;margin-bottom:12px;">This declaration confirms all required CDD steps have been completed before the designated service is provided.</p>
+    <div style="background:#f0fdf4;border:0.5px solid #bbf7d0;border-radius:8px;padding:12px 14px;margin-bottom:14px;">
+      <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+        <input type="checkbox" id="cl-tipping" ${d.tippingAck?'checked':''} style="margin-top:2px;flex-shrink:0;" onchange="cdDraftCheck('tippingAck',this.checked)">
+        <span style="font-size:12px;color:#166534;line-height:1.6;">I confirm that customer due diligence, identity verification, and sanctions/PEP screening have been completed before providing a designated service to this customer.</span>
       </label>
     </div>
-    <div class="grid grid-cols-2 gap-4">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
       <div>
-        <label class="text-xs text-slate-500">CDD completed date</label>
-        <input id="cl-cdd-date" type="date" class="inp mt-1" value="${d.cddDate||new Date().toISOString().split('T')[0]}" onchange="cdDraft('cddDate',this.value);autoSetNextReview(this.value)">
+        <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">CDD completed date</label>
+        <input id="cl-cdd-date" type="date" class="inp" value="${d.cddDate||new Date().toISOString().split('T')[0]}" onchange="cdDraft('cddDate',this.value);autoSetNextReview(this.value)">
       </div>
       <div>
-        <label class="text-xs text-slate-500">Completed by *</label>
-        <select id="cl-cdd-by" class="inp mt-1" onchange="cdDraft('cddBy',this.value)">
+        <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Completed by *</label>
+        <select id="cl-cdd-by" class="inp" onchange="cdDraft('cddBy',this.value)">
           <option value="">— Select staff member —</option>
           ${S.staff.filter(st=>!st.status||st.status==='Active'||st.status==='On Leave').map(st=>`<option value="${st.name}" ${d.cddBy===st.name?'selected':''}>${st.name}${st.role?' — '+st.role:''}</option>`).join('')}
         </select>
       </div>
-      <div class="col-span-2 border-t border-slate-100 pt-4">
-        <div class="flex items-center justify-between mb-1">
-          <label class="text-xs text-slate-500">Next review date</label>
-          <span class="text-xs text-slate-400">Auto-set based on risk rating — override if needed</span>
+      <div style="grid-column:1/-1;border-top:0.5px solid #f1f5f9;padding-top:12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Next review date</label>
+          <span style="font-size:11px;color:#94a3b8;">Auto-set based on risk rating — override if needed</span>
         </div>
         <input id="cl-next-review" type="date" class="inp" value="${d.nextReviewDate||''}" onchange="cdDraft('nextReviewDate',this.value)">
-        <p class="text-xs text-slate-400 mt-1">
-          ${effectiveRisk === 'High' ? '⚡ High risk — annual review recommended (12 months)' :
-            effectiveRisk === 'Medium' ? '🔶 Medium risk — review every 24 months recommended' :
-            '🟢 Low risk — review every 36 months recommended'}
+        <p style="font-size:11px;color:#94a3b8;margin-top:6px;">
+          ${effectiveRisk === 'High' ? 'High risk — annual review recommended (12 months)' :
+            effectiveRisk === 'Medium' ? 'Medium risk — review every 24 months recommended' :
+            'Low risk — review every 36 months recommended'}
         </p>
       </div>
     </div>`;
@@ -472,35 +476,33 @@ export function screen() {
     ? `Editing record for ${editedClient?.name || ''}. Previous version will be preserved on save.`
     : 'Complete all four sections before providing a designated service to this client.';
 
-  return `<div class="py-8 space-y-4">
+  return `<div style="max-width:760px;">
 
     <!-- HEADER -->
-    <div class="flex items-start gap-4">
-      <button onclick="go('clients')" class="text-slate-400 hover:text-slate-600 text-sm mt-1 flex-shrink-0">← Client Register</button>
-      <div class="flex-1">
-        <div class="flex items-center gap-3 flex-wrap">
-          <h1 class="text-2xl font-bold text-slate-900">${pageTitle}</h1>
-          ${isEditing ? `<span class="text-xs text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">⚠ Editing — ${editedClient?.name || ''}</span>` : ''}
+    <div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;">
+      <button onclick="go('clients')" style="font-size:12px;color:#94a3b8;background:none;border:none;cursor:pointer;white-space:nowrap;margin-top:3px;">← Client Register</button>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <h1 style="font-size:20px;font-weight:500;color:#0f172a;">${pageTitle}</h1>
+          ${isEditing ? `<span style="font-size:10px;font-weight:500;color:#92400e;background:#fffbeb;border:0.5px solid #fde68a;padding:2px 10px;border-radius:99px;">Editing — ${editedClient?.name || ''}</span>` : ''}
         </div>
-        <p class="text-sm text-slate-400 mt-1">${pageSubtitle}</p>
+        <p style="font-size:13px;color:#64748b;margin-top:3px;">${pageSubtitle}</p>
       </div>
     </div>
 
     <!-- PERSISTENT ENTITY TYPE STRIP — always visible regardless of accordion state -->
     ${d.entityType ? `
-    <div class="flex items-center justify-between bg-white border border-slate-200 rounded-xl px-4 py-3">
-      <div class="flex items-center gap-2.5">
-        <span class="text-xl">${cfg.icon}</span>
+    <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:0.5px solid #e2e8f0;border-radius:10px;padding:10px 16px;margin-bottom:10px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">${cfg.icon}</span>
         <div>
-          <div class="text-xs text-slate-400 font-medium uppercase tracking-wide">Entity type</div>
-          <div class="text-sm font-bold text-slate-800">${d.entityType}</div>
+          <div style="font-size:10px;font-weight:500;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;">Entity type</div>
+          <div style="font-size:13px;font-weight:500;color:#0f172a;">${d.entityType}</div>
         </div>
       </div>
       ${!isEditing ? `
-      <button onclick="changeEntityType()" class="text-xs text-amber-600 border border-amber-200 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-lg font-semibold transition">
-        Change ↓
-      </button>` : `
-      <span class="text-xs text-slate-400 italic">Entity type is locked for existing records</span>`}
+      <button onclick="changeEntityType()" style="font-size:11px;color:#92400e;border:0.5px solid #fde68a;background:#fffbeb;padding:5px 12px;border-radius:6px;font-weight:500;cursor:pointer;">Change ↓</button>` : `
+      <span style="font-size:11px;color:#94a3b8;font-style:italic;">Entity type is locked for existing records</span>`}
     </div>` : ''}
 
     <!-- PANEL A: ENTITY & IDENTITY -->
@@ -520,9 +522,9 @@ export function screen() {
 
     <!-- SAVE -->
     ${d.entityType ? `
-    <div class="flex gap-3 pt-2">
-      <button onclick="go('clients')" class="flex-1 border border-slate-200 py-3 rounded-xl text-sm font-semibold hover:bg-slate-50 transition">Cancel</button>
-      <button onclick="saveClient()" class="flex-1 bg-indigo-600 text-white py-3 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">Save Client Record</button>
+    <div style="display:flex;gap:10px;">
+      <button onclick="go('clients')" style="flex:1;font-size:12px;font-weight:500;color:#64748b;background:#fff;border:0.5px solid #e2e8f0;padding:10px;border-radius:8px;cursor:pointer;">Cancel</button>
+      <button onclick="saveClient()" style="flex:1;font-size:12px;font-weight:500;color:#fff;background:#4f46e5;border:none;padding:10px;border-radius:8px;cursor:pointer;">Save Client Record</button>
     </div>` : ''}
 
   </div>`;
