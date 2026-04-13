@@ -4,32 +4,29 @@ import { toast, infoBtn, infoPop } from '../components/index.js';
 export function screen() {
   const adding = S._trainingDraft !== undefined;
   const d = S._trainingDraft || {};
-  const thCls = 'text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-4 py-3';
-
-  return `<div class="py-8 space-y-6">
-
-    <div class="flex items-start justify-between">
+  return `<div style="max-width:900px;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;">
       <div>
-        <h1 class="text-2xl font-bold text-slate-900">Training Register</h1>
-        <p class="text-sm text-slate-400 mt-1">AUSTRAC requires all staff performing AML/CTF functions to receive appropriate training — and for that training to be recorded and kept current.</p>
+        <h1 style="font-size:20px;font-weight:500;color:#0f172a;margin-bottom:3px;">Training Register</h1>
+        <p style="font-size:13px;color:#64748b;">AUSTRAC requires all staff performing AML/CTF functions to receive appropriate training — recorded and kept current.</p>
       </div>
       ${(() => {
         const amlStaff = S.staff.filter(st=>st.classification==='Key Personnel'||st.classification==='Standard AML/CTF Staff');
         const allHaveRecords = amlStaff.length > 0 && amlStaff.every(st=>S.training.find(t=>t.name===st.name));
         return allHaveRecords
-          ? '<span class="text-xs text-green-600 font-semibold flex-shrink-0 ml-6">✓ All AML staff have training records</span>'
-          : '<button onclick="startAddTraining()" class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition flex-shrink-0 ml-6">+ Add record</button>';
+          ? '<span style="font-size:11px;font-weight:500;color:#166534;background:#f0fdf4;border:0.5px solid #bbf7d0;padding:3px 10px;border-radius:99px;white-space:nowrap;margin-left:16px;flex-shrink:0;">All staff have records</span>'
+          : '<button onclick="startAddTraining()" style="font-size:12px;font-weight:500;color:#fff;background:#4f46e5;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;margin-left:16px;flex-shrink:0;">+ Add record</button>';
       })()}
     </div>
 
     ${adding ? `
-    <div class="bg-white border-2 border-indigo-200 rounded-xl p-6 space-y-5">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <h2 class="text-sm font-bold text-slate-700">${S._trainingEditIdx !== undefined ? 'Edit training record — ' + (S.training[S._trainingEditIdx]?.name||'') : 'New training record'}</h2>
+    <div style="background:#fff;border:1.5px solid #c7d2fe;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:13px;font-weight:500;color:#0f172a;">${S._trainingEditIdx !== undefined ? 'Edit training record — ' + (S.training[S._trainingEditIdx]?.name||'') : 'New training record'}</span>
           ${infoBtn('training-how-tip')}
         </div>
-        ${S._trainingEditIdx !== undefined ? `<span class="text-xs text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">Editing — previous version will be preserved</span>` : ''}
+        ${S._trainingEditIdx !== undefined ? `<span style="font-size:10px;font-weight:500;color:#92400e;background:#fffbeb;border:0.5px solid #fde68a;padding:2px 10px;border-radius:99px;">Editing — previous version preserved</span>` : ''}
       </div>
       ${infoPop('training-how-tip', `
         <strong class="text-indigo-300 block mb-2">Who needs training and what to record</strong>
@@ -42,69 +39,69 @@ export function screen() {
         <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">Training records are permanent evidence. Add staff in Key Personnel Vetting before adding training records.</p>
       `)}
 
-      <div class="grid grid-cols-2 gap-4">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div>
-          <label class="text-xs text-slate-500">Staff member *</label>
-          <select id="tr-name" class="inp mt-1" onchange="autoFillTrainingClassification(this.value)">
+          <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Staff member *</label>
+          <select id="tr-name" class="inp" onchange="autoFillTrainingClassification(this.value)">
             <option value="">— Select staff member —</option>
             ${S.staff.filter(st=>(st.classification==='Key Personnel'||st.classification==='Standard AML/CTF Staff') && (S._trainingEditIdx !== undefined || !S.training.find(t=>t.name===st.name))).map(st=>`<option value="${st.name}" ${d.name===st.name?'selected':''}>${st.name}${st.role?' — '+st.role:''} (${st.classification})</option>`).join('')}
             ${d.name && !S.staff.find(st=>st.name===d.name) ? `<option value="${d.name}" selected>${d.name} (not in vetting register)</option>` : ''}
           </select>
-          <p class="text-xs text-slate-400 mt-1">Only Key Personnel and AML Staff shown. Add staff in Key Personnel Vetting first.</p>
-          ${d.name && S.staff.find(st=>st.name===d.name) ? `<div class="text-xs text-indigo-500 mt-0.5">${S.staff.find(st=>st.name===d.name).classification||''}</div>` : ''}
+          <p style="font-size:11px;color:#94a3b8;margin-top:5px;">Only Key Personnel and AML Staff shown.</p>
+          ${d.name && S.staff.find(st=>st.name===d.name) ? `<div style="font-size:11px;color:#4f46e5;margin-top:3px;">${S.staff.find(st=>st.name===d.name).classification||''}</div>` : ''}
         </div>
-        <div><label class="text-xs text-slate-500">Training date *</label><input id="tr-date" type="date" class="inp mt-1" value="${d.date||''}" onchange="autoSetTrainingNext(this.value)"></div>
-        <div class="col-span-2"><label class="text-xs text-slate-500">Provider / course *</label><textarea id="tr-provider" class="inp mt-1" rows="3" placeholder="e.g. AUSTRAC online module — March 2026&#10;In-house refresher — September 2026">${d.provider||''}</textarea><p class="text-xs text-slate-400 mt-1">List all training completed — one per line if multiple.</p></div>
-        <div class="col-span-2"><label class="text-xs text-slate-500">Certificate / Storage location</label><input id="tr-score" type="text" class="inp mt-1" value="${d.score||''}" placeholder="e.g. SharePoint > Staff > Training > Chris Wong — AUSTRAC 2026.pdf"></div>
+        <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Training date *</label><input id="tr-date" type="date" class="inp" value="${d.date||''}" onchange="autoSetTrainingNext(this.value)"></div>
+        <div style="grid-column:1/-1;"><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Provider / course *</label><textarea id="tr-provider" class="inp" rows="3" placeholder="e.g. AUSTRAC online module — March 2026&#10;In-house refresher — September 2026">${d.provider||''}</textarea><p style="font-size:11px;color:#94a3b8;margin-top:5px;">One per line if multiple.</p></div>
+        <div style="grid-column:1/-1;"><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Certificate / Storage location</label><input id="tr-score" type="text" class="inp" value="${d.score||''}" placeholder="e.g. SharePoint > Staff > Training > Chris Wong — AUSTRAC 2026.pdf"></div>
         <div>
-          <label class="text-xs text-slate-500">Next due <span class="text-indigo-400 font-normal">(auto-set to +1 year — override allowed)</span></label>
-          <input id="tr-next" type="date" class="inp mt-1" value="${d.next||''}">
-          <p class="text-xs text-amber-600 mt-1">AUSTRAC expects AML/CTF training at least once every 12 months.</p>
+          <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Next due <span style="color:#818cf8;font-weight:400;">(auto-set to +1 year — override allowed)</span></label>
+          <input id="tr-next" type="date" class="inp" value="${d.next||''}">
+          <p style="font-size:11px;color:#d97706;margin-top:5px;">AUSTRAC expects training at least every 12 months.</p>
         </div>
       </div>
 
-      <div><label class="text-xs text-slate-500">Notes</label><textarea id="tr-notes" class="inp mt-1" rows="2" placeholder="Training content, topics covered, or relevant observations">${d.notes||''}</textarea></div>
+      <div><label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Notes</label><textarea id="tr-notes" class="inp" rows="2" placeholder="Training content, topics covered, or relevant observations">${d.notes||''}</textarea></div>
 
       ${S._trainingEditIdx !== undefined && (S.training[S._trainingEditIdx]?.history||[]).length > 0 ? `
-      <div class="border-t border-slate-100 pt-4">
-        <button type="button" onclick="toggleTrainingHistory()" class="flex items-center justify-between w-full text-left">
-          <div>
-            <div class="text-xs font-semibold text-slate-500 uppercase tracking-widest">Previous training history</div>
-            <div class="text-xs text-slate-400 mt-0.5">${(S.training[S._trainingEditIdx]?.history||[]).length} previous version${(S.training[S._trainingEditIdx]?.history||[]).length !== 1 ? 's' : ''} — audit trail</div>
+      <div style="border-top:0.5px solid #f1f5f9;padding-top:14px;">
+        <button type="button" onclick="toggleTrainingHistory()" style="display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;padding:0;">
+          <div style="text-align:left;">
+            <div style="font-size:11px;font-weight:500;color:#0f172a;">Previous training history</div>
+            <div style="font-size:11px;color:#94a3b8;margin-top:2px;">${(S.training[S._trainingEditIdx]?.history||[]).length} previous version${(S.training[S._trainingEditIdx]?.history||[]).length !== 1 ? 's' : ''} — audit trail</div>
           </div>
-          <span id="tr-history-chevron" class="text-slate-400 text-xs ml-4">▾ Show</span>
+          <span id="tr-history-chevron" style="font-size:11px;color:#94a3b8;margin-left:12px;">▾ Show</span>
         </button>
-        <div id="tr-history-panel" style="display:none;" class="mt-3 space-y-2">
+        <div id="tr-history-panel" style="display:none;margin-top:10px;">
           ${(S.training[S._trainingEditIdx]?.history||[]).map((h, i) => `
-          <div class="bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs">
-            <div class="flex items-center justify-between mb-1">
-              <span class="font-semibold text-slate-700">Version ${(S.training[S._trainingEditIdx]?.history||[]).length - i} — ${h.date ? new Date(h.date).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '—'}</span>
-              <span class="text-slate-400">Next due: ${h.next ? new Date(h.next).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '—'}</span>
+          <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:8px;padding:10px 12px;margin-bottom:6px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <span style="font-size:11px;font-weight:500;color:#0f172a;">Version ${(S.training[S._trainingEditIdx]?.history||[]).length - i} — ${h.date ? new Date(h.date).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '—'}</span>
+              <span style="font-size:11px;color:#94a3b8;">Next due: ${h.next ? new Date(h.next).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '—'}</span>
             </div>
-            <div class="text-slate-500 whitespace-pre-line">${h.provider||'—'}</div>
-            ${h.score ? `<div class="text-slate-400 mt-1">Certificate: ${h.score}</div>` : ''}
+            <div style="font-size:11px;color:#64748b;white-space:pre-line;">${h.provider||'—'}</div>
+            ${h.score ? `<div style="font-size:11px;color:#94a3b8;margin-top:4px;">Certificate: ${h.score}</div>` : ''}
           </div>`).join('')}
         </div>
       </div>` : ''}
 
-      <div class="flex gap-3">
-        <button onclick="cancelTraining()" class="flex-1 border border-slate-200 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-50 transition">Cancel</button>
-        <button onclick="saveTraining()" class="flex-1 bg-indigo-600 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">Save Record</button>
+      <div style="display:flex;gap:10px;">
+        <button onclick="cancelTraining()" style="flex:1;font-size:12px;font-weight:500;color:#64748b;background:#fff;border:0.5px solid #e2e8f0;padding:9px;border-radius:8px;cursor:pointer;">Cancel</button>
+        <button onclick="saveTraining()" style="flex:1;font-size:12px;font-weight:500;color:#fff;background:#4f46e5;border:none;padding:9px;border-radius:8px;cursor:pointer;">Save Record</button>
       </div>
     </div>` : ''}
 
     ${S.training.length > 0 ? `
-    <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
-      <table class="w-full text-sm border-collapse">
+    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;overflow:hidden;">
+      <table style="width:100%;border-collapse:collapse;">
         <thead>
-          <tr class="border-b border-slate-100">
-            <th class="${thCls}">Staff Member</th>
-            <th class="${thCls}">Training Date</th>
-            <th class="${thCls}">Provider</th>
-            <th class="${thCls}">Certificate / Storage</th>
-            <th class="${thCls}">Status</th>
-            <th class="${thCls}">Next Due</th>
-            <th class="${thCls}"></th>
+          <tr style="background:#f8fafc;border-bottom:0.5px solid #e2e8f0;">
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Staff member</th>
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Training date</th>
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Provider</th>
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Certificate / storage</th>
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Status</th>
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Next due</th>
+            <th style="width:50px;"></th>
           </tr>
         </thead>
         <tbody>
@@ -116,38 +113,36 @@ export function screen() {
 
             // Status badge — mirrors client register pattern
             const statusBadge = !t.date || !t.score
-              ? '<span class="text-xs font-semibold text-red-600">⚠ Incomplete</span>'
-              : '<span class="text-xs font-semibold text-green-700">✓ Complete</span>';
-
-            // Next due badge
+              ? '<span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:#fef2f2;color:#991b1b;">Incomplete</span>'
+              : '<span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:#f0fdf4;color:#166534;">Complete</span>';
             const nextBadge = !t.next
-              ? '<span class="text-xs text-slate-400 italic">Not set</span>'
+              ? '<span style="font-size:11px;color:#94a3b8;font-style:italic;">Not set</span>'
               : isOverdue
-                ? `<span class="text-xs font-semibold text-amber-600">⚠ Due ${fmtDate(t.next)}</span>`
-                : `<span class="text-xs font-semibold text-green-700">✓ Due ${fmtDate(t.next)}</span>`;
+                ? `<span style="font-size:11px;font-weight:500;color:#d97706;">⚠ ${fmtDate(t.next)}</span>`
+                : `<span style="font-size:11px;color:#64748b;">${fmtDate(t.next)}</span>`;
 
             return `
-            <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition cursor-pointer" onclick="editTraining(${i})">
-              <td class="px-4 py-3">
-                <div class="font-semibold text-slate-800">${t.name}</div>
-                ${classification ? `<div class="text-xs text-slate-400 mt-0.5">${classification}</div>` : ''}
+            <tr style="border-bottom:0.5px solid #f1f5f9;cursor:pointer;transition:background .1s;" onclick="editTraining(${i})" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+              <td style="padding:10px 14px;">
+                <div style="font-size:12px;font-weight:500;color:#0f172a;">${t.name}</div>
+                ${classification ? `<div style="font-size:11px;color:#94a3b8;margin-top:2px;">${classification}</div>` : ''}
               </td>
-              <td class="px-4 py-3 text-xs text-slate-600">${fmtDate(t.date)}</td>
-              <td class="px-4 py-3 text-xs text-slate-500">${t.provider||'—'}</td>
-              <td class="px-4 py-3 text-xs text-slate-600">${t.score||'—'}</td>
-              <td class="px-4 py-3">${statusBadge}</td>
-              <td class="px-4 py-3">${nextBadge}</td>
-              <td class="px-4 py-3 text-right whitespace-nowrap" onclick="event.stopPropagation()">
-                <button onclick="editTraining(${i})" class="text-xs text-indigo-600 font-semibold hover:text-indigo-800">Edit</button>
+              <td style="padding:10px 14px;font-size:11px;color:#64748b;">${fmtDate(t.date)}</td>
+              <td style="padding:10px 14px;font-size:11px;color:#64748b;white-space:pre-line;">${t.provider||'—'}</td>
+              <td style="padding:10px 14px;font-size:11px;color:#64748b;">${t.score||'—'}</td>
+              <td style="padding:10px 14px;">${statusBadge}</td>
+              <td style="padding:10px 14px;">${nextBadge}</td>
+              <td style="padding:10px 14px;text-align:right;" onclick="event.stopPropagation()">
+                <button onclick="editTraining(${i})" style="font-size:11px;color:#6366f1;background:none;border:none;cursor:pointer;font-weight:500;">Edit</button>
               </td>
             </tr>`;
           }).join('')}
         </tbody>
       </table>
     </div>` : (!adding ? `
-    <div class="bg-white border border-slate-200 rounded-xl p-10 text-center">
-      <div class="text-slate-400 text-sm">No training records yet.</div>
-      <div class="text-xs text-slate-400 mt-1">Click "+ Add record" to begin your training register.</div>
+    <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:12px;padding:32px;text-align:center;">
+      <div style="font-size:13px;color:#94a3b8;margin-bottom:4px;">No training records yet.</div>
+      <div style="font-size:11px;color:#cbd5e1;">Click "+ Add record" to begin your training register.</div>
     </div>` : '')}
 
   </div>`;
