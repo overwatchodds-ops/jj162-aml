@@ -55,7 +55,7 @@ function item(label, detail, screen, actionLabel) {
   return `
   <div class="flex items-center justify-between py-3 border-b border-slate-50 last:border-0">
     <div>
-      <div class="text-sm font-semibold text-slate-700">${label}</div>
+      <div style="font-size:12px;font-weight:500;color:#0f172a;">${label}</div>
       ${detail ? `<div class="text-xs text-slate-400 mt-0.5">${detail}</div>` : ''}
     </div>
     <button onclick="go('${screen}')"
@@ -68,11 +68,11 @@ function item(label, detail, screen, actionLabel) {
 function section(title, items) {
   if (!items.length) return '';
   return `
-  <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
-    <div class="px-5 py-3 bg-slate-50 border-b border-slate-200">
-      <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-widest">${title}</h2>
+  <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;overflow:hidden;margin-bottom:12px;">
+    <div style="padding:10px 16px;background:#f8fafc;border-bottom:0.5px solid #e2e8f0;">
+      <div style="font-size:10px;font-weight:500;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;">${title}</div>
     </div>
-    <div class="px-5">
+    <div style="padding:0 16px;">
       ${items.join('')}
     </div>
   </div>`;
@@ -247,25 +247,22 @@ export function screen() {
   const totalIssues = complianceItems.length + personnelItems.length + clientItems.length;
   const allClear = totalIssues === 0;
 
-  return `<div class="py-8 space-y-6">
-
-    <div>
-      <h1 class="text-2xl font-bold text-slate-900">Action Required</h1>
-      <p class="text-sm text-slate-400 mt-1">Only items that need your attention appear here. If this screen is empty, your firm is on track.</p>
+  return `<div style="max-width:860px;">
+    <div style="margin-bottom:24px;">
+      <h1 style="font-size:20px;font-weight:500;color:#0f172a;margin-bottom:3px;">Action Required</h1>
+      <p style="font-size:13px;color:#64748b;">Only items that need your attention appear here. If this screen is empty, your firm is on track.</p>
     </div>
 
     ${allClear ? `
-    <div class="bg-green-50 border border-green-200 rounded-xl p-8 text-center space-y-2">
-      <div class="text-3xl">✓</div>
-      <div class="text-base font-bold text-green-800">No outstanding items</div>
-      <div class="text-sm text-green-700">Your firm's AML/CTF obligations are complete and current.</div>
+    <div style="background:#f0fdf4;border:0.5px solid #bbf7d0;border-radius:12px;padding:40px;text-align:center;">
+      <div style="font-size:24px;margin-bottom:8px;">✓</div>
+      <div style="font-size:14px;font-weight:500;color:#166534;margin-bottom:4px;">No outstanding items</div>
+      <div style="font-size:13px;color:#4ade80;">Your firm's AML/CTF obligations are complete and current.</div>
     </div>` : `
 
-    <div class="bg-amber-50 border border-amber-200 rounded-xl px-5 py-3 flex items-center justify-between">
-      <span class="text-sm font-semibold text-amber-800">
-        ${totalIssues} item${totalIssues !== 1 ? 's' : ''} require${totalIssues === 1 ? 's' : ''} attention
-      </span>
-      <span class="text-xs text-amber-600">Click any item to go directly to the relevant screen</span>
+    <div style="background:#fffbeb;border:0.5px solid #fde68a;border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <span style="font-size:13px;font-weight:500;color:#92400e;">${totalIssues} item${totalIssues !== 1 ? 's' : ''} require${totalIssues === 1 ? 's' : ''} attention</span>
+      <span style="font-size:11px;color:#b45309;">Click any item to go directly to the relevant screen</span>
     </div>
 
     ${section('Compliance', complianceItems)}
