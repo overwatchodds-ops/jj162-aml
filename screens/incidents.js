@@ -5,16 +5,15 @@ export function screen() {
   const incidents = S.incidents || [];
   const fmtDate = (d) => d ? new Date(d).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '—';
 
-  return `<div class="py-8 space-y-6">
-
-    <div class="flex items-start justify-between">
+  return `<div style="max-width:900px;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;">
       <div>
-        <h1 class="text-2xl font-bold text-slate-900">SMR &amp; Incident Register</h1>
-        <p class="text-sm text-slate-400 mt-1">Every suspicious matter must be assessed and recorded — whether or not it results in a report to AUSTRAC. The register is permanent evidence of your firm's monitoring activity.</p>
+        <h1 style="font-size:20px;font-weight:500;color:#0f172a;margin-bottom:3px;">SMR &amp; Incident Register</h1>
+        <p style="font-size:13px;color:#64748b;">Every suspicious matter must be assessed and recorded — whether or not it results in a report to AUSTRAC.</p>
       </div>
-      <div class="flex items-center gap-2 flex-shrink-0 ml-6">
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:16px;">
         ${infoBtn('smr-tip')}
-        <button onclick="startNewIncident()" class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">+ New incident</button>
+        <button onclick="startNewIncident()" style="font-size:12px;font-weight:500;color:#fff;background:#4f46e5;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;">+ New incident</button>
       </div>
     </div>
 
@@ -29,50 +28,53 @@ export function screen() {
       <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">All records in this register are permanent and cannot be deleted. They form part of your AML/CTF compliance evidence.</p>
     `)}
 
-    <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-xs text-red-800 leading-relaxed">
-      <strong>Tipping-off warning</strong> — Under section 123 of the AML/CTF Act 2006, it is a criminal offence to disclose to a customer, or any person, that a Suspicious Matter Report has been or may be submitted to AUSTRAC. Do not inform the customer that they are under review or that a report has been filed.
+    <div style="background:#fef2f2;border:0.5px solid #fecaca;border-radius:10px;padding:12px 16px;font-size:11px;color:#991b1b;line-height:1.6;margin-bottom:16px;">
+      <span style="font-weight:500;">Tipping-off warning</span> — Under section 123 of the AML/CTF Act 2006, it is a criminal offence to disclose to a customer, or any person, that a Suspicious Matter Report has been or may be submitted to AUSTRAC. Do not inform the customer that they are under review or that a report has been filed.
     </div>
 
     ${incidents.length > 0 ? `
-    <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
-      <table class="w-full text-sm border-collapse">
+    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;overflow:hidden;">
+      <table style="width:100%;border-collapse:collapse;">
         <thead>
-          <tr class="border-b border-slate-100">
-            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-4 py-3 w-28">Date</th>
-            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-4 py-3">Client</th>
-            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-4 py-3">Nature of Suspicion</th>
-            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-4 py-3 w-28">AUSTRAC Ref</th>
-            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-4 py-3 w-20">Status</th>
-            <th class="px-4 py-3 w-24"></th>
+          <tr style="background:#f8fafc;border-bottom:0.5px solid #e2e8f0;">
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;width:100px;">Date</th>
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Client</th>
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Nature of suspicion</th>
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;width:110px;">AUSTRAC ref</th>
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;width:80px;">Status</th>
+            <th style="width:90px;"></th>
           </tr>
         </thead>
         <tbody>
           ${incidents.map((inc, i) => {
-            const statusCls = inc.status === 'Closed' ? 'text-slate-500' : 'text-amber-600 font-semibold';
+            const statusCol = inc.status === 'Closed' ? '#64748b' : '#d97706';
             const expanded = S._expandedIncident === i;
             return `
-            <tr class="border-b border-slate-50 hover:bg-slate-50 transition ${expanded?'bg-slate-50':''}">
-              <td class="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">${fmtDate(inc.dateIdentified)}</td>
-              <td class="px-4 py-3 font-semibold text-slate-800">${inc.clientName||'—'}<br><span class="text-xs font-normal text-slate-400">${inc.entityType||''}</span></td>
-              <td class="px-4 py-3 text-xs text-slate-600" style="max-width:260px;">${inc.suspicion ? (inc.suspicion.length > 80 ? inc.suspicion.slice(0,80)+'…' : inc.suspicion) : '—'}</td>
-              <td class="px-4 py-3 text-xs font-mono text-slate-500">${inc.reference||'—'}</td>
-              <td class="px-4 py-3 text-xs ${statusCls}">${inc.status||'Open'}</td>
-              <td class="px-4 py-3 text-right whitespace-nowrap">
-                <button onclick="editIncident(${i})" class="text-xs text-indigo-600 font-semibold hover:text-indigo-800 mr-2">Edit</button>
-                <button onclick="toggleExpandIncident(${i})" class="text-xs text-slate-400 hover:text-slate-600">${expanded?'▲':'▼'}</button>
+            <tr style="border-bottom:0.5px solid #f1f5f9;background:${expanded?'#f8fafc':'#fff'};transition:background .1s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='${expanded?'#f8fafc':'#fff'}'">
+              <td style="padding:10px 14px;font-size:11px;color:#64748b;white-space:nowrap;">${fmtDate(inc.dateIdentified)}</td>
+              <td style="padding:10px 14px;">
+                <div style="font-size:12px;font-weight:500;color:#0f172a;">${inc.clientName||'—'}</div>
+                <div style="font-size:11px;color:#94a3b8;">${inc.entityType||''}</div>
+              </td>
+              <td style="padding:10px 14px;font-size:11px;color:#64748b;max-width:260px;">${inc.suspicion ? (inc.suspicion.length > 80 ? inc.suspicion.slice(0,80)+'…' : inc.suspicion) : '—'}</td>
+              <td style="padding:10px 14px;font-size:11px;font-family:monospace;color:#64748b;">${inc.reference||'—'}</td>
+              <td style="padding:10px 14px;font-size:11px;font-weight:500;color:${statusCol};">${inc.status||'Open'}</td>
+              <td style="padding:10px 14px;text-align:right;white-space:nowrap;">
+                <button onclick="editIncident(${i})" style="font-size:11px;color:#6366f1;background:none;border:none;cursor:pointer;font-weight:500;margin-right:8px;">Edit</button>
+                <button onclick="toggleExpandIncident(${i})" style="font-size:11px;color:#94a3b8;background:none;border:none;cursor:pointer;">${expanded?'▲':'▼'}</button>
               </td>
             </tr>
             ${expanded ? `
             <tr>
-              <td colspan="6" class="border-b border-slate-100">
-                <div class="bg-slate-50 px-6 py-4">
-                  <div class="grid grid-cols-2 gap-x-8 gap-y-2 text-xs">
-                    <div><span class="text-slate-400">Entity type: </span><span class="text-slate-600">${inc.entityType||'—'}</span></div>
-                    <div><span class="text-slate-400">Individuals involved: </span><span class="text-slate-600">${inc.individualsInvolved||'—'}</span></div>
-                    <div><span class="text-slate-400">AMLCO review date: </span><span class="text-slate-600">${inc.amlcoDate ? fmtDate(inc.amlcoDate) : '—'}</span></div>
-                    <div><span class="text-slate-400">AUSTRAC reported: </span><span class="text-slate-600">${inc.austrDate ? fmtDate(inc.austrDate) : '—'}</span></div>
-                    ${inc.amlcoNotes ? `<div class="col-span-2"><span class="text-slate-400">AMLCO notes: </span><span class="text-slate-600">${inc.amlcoNotes}</span></div>` : ''}
-                    ${inc.notes ? `<div class="col-span-2"><span class="text-slate-400">Notes: </span><span class="text-slate-600">${inc.notes}</span></div>` : ''}
+              <td colspan="6" style="border-bottom:0.5px solid #f1f5f9;">
+                <div style="background:#f8fafc;padding:14px 20px;">
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 32px;">
+                    <div style="font-size:11px;"><span style="color:#94a3b8;">Entity type: </span><span style="color:#64748b;">${inc.entityType||'—'}</span></div>
+                    <div style="font-size:11px;"><span style="color:#94a3b8;">Individuals: </span><span style="color:#64748b;">${inc.individualsInvolved||'—'}</span></div>
+                    <div style="font-size:11px;"><span style="color:#94a3b8;">AMLCO review: </span><span style="color:#64748b;">${inc.amlcoDate ? fmtDate(inc.amlcoDate) : '—'}</span></div>
+                    <div style="font-size:11px;"><span style="color:#94a3b8;">AUSTRAC reported: </span><span style="color:#64748b;">${inc.austrDate ? fmtDate(inc.austrDate) : '—'}</span></div>
+                    ${inc.amlcoNotes ? `<div style="grid-column:1/-1;font-size:11px;"><span style="color:#94a3b8;">AMLCO notes: </span><span style="color:#64748b;">${inc.amlcoNotes}</span></div>` : ''}
+                    ${inc.notes ? `<div style="grid-column:1/-1;font-size:11px;"><span style="color:#94a3b8;">Notes: </span><span style="color:#64748b;">${inc.notes}</span></div>` : ''}
                   </div>
                 </div>
               </td>
@@ -81,9 +83,9 @@ export function screen() {
         </tbody>
       </table>
     </div>` : `
-    <div class="bg-white border border-slate-200 rounded-xl p-10 text-center">
-      <div class="text-slate-400 text-sm">No incidents recorded.</div>
-      <div class="text-xs text-slate-400 mt-1">Click "+ New incident" to log a suspicious matter or compliance event.</div>
+    <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:12px;padding:32px;text-align:center;">
+      <div style="font-size:13px;color:#94a3b8;margin-bottom:4px;">No incidents recorded.</div>
+      <div style="font-size:11px;color:#cbd5e1;">Click "+ New incident" to log a suspicious matter or compliance event.</div>
     </div>`}
 
   </div>`;

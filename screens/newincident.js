@@ -12,14 +12,13 @@ export function screen() {
   );
   const clientInds = selectedClient ? (selectedClient.individuals || []) : [];
 
-  return `<div class="py-8 space-y-6">
-
-    <div class="flex items-start justify-between">
-      <div class="flex items-center gap-4">
-        <button onclick="go('incidents')" class="text-slate-400 hover:text-slate-600 text-sm mt-1 flex-shrink-0">← Incident Register</button>
+  return `<div style="max-width:680px;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;">
+      <div style="display:flex;align-items:flex-start;gap:16px;">
+        <button onclick="go('incidents')" style="font-size:12px;color:#94a3b8;background:none;border:none;cursor:pointer;white-space:nowrap;margin-top:3px;">← Register</button>
         <div>
-          <h1 class="text-2xl font-bold text-slate-900">${isEdit ? 'Edit Incident' : 'New Incident / SMR'}</h1>
-          <p class="text-sm text-slate-400 mt-1">Record every suspicious matter — whether or not it results in a report to AUSTRAC.</p>
+          <h1 style="font-size:20px;font-weight:500;color:#0f172a;margin-bottom:3px;">${isEdit ? 'Edit Incident' : 'New Incident / SMR'}</h1>
+          <p style="font-size:13px;color:#64748b;">Record every suspicious matter — whether or not it results in a report to AUSTRAC.</p>
         </div>
       </div>
       ${infoBtn('smr-how-tip')}
@@ -36,96 +35,93 @@ export function screen() {
       <p class="mt-2 text-slate-400 border-t border-slate-600 pt-2">All records are permanent. You must submit an SMR to AUSTRAC within 3 business days of forming a suspicion.</p>
     `)}
 
-    <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-xs text-red-800 leading-relaxed">
-      <strong>Tipping-off warning</strong> — Under section 123 of the AML/CTF Act 2006, it is a criminal offence to disclose to a customer, or any person, that a Suspicious Matter Report has been or may be submitted to AUSTRAC. Do not inform the customer that they are under review or that a report has been filed.
+    <div style="background:#fef2f2;border:0.5px solid #fecaca;border-radius:10px;padding:12px 16px;font-size:11px;color:#991b1b;line-height:1.6;margin-bottom:16px;">
+      <span style="font-weight:500;">Tipping-off warning</span> — Under section 123 of the AML/CTF Act 2006, it is a criminal offence to disclose to a customer, or any person, that a Suspicious Matter Report has been or may be submitted to AUSTRAC. Do not inform the customer that they are under review or that a report has been filed.
     </div>
 
     <!-- INCIDENT DETAILS -->
-    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
-      <h2 class="text-sm font-bold text-slate-700">Incident details</h2>
-      <div class="grid grid-cols-2 gap-4">
+    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:500;color:#0f172a;margin-bottom:14px;">Incident details</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div>
-          <label class="text-xs text-slate-500">Client *</label>
-          <select id="inc-client" class="inp mt-1" onchange="incidentClientChange(this.value)">
+          <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Client *</label>
+          <select id="inc-client" class="inp" onchange="incidentClientChange(this.value)">
             <option value="">— Select client —</option>
             ${S.clients.map(c => `<option value="${c.name}" ${d.clientName===c.name?'selected':''}>${c.name} — ${c.entityType||'—'}</option>`).join('')}
           </select>
         </div>
         <div>
-          <label class="text-xs text-slate-500">Entity type</label>
-          <input id="inc-entity-type" type="text" class="inp mt-1 bg-slate-50" value="${d.entityType||''}" readonly placeholder="Auto-filled from client">
+          <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Entity type</label>
+          <input id="inc-entity-type" type="text" class="inp" style="background:#f8fafc;" value="${d.entityType||''}" readonly placeholder="Auto-filled from client">
         </div>
         <div>
-          <label class="text-xs text-slate-500">Date incident identified *</label>
-          <input id="inc-date" type="date" class="inp mt-1" value="${d.dateIdentified||''}">
+          <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Date incident identified *</label>
+          <input id="inc-date" type="date" class="inp" value="${d.dateIdentified||''}">
         </div>
         <div>
-          <label class="text-xs text-slate-500">Status</label>
-          <select id="inc-status" class="inp mt-1">
+          <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Status</label>
+          <select id="inc-status" class="inp">
             <option ${(!d.status||d.status==='Open')?'selected':''} value="Open">Open</option>
             <option ${d.status==='Closed'?'selected':''} value="Closed">Closed</option>
           </select>
         </div>
       </div>
 
-      <div>
-        <label class="text-xs text-slate-500">Individuals involved <span class="font-normal text-slate-400">(select from client's registered persons)</span></label>
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Individuals involved <span style="color:#cbd5e1;">(from client's registered persons)</span></label>
         ${clientInds.length > 0 ? `
-        <div class="mt-1 space-y-1 border border-slate-200 rounded-xl p-3 bg-slate-50">
+        <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:8px;padding:10px 12px;">
           ${clientInds.map(ind => `
-          <label class="flex items-center gap-2 text-xs cursor-pointer">
+          <label style="display:flex;align-items:center;gap:8px;font-size:11px;cursor:pointer;margin-bottom:4px;">
             <input type="checkbox" value="${ind.name}" ${(d.individualsArr||[]).includes(ind.name)?'checked':''} onchange="toggleIncidentIndividual('${ind.name}',this.checked)">
-            <span class="text-slate-700">${ind.name||'—'}</span><span class="text-slate-400">${ind.role?' — '+ind.role:''}</span>
+            <span style="color:#0f172a;">${ind.name||'—'}</span><span style="color:#94a3b8;">${ind.role?' — '+ind.role:''}</span>
           </label>`).join('')}
         </div>` : `
-        <input id="inc-individuals" type="text" class="inp mt-1" value="${d.individualsInvolved||''}" placeholder="e.g. John Smith (Director)">`}
+        <input id="inc-individuals" type="text" class="inp" value="${d.individualsInvolved||''}" placeholder="e.g. John Smith (Director)">`}
       </div>
 
-      <div>
-        <label class="text-xs text-slate-500">Nature of suspicion *</label>
-        <textarea id="inc-suspicion" class="inp mt-1" rows="4" placeholder="Describe the suspicious matter, transaction, or behaviour that triggered this incident. Be specific — AUSTRAC reviewers will read this description.">${d.suspicion||''}</textarea>
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Nature of suspicion *</label>
+        <textarea id="inc-suspicion" class="inp" rows="4" placeholder="Describe the suspicious matter, transaction, or behaviour that triggered this incident. Be specific — AUSTRAC reviewers will read this description.">${d.suspicion||''}</textarea>
       </div>
-
       <div>
-        <label class="text-xs text-slate-500">Notes</label>
-        <textarea id="inc-notes" class="inp mt-1" rows="2" placeholder="Any additional context or observations">${d.notes||''}</textarea>
+        <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Notes</label>
+        <textarea id="inc-notes" class="inp" rows="2" placeholder="Any additional context or observations">${d.notes||''}</textarea>
       </div>
     </div>
 
     <!-- AMLCO REVIEW -->
-    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
-      <h2 class="text-sm font-bold text-slate-700">AMLCO review</h2>
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <label class="text-xs text-slate-500">Date reviewed by AMLCO</label>
-          <input id="inc-amlco-date" type="date" class="inp mt-1" value="${d.amlcoDate||''}">
-        </div>
-        <div class="col-span-2">
-          <label class="text-xs text-slate-500">AMLCO outcome / notes</label>
-          <textarea id="inc-amlco-notes" class="inp mt-1" rows="2" placeholder="e.g. Reviewed 15/03/26 — escalated to AUSTRAC for further assessment">${d.amlcoNotes||''}</textarea>
-        </div>
+    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:500;color:#0f172a;margin-bottom:14px;">AMLCO review</div>
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Date reviewed by AMLCO</label>
+        <input id="inc-amlco-date" type="date" class="inp" value="${d.amlcoDate||''}">
+      </div>
+      <div>
+        <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">AMLCO outcome / notes</label>
+        <textarea id="inc-amlco-notes" class="inp" rows="2" placeholder="e.g. Reviewed 15/03/26 — escalated to AUSTRAC for further assessment">${d.amlcoNotes||''}</textarea>
       </div>
     </div>
 
     <!-- AUSTRAC REPORTING -->
-    <div class="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
-      <h2 class="text-sm font-bold text-slate-700">AUSTRAC reporting</h2>
-      <div class="grid grid-cols-2 gap-4">
+    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:500;color:#0f172a;margin-bottom:14px;">AUSTRAC reporting</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div>
-          <label class="text-xs text-slate-500">Date reported to AUSTRAC</label>
-          <input id="inc-austr-date" type="date" class="inp mt-1" value="${d.austrDate||''}">
+          <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">Date reported to AUSTRAC</label>
+          <input id="inc-austr-date" type="date" class="inp" value="${d.austrDate||''}">
         </div>
         <div>
-          <label class="text-xs text-slate-500">AUSTRAC reference number</label>
-          <input id="inc-reference" type="text" class="inp mt-1 font-mono" value="${d.reference||''}" placeholder="AUSTRAC ref — leave blank if not yet submitted">
+          <label style="display:block;font-size:11px;color:#94a3b8;margin-bottom:5px;">AUSTRAC reference number</label>
+          <input id="inc-reference" type="text" class="inp" style="font-family:monospace;" value="${d.reference||''}" placeholder="AUSTRAC ref — leave blank if not yet submitted">
         </div>
       </div>
-      <p class="text-xs text-slate-400">Leave blank if the matter was resolved internally without an AUSTRAC submission. Record the AMLCO's decision in the notes field above.</p>
+      <p style="font-size:11px;color:#94a3b8;margin-top:8px;">Leave blank if the matter was resolved internally without an AUSTRAC submission. Record the AMLCO's decision in the notes field above.</p>
     </div>
 
-    <div class="flex gap-3">
-      <button onclick="go('incidents')" class="flex-1 border border-slate-200 py-3 rounded-xl text-sm font-semibold hover:bg-slate-50 transition">Cancel</button>
-      <button onclick="saveIncident()" class="flex-1 bg-indigo-600 text-white py-3 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">Save Incident Record</button>
+    <div style="display:flex;gap:10px;">
+      <button onclick="go('incidents')" style="flex:1;font-size:12px;font-weight:500;color:#64748b;background:#fff;border:0.5px solid #e2e8f0;padding:10px;border-radius:8px;cursor:pointer;">Cancel</button>
+      <button onclick="saveIncident()" style="flex:1;font-size:12px;font-weight:500;color:#fff;background:#4f46e5;border:none;padding:10px;border-radius:8px;cursor:pointer;">Save Incident Record</button>
     </div>
 
   </div>`;
