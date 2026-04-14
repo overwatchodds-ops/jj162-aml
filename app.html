@@ -17,6 +17,32 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="SimpleAML — AML/CTF compliance tool for Australian accountants. Manage your firm's AML/CTF obligations under the Anti-Money Laundering and Counter-Terrorism Financing Act 2006.">
   <title>SimpleAML — Accountant AML/CTF Compliance</title>
+  <script>
+    // ─── MOBILE INTERCEPT ─────────────────────────────────────────────────────
+    // Runs before any module loads. If screen is narrow, replace body immediately.
+    (function() {
+      if (window.innerWidth < 900 && !sessionStorage.getItem('saml_force_desktop')) {
+        document.addEventListener('DOMContentLoaded', function() {
+          document.body.innerHTML = `
+            <div style="min-height:100vh;background:#f8fafc;display:flex;align-items:center;justify-content:center;padding:32px 24px;box-sizing:border-box;">
+              <div style="max-width:420px;width:100%;text-align:center;">
+                <div style="width:56px;height:56px;background:#4f46e5;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;margin:0 auto 20px;">SA</div>
+                <h1 style="font-size:20px;font-weight:700;color:#0f172a;margin:0 0 10px;">SimpleAML works best on desktop</h1>
+                <p style="font-size:14px;color:#64748b;line-height:1.6;margin:0 0 28px;">The compliance register is designed for desktop use. Please open it on a laptop or desktop computer for the best experience.</p>
+                <a href="https://simpleaml.com.au"
+                  style="display:block;width:100%;box-sizing:border-box;padding:12px;background:#4f46e5;color:#fff;font-size:14px;font-weight:600;border:none;border-radius:10px;cursor:pointer;text-decoration:none;margin-bottom:12px;">
+                  Go to simpleaml.com.au
+                </a>
+                <button onclick="sessionStorage.setItem('saml_force_desktop','1');location.reload()"
+                  style="display:block;width:100%;padding:12px;background:#fff;color:#64748b;font-size:14px;font-weight:500;border:0.5px solid #e2e8f0;border-radius:10px;cursor:pointer;">
+                  Continue anyway →
+                </button>
+              </div>
+            </div>`;
+        });
+      }
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Note: CDN is intentional for this browser-based app. No build pipeline required. -->
   <!-- Brevo newsletter form styles -->
