@@ -38,5 +38,72 @@ export function screen() {
         <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(this)">
       </div>
 
+      <!-- RESET ALL DATA -->
+      <div style="background:#fff;border:0.5px solid #fecaca;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+        <div style="font-size:13px;font-weight:500;color:#991b1b;margin-bottom:8px;">Reset All Data</div>
+        <p style="font-size:12px;color:#64748b;margin:0 0 16px;">Permanently deletes all SimpleAML data stored in this browser — firm details, clients, staff, risk assessments, and all compliance records. This cannot be undone.</p>
+
+        <div id="wipe-confirm-box" style="display:none;margin-bottom:14px;">
+          <div style="background:#fef2f2;border:0.5px solid #fecaca;border-radius:8px;padding:14px;">
+            <p style="font-size:12px;color:#991b1b;font-weight:500;margin:0 0 6px;">Are you sure? This will permanently delete all your compliance records.</p>
+            <p style="font-size:11px;color:#64748b;margin:0 0 12px;">We recommend exporting a backup first. Type <strong>RESET</strong> below to confirm.</p>
+            <input type="text" id="wipe-confirm-input" placeholder="Type RESET to confirm"
+              oninput="window.checkWipeConfirm()"
+              style="width:100%;box-sizing:border-box;font-size:12px;color:#0f172a;border:0.5px solid #fca5a5;border-radius:6px;padding:8px 10px;margin-bottom:10px;outline:none;">
+            <div style="display:flex;gap:8px;">
+              <button onclick="window.executeWipe()" id="wipe-execute-btn" disabled
+                style="flex:1;font-size:12px;font-weight:500;color:#fff;background:#dc2626;border:none;padding:10px;border-radius:8px;cursor:not-allowed;opacity:0.4;">
+                Delete All Data
+              </button>
+              <button onclick="window.cancelWipe()"
+                style="flex:1;font-size:12px;font-weight:500;color:#64748b;background:#fff;border:0.5px solid #e2e8f0;padding:10px;border-radius:8px;cursor:pointer;">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="window.showWipeConfirm()" id="wipe-trigger-btn"
+          style="width:100%;font-size:12px;font-weight:500;color:#991b1b;background:#fff;border:0.5px solid #fecaca;padding:10px;border-radius:8px;cursor:pointer;">
+          Reset All Data…
+        </button>
+      </div>
+
     </div>`;
 }
+
+// ─── WIPE ACTIONS ─────────────────────────────────────────────────────────────
+window.showWipeConfirm = function() {
+  document.getElementById('wipe-confirm-box').style.display = 'block';
+  document.getElementById('wipe-trigger-btn').style.display = 'none';
+  document.getElementById('wipe-confirm-input').focus();
+};
+
+window.cancelWipe = function() {
+  document.getElementById('wipe-confirm-box').style.display = 'none';
+  document.getElementById('wipe-trigger-btn').style.display = 'block';
+  document.getElementById('wipe-confirm-input').value = '';
+  const btn = document.getElementById('wipe-execute-btn');
+  btn.disabled = true;
+  btn.style.opacity = '0.4';
+  btn.style.cursor = 'not-allowed';
+};
+
+window.checkWipeConfirm = function() {
+  const val = document.getElementById('wipe-confirm-input').value.trim();
+  const btn = document.getElementById('wipe-execute-btn');
+  if (val === 'RESET') {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+  } else {
+    btn.disabled = true;
+    btn.style.opacity = '0.4';
+    btn.style.cursor = 'not-allowed';
+  }
+};
+
+window.executeWipe = function() {
+  localStorage.removeItem('saml_v2');
+  window.location.reload();
+};
