@@ -164,7 +164,7 @@ function setupBanner() {
 function render() {
   const screenFn = Screens[S.currentScreen] || Screens.dashboard;
   const banner = setupBanner();
-  const topPad = banner ? '96px' : '48px';
+  const topPad = banner ? '112px' : '72px';
   document.getElementById('app').innerHTML = `
     ${Sidebar()}
     ${TopNav()}
