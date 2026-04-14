@@ -37,7 +37,7 @@ export function screen() {
   const programDue= programOk && isOD(p.nextReview);
   const enrolled  = !!(S.enrolment?.enrolled || S.austracConfirmed);
 
-  const compChecks = [firmOk, apptOk && !apptDue, scopeOk, riskOk && !riskDue, programOk && !programDue];
+  const compChecks = [firmOk, apptOk && !apptDue, scopeOk, riskOk && !riskDue, programOk && !programDue, enrolled];
   const compPassed = compChecks.filter(Boolean).length;
   const compTotal  = compChecks.length;
 
