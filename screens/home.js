@@ -57,7 +57,30 @@ export function screen() {
 
   // ── OVERALL ──────────────────────────────────────────────────────────────
   const allGreen   = compPassed === compTotal && incompVet === 0 && declDue === 0 && trainDue === 0 && incompCdd === 0 && overdueCdd === 0 && openSmrs === 0;
-  const overallPct = Math.round(((compPassed / compTotal) * 0.6 + ((incompVet === 0 && declDue === 0 && trainDue === 0 && amlStaff.length > 0) ? 0.2 : 0) + ((incompCdd === 0 && overdueCdd === 0 && openSmrs === 0 && clients.length > 0) ? 0.2 : 0)) * 100);
+
+  // Three separate scores
+  const compPct = Math.round((compPassed / compTotal) * 100);
+
+  const personnelNA  = amlStaff.length === 0;
+  const personnelPct = personnelNA ? null : (() => {
+    const checks  = amlStaff.map(st => vettingOk(st) ? 1 : 0);
+    const declOk  = declDue  === 0 ? 1 : 0;
+    const trainOk = trainDue === 0 ? 1 : 0;
+    const total   = amlStaff.length + 2;
+    const passed  = checks.reduce((a,b) => a+b, 0) + declOk + trainOk;
+    return Math.round((passed / total) * 100);
+  })();
+
+  const clientsNA  = clients.length === 0;
+  const clientsPct = clientsNA ? null : (() => {
+    const cddChecks = clients.map(c => cddOk(c) ? 1 : 0);
+    const cddPassed = cddChecks.reduce((a,b) => a+b, 0);
+    const smrOk     = openSmrs   === 0 ? 1 : 0;
+    const screenOk  = overdueCdd === 0 ? 1 : 0;
+    const total     = clients.length + 2;
+    const passed    = cddPassed + smrOk + screenOk;
+    return Math.round((passed / total) * 100);
+  })();
 
   // ── DEADLINE ─────────────────────────────────────────────────────────────
   const deadline    = new Date('2026-07-01T00:00:00+10:00');
@@ -124,11 +147,18 @@ export function screen() {
       <div style="font-size:11px;color:#94a3b8;flex-shrink:0;">→</div>
     </div>`;
 
-  // Ring
-  const r = 28;
-  const circ = +(2*Math.PI*r).toFixed(1);
-  const offset = +(circ*(1-overallPct/100)).toFixed(1);
-  const ringColour = allGreen ? '#16a34a' : overallPct >= 60 ? '#4f46e5' : '#f59e0b';
+  // Ring helper
+  const ring = (pct, na) => {
+    const r = 28, circ = +(2*Math.PI*r).toFixed(1);
+    const val    = na ? 0 : (pct === null ? 0 : pct);
+    const offset = +(circ*(1-(val/100))).toFixed(1);
+    const colour = na ? '#e2e8f0' : val === 100 ? '#16a34a' : val >= 60 ? '#4f46e5' : '#f59e0b';
+    const label  = na ? 'N/A' : `${val}%`;
+    return { r, circ, offset, colour, label };
+  };
+  const compRing      = ring(compPct, false);
+  const personnelRing = ring(personnelPct, personnelNA);
+  const clientsRing   = ring(clientsPct, clientsNA);
 
   return `<div style="max-width:900px;">
 
@@ -144,33 +174,67 @@ export function screen() {
       </div>
     </div>
 
-    <!-- HERO -->
-    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:22px 24px;display:flex;align-items:center;gap:24px;margin-bottom:16px;">
-      <div style="position:relative;width:64px;height:64px;flex-shrink:0;">
-        <svg viewBox="0 0 64 64" style="width:64px;height:64px;transform:rotate(-90deg);">
-          <circle cx="32" cy="32" r="${r}" fill="none" stroke="#f1f5f9" stroke-width="7"/>
-          <circle cx="32" cy="32" r="${r}" fill="none" stroke="${ringColour}" stroke-width="7"
-            stroke-dasharray="${circ}" stroke-dashoffset="${offset}" stroke-linecap="round"/>
-        </svg>
-        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:${ringColour};">${overallPct}%</div>
-      </div>
-      <div style="flex:1;">
-        <div style="font-size:15px;font-weight:500;color:#0f172a;margin-bottom:4px;">
-          ${allGreen ? 'Fully compliant' : exc.length > 0 ? `${exc.length} item${exc.length>1?'s':''} need${exc.length===1?'s':''} attention` : 'Compliance in progress'}
+    <!-- HERO — THREE CIRCLES -->
+    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:22px 24px;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+
+        <!-- COMPLIANCE CIRCLE -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:80px;">
+          <div style="position:relative;width:64px;height:64px;flex-shrink:0;">
+            <svg viewBox="0 0 64 64" style="width:64px;height:64px;transform:rotate(-90deg);">
+              <circle cx="32" cy="32" r="${compRing.r}" fill="none" stroke="#f1f5f9" stroke-width="7"/>
+              <circle cx="32" cy="32" r="${compRing.r}" fill="none" stroke="${compRing.colour}" stroke-width="7"
+                stroke-dasharray="${compRing.circ}" stroke-dashoffset="${compRing.offset}" stroke-linecap="round"/>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:${compRing.colour};">${compRing.label}</div>
+          </div>
+          <div style="font-size:11px;color:#64748b;text-align:center;">Compliance</div>
         </div>
-        <div style="font-size:12px;color:#64748b;margin-bottom:10px;">
-          ${compPassed} of ${compTotal} compliance obligations
-          · ${amlStaff.length === 0 ? '<span style="color:#94a3b8;">no personnel recorded</span>' : (incompVet===0&&declDue===0&&trainDue===0) ? '<span style="color:#16a34a;">personnel current</span>' : '<span style="color:#f59e0b;">personnel needs attention</span>'}
-          · ${clients.length === 0 ? '<span style="color:#94a3b8;">no clients recorded</span>' : (incompCdd===0&&overdueCdd===0&&openSmrs===0) ? '<span style="color:#16a34a;">clients current</span>' : '<span style="color:#f59e0b;">clients need attention</span>'}
+
+        <!-- PERSONNEL CIRCLE -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:80px;">
+          <div style="position:relative;width:64px;height:64px;flex-shrink:0;">
+            <svg viewBox="0 0 64 64" style="width:64px;height:64px;transform:rotate(-90deg);">
+              <circle cx="32" cy="32" r="${personnelRing.r}" fill="none" stroke="#f1f5f9" stroke-width="7"/>
+              <circle cx="32" cy="32" r="${personnelRing.r}" fill="none" stroke="${personnelRing.colour}" stroke-width="7"
+                stroke-dasharray="${personnelRing.circ}" stroke-dashoffset="${personnelRing.offset}" stroke-linecap="round"/>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:${personnelRing.colour};">${personnelRing.label}</div>
+          </div>
+          <div style="font-size:11px;color:#64748b;text-align:center;">Personnel</div>
         </div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          ${deadlinePast
-            ? `<span style="font-size:11px;padding:2px 10px;border-radius:99px;background:#fef2f2;color:#991b1b;border:0.5px solid #fecaca;">Obligations in effect</span>`
-            : `<span style="font-size:11px;padding:2px 10px;border-radius:99px;background:#f8fafc;color:#64748b;border:0.5px solid #e2e8f0;">${daysLeft} days to 1 July 2026</span>`}
-          ${lastReport
-            ? `<span style="font-size:11px;padding:2px 10px;border-radius:99px;background:#f0fdf4;color:#166534;border:0.5px solid #bbf7d0;">Report: ${lastReport.date}</span>`
-            : `<span style="font-size:11px;padding:2px 10px;border-radius:99px;background:#f8fafc;color:#64748b;border:0.5px solid #e2e8f0;">No report generated yet</span>`}
+
+        <!-- CLIENTS CIRCLE -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:80px;">
+          <div style="position:relative;width:64px;height:64px;flex-shrink:0;">
+            <svg viewBox="0 0 64 64" style="width:64px;height:64px;transform:rotate(-90deg);">
+              <circle cx="32" cy="32" r="${clientsRing.r}" fill="none" stroke="#f1f5f9" stroke-width="7"/>
+              <circle cx="32" cy="32" r="${clientsRing.r}" fill="none" stroke="${clientsRing.colour}" stroke-width="7"
+                stroke-dasharray="${clientsRing.circ}" stroke-dashoffset="${clientsRing.offset}" stroke-linecap="round"/>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:${clientsRing.colour};">${clientsRing.label}</div>
+          </div>
+          <div style="font-size:11px;color:#64748b;text-align:center;">Clients</div>
         </div>
+
+        <!-- STATUS TEXT -->
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:15px;font-weight:500;color:#0f172a;margin-bottom:4px;">
+            ${allGreen ? 'Fully compliant' : exc.length > 0 ? `${exc.length} item${exc.length>1?'s':''} need${exc.length===1?'s':''} attention` : 'Compliance in progress'}
+          </div>
+          <div style="font-size:12px;color:#64748b;margin-bottom:10px;">
+            ${compPassed} of ${compTotal} compliance obligations complete
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            ${deadlinePast
+              ? `<span style="font-size:11px;padding:2px 10px;border-radius:99px;background:#fef2f2;color:#991b1b;border:0.5px solid #fecaca;">Obligations in effect</span>`
+              : `<span style="font-size:11px;padding:2px 10px;border-radius:99px;background:#f8fafc;color:#64748b;border:0.5px solid #e2e8f0;">${daysLeft} days to 1 July 2026</span>`}
+            ${lastReport
+              ? `<span style="font-size:11px;padding:2px 10px;border-radius:99px;background:#f0fdf4;color:#166534;border:0.5px solid #bbf7d0;">Report: ${lastReport.date}</span>`
+              : `<span style="font-size:11px;padding:2px 10px;border-radius:99px;background:#f8fafc;color:#64748b;border:0.5px solid #e2e8f0;">No report generated yet</span>`}
+          </div>
+        </div>
+
       </div>
     </div>
 
