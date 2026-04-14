@@ -32,28 +32,27 @@ export function screen() {
   const allOk = incomplete === 0 && declOverdue === 0 && trainOverdue === 0 && amlStaff.length > 0;
 
   const card = (title, count, desc, screen, urgent) => `
-  <div class="bg-white border ${urgent && count > 0 ? 'border-amber-200' : 'border-slate-200'} rounded-xl p-5 space-y-3 cursor-pointer hover:border-indigo-200 transition" onclick="go('${screen}')">
-    <h2 class="text-sm font-bold text-slate-700">${title}</h2>
-    <div class="flex items-end gap-2">
-      <span class="text-3xl font-black ${urgent && count > 0 ? 'text-amber-600' : count === 0 ? 'text-green-600' : 'text-slate-800'}">${count}</span>
-      <span class="text-xs text-slate-400 mb-1">${count === 1 ? desc.singular : desc.plural}</span>
+  <div onclick="go('${screen}')" style="background:#fff;border:0.5px solid ${urgent && count > 0 ? '#fde68a' : '#e2e8f0'};border-radius:12px;padding:18px;cursor:pointer;transition:border-color .1s;" onmouseover="this.style.borderColor='#c7d2fe'" onmouseout="this.style.borderColor='${urgent && count > 0 ? '#fde68a' : '#e2e8f0'}'">
+    <div style="font-size:12px;font-weight:500;color:#0f172a;margin-bottom:10px;">${title}</div>
+    <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;">
+      <span style="font-size:28px;font-weight:500;color:${urgent && count > 0 ? '#d97706' : count === 0 ? '#16a34a' : '#0f172a'};line-height:1;">${count}</span>
+      <span style="font-size:11px;color:#94a3b8;">${count === 1 ? desc.singular : desc.plural}</span>
     </div>
-    <div class="text-xs ${urgent && count > 0 ? 'text-amber-600' : 'text-slate-400'}">${count > 0 ? desc.action : desc.clear}</div>
+    <div style="font-size:11px;color:${urgent && count > 0 ? '#d97706' : '#94a3b8'};">${count > 0 ? desc.action : desc.clear}</div>
   </div>`;
 
-  return `<div class="py-8 space-y-6">
-
-    <div>
-      <h1 class="text-2xl font-bold text-slate-900">Personnel</h1>
-      <p class="text-sm text-slate-400 mt-1">Staff vetting and AML/CTF training records for all personnel performing compliance functions.</p>
+  return `<div style="max-width:860px;">
+    <div style="margin-bottom:24px;">
+      <h1 style="font-size:20px;font-weight:500;color:#0f172a;margin-bottom:3px;">Personnel</h1>
+      <p style="font-size:13px;color:#64748b;">Staff vetting and AML/CTF training records for all personnel performing compliance functions.</p>
     </div>
 
     ${allOk ? `
-    <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-800 font-medium">
-      ✓ All ${amlStaff.length} AML staff have complete vetting and current declarations. Training is up to date.
+    <div style="background:#f0fdf4;border:0.5px solid #bbf7d0;border-radius:10px;padding:12px 16px;font-size:13px;color:#166534;margin-bottom:16px;">
+      All ${amlStaff.length} AML staff have complete vetting and current declarations. Training is up to date.
     </div>` : ''}
 
-    <div class="grid grid-cols-3 gap-4">
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px;">
 
       ${card(
         'Incomplete Vetting',
@@ -79,91 +78,88 @@ export function screen() {
     </div>
 
     <!-- QUICK ACTIONS -->
-    <div class="bg-white border border-slate-200 rounded-xl p-5 space-y-3">
-      <h2 class="text-sm font-bold text-slate-700">Quick actions</h2>
-      <div class="grid grid-cols-2 gap-3">
-        <button onclick="go('staff')" class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:border-indigo-200 hover:bg-indigo-50 transition text-left">
-          <span class="text-lg flex-shrink-0">👤</span>
+    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:18px 20px;margin-bottom:16px;">
+      <div style="font-size:12px;font-weight:500;color:#0f172a;margin-bottom:12px;">Quick actions</div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
+        <button onclick="go('staff')" style="display:flex;align-items:center;gap:10px;padding:12px;border:0.5px solid #e2e8f0;border-radius:8px;cursor:pointer;background:#fff;text-align:left;transition:border-color .1s;" onmouseover="this.style.borderColor='#c7d2fe';this.style.background='#fafbff'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='#fff'">
           <div>
-            <div class="text-sm font-semibold text-slate-700">Key Personnel Vetting</div>
-            <div class="text-xs text-slate-400">View all staff vetting status and declarations</div>
+            <div style="font-size:12px;font-weight:500;color:#0f172a;">Key Personnel Vetting</div>
+            <div style="font-size:11px;color:#94a3b8;margin-top:2px;">View all staff vetting status and declarations</div>
           </div>
         </button>
-        <button onclick="startAddStaff()" class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:border-indigo-200 hover:bg-indigo-50 transition text-left">
-          <span class="text-lg flex-shrink-0">＋</span>
+        <button onclick="startAddStaff()" style="display:flex;align-items:center;gap:10px;padding:12px;border:0.5px solid #e2e8f0;border-radius:8px;cursor:pointer;background:#fff;text-align:left;transition:border-color .1s;" onmouseover="this.style.borderColor='#c7d2fe';this.style.background='#fafbff'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='#fff'">
           <div>
-            <div class="text-sm font-semibold text-slate-700">Add Staff Member</div>
-            <div class="text-xs text-slate-400">Record vetting and AML/CTF functions</div>
+            <div style="font-size:12px;font-weight:500;color:#0f172a;">Add Staff Member</div>
+            <div style="font-size:11px;color:#94a3b8;margin-top:2px;">Record vetting and AML/CTF functions</div>
           </div>
         </button>
-        <button onclick="go('training')" class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:border-indigo-200 hover:bg-indigo-50 transition text-left">
-          <span class="text-lg flex-shrink-0">📚</span>
+        <button onclick="go('training')" style="display:flex;align-items:center;gap:10px;padding:12px;border:0.5px solid #e2e8f0;border-radius:8px;cursor:pointer;background:#fff;text-align:left;transition:border-color .1s;" onmouseover="this.style.borderColor='#c7d2fe';this.style.background='#fafbff'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='#fff'">
           <div>
-            <div class="text-sm font-semibold text-slate-700">Training Register</div>
-            <div class="text-xs text-slate-400">View all training records and upcoming due dates</div>
+            <div style="font-size:12px;font-weight:500;color:#0f172a;">Training Register</div>
+            <div style="font-size:11px;color:#94a3b8;margin-top:2px;">View all training records and upcoming due dates</div>
           </div>
         </button>
-        <button onclick="startAddTraining()" class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:border-indigo-200 hover:bg-indigo-50 transition text-left">
-          <span class="text-lg flex-shrink-0">＋</span>
+        <button onclick="startAddTraining()" style="display:flex;align-items:center;gap:10px;padding:12px;border:0.5px solid #e2e8f0;border-radius:8px;cursor:pointer;background:#fff;text-align:left;transition:border-color .1s;" onmouseover="this.style.borderColor='#c7d2fe';this.style.background='#fafbff'" onmouseout="this.style.borderColor='#e2e8f0';this.style.background='#fff'">
           <div>
-            <div class="text-sm font-semibold text-slate-700">Add Training Record</div>
-            <div class="text-xs text-slate-400">Log completed AML/CTF training</div>
+            <div style="font-size:12px;font-weight:500;color:#0f172a;">Add Training Record</div>
+            <div style="font-size:11px;color:#94a3b8;margin-top:2px;">Log completed AML/CTF training</div>
           </div>
         </button>
       </div>
     </div>
 
     ${active.length === 0 ? `
-    <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 text-center">
-      <div class="text-slate-400 text-sm">No staff records yet.</div>
-      <div class="text-xs text-slate-400 mt-1">Add your first staff member to begin the vetting register.</div>
-      <button onclick="startAddStaff()" class="mt-4 bg-indigo-600 text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">+ Add Staff Member</button>
+    <div style="background:#f8fafc;border:0.5px solid #e2e8f0;border-radius:12px;padding:32px;text-align:center;margin-bottom:16px;">
+      <div style="font-size:13px;color:#94a3b8;margin-bottom:4px;">No staff records yet.</div>
+      <div style="font-size:11px;color:#cbd5e1;margin-bottom:16px;">Add your first staff member to begin the vetting register.</div>
+      <button onclick="startAddStaff()" style="font-size:12px;font-weight:500;color:#fff;background:#4f46e5;border:none;padding:8px 20px;border-radius:8px;cursor:pointer;">+ Add Staff Member</button>
     </div>` : ''}
 
-    <!-- SNAPSHOT TABLE — active AML staff only -->
+    <!-- SNAPSHOT TABLE -->
     ${amlStaff.length > 0 ? `
-    <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
-      <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
-        <h2 class="text-sm font-bold text-slate-700">AML Staff at a glance</h2>
-        <span class="text-xs text-slate-400">${amlStaff.length} active</span>
+    <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;overflow:hidden;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:0.5px solid #f1f5f9;">
+        <div style="font-size:12px;font-weight:500;color:#0f172a;">AML Staff at a glance</div>
+        <span style="font-size:11px;color:#94a3b8;">${amlStaff.length} active</span>
       </div>
-      <table class="w-full text-sm border-collapse">
+      <table style="width:100%;border-collapse:collapse;">
         <thead>
-          <tr class="border-b border-slate-100">
-            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-4 py-3">Name</th>
-            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-4 py-3">Classification</th>
-            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-4 py-3">Vetting</th>
-            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-4 py-3">Next Declaration</th>
-            <th class="text-left text-xs font-semibold text-slate-400 uppercase tracking-wide px-4 py-3">Last Training</th>
+          <tr style="background:#f8fafc;border-bottom:0.5px solid #e2e8f0;">
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Name</th>
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Classification</th>
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Vetting</th>
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Next declaration</th>
+            <th style="text-align:left;font-size:10px;font-weight:500;color:#94a3b8;padding:9px 14px;text-transform:uppercase;letter-spacing:.06em;">Last training</th>
           </tr>
         </thead>
         <tbody>
           ${amlStaff.map(st => {
             const vs = vettingStatus(st);
             const isKey = st.classification === 'Key Personnel';
-            const clsBadge = isKey ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700';
+            const pillBg  = isKey ? '#fef3c7' : '#dbeafe';
+            const pillCol = isKey ? '#92400e' : '#1e40af';
             const vsBadge = vs === 'complete'
-              ? '<span class="text-xs text-green-700 font-semibold">✓ Complete</span>'
-              : '<span class="text-xs text-red-600 font-semibold">⚠ Incomplete</span>';
+              ? '<span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:#f0fdf4;color:#166534;">Complete</span>'
+              : '<span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:#fef2f2;color:#991b1b;">Incomplete</span>';
             const declOverdueFlag = st.declNext && new Date(st.declNext) < now;
             const declBadge = !st.declNext
-              ? '<span class="text-xs text-slate-400 italic">Not set</span>'
+              ? '<span style="font-size:11px;color:#94a3b8;font-style:italic;">Not set</span>'
               : declOverdueFlag
-                ? `<span class="text-xs text-amber-600 font-semibold">⚠ ${fmtDate(st.declNext)}</span>`
-                : `<span class="text-xs text-green-700 font-semibold">✓ ${fmtDate(st.declNext)}</span>`;
+                ? `<span style="font-size:11px;font-weight:500;color:#d97706;">⚠ ${fmtDate(st.declNext)}</span>`
+                : `<span style="font-size:11px;color:#64748b;">${fmtDate(st.declNext)}</span>`;
             const lastTraining = S.training.filter(t => t.name === st.name).sort((a,b) => new Date(b.date||0) - new Date(a.date||0))[0];
             const trainBadge = !lastTraining
-              ? '<span class="text-xs text-slate-400 italic">No record</span>'
+              ? '<span style="font-size:11px;color:#94a3b8;font-style:italic;">No record</span>'
               : lastTraining.next && new Date(lastTraining.next) < now
-                ? `<span class="text-xs text-amber-600 font-semibold">⚠ ${fmtDate(lastTraining.date)}</span>`
-                : `<span class="text-xs text-slate-600">${fmtDate(lastTraining.date)}</span>`;
+                ? `<span style="font-size:11px;font-weight:500;color:#d97706;">⚠ ${fmtDate(lastTraining.date)}</span>`
+                : `<span style="font-size:11px;color:#64748b;">${fmtDate(lastTraining.date)}</span>`;
             return `
-            <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition cursor-pointer" onclick="go('staff')">
-              <td class="px-4 py-3 font-semibold text-slate-800">${st.name}</td>
-              <td class="px-4 py-3"><span class="text-xs font-semibold px-2 py-0.5 rounded-full ${clsBadge}">${st.classification}</span></td>
-              <td class="px-4 py-3">${vsBadge}</td>
-              <td class="px-4 py-3">${declBadge}</td>
-              <td class="px-4 py-3">${trainBadge}</td>
+            <tr style="border-bottom:0.5px solid #f1f5f9;cursor:pointer;transition:background .1s;" onclick="go('staff')" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+              <td style="padding:10px 14px;font-size:12px;font-weight:500;color:#0f172a;">${st.name}</td>
+              <td style="padding:10px 14px;"><span style="font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:${pillBg};color:${pillCol};">${st.classification}</span></td>
+              <td style="padding:10px 14px;">${vsBadge}</td>
+              <td style="padding:10px 14px;">${declBadge}</td>
+              <td style="padding:10px 14px;">${trainBadge}</td>
             </tr>`;
           }).join('')}
         </tbody>
