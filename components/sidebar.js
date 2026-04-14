@@ -47,7 +47,7 @@ export function TopNav() {
     { id: 'compliance', label: 'Compliance', screen: 'compliance-overview' },
     { id: 'personnel',  label: 'Personnel',  screen: 'personnel-overview' },
     { id: 'clients',    label: 'Clients',    screen: 'clients-overview' },
-    { id: 'reports',    label: 'Reports',    screen: 'reports-overview' },
+    { id: 'reports',    label: 'Reports',    screen: 'report' },
   ];
   return `
     <nav style="position:fixed;left:200px;right:0;top:0;height:48px;background:#fff;border-bottom:0.5px solid #e2e8f0;display:flex;align-items:center;padding:0 24px;z-index:50;">
@@ -126,7 +126,6 @@ export function Sidebar() {
       ${navItem('SMR & Incident Register','incidents',         cur, false)}`,
 
     reports: `
-      ${navItem('Overview',              'reports-overview',   cur, false)}
       ${navItem('Compliance Report',     'report',             cur, false)}`,
   };
 
