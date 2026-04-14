@@ -9,7 +9,7 @@ export function screen() {
 
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;">
         <div>
-          <h1 style="font-size:20px;font-weight:600;color:#0f172a;margin:0 0 4px;">AUSTRAC Enrolment</h1>
+          <h1 style="font-size:20px;font-weight:500;color:#0f172a;margin-bottom:3px;">AUSTRAC Enrolment</h1>
           <p style="font-size:12px;color:#94a3b8;margin:0;">Enrolment is a legal requirement before operating as a reporting entity.</p>
         </div>
         ${confirmed

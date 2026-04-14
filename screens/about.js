@@ -5,7 +5,7 @@ export function screen() {
     <div style="max-width:680px;padding:32px 0;">
 
       <div style="margin-bottom:24px;">
-        <h1 style="font-size:20px;font-weight:600;color:#0f172a;margin:0 0 4px;">About SimpleAML</h1>
+        <h1 style="font-size:20px;font-weight:500;color:#0f172a;margin-bottom:3px;">About SimpleAML</h1>
         <p style="font-size:12px;color:#94a3b8;margin:0;">Product information and release notes.</p>
       </div>
 
