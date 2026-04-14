@@ -5,21 +5,21 @@ export function screen() {
   const storageLocation = S.report?.storageLocation || '';
 
   return `
-    <div class="py-8 space-y-6">
-      <div>
-        <h1 class="text-2xl font-bold">AML/CTF Compliance Report</h1>
-        <p class="text-slate-400 text-sm mt-1">A summary of your firm's AML/CTF compliance records — evidence you can draw on when responding to AUSTRAC's annual compliance questionnaire.</p>
+    <div style="max-width:680px;">
+      <div style="margin-bottom:20px;">
+        <h1 style="font-size:20px;font-weight:500;color:#0f172a;margin-bottom:3px;">AML/CTF Compliance Report</h1>
+        <p style="font-size:13px;color:#64748b;">A summary of your firm's AML/CTF compliance records — evidence you can draw on when responding to AUSTRAC's annual compliance questionnaire.</p>
       </div>
 
-      <div class="bg-blue-50 border border-blue-100 rounded-xl p-3 text-xs text-blue-700 space-y-1.5">
-        <div><strong>What is the AUSTRAC Annual Compliance Report?</strong></div>
-        <p>It is an <strong>online questionnaire</strong> you complete and submit directly in AUSTRAC Online — not a PDF or written report. Think of it as a structured form with yes/no and multiple choice questions covering whether you have an AML/CTF program, did a risk assessment, trained your staff, completed customer due diligence, and reported suspicious matters.</p>
-        <p>This SimpleAML report is your <strong>evidence record</strong> — a summary of your compliance activity that you can refer to when answering AUSTRAC's questions. It is not submitted to AUSTRAC.</p>
+      <div style="background:#eff6ff;border:0.5px solid #bfdbfe;border-radius:10px;padding:14px 16px;margin-bottom:14px;">
+        <div style="font-size:12px;font-weight:500;color:#1e40af;margin-bottom:8px;">What is the AUSTRAC Annual Compliance Report?</div>
+        <p style="font-size:11px;color:#1e40af;line-height:1.6;margin-bottom:6px;">It is an <strong>online questionnaire</strong> you complete and submit directly in AUSTRAC Online — not a PDF or written report. Think of it as a structured form with yes/no and multiple choice questions covering whether you have an AML/CTF program, did a risk assessment, trained your staff, completed customer due diligence, and reported suspicious matters.</p>
+        <p style="font-size:11px;color:#1e40af;line-height:1.6;">This SimpleAML report is your <strong>evidence record</strong> — a summary of your compliance activity that you can refer to when answering AUSTRAC's questions. It is not submitted to AUSTRAC.</p>
       </div>
 
-      <div class="bg-white border rounded-xl p-5 space-y-3">
-        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest">What this report contains</h2>
-        <div class="space-y-1 text-xs text-slate-500">
+      <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+        <div style="font-size:10px;font-weight:500;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">What this report contains</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
           ${[
             '1. Firm profile — practice details and compliance appointments',
             '2. AML/CTF risk assessment — designated services, inherent risk ratings, risk appetite',
@@ -29,48 +29,48 @@ export function screen() {
             '6. AML/CTF training register — training records for AML/CTF staff',
             '7. Client register — CDD status, entity types, new/ongoing/dormant summary',
             '8. SMR & incident register — suspicious matter reports and threshold transactions'
-          ].map(item => `<div class="flex items-start gap-2"><span class="text-indigo-400 flex-shrink-0">→</span>${item}</div>`).join('')}
+          ].map(item => `<div style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:#64748b;"><span style="color:#6366f1;flex-shrink:0;">→</span>${item}</div>`).join('')}
         </div>
       </div>
 
-      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800 leading-relaxed">
+      <div style="background:#fffbeb;border:0.5px solid #fde68a;border-radius:10px;padding:12px 16px;font-size:11px;color:#92400e;line-height:1.6;margin-bottom:14px;">
         <strong>SimpleAML is your AML/CTF compliance register.</strong> By generating this report you confirm that you have sighted all underlying evidence documents and stored copies in your firm's records. This report must be retained for 7 years from the date of generation as required under the AML/CTF Act 2006.
       </div>
 
-      <div class="bg-white border rounded-xl p-5 space-y-3">
-        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Report storage location <span class="normal-case font-normal text-slate-400 ml-1">(optional)</span></h2>
-        <p class="text-xs text-slate-400">Record where you have saved the downloaded PDF — e.g. SharePoint, Google Drive, or a shared folder. This appears in your generation history below.</p>
+      <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+        <div style="font-size:12px;font-weight:500;color:#0f172a;margin-bottom:4px;">Report storage location <span style="font-size:11px;font-weight:400;color:#94a3b8;">(optional)</span></div>
+        <p style="font-size:11px;color:#94a3b8;margin-bottom:10px;">Record where you have saved the downloaded PDF — e.g. SharePoint, Google Drive, or a shared folder. This appears in your generation history below.</p>
         <input
           type="text"
-          class="inp text-xs"
+          class="inp"
           placeholder="e.g. SharePoint > Compliance > AML Reports > 2026"
           value="${storageLocation}"
           oninput="reportField('storageLocation',this.value)"
         >
       </div>
 
-      <button onclick="generateReport()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition text-sm">
+      <button onclick="generateReport()" style="width:100%;font-size:13px;font-weight:500;color:#fff;background:#4f46e5;border:none;padding:12px 16px;border-radius:8px;cursor:pointer;margin-bottom:8px;">
         Generate AML/CTF Compliance Report (PDF)
       </button>
 
-      <p class="text-xs text-slate-400 text-center">
+      <p style="font-size:11px;color:#94a3b8;text-align:center;margin-bottom:14px;">
         This document summarises your AML/CTF records to assist with AUSTRAC's Compliance Report. It is not submitted to AUSTRAC.
       </p>
 
       ${reportHistory.length > 0 ? `
-      <div class="bg-white border rounded-xl p-5 space-y-3">
-        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Generation history</h2>
-        <p class="text-xs text-slate-400">A log of when this report was generated and where it was saved. You can remove any entry.</p>
-        <div class="space-y-1">
+      <div style="background:#fff;border:0.5px solid #e2e8f0;border-radius:12px;padding:20px 22px;">
+        <div style="font-size:10px;font-weight:500;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Generation history</div>
+        <p style="font-size:11px;color:#94a3b8;margin-bottom:12px;">A log of when this report was generated and where it was saved. You can remove any entry.</p>
+        <div>
           ${reportHistory.map((h, i) => `
             <div class="flex items-center justify-between gap-4 py-2 border-b border-slate-50 last:border-0">
               <div>
-                <div class="text-xs font-semibold text-slate-700">${h.date}</div>
+                <div style="font-size:12px;font-weight:500;color:#0f172a;">${h.date}</div>
                 ${h.location
                   ? `<div class="text-xs text-slate-400 mt-0.5">Stored: ${h.location}</div>`
                   : `<div class="text-xs text-slate-400 italic mt-0.5">Storage location not recorded</div>`}
               </div>
-              <button onclick="deleteReportHistory(${i})" class="text-xs text-slate-300 hover:text-red-500 transition flex-shrink-0">
+              <button onclick="deleteReportHistory(${i})" style="font-size:11px;color:#cbd5e1;background:none;border:none;cursor:pointer;flex-shrink:0;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='#cbd5e1'">
                 Remove
               </button>
             </div>
