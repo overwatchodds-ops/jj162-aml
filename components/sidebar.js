@@ -96,7 +96,12 @@ export function Sidebar() {
 
   const sidebarItems = {
     dashboard: `
-      ${navItem('Home', 'home', cur, false)}`,
+      ${navItem('Home', 'home', cur, false)}
+      ${GROUP_LABEL('Quick links')}
+      ${navItem('Continue Setup',        'setup',    cur, true)}
+      ${navItem('Client Register',       'clients',  cur, true)}
+      ${navItem('Key Personnel Vetting', 'staff',    cur, true)}
+      ${navItem('AML/CTF Program',       'program',  cur, true)}`,
 
     compliance: `
       ${navItem('Overview', 'compliance-overview', cur, false)}
