@@ -350,8 +350,9 @@ if (isNewUser) {
   window.dismissNewsletter = function() {
     var el = document.getElementById('newsletter-backdrop');
     if (el) el.style.display = 'none';
-    // Mark as shown in localStorage directly (S may not be in scope here)
+    // Mark as shown in both S (memory) and localStorage
     try {
+      if (window.S && window.S.firm) window.S.firm.newsletterShown = true;
       var raw = localStorage.getItem('saml_v2');
       if (raw) {
         var data = JSON.parse(raw);
